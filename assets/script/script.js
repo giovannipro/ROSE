@@ -16,6 +16,10 @@ function load_data() {
 			width = window_w - (margin.right + margin.right),
 			height = window_h - (margin.top + margin.bottom);
 
+		data.forEach(function(d) {
+        	d.duration = parseFloat(d.duration);  
+    	});
+
 		function display_data(data){
 			let svg = d3.select(container)
 				.append("svg")
@@ -36,17 +40,73 @@ function load_data() {
 			];
 
 			const lineGenerator = d3.line()
-			    .x((d) => d.x)  
-			    .y((d) => d.y);
+				.x((d) => d.x)  
+				.y((d) => d.y);
 
-			plot.selectAll("path")
-			    .data(line_data)
-			    .enter()
-			    .append("path")
-			    .attr("d", lineGenerator)
-			    .attr("stroke", "gray")  // Line color
-			    .attr("stroke-width", 1)  // Line width
-			    .attr("fill", "none");    // No fill
+			let lines = plot.append("g")
+				.attr("class","lines")
+
+			let line = lines.selectAll("path")
+				.data(line_data)
+				.enter()
+				.append("path")
+				.attr("d", lineGenerator)
+				.attr("stroke", "gray")
+				.attr("stroke-width", 1)
+				.attr("fill", "none")
+
+			let strips = plot.append("g")
+				.attr("class","strips")
+
+			let strip = strips.selectAll("rect")
+				.data(data)
+				.enter()
+				.append("rect")
+				.attr("data-action", (d) => d.action)
+				.attr("x", (d,i) => 50)
+				.attr("y", (d,i) => i*height/data.length)
+				.attr("width", (d) => d.duration)
+				.attr("height", height/data.length)
+				.attr("fill", (d) => {
+					let color = 'blue'
+					if (d.action == "TASK_STARTED" || d.action == "PRE_SURVEY_STARTED" || d.action == "PRE_SURVEY_ENDED" || d.action == 'POST_SURVEY_STARTED'){
+						color = 'orange' 
+					}
+					else if (d.action == "NEW_TAB"){
+						color = 'pink'
+					}
+					else if (d.action == "SEARCH_STARTED"){
+						color = 'red' 
+					}
+					else if (d.action == "SEARCH_RESUMED"){
+						color = 'lightblue' 
+					}
+					else if (d.action == "NEW_RESULT"){
+						color = 'yellow' 
+					}
+					else if (d.action == "SAME_SEARCH"){
+						color = 'blueviolet' 
+					}
+					else if (d.action == "NEW_SEARCH"){
+						color = 'violet' 
+					}
+					else if (d.action == "REFINE_SEARCH"){
+						color = 'aquamarine' 
+					}
+					else if (d.action == "NEW_SEARCH_SAME_ENGINE"){
+						color = 'peachpuff' 
+					}
+					else if (d.action == "NEW_RESULT"){
+						color = 'green' 
+					}
+					else if (d.action == "SEEN_DOMAIN_RESULT"){
+						color = 'lightgreen' 
+					}
+					else if (d.action == "SEARCH_RESUMED"){
+						color = 'lightcoral' 
+					}
+					return color
+				})
 
 		}
 
@@ -55,7 +115,7 @@ function load_data() {
 }	
 
 
-window.addEventListener('load', function () {    
+window.addEventListener('load', function () {	
 
 	load_data();
 
