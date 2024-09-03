@@ -1,4 +1,5 @@
 const container = "#container";
+const duration = 100;
 
 function load_data() {
 	
@@ -37,7 +38,7 @@ function load_data() {
 
 			const timeScale = d3.scaleTime()
 			    .domain([new Date(data[0].time), new Date(data[data.length-1].time)]) 
-			    .range([0, width]); 
+			    .range([200, width]); 
 
 			// const durationScale = d3.scaleLinear()
 			//     .domain([(data[0].duration), new Date(data[data.length-1].duration)])
@@ -73,10 +74,15 @@ function load_data() {
 			let strips = plot.append("g")
 				.attr("class","strips")
 
-			let strip = strips.selectAll("rect")
+			let strip_box = strips.selectAll("g")
 				.data(data)
 				.enter()
-				.append("rect")
+				.append("g")
+				.attr("class","strip_box")
+				.on("mouseover", handleMouseOver) 
+				.on("mouseout", handleMouseOut)
+
+			let strip_rect = strip_box.append("rect")
 				.attr("data-action", (d) => d.action)
 				.attr("data-domain", (d) => d.domain)
 				.attr("data-url", (d) => {
@@ -145,6 +151,28 @@ function load_data() {
 					}
 					return color
 				})
+				
+
+				let strip_text = strip_box.append("text")
+					.text((d) => d.url)
+					.attr("x",5)
+					.attr("y", 20)
+					.attr("opacity",0)
+
+
+				function handleMouseOver(){
+					d3.select(this).select("text")
+						.transition()
+						.duration(duration)
+						.attr("opacity",1)
+				}
+
+				function handleMouseOut(){
+					d3.select(this).select("text")
+						.transition()
+						.duration(duration)
+						.attr("opacity",0)
+				}
 		}
 
 		display_data(data)
