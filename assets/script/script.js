@@ -44,17 +44,18 @@ function load_data() {
 			    .range([200, width])
 			    // .nice()
 
-			console.log(data[0].time)
-			console.log(data[data.length-1].time)
+			// console.log(data[0].time)
+			// console.log(data[data.length-1].time)
 
+			const strip_height = height/6
 
 			let line_data = [
 				[{ x: 0, y: 0 },{ x: width, y: 0 }],
-				[{ x: 0, y: height/6*1 },{ x: width, y: height/6*1 }],
-				[{ x: 0, y: height/6*2 },{ x: width, y: height/6*2 }],
-				[{ x: 0, y: height/6*3 },{ x: width, y: height/6*3 }],
-				[{ x: 0, y: height/6*4 },{ x: width, y: height/6*4 }],
-				[{ x: 0, y: height/6*5 },{ x: width, y: height/6*5 }]
+				[{ x: 0, y: strip_height*1 },{ x: width, y: strip_height*1 }],
+				[{ x: 0, y: strip_height*2 },{ x: width, y: strip_height*2 }],
+				[{ x: 0, y: strip_height*3 },{ x: width, y: strip_height*3 }],
+				[{ x: 0, y: strip_height*4 },{ x: width, y: strip_height*4 }],
+				[{ x: 0, y: strip_height*5 },{ x: width, y: strip_height*5 }]
 			];
 
 			const lineGenerator = d3.line()
@@ -112,7 +113,6 @@ function load_data() {
 					return width
 				})
 				.attr("height", (d) => {
-					const strip_height = height/6
 					return strip_height 
 				})
 				.attr("stroke","black")
@@ -157,10 +157,42 @@ function load_data() {
 				
 
 				let strip_text = strip_box.append("text")
-					.text((d) => d.url + ' ' + d.duration)
+					.text((d) => d.url + ', ' + (d.duration/60).toFixed(2) + ' min')
 					.attr("x", 10)
 					.attr("y", height/5*1/2)
 					.attr("opacity",0)
+
+		        // strip labels
+				let labels = plot.append("g")
+					.attr("class","labels")
+
+		        let label_a = labels.append("text")
+		            .attr("x", 10)
+		            .attr("y", (strip_height*1))
+		            .attr("dy", strip_height/2)
+		            .attr("alignment-baseline","middle")
+		            .text("Search");
+
+		        let label_b = labels.append("text")
+		            .attr("x", 10)
+		            .attr("y", (strip_height*2))
+		            .attr("dy", strip_height/2)
+		            .attr("alignment-baseline","middle")
+		            .text("Website");
+
+		        let label_c = labels.append("text")
+		            .attr("x", 10)
+		            .attr("y", (strip_height*3))
+		            .attr("dy", strip_height/2)
+		            .attr("alignment-baseline","middle")
+		            .text("Page");
+
+		        let label_d = labels.append("text")
+		            .attr("x", 10)
+		            .attr("y", (strip_height*4))
+		            .attr("dy", strip_height/2)
+		            .attr("alignment-baseline","middle")
+		            .text("Other");
 
 				// x-axis
 		        const xAxis = d3.axisBottom(timeScale)
@@ -180,6 +212,7 @@ function load_data() {
 		            .attr("class","x_axis")
 		            .attr("transform", "translate(0, " + (height - 70) + ")")
 		            .call(xAxis)
+
 
 				function handleMouseOver(){
 					d3.select(this).select("text")
