@@ -3,8 +3,17 @@ const dataset = "search_story_task_8_user_1003.csv"
 
 const container = "#container";
 const duration = 100;
-
 const start_shift = 200;
+
+function getTextAfterX(query,x) {
+  const index = query.indexOf(x);
+
+  if (index !== -1) {
+    return query.substring(index + 2);
+  }
+
+  return "";
+}
 
 function load_data() {
 	
@@ -168,7 +177,30 @@ function load_data() {
 					.attr("opacity",0)
 
 				let info_a = strip_text_box.append("tspan")
-					.text((d) => d.url)
+					.text((d) => {
+						let url = d.url
+						if (url.indexOf("google") >= 0 && url.indexOf("safe=active") == -1){
+							url_a = url.replace("https://www.google.com/search?q=","")
+							url_b = url_a.split("&")[0]
+							url_c = url_b.replace(/\+/g," ")
+
+							the_url = "query on Google: " + url_c
+						}
+						else {
+							the_url = url
+						}
+							// // if (url.indexOf("&q=") >= 0){
+							// // 	url_a = url.replace(getTextAfterX(url,'&q='))
+							// // }
+							// // else {
+							// 	url_a = url.replace(getTextAfterX(url,'?q='))
+							// }
+							// else {
+							// 	url_a = url
+							// }
+
+						return the_url
+					})
 
 				let info_b = strip_text_box.append("tspan")
 					.text((d) => (d.duration/60).toFixed(2) + ' min')
