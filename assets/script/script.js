@@ -4,6 +4,7 @@ const dataset = "search_story_task_8_user_1004"
 const container = "#container";
 const duration = 100;
 const start_shift = 100;
+const interline = 2;
 
 function getTextAfterX(query,x) {
   const index = query.indexOf(x);
@@ -159,7 +160,7 @@ function load_data() {
 					else {
 						y_pos = height/6*4
 					}
-					return y_pos
+					return y_pos + interline
 				})
 				.attr("width", (d) => {
 					const end_time = new Date(d.time).getTime() + d.duration*1000
@@ -168,7 +169,7 @@ function load_data() {
 					return width
 				})
 				.attr("height", (d) => {
-					return strip_height 
+					return strip_height - (interline*2)
 				})
 				.attr("stroke","black")
 				.attr("stroke-opacity", 0.2)
@@ -223,7 +224,7 @@ function load_data() {
 					})
 					.attr("y", (d,i) => {
 						let y_pos = height/6*2
-						return y_pos
+						return y_pos + interline
 					})
 					.attr("width", (d) => {
 						const end_time = new Date(d[d.length-1].time).getTime() + d[d.length-1].duration*1000
@@ -231,7 +232,7 @@ function load_data() {
 						return width
 					})
 					.attr("height", (d) => {
-						return strip_height 
+						return strip_height - (interline*2)
 					})
 					.attr("stroke","orange")
 					.attr("fill", "orange")
