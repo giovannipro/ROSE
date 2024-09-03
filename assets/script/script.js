@@ -1,7 +1,6 @@
-// const dataset = "search_story_task_5_user_1015"
-// const dataset = "search_story_task_8_user_1004"
+const dataset = "search_story_task_8_user_1004"
 // const dataset = "search_story_task_8_user_1013"
-const dataset = "search_story_task_8_user_1005"
+// const dataset = "search_story_task_8_user_1005"
 
 const container = "#container";
 const duration = 100;
@@ -65,10 +64,6 @@ function load_data() {
 
 		data.forEach(function(d) {
 			d.duration = parseFloat(d.duration);  
-
-			// if (d.page_type != 'NEW_TAB' && d.page_type != 'SYSTEM'){
-			// 	console.log(d)
-			// }
 		});
 
 		const website_strip_data = groupConsecutiveDomains(data);
@@ -89,7 +84,7 @@ function load_data() {
 			// scale time
 			const total_duration = data.reduce((sum, item) => sum + item.duration, 0);
 
-			const timeScale = d3.scaleTime()
+			let timeScale = d3.scaleTime()
 				.domain([new Date(data[0].time), new Date( new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
 				.range([start_shift, width-20])
 				// .nice()
@@ -167,7 +162,6 @@ function load_data() {
 				.attr("width", (d) => {
 					const end_time = new Date(d.time).getTime() + d.duration*1000
 					const width = timeScale(end_time) - timeScale(new Date(d.time))
-					// console.log(end_time, width)
 					return width
 				})
 				.attr("height", (d) => {
@@ -216,6 +210,11 @@ function load_data() {
 					.enter()
 					.append("g")
 					.attr("class","website")
+					.append("a")
+					.attr("xlink:href", (d) => {
+						return d[0].url
+					})
+					.attr("target","_blank")
 					.on("mouseover", handleMouseOver_website) 
 					.on("mouseout", handleMouseOut_website)
 
@@ -236,7 +235,8 @@ function load_data() {
 					.attr("height", (d) => {
 						return strip_height - (interline*2)
 					})
-					.attr("stroke","orange")
+					.attr("stroke","black")
+					.attr("stroke-opacity", 0.2)
 					.attr("fill", "orange")
 				
 				let strip_text_box = strip_box.append("text")
@@ -264,7 +264,8 @@ function load_data() {
 						const totalDuration = d.reduce((accumulator, currentObject) => {
     						return accumulator + currentObject.duration
 						}, 0)
-						return Math.floor(totalDuration) + '"'
+						// return Math.floor(totalDuration) + '"'
+						return Math.floor(totalDuration/60 * 60) + ' seconds / ' + (totalDuration/60).toFixed(1) + ' minutes'
 					})
 					.attr("x",0)
 					.attr("dy", 20)
@@ -287,7 +288,7 @@ function load_data() {
 
 				let info_b = strip_text_box.append("tspan")
 					.text((d) => (
-						Math.floor(d.duration/60 * 60)) + '"'
+						Math.floor(d.duration/60 * 60)) + ' seconds / ' + (d.duration/60).toFixed(1) + ' minutes'
 					)
 					.attr("dy", 20)
 					.attr("x",0)
@@ -405,9 +406,39 @@ function load_data() {
 						.duration(duration)
 						.attr("opacity",0)
 				}
-		}
 
+			function rescale_chart(){
+				console.log("fire")
+
+				timeScale = d3.scaleTime()
+					.range([start_shift, width/2])
+
+				svg
+					.attr("width", width)
+
+				// strip_rect.attr("x", (d,i) => {
+				// 		const x_pos = timeScale(new Date(d.time))
+				// 		return x_pos
+				// 	})
+				// 	.attr("width", (d) => {
+				// 		const end_time = new Date(d.time).getTime() + d.duration*1000
+				// 		const width = timeScale(end_time) - timeScale(new Date(d.time))
+				// 		return width
+				// 	})
+
+				// const timeScale = d3.scaleTime()
+				// 	.domain([new Date(data[0].time), new Date( new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
+			}
+
+			addEventListener("keypress", (event) => {
+				let key = event.key
+				if (key == "1") {
+					rescale_chart()
+				}
+			});
+		}
 		display_data(data)
+
 	}
 }	
 
