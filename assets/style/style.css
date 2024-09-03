@@ -23,3 +23,7 @@ header, footer {
 .x_axis text, .x_axis .tick line {
 	fill: gray;
 }
+
+.labels {
+	font-size: 0.8rem;
+}

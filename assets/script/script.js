@@ -1,5 +1,7 @@
 // const dataset = "search_story_task_5_user_1015"
-const dataset = "search_story_task_8_user_1004"
+// const dataset = "search_story_task_8_user_1004"
+// const dataset = "search_story_task_8_user_1013"
+const dataset = "search_story_task_8_user_1005"
 
 const container = "#container";
 const duration = 100;
@@ -89,8 +91,8 @@ function load_data() {
 
 			const timeScale = d3.scaleTime()
 				.domain([new Date(data[0].time), new Date( new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
-				.range([start_shift, width])
-				.nice()
+				.range([start_shift, width-20])
+				// .nice()
 
 			// console.log(new Date(data[0].time))
 			// console.log(new Date( new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000))
@@ -184,14 +186,14 @@ function load_data() {
 					else if (d.action == "SEARCH_STARTED" || d.action == "SEARCH_ENDED" || d.action == "SEARCH_RESUMED"){
 						color = '#9aa4ac' 
 					}
-					else if (d.action == "SAME_SEARCH"){
-						color = 'blueviolet' 
+					else if (d.action == "SAME_SEARCH" || d.action == "SEEN_SEARCH"){
+						color = '#85DAE9' 
 					}
 					else if (d.action == "NEW_SEARCH" || d.action == "NEW_SEARCH_SAME_ENGINE"){
-						color = 'violet' 
+						color = '#619ED4' 
 					}
 					else if (d.action == "REFINE_SEARCH"){
-						color = 'aquamarine' 
+						color = '#C8DFF4' 
 					}
 					else if (d.action == "NEW_RESULT"){
 						color = 'orange' 
@@ -202,9 +204,9 @@ function load_data() {
 					else if (d.action == "SAME_DOMAIN_RESULT"){
 						color = '#FFCC88'  // orange
 					}
-					else if (d.action == "SEEN_SEARCH"){
-						color = 'lightcoral' 
-					}
+					// else if (d.action == "SEEN_SEARCH"){
+					// 	color = 'lightcoral' 
+					// }
 					return color
 				})
 
