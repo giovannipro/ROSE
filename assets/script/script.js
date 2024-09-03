@@ -21,6 +21,7 @@ function load_data() {
     	});
 
 		function display_data(data){
+
 			let svg = d3.select(container)
 				.append("svg")
 				.attr("width", width + (margin.right + margin.right))
@@ -30,6 +31,20 @@ function load_data() {
 			let plot = svg.append("g")
 				.attr("id", "plot")
 				.attr("transform", "translate(" + margin.right + "," + margin.top + ")");
+
+			// scale time
+			const total_duration = data.reduce((sum, item) => sum + item.duration, 0);
+
+			const timeScale = d3.scaleTime()
+			    .domain([new Date(data[0].time), new Date(data[data.length-1].time)]) 
+			    .range([0, width]); 
+
+			// const durationScale = d3.scaleLinear()
+			//     .domain([(data[0].duration), new Date(data[data.length-1].duration)])
+			//     .range([0, width]);
+
+			// console.log(data[data.length-1].time)
+			// console.log(data[0].time)
 
 			let line_data = [
 				[{ x: 0, y: 0 },{ x: width, y: 0 }],
@@ -63,10 +78,36 @@ function load_data() {
 				.enter()
 				.append("rect")
 				.attr("data-action", (d) => d.action)
-				.attr("x", (d,i) => 50)
-				.attr("y", (d,i) => i*height/data.length)
-				.attr("width", (d) => d.duration)
-				.attr("height", height/data.length)
+				.attr("data-domain", (d) => d.domain)
+				.attr("data-url", (d) => {
+					// console.log(d.url)
+					return d.url
+				})
+				.attr("x", (d,i) => {
+					const x_pos = timeScale(new Date(d.time))
+					return x_pos
+				})
+				.attr("y", (d,i) => {
+					let y_pos = 0
+					if (d.action.indexOf("SEARCH") >= 0) {
+						y_pos = 0
+					}
+					else if (d.action.indexOf("RESULT") >= 0) {
+						y_pos = height/5*1
+					}
+					else {
+						y_pos = height/5*3
+					}
+					return y_pos
+				})
+				.attr("width", (d) => {
+					const width = 2
+					return width
+				})
+				.attr("height", (d) => {
+					const strip_height = height/5
+					return strip_height 
+				})
 				.attr("fill", (d) => {
 					let color = 'blue'
 					if (d.action == "TASK_STARTED" || d.action == "PRE_SURVEY_STARTED" || d.action == "PRE_SURVEY_ENDED" || d.action == 'POST_SURVEY_STARTED'){
@@ -81,19 +122,16 @@ function load_data() {
 					else if (d.action == "SEARCH_RESUMED"){
 						color = 'lightblue' 
 					}
-					else if (d.action == "NEW_RESULT"){
-						color = 'yellow' 
-					}
 					else if (d.action == "SAME_SEARCH"){
 						color = 'blueviolet' 
 					}
-					else if (d.action == "NEW_SEARCH"){
+					else if (d.action == "NEW_SEARCH" || d.action == "NEW_SEARCH_SAME_ENGINE"){
 						color = 'violet' 
 					}
 					else if (d.action == "REFINE_SEARCH"){
 						color = 'aquamarine' 
 					}
-					else if (d.action == "NEW_SEARCH_SAME_ENGINE"){
+					else if (d.action == "SEARCH_ENDED"){
 						color = 'peachpuff' 
 					}
 					else if (d.action == "NEW_RESULT"){
@@ -102,12 +140,11 @@ function load_data() {
 					else if (d.action == "SEEN_DOMAIN_RESULT"){
 						color = 'lightgreen' 
 					}
-					else if (d.action == "SEARCH_RESUMED"){
+					else if (d.action == "SEEN_SEARCH"){
 						color = 'lightcoral' 
 					}
 					return color
 				})
-
 		}
 
 		display_data(data)
