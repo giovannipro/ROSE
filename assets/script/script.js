@@ -4,6 +4,8 @@ const dataset = "search_story_task_8_user_1003.csv"
 const container = "#container";
 const duration = 100;
 
+const start_shift = 200;
+
 function load_data() {
 	
 	// load data
@@ -41,7 +43,7 @@ function load_data() {
 
 			const timeScale = d3.scaleTime()
 			    .domain([new Date(data[0].time), new Date(data[data.length-1].time).getTime() + data[data.length-1].duration*1000]) 
-			    .range([200, width])
+			    .range([start_shift, width])
 			    // .nice()
 
 			// console.log(data[0].time)
@@ -141,10 +143,13 @@ function load_data() {
 						color = 'aquamarine' 
 					}
 					else if (d.action == "NEW_RESULT"){
-						color = 'green' 
+						color = '#FFCC88' 
 					}
 					else if (d.action == "SEEN_DOMAIN_RESULT"){
-						color = 'lightgreen' 
+						color = '#F7E4CC' 
+					}
+					else if (d.action == "SAME_DOMAIN_RESULT"){
+						color = 'orange' 
 					}
 					else if (d.action == "SEEN_SEARCH"){
 						color = 'lightcoral' 
@@ -152,12 +157,20 @@ function load_data() {
 					return color
 				})
 				
-
-				let strip_text = strip_box.append("text")
-					.text((d) => d.url + ', ' + (d.duration/60).toFixed(2) + ' min')
-					.attr("x", 10)
-					.attr("y", height/5*1/2)
+				let strip_text_box = strip_box.append("text")
+					.attr("transform","translate(" + start_shift + "," + height/5*1/2.5 + ")")
+					.attr("x", 0)
+					.attr("y", 0)
+					.attr("alignment-baseline","middle")
 					.attr("opacity",0)
+
+				let info_a = strip_text_box.append("tspan")
+					.text((d) => d.url)
+
+				let info_b = strip_text_box.append("tspan")
+					.text((d) => (d.duration/60).toFixed(2) + ' min')
+					.attr("dy", 20)
+					.attr("x",0)
 
 		        // strip labels
 				let labels = plot.append("g")
@@ -194,7 +207,7 @@ function load_data() {
 				// x-axis
 		        const xAxis = d3.axisBottom(timeScale)
 		            // .ticks(18)
-		        .ticks(d3.timeMinute.every(5)) 
+		        .ticks(d3.timeMinute.every(2)) 
 		            .tickFormat(d => {
 				        const hours = d.getHours();
 				        const minutes = d.getMinutes();
@@ -216,6 +229,8 @@ function load_data() {
 						.transition()
 						.duration(duration)
 						.attr("opacity",1)
+
+					// console.log(d3.select(this))
 				}
 
 				function handleMouseOut(){
