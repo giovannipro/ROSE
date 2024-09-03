@@ -3,6 +3,22 @@ body {
 	padding: 0;
 }
 
+header, footer {
+	margin: 0 1rem;
+}
+
 #container {
 	height: 500px;
+}
+
+.strip_box {
+	cursor: pointer;
+}
+
+.x_axis path {
+	stroke: none;
+}
+
+.x_axis text, .x_axis .tick line {
+	fill: gray;
 }

@@ -1,10 +1,13 @@
+const dataset = "search_story_task_8_user_1003.csv"
+// const dataset = "search_story_task_5_user_1015.csv"
+
 const container = "#container";
 const duration = 100;
 
 function load_data() {
 	
 	// load data
-	d3.csv("../assets/data/search_story_task_5_user_1015.csv")
+	d3.csv("../assets/data/" + dataset)
 		.then(loaded)
 
 	function loaded(data) {
@@ -37,22 +40,16 @@ function load_data() {
 			const total_duration = data.reduce((sum, item) => sum + item.duration, 0);
 
 			const timeScale = d3.scaleTime()
-			    .domain([new Date(data[0].time), new Date(data[data.length-1].time)]) 
+			    .domain([new Date(data[0].time), new Date(data[data.length-1].time).getTime() + data[data.length-1].duration*1000]) 
 			    .range([200, width]); 
-
-			// const durationScale = d3.scaleLinear()
-			//     .domain([(data[0].duration), new Date(data[data.length-1].duration)])
-			//     .range([0, width]);
-
-			// console.log(data[data.length-1].time)
-			// console.log(data[0].time)
 
 			let line_data = [
 				[{ x: 0, y: 0 },{ x: width, y: 0 }],
-				[{ x: 0, y: height/5*1 },{ x: width, y: height/5*1 }],
-				[{ x: 0, y: height/5*2 },{ x: width, y: height/5*2 }],
-				[{ x: 0, y: height/5*3 },{ x: width, y: height/5*3 }],
-				[{ x: 0, y: height/5*4 },{ x: width, y: height/5*4 }]
+				[{ x: 0, y: height/6*1 },{ x: width, y: height/6*1 }],
+				[{ x: 0, y: height/6*2 },{ x: width, y: height/6*2 }],
+				[{ x: 0, y: height/6*3 },{ x: width, y: height/6*3 }],
+				[{ x: 0, y: height/6*4 },{ x: width, y: height/6*4 }],
+				[{ x: 0, y: height/6*5 },{ x: width, y: height/6*5 }]
 			];
 
 			const lineGenerator = d3.line()
@@ -67,7 +64,7 @@ function load_data() {
 				.enter()
 				.append("path")
 				.attr("d", lineGenerator)
-				.attr("stroke", "gray")
+				.attr("stroke", "#d0d0d0")
 				.attr("stroke-width", 1)
 				.attr("fill", "none")
 
@@ -85,10 +82,7 @@ function load_data() {
 			let strip_rect = strip_box.append("rect")
 				.attr("data-action", (d) => d.action)
 				.attr("data-domain", (d) => d.domain)
-				.attr("data-url", (d) => {
-					// console.log(d.url)
-					return d.url
-				})
+				.attr("data-url", (d) => d.url)
 				.attr("x", (d,i) => {
 					const x_pos = timeScale(new Date(d.time))
 					return x_pos
@@ -96,24 +90,28 @@ function load_data() {
 				.attr("y", (d,i) => {
 					let y_pos = 0
 					if (d.action.indexOf("SEARCH") >= 0) {
-						y_pos = 0
+						y_pos = height/6*1
 					}
 					else if (d.action.indexOf("RESULT") >= 0) {
-						y_pos = height/5*1
+						y_pos = height/6*2
 					}
 					else {
-						y_pos = height/5*3
+						y_pos = height/6*4
 					}
 					return y_pos
 				})
 				.attr("width", (d) => {
-					const width = 2
+					const end_time = new Date(d.time).getTime() + d.duration*1000
+					const width = timeScale(end_time) - timeScale(new Date(d.time))
+					// console.log(end_time, width)
 					return width
 				})
 				.attr("height", (d) => {
-					const strip_height = height/5
+					const strip_height = height/6
 					return strip_height 
 				})
+				.attr("stroke","black")
+				.attr("stroke-opacity", 0.2)
 				.attr("fill", (d) => {
 					let color = 'blue'
 					if (d.action == "TASK_STARTED" || d.action == "PRE_SURVEY_STARTED" || d.action == "PRE_SURVEY_ENDED" || d.action == 'POST_SURVEY_STARTED'){
@@ -154,11 +152,19 @@ function load_data() {
 				
 
 				let strip_text = strip_box.append("text")
-					.text((d) => d.url)
-					.attr("x",5)
-					.attr("y", 20)
+					.text((d) => d.url + ' ' + d.duration)
+					.attr("x", 10)
+					.attr("y", height/5*1/2)
 					.attr("opacity",0)
 
+				// x-axis
+				const formatDate = d3.timeFormat("%S");
+
+		        const xAxis = plot.append("g")
+		            .attr("class","x_axis")
+		            .attr("transform", "translate(0, " + (height - 70) + ")")
+		            .call(d3.axisBottom(timeScale))
+		            // .tickFormat(formatDate)
 
 				function handleMouseOver(){
 					d3.select(this).select("text")
