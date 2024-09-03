@@ -12,7 +12,7 @@ header, footer {
 	height: 500px;
 }
 
-.strip_box {
+.strip_box, .website {
 	cursor: pointer;
 }
 

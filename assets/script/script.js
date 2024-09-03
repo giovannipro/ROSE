@@ -1,19 +1,47 @@
 // const dataset = "search_story_task_5_user_1015"
-// const dataset = "search_story_task_8_user_1014"
 const dataset = "search_story_task_8_user_1004"
 
 const container = "#container";
 const duration = 100;
-const start_shift = 200;
+const start_shift = 100;
 
 function getTextAfterX(query,x) {
   const index = query.indexOf(x);
 
   if (index !== -1) {
-    return query.substring(index + 2);
+	return query.substring(index + 2);
   }
 
   return "";
+}
+
+function groupConsecutiveDomains(data) {
+	data = data.filter(d => d.page_type == 'RESULT')
+
+  	const groupedData = [];
+  	let currentGroup = [];
+
+  for (let i = 0; i < data.length; i++) {
+	const currentItem = data[i];
+	const previousItem = data[i - 1];
+
+	if (previousItem && currentItem.domain !== previousItem.domain) {
+	  // New domain encountered, start a new group
+	  if (currentGroup.length > 0) {
+		groupedData.push(currentGroup);
+	  }
+	  currentGroup = [];
+	}
+
+	currentGroup.push(currentItem);
+  }
+
+  // Add the last group if it's not empty
+  if (currentGroup.length > 0) {
+	groupedData.push(currentGroup);
+  }
+
+  return groupedData;
 }
 
 function load_data() {
@@ -33,47 +61,15 @@ function load_data() {
 			height = window_h - (margin.top + margin.bottom);
 
 		data.forEach(function(d) {
-        	d.duration = parseFloat(d.duration);  
+			d.duration = parseFloat(d.duration);  
 
-        	if (d.page_type != 'NEW_TAB' && d.page_type != 'SYSTEM'){
-        		console.log(d)
-        	}
-    	});
+			// if (d.page_type != 'NEW_TAB' && d.page_type != 'SYSTEM'){
+			// 	console.log(d)
+			// }
+		});
 
-		const website_strip_data = make_website_strips(data)
+		const website_strip_data = groupConsecutiveDomains(data);
 		console.log(website_strip_data)
-
-		function make_website_strips(data){
-			let the_data = data.filter(d => d.page_type != 'NEW_TAB' && d.page_type != 'SYSTEM')
-			let website_data = []
-			let prov_data = ''
-			let start = ''
-
-			the_data.forEach(d => {
-				if (d.domain != "www.google.com"){
-					console.log(d.domain)
-
-					if (d.domain != prov_data){
-						prov_data = d.domain
-						start = d.time
-
-						let obj = {}
-						obj.duration = d.duration
-						obj.domain = d.domain
-						obj.time = d.time
-
-						website_data.push(obj)
-
-					}
-					else {
-
-					}
-				}
-			})
-
-			return website_data
-		}
-
 
 		function display_data(data){
 
@@ -91,12 +87,12 @@ function load_data() {
 			const total_duration = data.reduce((sum, item) => sum + item.duration, 0);
 
 			const timeScale = d3.scaleTime()
-			    .domain([new Date(data[0].time), new Date( new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
-			    .range([start_shift, width])
-			    .nice()
+				.domain([new Date(data[0].time), new Date( new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
+				.range([start_shift, width])
+				.nice()
 
-			console.log(new Date(data[0].time))
-			console.log(new Date( new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000))
+			// console.log(new Date(data[0].time))
+			// console.log(new Date( new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000))
 
 			const strip_height = height/6
 
@@ -212,36 +208,27 @@ function load_data() {
 				})
 
 				// website strips
-				let strip_website = strip_website_box.selectAll("rect")
+				let strip_website = strip_website_box.selectAll("g")
 					.data(website_strip_data)
 					.enter()
-					.append("rect")
+					.append("g")
 					.attr("class","website")
+					.on("mouseover", handleMouseOver_website) 
+					.on("mouseout", handleMouseOut_website)
+
+				let strip_website_rect = strip_website.append("rect")
 					.attr("x", (d,i) => {
-						const x_pos = timeScale(new Date(d.time))
+						const x_pos = timeScale(new Date(d[0].time))
 						return x_pos
 					})
 					.attr("y", (d,i) => {
 						let y_pos = height/6*2
-						// let y_pos = 0
-						// if (d.page_type == 'RESULT') {
-						// 	y_pos = height/6*2
-						// }
 						return y_pos
 					})
 					.attr("width", (d) => {
-						const end_time = new Date(d.time).getTime() + d.duration*1000
-						const width = timeScale(end_time) - timeScale(new Date(d.time))
+						const end_time = new Date(d[d.length-1].time).getTime() + d[d.length-1].duration*1000
+						const width = timeScale(end_time) - timeScale(new Date(d[0].time))
 						return width
-
-						// if (d.page_type == 'RESULT') {
-						// 	const end_time = new Date(d.time).getTime() + d.duration*1000
-						// 	const width = timeScale(end_time) - timeScale(new Date(d.time))
-						// 	return width
-						// }
-						// else {
-						// 	return 0
-						// }
 					})
 					.attr("height", (d) => {
 						return strip_height 
@@ -255,6 +242,29 @@ function load_data() {
 					.attr("y", 0)
 					.attr("alignment-baseline","middle")
 					.attr("opacity",0)
+
+				let strip_website_textBox = strip_website.append("text")
+					.attr("transform","translate(" + start_shift + "," + height/5*1/2.5 + ")")
+					.attr("x", 0)
+					.attr("y", 0)
+					.attr("alignment-baseline","middle")
+					.attr("opacity",0)
+
+				let strip_website_text_a = strip_website_textBox.append("tspan")
+					.text((d) => {
+						return  d[0].domain
+					})
+
+				let strip_website_text_b = strip_website_textBox.append("tspan")
+					.text((d) => {
+						// console.log(d[0])
+						const totalDuration = d.reduce((accumulator, currentObject) => {
+    						return accumulator + currentObject.duration
+						}, 0)
+						return Math.floor(totalDuration) + '"'
+					})
+					.attr("x",0)
+					.attr("dy", 20)
 
 				let info_a = strip_text_box.append("tspan")
 					.text((d) => {
@@ -273,61 +283,64 @@ function load_data() {
 					})
 
 				let info_b = strip_text_box.append("tspan")
-					.text((d) => (d.duration/60).toFixed(2) + ' min')
+					.text((d) => (
+						Math.floor(d.duration/60 * 60)) + '"'
+					)
 					.attr("dy", 20)
 					.attr("x",0)
 
-		        // strip labels
+				// strip labels
 				let labels = plot.append("g")
 					.attr("class","labels")
 
-		        let label_a = labels.append("text")
-		            .attr("x", 10)
-		            .attr("y", (strip_height*1))
-		            .attr("dy", strip_height/2)
-		            .attr("alignment-baseline","middle")
-		            .text("Search");
+				let label_a = labels.append("text")
+					.attr("x", 10)
+					.attr("y", (strip_height*1))
+					.attr("dy", strip_height/2)
+					.attr("alignment-baseline","middle")
+					.text("Search");
 
-		        let label_b = labels.append("text")
-		            .attr("x", 10)
-		            .attr("y", (strip_height*2))
-		            .attr("dy", strip_height/2)
-		            .attr("alignment-baseline","middle")
-		            .text("Website");
+				let label_b = labels.append("text")
+					.attr("x", 10)
+					.attr("y", (strip_height*2))
+					.attr("dy", strip_height/2)
+					.attr("alignment-baseline","middle")
+					.text("Website");
 
-		        let label_c = labels.append("text")
-		            .attr("x", 10)
-		            .attr("y", (strip_height*3))
-		            .attr("dy", strip_height/2)
-		            .attr("alignment-baseline","middle")
-		            .text("Page");
+				let label_c = labels.append("text")
+					.attr("x", 10)
+					.attr("y", (strip_height*3))
+					.attr("dy", strip_height/2)
+					.attr("alignment-baseline","middle")
+					.text("Page");
 
-		        let label_d = labels.append("text")
-		            .attr("x", 10)
-		            .attr("y", (strip_height*4))
-		            .attr("dy", strip_height/2)
-		            .attr("alignment-baseline","middle")
-		            .text("Other");
+				let label_d = labels.append("text")
+					.attr("x", 10)
+					.attr("y", (strip_height*4))
+					.attr("dy", strip_height/2)
+					.attr("alignment-baseline","middle")
+					.text("Other");
 
 				// x-axis
-		        const xAxis = d3.axisBottom(timeScale)
-		            // .ticks(18)
-		        .ticks(d3.timeMinute.every(2)) 
-		            .tickFormat(d => {
-				        const hours = d.getHours();
-				        const minutes = d.getMinutes();
-				        const duration = hours * 60 + minutes;
-				        const start = new Date(data[0].time).getMinutes() + (new Date(data[0].time).getHours() * 60)
+				const xAxis = d3.axisBottom(timeScale)
+					// .ticks(18)
+				.ticks(d3.timeMinute.every(2)) 
+					.tickFormat(d => {
+						const hours = d.getHours();
+						const minutes = d.getMinutes();
+						const duration = hours * 60 + minutes;
+						const start = new Date(data[0].time).getMinutes() + (new Date(data[0].time).getHours() * 60)
 
-				        return (duration-start+0) + " min";
-				    })
+						return (duration-start+0) + "'"//+ ":00";
+					})
 
-		        const xAxis_box = plot.append("g")
-		            .attr("class","x_axis")
-		            .attr("transform", "translate(0, " + (height - 70) + ")")
-		            .call(xAxis)
+				const xAxis_box = plot.append("g")
+					.attr("class","x_axis")
+					.attr("transform", "translate(0, " + (height - 70) + ")")
+					.call(xAxis)
 
 
+				// handle Mouse Over
 				function handleMouseOver(){
 					d3.select(this).select("text")
 						.transition()
@@ -339,6 +352,9 @@ function load_data() {
 
 					d3.select(this)
 						.attr("opacity",1)
+
+					d3.selectAll(".website")
+						.attr("opacity",0.4)
 				}
 
 				function handleMouseOut(){
@@ -349,6 +365,42 @@ function load_data() {
 
 					d3.selectAll(".strip_box")
 						.attr("opacity",1)
+
+					d3.selectAll(".website")
+						.attr("opacity",1)
+				}
+
+				// - - - 
+
+				function handleMouseOver_website(){
+					d3.selectAll(".website").select("rect")
+						.attr("opacity",0.4)
+
+					d3.selectAll(".strip_box")
+						.attr("opacity",0.4)
+
+					d3.select(this).select("rect")
+						.transition()
+						.duration(duration)
+						.attr("opacity",1)
+
+					d3.select(this).select("text")
+						.transition()
+						.duration(duration)
+						.attr("opacity",1)
+				}
+
+				function handleMouseOut_website(){
+					d3.selectAll(".website").select("rect")
+						.attr("opacity",1)
+
+					d3.selectAll(".strip_box")
+						.attr("opacity",1)
+
+					d3.select(this).select("text")
+						.transition()
+						.duration(duration)
+						.attr("opacity",0)
 				}
 		}
 
