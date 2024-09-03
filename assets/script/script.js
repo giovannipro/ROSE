@@ -120,17 +120,17 @@ function load_data() {
 				.attr("fill", (d) => {
 					let color = 'blue'
 					if (d.action == "TASK_STARTED" || d.action == "PRE_SURVEY_STARTED" || d.action == "PRE_SURVEY_ENDED" || d.action == 'POST_SURVEY_STARTED'){
-						color = 'orange' 
+						color = '#dbdbdb' 
 					}
 					else if (d.action == "NEW_TAB"){
-						color = 'pink'
+						color = '#afafaf'
 					}
-					else if (d.action == "SEARCH_STARTED"){
-						color = 'red' 
+					else if (d.action == "SEARCH_STARTED" || d.action == "SEARCH_ENDED" || d.action == "SEARCH_RESUMED"){
+						color = '#4ab9dd' 
 					}
-					else if (d.action == "SEARCH_RESUMED"){
-						color = 'lightblue' 
-					}
+					// else if (d.action == "SEARCH_RESUMED"){
+					// 	color = 'lightblue' 
+					// }
 					else if (d.action == "SAME_SEARCH"){
 						color = 'blueviolet' 
 					}
@@ -139,9 +139,6 @@ function load_data() {
 					}
 					else if (d.action == "REFINE_SEARCH"){
 						color = 'aquamarine' 
-					}
-					else if (d.action == "SEARCH_ENDED"){
-						color = 'peachpuff' 
 					}
 					else if (d.action == "NEW_RESULT"){
 						color = 'green' 
