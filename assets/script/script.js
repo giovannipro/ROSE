@@ -24,6 +24,10 @@ function load_data() {
 
 		data.forEach(function(d) {
         	d.duration = parseFloat(d.duration);  
+
+        	if (d.page_type != 'NEW_TAB' && d.page_type != 'SYSTEM'){
+        		console.log(d)
+        	}
     	});
 
 		function display_data(data){
@@ -44,10 +48,7 @@ function load_data() {
 			const timeScale = d3.scaleTime()
 			    .domain([new Date(data[0].time), new Date(data[data.length-1].time).getTime() + data[data.length-1].duration*1000]) 
 			    .range([start_shift, width])
-			    // .nice()
-
-			// console.log(data[0].time)
-			// console.log(data[data.length-1].time)
+			    .nice()
 
 			const strip_height = height/6
 
@@ -86,6 +87,11 @@ function load_data() {
 				.attr("class","strip_box")
 				.on("mouseover", handleMouseOver) 
 				.on("mouseout", handleMouseOut)
+				.append("a")
+				.attr("xlink:href", (d) => {
+					return d.url
+				})
+				.attr("target","_blank")
 
 			let strip_rect = strip_box.append("rect")
 				.attr("data-action", (d) => d.action)
@@ -97,11 +103,11 @@ function load_data() {
 				})
 				.attr("y", (d,i) => {
 					let y_pos = 0
-					if (d.action.indexOf("SEARCH") >= 0) {
+					if (d.page_type == 'SEARCH_ENGINE') {
 						y_pos = height/6*1
 					}
-					else if (d.action.indexOf("RESULT") >= 0) {
-						y_pos = height/6*2
+					else if (d.page_type == 'RESULT') {
+						y_pos = height/6*3
 					}
 					else {
 						y_pos = height/6*4
@@ -128,11 +134,8 @@ function load_data() {
 						color = '#afafaf'
 					}
 					else if (d.action == "SEARCH_STARTED" || d.action == "SEARCH_ENDED" || d.action == "SEARCH_RESUMED"){
-						color = '#4ab9dd' 
+						color = '#9aa4ac' 
 					}
-					// else if (d.action == "SEARCH_RESUMED"){
-					// 	color = 'lightblue' 
-					// }
 					else if (d.action == "SAME_SEARCH"){
 						color = 'blueviolet' 
 					}
@@ -143,13 +146,13 @@ function load_data() {
 						color = 'aquamarine' 
 					}
 					else if (d.action == "NEW_RESULT"){
-						color = '#FFCC88' 
+						color = 'orange' 
 					}
 					else if (d.action == "SEEN_DOMAIN_RESULT"){
 						color = '#F7E4CC' 
 					}
 					else if (d.action == "SAME_DOMAIN_RESULT"){
-						color = 'orange' 
+						color = '#FFCC88'  // orange
 					}
 					else if (d.action == "SEEN_SEARCH"){
 						color = 'lightcoral' 
@@ -214,9 +217,8 @@ function load_data() {
 				        const duration = hours * 60 + minutes;
 				        const start = new Date(data[0].time).getMinutes() + (new Date(data[0].time).getHours() * 60)
 
-				        return (duration-start+1) + " min";
+				        return (duration-start+0) + " min";
 				    })
-		            // .tickFormat(d3.timeFormat('%M:%S'));
 
 		        const xAxis_box = plot.append("g")
 		            .attr("class","x_axis")
@@ -230,7 +232,11 @@ function load_data() {
 						.duration(duration)
 						.attr("opacity",1)
 
-					// console.log(d3.select(this))
+					d3.selectAll(".strip_box")
+						.attr("opacity",0.4)
+
+					d3.select(this)
+						.attr("opacity",1)
 				}
 
 				function handleMouseOut(){
@@ -238,6 +244,9 @@ function load_data() {
 						.transition()
 						.duration(duration)
 						.attr("opacity",0)
+
+					d3.selectAll(".strip_box")
+						.attr("opacity",1)
 				}
 		}
 
