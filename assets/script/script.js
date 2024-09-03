@@ -41,7 +41,12 @@ function load_data() {
 
 			const timeScale = d3.scaleTime()
 			    .domain([new Date(data[0].time), new Date(data[data.length-1].time).getTime() + data[data.length-1].duration*1000]) 
-			    .range([200, width]); 
+			    .range([200, width])
+			    // .nice()
+
+			console.log(data[0].time)
+			console.log(data[data.length-1].time)
+
 
 			let line_data = [
 				[{ x: 0, y: 0 },{ x: width, y: 0 }],
@@ -158,13 +163,23 @@ function load_data() {
 					.attr("opacity",0)
 
 				// x-axis
-				const formatDate = d3.timeFormat("%S");
+		        const xAxis = d3.axisBottom(timeScale)
+		            // .ticks(18)
+		        .ticks(d3.timeMinute.every(5)) 
+		            .tickFormat(d => {
+				        const hours = d.getHours();
+				        const minutes = d.getMinutes();
+				        const duration = hours * 60 + minutes;
+				        const start = new Date(data[0].time).getMinutes() + (new Date(data[0].time).getHours() * 60)
 
-		        const xAxis = plot.append("g")
+				        return (duration-start+1) + " min";
+				    })
+		            // .tickFormat(d3.timeFormat('%M:%S'));
+
+		        const xAxis_box = plot.append("g")
 		            .attr("class","x_axis")
 		            .attr("transform", "translate(0, " + (height - 70) + ")")
-		            .call(d3.axisBottom(timeScale))
-		            // .tickFormat(formatDate)
+		            .call(xAxis)
 
 				function handleMouseOver(){
 					d3.select(this).select("text")
