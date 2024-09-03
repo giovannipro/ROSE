@@ -1,5 +1,6 @@
-const dataset = "search_story_task_8_user_1003.csv"
-// const dataset = "search_story_task_5_user_1015.csv"
+// const dataset = "search_story_task_5_user_1015"
+// const dataset = "search_story_task_8_user_1014"
+const dataset = "search_story_task_8_user_1004"
 
 const container = "#container";
 const duration = 100;
@@ -18,7 +19,7 @@ function getTextAfterX(query,x) {
 function load_data() {
 	
 	// load data
-	d3.csv("../assets/data/" + dataset)
+	d3.csv("../assets/data/" + dataset + '.csv')
 		.then(loaded)
 
 	function loaded(data) {
@@ -39,6 +40,41 @@ function load_data() {
         	}
     	});
 
+		const website_strip_data = make_website_strips(data)
+		console.log(website_strip_data)
+
+		function make_website_strips(data){
+			let the_data = data.filter(d => d.page_type != 'NEW_TAB' && d.page_type != 'SYSTEM')
+			let website_data = []
+			let prov_data = ''
+			let start = ''
+
+			the_data.forEach(d => {
+				if (d.domain != "www.google.com"){
+					console.log(d.domain)
+
+					if (d.domain != prov_data){
+						prov_data = d.domain
+						start = d.time
+
+						let obj = {}
+						obj.duration = d.duration
+						obj.domain = d.domain
+						obj.time = d.time
+
+						website_data.push(obj)
+
+					}
+					else {
+
+					}
+				}
+			})
+
+			return website_data
+		}
+
+
 		function display_data(data){
 
 			let svg = d3.select(container)
@@ -55,9 +91,12 @@ function load_data() {
 			const total_duration = data.reduce((sum, item) => sum + item.duration, 0);
 
 			const timeScale = d3.scaleTime()
-			    .domain([new Date(data[0].time), new Date(data[data.length-1].time).getTime() + data[data.length-1].duration*1000]) 
+			    .domain([new Date(data[0].time), new Date( new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
 			    .range([start_shift, width])
 			    .nice()
+
+			console.log(new Date(data[0].time))
+			console.log(new Date( new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000))
 
 			const strip_height = height/6
 
@@ -88,6 +127,9 @@ function load_data() {
 
 			let strips = plot.append("g")
 				.attr("class","strips")
+
+			let strip_website_box = plot.append("g")
+				.attr("class","strip_website")
 
 			let strip_box = strips.selectAll("g")
 				.data(data)
@@ -168,6 +210,44 @@ function load_data() {
 					}
 					return color
 				})
+
+				// website strips
+				let strip_website = strip_website_box.selectAll("rect")
+					.data(website_strip_data)
+					.enter()
+					.append("rect")
+					.attr("class","website")
+					.attr("x", (d,i) => {
+						const x_pos = timeScale(new Date(d.time))
+						return x_pos
+					})
+					.attr("y", (d,i) => {
+						let y_pos = height/6*2
+						// let y_pos = 0
+						// if (d.page_type == 'RESULT') {
+						// 	y_pos = height/6*2
+						// }
+						return y_pos
+					})
+					.attr("width", (d) => {
+						const end_time = new Date(d.time).getTime() + d.duration*1000
+						const width = timeScale(end_time) - timeScale(new Date(d.time))
+						return width
+
+						// if (d.page_type == 'RESULT') {
+						// 	const end_time = new Date(d.time).getTime() + d.duration*1000
+						// 	const width = timeScale(end_time) - timeScale(new Date(d.time))
+						// 	return width
+						// }
+						// else {
+						// 	return 0
+						// }
+					})
+					.attr("height", (d) => {
+						return strip_height 
+					})
+					.attr("stroke","orange")
+					.attr("fill", "orange")
 				
 				let strip_text_box = strip_box.append("text")
 					.attr("transform","translate(" + start_shift + "," + height/5*1/2.5 + ")")
@@ -179,7 +259,7 @@ function load_data() {
 				let info_a = strip_text_box.append("tspan")
 					.text((d) => {
 						let url = d.url
-						if (url.indexOf("google") >= 0 && url.indexOf("safe=active") == -1){
+						if (url.indexOf("google") >= 0 ){ // && url.indexOf("safe=active") == -1
 							url_a = url.replace("https://www.google.com/search?q=","")
 							url_b = url_a.split("&")[0]
 							url_c = url_b.replace(/\+/g," ")
@@ -189,16 +269,6 @@ function load_data() {
 						else {
 							the_url = url
 						}
-							// // if (url.indexOf("&q=") >= 0){
-							// // 	url_a = url.replace(getTextAfterX(url,'&q='))
-							// // }
-							// // else {
-							// 	url_a = url.replace(getTextAfterX(url,'?q='))
-							// }
-							// else {
-							// 	url_a = url
-							// }
-
 						return the_url
 					})
 
