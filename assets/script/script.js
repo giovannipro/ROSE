@@ -150,7 +150,7 @@ function load_data() {
 				.attr("data-domain", (d) => d.domain)
 				// .attr("data-url", (d) => d.url)
 				.attr("x", (d,i) => {
-					const x_pos = timeScale(new Date(d.time))
+					let x_pos = timeScale(new Date(d.time))
 					return x_pos
 				})
 				.attr("y", (d,i) => {
@@ -228,7 +228,7 @@ function load_data() {
 
 				let strip_website_rect = strip_website.append("rect")
 					.attr("x", (d,i) => {
-						const x_pos = timeScale(new Date(d[0].time))
+						let x_pos = timeScale(new Date(d[0].time))
 						return x_pos
 					})
 					.attr("y", (d,i) => {
@@ -349,6 +349,7 @@ function load_data() {
 
 				const xAxis_box = plot.append("g")
 					.attr("class","x_axis")
+					.attr("id","x_axis")
 					.attr("transform", "translate(0, " + (strip_height * 4 + interline) + ")")
 					.call(xAxis)
 
@@ -415,34 +416,49 @@ function load_data() {
 						.attr("opacity",0)
 				}
 
-			function rescale_chart(){
-				console.log("fire")
+			function rescale_chart(mode){
 
-				timeScale = d3.scaleTime()
-					.range([start_shift, width/2])
+				const max_time = 60 * 60
 
-				svg
-					.attr("width", width)
-
-				// strip_rect.attr("x", (d,i) => {
-				// 		const x_pos = timeScale(new Date(d.time))
-				// 		return x_pos
-				// 	})
-				// 	.attr("width", (d) => {
-				// 		const end_time = new Date(d.time).getTime() + d.duration*1000
-				// 		const width = timeScale(end_time) - timeScale(new Date(d.time))
-				// 		return width
-				// 	})
-
-				// const timeScale = d3.scaleTime()
-				// 	.domain([new Date(data[0].time), new Date( new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
-			}
-
-			addEventListener("keypress", (event) => {
-				let key = event.key
-				if (key == "1") {
-					rescale_chart()
+				if (mode == 1){
+					timeScale = d3.scaleTime()
+						.range([start_shift, max_time - 20])
+						
+					svg
+						.attr("width", max_time + (margin.right + margin.right))
 				}
+				else if (mode == 2) {
+					timeScale = d3.scaleTime()
+						.range([start_shift, width-20])
+
+					svg
+						.attr("width", width + (margin.right + margin.right))
+				}
+				
+				strip_rect.attr("x", (d,i) => {
+					let x_pos = timeScale(new Date(d.time))
+					return x_pos
+				})
+				.attr("width", (d) => {
+					const end_time = new Date(d.time).getTime() + d.duration*1000
+					const width = timeScale(end_time) - timeScale(new Date(d.time))
+					return width
+				})
+
+				// d3.select("#x_axis")
+				// 	.transition()
+				// 	.call(xAxis)
+				// 	.selectAll("text")
+			}
+			
+			addEventListener("keypress", (event) => {
+				// let key = event.key
+				// if (key == "1") {
+				// 	rescale_chart(1)
+				// }
+				// else if (key == "2"){
+				// 	rescale_chart(2)
+				// }
 			});
 		}
 		display_data(data)
