@@ -1,5 +1,5 @@
-const dataset = "search_story_task_8_user_1004"
-// const dataset = "search_story_task_8_user_1005"
+// const dataset = "search_story_task_8_user_1004"
+const dataset = "search_story_task_8_user_1005"
 // const dataset = "search_story_task_8_user_1007"
 // const dataset = "search_story_task_8_user_1010"
 // const dataset = "search_story_task_8_user_1013"
@@ -18,6 +18,9 @@ function getTextAfterX(query,x) {
 
   return "";
 }
+
+const new_page_color = '#ff9100'
+const duration_color = '#a4a4a4'
 
 function groupConsecutiveDomains(data) {
 	data = data.filter(d => d.page_type == 'RESULT')
@@ -70,6 +73,8 @@ function load_data() {
 
 		const website_strip_data = groupConsecutiveDomains(data);
 		console.log(website_strip_data)
+
+		document.getElementById("task_name").innerHTML = dataset
 
 		function display_data(data){
 
@@ -143,7 +148,7 @@ function load_data() {
 			let strip_rect = strip_box.append("rect")
 				.attr("data-action", (d) => d.action)
 				.attr("data-domain", (d) => d.domain)
-				.attr("data-url", (d) => d.url)
+				// .attr("data-url", (d) => d.url)
 				.attr("x", (d,i) => {
 					const x_pos = timeScale(new Date(d.time))
 					return x_pos
@@ -191,14 +196,15 @@ function load_data() {
 					else if (d.action == "REFINE_SEARCH"){
 						color = '#C8DFF4' 
 					}
+					// results
 					else if (d.action == "NEW_RESULT"){
-						color = 'orange' 
-					}
-					else if (d.action == "SEEN_DOMAIN_RESULT"){
-						color = '#F7E4CC' 
+						color = new_page_color 
 					}
 					else if (d.action == "SAME_DOMAIN_RESULT"){
-						color = '#FFCC88'  // orange
+						color = '#feaf48'  // orange
+					}
+					else if (d.action == "SEEN_DOMAIN_RESULT"){
+						color = '#fdc780' 
 					}
 					// else if (d.action == "SEEN_SEARCH"){
 					// 	color = 'lightcoral' 
@@ -239,7 +245,7 @@ function load_data() {
 					})
 					.attr("stroke","black")
 					.attr("stroke-opacity", 0.2)
-					.attr("fill", "orange")
+					.attr("fill", new_page_color)
 				
 				let strip_text_box = strip_box.append("text")
 					.attr("transform","translate(" + start_shift + "," + height/5*1/2.5 + ")")
@@ -259,6 +265,7 @@ function load_data() {
 					.text((d) => {
 						return  d[0].domain
 					})
+					
 
 				let strip_website_text_b = strip_website_textBox.append("tspan")
 					.text((d) => {
@@ -271,6 +278,7 @@ function load_data() {
 					})
 					.attr("x",0)
 					.attr("dy", 20)
+					.attr("fill",duration_color)
 
 				let info_a = strip_text_box.append("tspan")
 					.text((d) => {
@@ -294,6 +302,7 @@ function load_data() {
 					)
 					.attr("dy", 20)
 					.attr("x",0)
+					.attr('fill',duration_color)
 
 				// strip labels
 				let labels = plot.append("g")
