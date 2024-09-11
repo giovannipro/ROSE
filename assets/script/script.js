@@ -140,16 +140,13 @@ function load_data() {
 				.attr("stroke","black")
 				.attr("stroke-opacity", 0.2)
 				.attr("fill", (d) => {
-					let color = 'blue'
-					if (d.action == "TASK_STARTED" || d.action == "PRE_SURVEY_STARTED" || d.action == "PRE_SURVEY_ENDED" || d.action == 'POST_SURVEY_STARTED'){
-						color = '#dbdbdb' 
+					let color = 'red'
+
+					if (d.action == "TASK_STARTED" || d.action == "PRE_SURVEY_STARTED" || d.action == "PRE_SURVEY_ENDED" || d.action == 'POST_SURVEY_STARTED' || d.action == "NEW_TAB" || d.action == "SEARCH_STARTED" || d.action == "SEARCH_ENDED" || d.action == "SEARCH_RESUMED"){
+						color = '#dbdbdb' // #afafaf #9aa4ac
 					}
-					else if (d.action == "NEW_TAB"){
-						color = '#afafaf'
-					}
-					else if (d.action == "SEARCH_STARTED" || d.action == "SEARCH_ENDED" || d.action == "SEARCH_RESUMED"){
-						color = '#9aa4ac' 
-					}
+
+					// search
 					else if (d.action == "NEW_SEARCH" || d.action == "NEW_SEARCH_SAME_ENGINE"){ // new
 						color = '#619ED4' 
 					}
@@ -159,6 +156,7 @@ function load_data() {
 					else if (d.action == "REFINE_SEARCH"){ // revised
 						color = '#C8DFF4' 
 					}
+
 					// results
 					else if (d.action == "NEW_RESULT"){
 						color = new_page_color 
