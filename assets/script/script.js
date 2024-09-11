@@ -1,10 +1,9 @@
-// const dataset = "search_story_task_8_user_1004"
+const dataset = "search_story_task_8_user_1004"
 // const dataset = "search_story_task_8_user_1005"
 // const dataset = "search_story_task_8_user_1007"
 // const dataset = "search_story_task_8_user_1010"
-const dataset = "search_story_task_8_user_1013"
+// const dataset = "search_story_task_8_user_1013"
 // const dataset = "search_story_task_1_user_300"
-
 
 const container = "#container";
 const duration = 100;
@@ -170,19 +169,24 @@ function load_data() {
 					}
 
 					// results
-					else if (d.action == "NEW_RESULT"){
+					else if (d.action == "NEW_RESULT" || d.action == "SAME_DOMAIN_RESULT" || d.action == "SEEN_DOMAIN_RESULT"){
 						color = new_page_color 
 					}
-					else if (d.action == "SAME_DOMAIN_RESULT"){ 
-						color = '#feaf48'  // orange
-					}
-					else if (d.action == "SEEN_DOMAIN_RESULT"){
-						color = '#fdc780' 
-					}
+
+					// else if (d.action == "NEW_RESULT"){
+					// 	color = new_page_color 
+					// }
+					// else if (d.action == "SAME_DOMAIN_RESULT"){ 
+					// 	color = '#feaf48'  // orange
+					// }
+					// else if (d.action == "SEEN_DOMAIN_RESULT"){
+					// 	color = '#fdc780' 
+					// }
 					return color
 				})
 
 				// website strips
+				// console.log(website_strip_data)
 				let strip_website = strip_website_box.selectAll("g")
 					.data(website_strip_data)
 					.enter()
@@ -215,7 +219,13 @@ function load_data() {
 					})
 					.attr("stroke","black")
 					.attr("stroke-opacity", 0.2)
-					.attr("fill", new_page_color)
+					.attr("fill", (d) => {
+						let fill = new_page_color
+						if (d[0].domain_status == "SEEN") {
+							fill = '#fdc780'
+						}
+						return fill
+					})
 				
 				let strip_text_box = strip_box.append("text")
 					.attr("transform","translate(" + start_shift + "," + ((strip_height*3/1)-30) + ")")
