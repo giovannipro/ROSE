@@ -36,4 +36,20 @@ h2 {
 
 #statistics {
 	margin-top: 2rem;
+	display: flex;
+	justify-content: space-between;
+	border-top: 1px solid #ccc;
+	padding-top: 0.5rem;
+}
+
+.statistics_box {
+	width: 28%;
+}
+
+.statistics_box table {
+	width: 100%;
+}
+
+table td:nth-child(2){
+	text-align: right;
 }

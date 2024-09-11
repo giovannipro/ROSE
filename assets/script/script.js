@@ -1,8 +1,8 @@
-// const dataset = "search_story_task_8_user_1004"
+const dataset = "search_story_task_8_user_1004"
 // const dataset = "search_story_task_8_user_1005"
 // const dataset = "search_story_task_8_user_1007"
 // const dataset = "search_story_task_8_user_1010"
-const dataset = "search_story_task_8_user_1013"
+// const dataset = "search_story_task_8_user_1013"
 
 const container = "#container";
 const duration = 100;
@@ -11,45 +11,6 @@ const interline = 2;
 
 const new_page_color = '#ff9100'
 const duration_color = '#a4a4a4'
-
-function getTextAfterX(query,x) {
-  const index = query.indexOf(x);
-
-  if (index !== -1) {
-	return query.substring(index + 2);
-  }
-
-  return "";
-}
-
-function groupConsecutiveDomains(data) {
-	data = data.filter(d => d.page_type == 'RESULT')
-
-  	const groupedData = [];
-  	let currentGroup = [];
-
-  for (let i = 0; i < data.length; i++) {
-	const currentItem = data[i];
-	const previousItem = data[i - 1];
-
-	if (previousItem && currentItem.domain !== previousItem.domain) {
-	  // New domain encountered, start a new group
-	  if (currentGroup.length > 0) {
-		groupedData.push(currentGroup);
-	  }
-	  currentGroup = [];
-	}
-
-	currentGroup.push(currentItem);
-  }
-
-  // Add the last group if it's not empty
-  if (currentGroup.length > 0) {
-	groupedData.push(currentGroup);
-  }
-
-  return groupedData;
-}
 
 function load_data() {
 	
@@ -73,7 +34,7 @@ function load_data() {
 		load_statistics(data)
 
 		const website_strip_data = groupConsecutiveDomains(data);
-		console.log(website_strip_data)
+		// console.log(website_strip_data)
 
 		document.getElementById("task_name").innerHTML = dataset
 
@@ -200,7 +161,7 @@ function load_data() {
 					else if (d.action == "NEW_RESULT"){
 						color = new_page_color 
 					}
-					else if (d.action == "SAME_DOMAIN_RESULT"){
+					else if (d.action == "SAME_DOMAIN_RESULT"){ 
 						color = '#feaf48'  // orange
 					}
 					else if (d.action == "SEEN_DOMAIN_RESULT"){
@@ -271,7 +232,7 @@ function load_data() {
 						const totalDuration = d.reduce((accumulator, currentObject) => {
     						return accumulator + currentObject.duration
 						}, 0)
-						return Math.floor(totalDuration/60 * 60) + ' seconds / ' + (totalDuration/60).toFixed(1) + ' minutes'
+						return Math.floor(totalDuration/60 * 60) + ' seconds / ' + convertSecondsToMinutes(totalDuration) + ' minutes'
 					})
 					.attr("x",0)
 					.attr("dy", 20)
@@ -295,7 +256,7 @@ function load_data() {
 
 				let info_b = strip_text_box.append("tspan")
 					.text((d) => (
-						Math.floor(d.duration/60 * 60)) + ' seconds / ' + (d.duration/60).toFixed(1) + ' minutes'
+						Math.floor(d.duration/60 * 60)) + ' seconds / ' + convertSecondsToMinutes(d.duration) + ' minutes'
 					)
 					.attr("dy", 20)
 					.attr("x",0)
@@ -468,23 +429,64 @@ function load_data() {
 function load_statistics(data){
 	console.log(data)
 
-	const container = document.getElementById('statistics')
+	const container_a = document.getElementById('statistics_a')
+	const container_b = document.getElementById('statistics_b')
+	const container_c = document.getElementById('statistics_c')
 
-	let output = ''
+	const searchItems = data.filter(item => item.action === 'NEW_SEARCH' || item.action === 'NEW_SEARCH_SAME_ENGINE' || item.action === 'REFINE_SEARCH');
+	const searchDuration = searchItems.reduce((sum, item) => sum + item.duration, 0);
+	const avgSearchDuration = searchDuration / searchItems.length; 
 
-	output += '<strong>Duration</strong><br/>'
-	output += '<table>'
+	const pageItems = data.filter(item => item.action === 'NEW_RESULT' || item.action === 'SAME_DOMAIN_RESULT' || item.action == "SEEN_DOMAIN_RESULT");
+	const pageDuration = pageItems.reduce((sum, item) => sum + item.duration, 0);
+	const avgPageDuration = pageDuration / pageItems.length; 
 
-	output += '<tr><td>Average search duration</td>'
-	output += '<td>999</td></tr>'
-	output += '<tr><td>Average website duration</td>'
-	output += '<td>999</td></tr>'
-	output += '<tr><td>Average page duration</td>'
-	output += '<td>999</td></tr>'
+	const newQueries = data.filter(item => item.action === 'NEW_SEARCH' || item.action === 'NEW_SEARCH_SAME_ENGINE').length
+	const revisedQueries = data.filter(item => item.action === 'REFINE_SEARCH').length
+	const reusedQueries = data.filter(item => item.action === 'SAME_SEARCH' || item.action === 'SEEN_SEARCH').length
 
-	output += '<table>'
+	const newDomains = data.filter(item => item.action === 'NEW_RESULT').length
+	const revisitedDomains = data.filter(item => item.action === 'SEEN_DOMAIN_RESULT').length
+	const pages = data.filter(item => item.action === 'NEW_RESULT' || item.action === 'SAME_DOMAIN_RESULT' || item.action === 'SEEN_DOMAIN_RESULT').length
 
-	container.innerHTML = output
+	let output_a = ''
+	let output_b = ''
+	let output_c = ''
+
+	output_a += '<table>'
+	output_a += '<tr><td><strong>Duration</strong></td></tr>'
+	output_a += '<tr><td>Search (average)</td>'
+	output_a += '<td>' + parseInt(avgSearchDuration) + ' seconds / ' + convertSecondsToMinutes(avgSearchDuration) + ' minutes</td></tr>'
+	output_a += '<tr><td>Page (average)</td>'
+	output_a += '<td>' + parseInt(avgPageDuration) + ' seconds / ' + convertSecondsToMinutes(avgPageDuration) + ' minutes</td></tr>'
+	output_a += '<table>'
+
+	output_b += '<table>'
+	output_b += '<tr><td><strong>Queries</strong></td></tr>'
+	output_b += '<tr><td>New queries</td>'
+	output_b += '<td>' + newQueries + '</td></tr>'
+	output_b += '<tr><td>Revised queries</td>'
+	output_b += '<td>' + revisedQueries + '</td></tr>'
+	output_b += '<tr><td>Reprised queries</td>'
+	output_b += '<td>' + revisedQueries + '</td></tr>'
+	output_b += '<tr><td>Reused queries</td>'
+	output_b += '<td>' + reusedQueries + '</td></tr>'
+	output_b += '<table>'
+
+	output_c += '<table>'
+	output_c += '<tr><td><strong>Results</strong></td></tr>'
+	output_c += '<tr><td>New domains</td>'
+	output_c += '<td>' + newDomains + '</td></tr>'
+	output_c += '<tr><td>Revisited domains</td>'
+	output_c += '<td>' + revisitedDomains + '</td></tr>'
+	output_c += '<tr><td>Total pages visited</td>'
+	output_c += '<td>' + pages + '</td></tr>'
+	output_c += '<table>'
+
+	container_a.innerHTML = output_a
+	container_b.innerHTML = output_b
+	container_c.innerHTML = output_c
+
 }
 
 
