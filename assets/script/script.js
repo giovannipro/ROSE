@@ -9,6 +9,9 @@ const duration = 100;
 const start_shift = 100;
 const interline = 2;
 
+const new_page_color = '#ff9100'
+const duration_color = '#a4a4a4'
+
 function getTextAfterX(query,x) {
   const index = query.indexOf(x);
 
@@ -18,9 +21,6 @@ function getTextAfterX(query,x) {
 
   return "";
 }
-
-const new_page_color = '#ff9100'
-const duration_color = '#a4a4a4'
 
 function groupConsecutiveDomains(data) {
 	data = data.filter(d => d.page_type == 'RESULT')
@@ -70,6 +70,7 @@ function load_data() {
 		data.forEach(function(d) {
 			d.duration = parseFloat(d.duration);  
 		});
+		load_statistics(data)
 
 		const website_strip_data = groupConsecutiveDomains(data);
 		console.log(website_strip_data)
@@ -99,7 +100,7 @@ function load_data() {
 			// console.log(new Date(data[0].time))
 			// console.log(new Date( new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000))
 
-			const strip_height = height/6
+			const strip_height = height/5
 
 			let line_data = [
 				[{ x: 0, y: 0 },{ x: width, y: 0 }],
@@ -107,7 +108,6 @@ function load_data() {
 				[{ x: 0, y: strip_height*2 },{ x: width, y: strip_height*2 }],
 				[{ x: 0, y: strip_height*3 },{ x: width, y: strip_height*3 }],
 				[{ x: 0, y: strip_height*4 },{ x: width, y: strip_height*4 }]
-				// [{ x: 0, y: strip_height*5 },{ x: width, y: strip_height*5 }]
 			];
 
 			const lineGenerator = d3.line()
@@ -156,13 +156,13 @@ function load_data() {
 				.attr("y", (d,i) => {
 					let y_pos = 0
 					if (d.page_type == 'SEARCH_ENGINE') {
-						y_pos = height/6*0
+						y_pos = strip_height*0
 					}
 					else if (d.page_type == 'RESULT') {
-						y_pos = height/6*2
+						y_pos = strip_height*2
 					}
 					else {
-						y_pos = height/6*3
+						y_pos = strip_height*3
 					}
 					return y_pos + interline
 				})
@@ -232,7 +232,7 @@ function load_data() {
 						return x_pos
 					})
 					.attr("y", (d,i) => {
-						let y_pos = height/6*1
+						let y_pos = strip_height*1
 						return y_pos + interline
 					})
 					.attr("width", (d) => {
@@ -248,14 +248,14 @@ function load_data() {
 					.attr("fill", new_page_color)
 				
 				let strip_text_box = strip_box.append("text")
-					.attr("transform","translate(" + start_shift + "," + height/5*4/1 + ")")
+					.attr("transform","translate(" + start_shift + "," + ((strip_height*5/1)-30) + ")")
 					.attr("x", 0)
 					.attr("y", 0)
 					.attr("alignment-baseline","middle")
 					.attr("opacity",0)
 
 				let strip_website_textBox = strip_website.append("text")
-					.attr("transform","translate(" + start_shift + "," + height/5*4/1 + ")")
+					.attr("transform","translate(" + start_shift + "," + ((strip_height*5/1)-30) + ")")
 					.attr("x", 0)
 					.attr("y", 0)
 					.attr("alignment-baseline","middle")
@@ -266,7 +266,6 @@ function load_data() {
 						return  d[0].domain
 					})
 					
-
 				let strip_website_text_b = strip_website_textBox.append("tspan")
 					.text((d) => {
 						const totalDuration = d.reduce((accumulator, currentObject) => {
@@ -465,6 +464,28 @@ function load_data() {
 
 	}
 }	
+
+function load_statistics(data){
+	console.log(data)
+
+	const container = document.getElementById('statistics')
+
+	let output = ''
+
+	output += '<strong>Duration</strong><br/>'
+	output += '<table>'
+
+	output += '<tr><td>Average search duration</td>'
+	output += '<td>999</td></tr>'
+	output += '<tr><td>Average website duration</td>'
+	output += '<td>999</td></tr>'
+	output += '<tr><td>Average page duration</td>'
+	output += '<td>999</td></tr>'
+
+	output += '<table>'
+
+	container.innerHTML = output
+}
 
 
 window.addEventListener('load', function () {	
