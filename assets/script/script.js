@@ -1,6 +1,6 @@
 // const dataset = "search_story_task_8_user_1004"
-// const dataset = "search_story_task_8_user_1005"
-const dataset = "search_story_task_8_user_1007"
+const dataset = "search_story_task_8_user_1005"
+// const dataset = "search_story_task_8_user_1007"
 // const dataset = "search_story_task_8_user_1010"
 // const dataset = "search_story_task_8_user_1013"
 // const dataset = "search_story_task_1_user_300"
@@ -60,17 +60,17 @@ function load_data() {
 				.range([start_shift, width-20])
 				// .nice()
 
-			// console.log(new Date(data[0].time))
-			// console.log(new Date( new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000))
-
-			const strip_height = height/5
+			const strip_height = height/2.9
+			const search_height = strip_height * 1
+			const website_height = strip_height * 0.5
+			const page_height = strip_height * 0.5
 
 			let line_data = [
 				[{ x: 0, y: 0 },{ x: width, y: 0 }],
 				[{ x: 0, y: strip_height*1 },{ x: width, y: strip_height*1 }],
+				[{ x: 0, y: strip_height*1.5 },{ x: width, y: strip_height*1.5 }],
 				[{ x: 0, y: strip_height*2 },{ x: width, y: strip_height*2 }],
-				[{ x: 0, y: strip_height*3 },{ x: width, y: strip_height*3 }],
-				[{ x: 0, y: strip_height*4 },{ x: width, y: strip_height*4 }]
+				[{ x: 0, y: strip_height*2.25 },{ x: width, y: strip_height*2.25 }]
 			];
 
 			const lineGenerator = d3.line()
@@ -111,7 +111,6 @@ function load_data() {
 			let strip_rect = strip_box.append("rect")
 				.attr("data-action", (d) => d.action)
 				.attr("data-domain", (d) => d.domain)
-				// .attr("data-url", (d) => d.url)
 				.attr("x", (d,i) => {
 					let x_pos = timeScale(new Date(d.time))
 					return x_pos
@@ -122,10 +121,10 @@ function load_data() {
 						y_pos = strip_height*0
 					}
 					else if (d.page_type == 'RESULT') {
-						y_pos = strip_height*2
+						y_pos = strip_height * 1.5
 					}
 					else {
-						y_pos = strip_height*3
+						y_pos = strip_height*2
 					}
 					return y_pos + interline
 				})
@@ -135,7 +134,15 @@ function load_data() {
 					return width
 				})
 				.attr("height", (d) => {
-					return strip_height - (interline*2)
+					let height = (strip_height/4)  - (interline)
+					if (d.page_type == 'SEARCH_ENGINE') {
+						height = search_height - interline
+					}
+					else if (d.page_type == 'RESULT') {
+						height = website_height - interline
+					}
+
+					return height - interline
 				})
 				.attr("stroke","black")
 				.attr("stroke-opacity", 0.2)
@@ -199,21 +206,21 @@ function load_data() {
 						return width
 					})
 					.attr("height", (d) => {
-						return strip_height - (interline*2)
+						return website_height - (interline*2)
 					})
 					.attr("stroke","black")
 					.attr("stroke-opacity", 0.2)
 					.attr("fill", new_page_color)
 				
 				let strip_text_box = strip_box.append("text")
-					.attr("transform","translate(" + start_shift + "," + ((strip_height*5/1)-30) + ")")
+					.attr("transform","translate(" + start_shift + "," + ((strip_height*3/1)-30) + ")")
 					.attr("x", 0)
 					.attr("y", 0)
 					.attr("alignment-baseline","middle")
 					.attr("opacity",0)
 
 				let strip_website_textBox = strip_website.append("text")
-					.attr("transform","translate(" + start_shift + "," + ((strip_height*5/1)-30) + ")")
+					.attr("transform","translate(" + start_shift + "," + ((strip_height*3/1)-30) + ")")
 					.attr("x", 0)
 					.attr("y", 0)
 					.attr("alignment-baseline","middle")
@@ -272,21 +279,21 @@ function load_data() {
 
 				let label_b = labels.append("text")
 					.attr("x", 10)
-					.attr("y", (strip_height*1))
+					.attr("y", (strip_height*0.75))
 					.attr("dy", strip_height/2)
 					.attr("alignment-baseline","middle")
 					.text("Website");
 
 				let label_c = labels.append("text")
 					.attr("x", 10)
-					.attr("y", (strip_height*2))
+					.attr("y", (strip_height*1.25))
 					.attr("dy", strip_height/2)
 					.attr("alignment-baseline","middle")
 					.text("Page");
 
 				let label_d = labels.append("text")
 					.attr("x", 10)
-					.attr("y", (strip_height*3))
+					.attr("y", (strip_height*1.625))
 					.attr("dy", strip_height/2)
 					.attr("alignment-baseline","middle")
 					.text("Other");
@@ -307,7 +314,7 @@ function load_data() {
 				const xAxis_box = plot.append("g")
 					.attr("class","x_axis")
 					.attr("id","x_axis")
-					.attr("transform", "translate(0, " + (strip_height * 4 + interline) + ")")
+					.attr("transform", "translate(0, " + (strip_height * 2.25 + interline) + ")")
 					.call(xAxis)
 
 				// handle Mouse Over
