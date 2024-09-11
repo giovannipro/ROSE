@@ -1,8 +1,10 @@
-const dataset = "search_story_task_8_user_1004"
+// const dataset = "search_story_task_8_user_1004"
 // const dataset = "search_story_task_8_user_1005"
-// const dataset = "search_story_task_8_user_1007"
+const dataset = "search_story_task_8_user_1007"
 // const dataset = "search_story_task_8_user_1010"
 // const dataset = "search_story_task_8_user_1013"
+// const dataset = "search_story_task_1_user_300"
+
 
 const container = "#container";
 const duration = 100;
@@ -148,13 +150,13 @@ function load_data() {
 					else if (d.action == "SEARCH_STARTED" || d.action == "SEARCH_ENDED" || d.action == "SEARCH_RESUMED"){
 						color = '#9aa4ac' 
 					}
-					else if (d.action == "SAME_SEARCH" || d.action == "SEEN_SEARCH"){
-						color = '#85DAE9' 
-					}
-					else if (d.action == "NEW_SEARCH" || d.action == "NEW_SEARCH_SAME_ENGINE"){
+					else if (d.action == "NEW_SEARCH" || d.action == "NEW_SEARCH_SAME_ENGINE"){ // new
 						color = '#619ED4' 
 					}
-					else if (d.action == "REFINE_SEARCH"){
+					else if (d.action == "SAME_SEARCH" || d.action == "SEEN_SEARCH"){ // reused
+						color = '#85DAE9' 
+					}
+					else if (d.action == "REFINE_SEARCH"){ // revised
 						color = '#C8DFF4' 
 					}
 					// results
@@ -167,9 +169,6 @@ function load_data() {
 					else if (d.action == "SEEN_DOMAIN_RESULT"){
 						color = '#fdc780' 
 					}
-					// else if (d.action == "SEEN_SEARCH"){
-					// 	color = 'lightcoral' 
-					// }
 					return color
 				})
 
@@ -442,8 +441,8 @@ function load_statistics(data){
 	const avgPageDuration = pageDuration / pageItems.length; 
 
 	const newQueries = data.filter(item => item.action === 'NEW_SEARCH' || item.action === 'NEW_SEARCH_SAME_ENGINE').length
-	const revisedQueries = data.filter(item => item.action === 'REFINE_SEARCH').length
 	const reusedQueries = data.filter(item => item.action === 'SAME_SEARCH' || item.action === 'SEEN_SEARCH').length
+	const revisedQueries = data.filter(item => item.action === 'REFINE_SEARCH').length
 
 	const newDomains = data.filter(item => item.action === 'NEW_RESULT').length
 	const revisitedDomains = data.filter(item => item.action === 'SEEN_DOMAIN_RESULT').length
@@ -462,22 +461,20 @@ function load_statistics(data){
 	output_a += '<table>'
 
 	output_b += '<table>'
-	output_b += '<tr><td><strong>Queries</strong></td></tr>'
+	output_b += '<tr><td><strong>Search</strong></td></tr>'
 	output_b += '<tr><td>New queries</td>'
 	output_b += '<td>' + newQueries + '</td></tr>'
-	output_b += '<tr><td>Revised queries</td>'
-	output_b += '<td>' + revisedQueries + '</td></tr>'
-	output_b += '<tr><td>Reprised queries</td>'
-	output_b += '<td>' + revisedQueries + '</td></tr>'
 	output_b += '<tr><td>Reused queries</td>'
 	output_b += '<td>' + reusedQueries + '</td></tr>'
+	output_b += '<tr><td>Reprised queries</td>'
+	output_b += '<td>' + revisedQueries + '</td></tr>'
 	output_b += '<table>'
 
 	output_c += '<table>'
-	output_c += '<tr><td><strong>Results</strong></td></tr>'
-	output_c += '<tr><td>New domains</td>'
+	output_c += '<tr><td><strong>Websites</strong></td></tr>'
+	output_c += '<tr><td>New websites</td>'
 	output_c += '<td>' + newDomains + '</td></tr>'
-	output_c += '<tr><td>Revisited domains</td>'
+	output_c += '<tr><td>Revisited websites</td>'
 	output_c += '<td>' + revisitedDomains + '</td></tr>'
 	output_c += '<tr><td>Total pages visited</td>'
 	output_c += '<td>' + pages + '</td></tr>'
@@ -488,6 +485,7 @@ function load_statistics(data){
 	container_c.innerHTML = output_c
 
 }
+
 
 
 window.addEventListener('load', function () {	
