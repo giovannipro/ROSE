@@ -1,8 +1,8 @@
 // const dataset = "search_story_task_8_user_1004"
-const dataset = "search_story_task_8_user_1005"
+// const dataset = "search_story_task_8_user_1005"
 // const dataset = "search_story_task_8_user_1007"
 // const dataset = "search_story_task_8_user_1010"
-// const dataset = "search_story_task_8_user_1013"
+const dataset = "search_story_task_8_user_1013"
 // const dataset = "search_story_task_1_user_300"
 
 
@@ -38,7 +38,12 @@ function load_data() {
 		const website_strip_data = groupConsecutiveDomains(data);
 		// console.log(website_strip_data)
 
-		document.getElementById("task_name").innerHTML = dataset
+		const values = dataset.match(/\d+/g)
+		const task_name = values[0]
+		const user_name = values[1]
+
+		document.getElementById("task_name").innerHTML = task_name
+		document.getElementById("user_name").innerHTML = user_name
 
 		function display_data(data){
 
@@ -149,7 +154,7 @@ function load_data() {
 				.attr("fill", (d) => {
 					let color = 'red'
 
-					if (d.action == "TASK_STARTED" || d.action == "PRE_SURVEY_STARTED" || d.action == "PRE_SURVEY_ENDED" || d.action == 'POST_SURVEY_STARTED' || d.action == "NEW_TAB" || d.action == "SEARCH_STARTED" || d.action == "SEARCH_ENDED" || d.action == "SEARCH_RESUMED"){
+					if (d.action == "TASK_STARTED" || d.action == "PRE_SURVEY_STARTED" || d.action == "PRE_SURVEY_ENDED" || d.action == 'POST_SURVEY_STARTED' || d.action == "NEW_TAB" || d.action == "SEARCH_STARTED" || d.action == "SEARCH_ENDED" || d.action == "SEARCH_RESUMED" || d.action == "POST_SURVEY_ENDED"){
 						color = '#dbdbdb' // #afafaf #9aa4ac
 					}
 
@@ -461,8 +466,15 @@ function load_statistics(data){
 	output_a += '<tr><td><strong>Duration</strong></td></tr>'
 	output_a += '<tr><td>Search (average)</td>'
 	output_a += '<td>' + parseInt(avgSearchDuration) + ' seconds / ' + convertSecondsToMinutes(avgSearchDuration) + ' minutes</td></tr>'
-	output_a += '<tr><td>Page (average)</td>'
+	output_a += '<tr><td>Pages (average)</td>'
 	output_a += '<td>' + parseInt(avgPageDuration) + ' seconds / ' + convertSecondsToMinutes(avgPageDuration) + ' minutes</td></tr>'
+	output_a += '<tr><td>Search (total)</td>'
+	output_a += '<td>' + parseInt(searchDuration) + ' seconds / ' + convertSecondsToMinutes(searchDuration) + ' minutes</td></tr>'
+	output_a += '<tr><td>Pages (total)</td>'
+	output_a += '<td>' + parseInt(pageDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration) + ' minutes</td></tr>'
+	output_a += '<tr><td>Total</td>'
+	output_a += '<td>' + parseInt(pageDuration + searchDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration + searchDuration) + ' minutes</td></tr>'
+
 	output_a += '<table>'
 
 	output_b += '<table>'
