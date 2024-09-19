@@ -173,16 +173,6 @@ function load_data() {
 					else if (d.action == "NEW_RESULT" || d.action == "SAME_DOMAIN_RESULT" || d.action == "SEEN_DOMAIN_RESULT"){
 						color = new_page_color 
 					}
-
-					// else if (d.action == "NEW_RESULT"){
-					// 	color = new_page_color 
-					// }
-					// else if (d.action == "SAME_DOMAIN_RESULT"){ 
-					// 	color = '#feaf48'  // orange
-					// }
-					// else if (d.action == "SEEN_DOMAIN_RESULT"){
-					// 	color = '#fdc780' 
-					// }
 					return color
 				})
 
@@ -245,7 +235,6 @@ function load_data() {
 				let strip_website_text_a = strip_website_textBox.append("tspan")
 					.text((d) => {
 						let output = d[0].domain
-						console.log(d)
 						if (d[0].domain_status == "SEEN") {
 							output += " (already seen)"
 						}
@@ -304,14 +293,14 @@ function load_data() {
 					.attr("y", (strip_height*0.75))
 					.attr("dy", strip_height/2)
 					.attr("alignment-baseline","middle")
-					.text("Website");
+					.text("Websites");
 
 				let label_c = labels.append("text")
 					.attr("x", 10)
 					.attr("y", (strip_height*1.25))
 					.attr("dy", strip_height/2)
 					.attr("alignment-baseline","middle")
-					.text("Page");
+					.text("Pages");
 
 				let label_d = labels.append("text")
 					.attr("x", 10)
@@ -482,6 +471,10 @@ function load_statistics(data){
 	const revisitedDomains = data.filter(item => item.action === 'SEEN_DOMAIN_RESULT').length
 	const pages = data.filter(item => item.action === 'NEW_RESULT' || item.action === 'SAME_DOMAIN_RESULT' || item.action === 'SEEN_DOMAIN_RESULT').length
 
+	const queries = searchItems.map(item => item.url)
+		.filter(item => item.indexOf('http') >= 0)
+	const unique_queries = getUniqueValues(queries) 
+
 	let output_a = ''
 	let output_b = ''
 	let output_c = ''
@@ -498,8 +491,7 @@ function load_statistics(data){
 	output_a += '<td>' + convertSecondsToMinutes(pageDuration) + '</td></tr>' // '<td>' + parseInt(pageDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration) + ' minutes</td></tr>'
 	output_a += '<tr><td>Total</td>'
 	output_a += '<td>' + convertSecondsToMinutes(pageDuration + searchDuration) + '</td></tr>' // '<td>' + parseInt(pageDuration + searchDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration + searchDuration) + ' minutes</td></tr>'
-
-	output_a += '<table>'
+	output_a += '</table>'
 
 	output_b += '<table>'
 	output_b += '<tr><td><strong>Search</strong></td></tr>'
@@ -509,7 +501,7 @@ function load_statistics(data){
 	output_b += '<td>' + reusedQueries + '</td></tr>'
 	output_b += '<tr><td>Reprised queries</td>'
 	output_b += '<td>' + revisedQueries + '</td></tr>'
-	output_b += '<table>'
+	output_b += '</table>'
 
 	output_c += '<table>'
 	output_c += '<tr><td><strong>Websites</strong></td></tr>'
@@ -519,13 +511,38 @@ function load_statistics(data){
 	output_c += '<td>' + revisitedDomains + '</td></tr>'
 	output_c += '<tr><td>Total pages visited</td>'
 	output_c += '<td>' + pages + '</td></tr>'
-	output_c += '<table>'
+	output_c += '</table>'
+
+	output_b += '<table style="margin-top: 1.5rem;">'
+	output_b += '<tr><td><strong>Queries</strong></td></tr>'
+	output_b += '<tr>'
+
+	unique_queries.forEach(item => {
+		const the_query_a = item.split('?q=')[1]
+		const the_query_b = the_query_a.split('=')[0]
+		const the_query_c = the_query_b.split('&')[0]
+		const the_query_d = the_query_c.replace(/\+/g,' ')
+		// console.log(the_query_d)
+		output_b += '<tr><td><a href="' + item + '" target="_blank">' + the_query_d + '</a></td><tr>' // short_url(item,40)
+	})
+
+
+	output_b += '</tr>'
+	output_c += '</table>'
 
 	container_a.innerHTML = output_a
 	container_b.innerHTML = output_b
 	container_c.innerHTML = output_c
 
 }
+
+
+
+// query = None
+//   url_query = urlparse.parse_qs(urlparse.urlparse(url).query)
+//   if 'q' in url_query:
+//     query = url_query['q'][0]
+//   return query
 
 
 

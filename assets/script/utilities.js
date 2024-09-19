@@ -47,3 +47,18 @@ function convertSecondsToMinutes(seconds){
   	const time = formattedMinutes + ':' + formattedSeconds
 	return time
 }
+
+function getUniqueValues(values) {
+	const uniqueValuesSet = new Set(values);
+	return Array.from(uniqueValuesSet);
+}
+
+function short_url(url,max){
+	if (url.length > max){
+		shortUrl = url.slice(0,max) + '...'
+	}
+	else {
+		shortUrl = url
+	}
+	return shortUrl
+}
