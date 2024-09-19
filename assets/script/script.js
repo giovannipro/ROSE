@@ -1,5 +1,5 @@
-const dataset = "search_story_task_8_user_1004"
-// const dataset = "search_story_task_8_user_1005"
+// const dataset = "search_story_task_8_user_1004"
+const dataset = "search_story_task_8_user_1005"
 // const dataset = "search_story_task_8_user_1007"
 // const dataset = "search_story_task_8_user_1010"
 // const dataset = "search_story_task_8_user_1013"
@@ -475,6 +475,27 @@ function load_statistics(data){
 		.filter(item => item.indexOf('http') >= 0)
 	const unique_queries = getUniqueValues(queries) 
 
+	const websites = pageItems.map(item => item.url)
+	const unique_websites = getUniqueValues(websites) 
+
+	const searchEngines = searchItems.map(item => {
+		// url = item.url
+		// console.log(url)
+
+		item != '' //.split("?q=")[0]
+
+		// if (url.indexOf("?q=") >= 0) {
+		// 	item.url.split("?q=")[0]
+		// 	console.log(item.url)
+		// }
+		// else {
+		// 	item.url
+		// }
+	})
+	console.log(searchEngines)
+	const unique_searchEngines = getUniqueValues(searchEngines) 
+	// console.log(searchEngines)
+
 	let output_a = ''
 	let output_b = ''
 	let output_c = ''
@@ -515,19 +536,43 @@ function load_statistics(data){
 
 	output_b += '<table style="margin-top: 1.5rem;">'
 	output_b += '<tr><td><strong>Queries</strong></td></tr>'
-	output_b += '<tr>'
-
 	unique_queries.forEach(item => {
-		const the_query_a = item.split('?q=')[1]
-		const the_query_b = the_query_a.split('=')[0]
-		const the_query_c = the_query_b.split('&')[0]
-		const the_query_d = the_query_c.replace(/\+/g,' ')
-		// console.log(the_query_d)
-		output_b += '<tr><td><a href="' + item + '" target="_blank">' + the_query_d + '</a></td><tr>' // short_url(item,40)
+		the_query = short_url(item,40)
+		if (item.split('?q=')[1]){
+			the_query_a = item.split('?q=')[1]
+			the_query_b = the_query_a.split('=')[0]
+			the_query_c = the_query_b.split('&')[0]
+			the_query = the_query_c.replace(/\+/g,' ')
+		}
+		else if (item.split('?safe=')[1]){
+			the_query_a = item.split('?safe=')[1]
+			the_query_b = the_query_a.split('=')[0]
+			the_query_c = the_query_b.split('&')[0]
+			the_query = the_query_c.replace(/\+/g,' ')
+		}
+		output_b += '<tr><td><a href="' + item + '" target="_blank">' + the_query + '</a></td></tr>'
 	})
+	output_b += '</table>'
 
 
-	output_b += '</tr>'
+	// output_b += '<table style="margin-top: 1.5rem;">'
+	// output_b += '<tr><td><strong>Search engines</strong></td></tr>'
+	// output_b += '<tr>'
+	// unique_searchEngines.forEach(item => {
+	// 	// const engine_a = item.replace('https://www.','')
+	// 	output_b += '<tr><td>' + item + '</td></tr>'
+	// })
+	// output_b += '</table>'
+
+
+	output_c += '<table style="margin-top: 1.5rem;">'
+	output_c += '<tr><td><strong>Websites</strong></td></tr>'
+	unique_websites.forEach(item => {
+		const web_a = item.replace('https://','')
+		const web_b = web_a.replace('www.','')
+		output_c += '<tr><td><a href="' + item + '" target="_blank">' + short_url(web_b,40) + '</a></td><tr>' // 
+	})
+	output_c += '</tr>'
 	output_c += '</table>'
 
 	container_a.innerHTML = output_a
@@ -536,13 +581,6 @@ function load_statistics(data){
 
 }
 
-
-
-// query = None
-//   url_query = urlparse.parse_qs(urlparse.urlparse(url).query)
-//   if 'q' in url_query:
-//     query = url_query['q'][0]
-//   return query
 
 
 
