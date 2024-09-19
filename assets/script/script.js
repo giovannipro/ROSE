@@ -106,11 +106,12 @@ function load_data() {
 				.attr("class","strip_box")
 				.on("mouseover", handleMouseOver) 
 				.on("mouseout", handleMouseOut)
-				.append("a")
-				.attr("xlink:href", (d) => {
-					return d.url
-				})
-				.attr("target","_blank")
+				.on("click", handleClick)
+				// .append("a")
+				// .attr("xlink:href", (d) => {
+				// 	return d.url
+				// })
+				// .attr("target","_blank")
 
 			let strip_rect = strip_box.append("rect")
 				.attr("data-action", (d) => d.action)
@@ -192,11 +193,11 @@ function load_data() {
 					.enter()
 					.append("g")
 					.attr("class","website")
-					.append("a")
-					.attr("xlink:href", (d) => {
-						return d[0].url
-					})
-					.attr("target","_blank")
+					// .append("a")
+					// .attr("xlink:href", (d) => {
+					// 	return d[0].url
+					// })
+					// .attr("target","_blank")
 					.on("mouseover", handleMouseOver_website) 
 					.on("mouseout", handleMouseOut_website)
 
@@ -243,7 +244,12 @@ function load_data() {
 
 				let strip_website_text_a = strip_website_textBox.append("tspan")
 					.text((d) => {
-						return  d[0].domain
+						let output = d[0].domain
+						console.log(d)
+						if (d[0].domain_status == "SEEN") {
+							output += " (already seen)"
+						}
+						return  output
 					})
 					
 				let strip_website_text_b = strip_website_textBox.append("tspan")
@@ -251,7 +257,7 @@ function load_data() {
 						const totalDuration = d.reduce((accumulator, currentObject) => {
     						return accumulator + currentObject.duration
 						}, 0)
-						return Math.floor(totalDuration/60 * 60) + ' seconds / ' + convertSecondsToMinutes(totalDuration) + ' minutes'
+						return convertSecondsToMinutes(totalDuration) //Math.floor(totalDuration/60 * 60) + ' seconds / ' + convertSecondsToMinutes(totalDuration) + ' minutes'
 					})
 					.attr("x",0)
 					.attr("dy", 20)
@@ -275,8 +281,9 @@ function load_data() {
 
 				let info_b = strip_text_box.append("tspan")
 					.text((d) => (
-						Math.floor(d.duration/60 * 60)) + ' seconds / ' + convertSecondsToMinutes(d.duration) + ' minutes'
-					)
+						convertSecondsToMinutes(d.duration)
+						// Math.floor(d.duration/60 * 60)) + ' seconds / ' + convertSecondsToMinutes(d.duration) + ' minutes'
+					))
 					.attr("dy", 20)
 					.attr("x",0)
 					.attr('fill',duration_color)
@@ -359,6 +366,13 @@ function load_data() {
 						.attr("opacity",1)
 
 					d3.selectAll(".website")
+						.attr("opacity",1)
+				}
+
+				function handleClick(){
+					d3.select(this).select("text")
+						.transition()
+						.duration(duration)
 						.attr("opacity",1)
 				}
 
@@ -475,15 +489,15 @@ function load_statistics(data){
 	output_a += '<table>'
 	output_a += '<tr><td><strong>Duration</strong></td></tr>'
 	output_a += '<tr><td>Search (average)</td>'
-	output_a += '<td>' + parseInt(avgSearchDuration) + ' seconds / ' + convertSecondsToMinutes(avgSearchDuration) + ' minutes</td></tr>'
+	output_a += '<td>' + convertSecondsToMinutes(avgSearchDuration) + '</td></tr>' //  parseInt(avgSearchDuration) + ' seconds / ' + convertSecondsToMinutes(avgSearchDuration) + ' minutes</td></tr>'
 	output_a += '<tr><td>Pages (average)</td>'
-	output_a += '<td>' + parseInt(avgPageDuration) + ' seconds / ' + convertSecondsToMinutes(avgPageDuration) + ' minutes</td></tr>'
+	output_a += '<td>' + convertSecondsToMinutes(avgPageDuration) + '</td></tr>' //'<td>' + parseInt(avgPageDuration) + ' seconds / ' + convertSecondsToMinutes(avgPageDuration) + ' minutes</td></tr>'
 	output_a += '<tr><td>Search (total)</td>'
-	output_a += '<td>' + parseInt(searchDuration) + ' seconds / ' + convertSecondsToMinutes(searchDuration) + ' minutes</td></tr>'
+	output_a += '<td>' + convertSecondsToMinutes(searchDuration) + '</td></tr>' // '<td>' + parseInt(searchDuration) + ' seconds / ' + convertSecondsToMinutes(searchDuration) + ' minutes</td></tr>'
 	output_a += '<tr><td>Pages (total)</td>'
-	output_a += '<td>' + parseInt(pageDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration) + ' minutes</td></tr>'
+	output_a += '<td>' + convertSecondsToMinutes(pageDuration) + '</td></tr>' // '<td>' + parseInt(pageDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration) + ' minutes</td></tr>'
 	output_a += '<tr><td>Total</td>'
-	output_a += '<td>' + parseInt(pageDuration + searchDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration + searchDuration) + ' minutes</td></tr>'
+	output_a += '<td>' + convertSecondsToMinutes(pageDuration + searchDuration) + '</td></tr>' // '<td>' + parseInt(pageDuration + searchDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration + searchDuration) + ' minutes</td></tr>'
 
 	output_a += '<table>'
 

@@ -38,7 +38,12 @@ function groupConsecutiveDomains(data) {
 }
 
 function convertSecondsToMinutes(seconds){
-	const min = parseFloat((seconds / 60).toFixed(1))
+	const minutes = Math.floor(seconds / 60);
+	const remainingSeconds = seconds % 60;
 
-	return min
+	const formattedMinutes = (minutes < 10 ? "0" : "") + minutes;
+	const formattedSeconds = (remainingSeconds < 10 ? "0" : "") + parseInt(remainingSeconds);
+
+  	const time = formattedMinutes + ':' + formattedSeconds
+	return time
 }
