@@ -1,8 +1,8 @@
-const dataset = "search_story_task_8_user_1004"
+// const dataset = "search_story_task_8_user_1004"
 // const dataset = "search_story_task_8_user_1005"
 // const dataset = "search_story_task_8_user_1007"
 // const dataset = "search_story_task_8_user_1010"
-// const dataset = "search_story_task_8_user_1013"
+const dataset = "search_story_task_8_user_1013"
 // const dataset = "search_story_task_1_user_300"
 
 const container = "#container";
@@ -225,7 +225,6 @@ function load_data() {
 
 				let strip_website_textBox = strip_website.append("a")
 					.attr("xlink:href", (d) => {
-						console.log(d.url)
 						return d[0].url
 					})
 					.attr("target","_blank")
@@ -437,15 +436,15 @@ function load_data() {
 						.attr("width", width + (margin.right + margin.right))
 				}
 				
-				strip_rect.attr("x", (d,i) => {
-					let x_pos = timeScale(new Date(d.time))
-					return x_pos
-				})
-				.attr("width", (d) => {
-					const end_time = new Date(d.time).getTime() + d.duration*1000
-					const width = timeScale(end_time) - timeScale(new Date(d.time))
-					return width
-				})
+				// strip_rect.attr("x", (d,i) => {
+				// 	let x_pos = timeScale(new Date(d.time))
+				// 	return x_pos
+				// })
+				// .attr("width", (d) => {
+				// 	const end_time = new Date(d.time).getTime() + d.duration*1000
+				// 	const width = timeScale(end_time) - timeScale(new Date(d.time))
+				// 	return width
+				// })
 
 				// d3.select("#x_axis")
 				// 	.transition()
@@ -469,7 +468,8 @@ function load_data() {
 }	
 
 function load_statistics(data){
-	console.log(data)
+
+	const max_link_char = 40
 
 	const container_a = document.getElementById('statistics_a')
 	const container_b = document.getElementById('statistics_b')
@@ -574,7 +574,7 @@ function load_statistics(data){
 			the_query_c = the_query_b.split('&')[0]
 			the_query = the_query_c.replace(/\+/g,' ')
 		}
-		output_b += '<tr><td><a href="' + item + '" target="_blank">' + the_query + '</a></td></tr>'
+		output_b += '<tr><td><a href="' + item + '" target="_blank">' + short_url(the_query,max_link_char) + '</a></td></tr>'
 	})
 	output_b += '</table>'
 
@@ -594,7 +594,7 @@ function load_statistics(data){
 	unique_websites.forEach(item => {
 		const web_a = item.replace('https://','')
 		const web_b = web_a.replace('www.','')
-		output_c += '<tr><td><a href="' + item + '" target="_blank">' + short_url(web_b,40) + '</a></td><tr>' // 
+		output_c += '<tr><td><a href="' + item + '" target="_blank">' + short_url(web_b,max_link_char) + '</a></td><tr>' // 
 	})
 	output_c += '</tr>'
 	output_c += '</table>'
