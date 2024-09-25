@@ -1,8 +1,8 @@
 // const dataset = "search_story_task_8_user_1004"
 // const dataset = "search_story_task_8_user_1005"
 // const dataset = "search_story_task_8_user_1007"
-// const dataset = "search_story_task_8_user_1010"
-const dataset = "search_story_task_8_user_1013"
+const dataset = "search_story_task_8_user_1010"
+// const dataset = "search_story_task_8_user_1013"
 // const dataset = "search_story_task_1_user_300"
 
 const container = "#container";
@@ -469,7 +469,7 @@ function load_data() {
 
 function load_statistics(data){
 
-	const max_link_char = 40
+	const max_link_char = 35
 
 	const container_a = document.getElementById('statistics_a')
 	const container_b = document.getElementById('statistics_b')
@@ -498,23 +498,14 @@ function load_statistics(data){
 	const websites = pageItems.map(item => item.url)
 	const unique_websites = getUniqueValues(websites) 
 
-	const searchEngines = searchItems.map(item => {
-		// url = item.url
-		// console.log(url)
-
-		item != '' //.split("?q=")[0]
-
-		// if (url.indexOf("?q=") >= 0) {
-		// 	item.url.split("?q=")[0]
-		// 	console.log(item.url)
-		// }
-		// else {
-		// 	item.url
-		// }
+	uniq_engine = []
+	searchItems.forEach(item => {
+		url = item.url
+		url_ = url.split("search?")[0]
+		uniq_engine.push(url_)
 	})
-	console.log(searchEngines)
-	const unique_searchEngines = getUniqueValues(searchEngines) 
-	// console.log(searchEngines)
+	const unique_searchEngines = getUniqueValues(uniq_engine) 
+	// console.log(unique_searchEngines)
 
 	let output_a = ''
 	let output_b = ''
@@ -575,6 +566,13 @@ function load_statistics(data){
 			the_query = the_query_c.replace(/\+/g,' ')
 		}
 		output_b += '<tr><td><a href="' + item + '" target="_blank">' + short_url(the_query,max_link_char) + '</a></td></tr>'
+	})
+	output_b += '</table>'
+
+	output_b += '<table style="margin-top: 1.5rem;">'
+	output_b += '<tr><td><strong>Search engines</strong></td></tr>'
+	unique_searchEngines.forEach(item => {
+		output_b += '<tr><td><a href="' + item + '" target="_blank">' + short_url(item,max_link_char) + '</a></td></tr>'
 	})
 	output_b += '</table>'
 
