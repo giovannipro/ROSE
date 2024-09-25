@@ -1,5 +1,5 @@
-// const dataset = "search_story_task_8_user_1004"
-const dataset = "search_story_task_8_user_1005"
+const dataset = "search_story_task_8_user_1004"
+// const dataset = "search_story_task_8_user_1005"
 // const dataset = "search_story_task_8_user_1007"
 // const dataset = "search_story_task_8_user_1010"
 // const dataset = "search_story_task_8_user_1013"
@@ -12,6 +12,8 @@ const interline = 2;
 
 const new_page_color = '#ff9100'
 const duration_color = '#a4a4a4'
+
+const over_opacity = 0.4
 
 function load_data() {
 	
@@ -106,12 +108,7 @@ function load_data() {
 				.attr("class","strip_box")
 				.on("mouseover", handleMouseOver) 
 				.on("mouseout", handleMouseOut)
-				.on("click", handleClick)
-				// .append("a")
-				// .attr("xlink:href", (d) => {
-				// 	return d.url
-				// })
-				// .attr("target","_blank")
+				.on("click", handleClick_strip)
 
 			let strip_rect = strip_box.append("rect")
 				.attr("data-action", (d) => d.action)
@@ -123,13 +120,13 @@ function load_data() {
 				.attr("y", (d,i) => {
 					let y_pos = 0
 					if (d.page_type == 'SEARCH_ENGINE') {
-						y_pos = strip_height*0
+						y_pos = strip_height * 0
 					}
 					else if (d.page_type == 'RESULT') {
 						y_pos = strip_height * 1.5
 					}
 					else {
-						y_pos = strip_height*2
+						y_pos = strip_height * 2
 					}
 					return y_pos + interline
 				})
@@ -163,7 +160,7 @@ function load_data() {
 						color = '#619ED4' 
 					}
 					else if (d.action == "SAME_SEARCH" || d.action == "SEEN_SEARCH"){ // reused
-						color = '#85DAE9' 
+						color = '#85DAE9'
 					}
 					else if (d.action == "REFINE_SEARCH"){ // revised
 						color = '#C8DFF4' 
@@ -183,13 +180,9 @@ function load_data() {
 					.enter()
 					.append("g")
 					.attr("class","website")
-					// .append("a")
-					// .attr("xlink:href", (d) => {
-					// 	return d[0].url
-					// })
-					// .attr("target","_blank")
 					.on("mouseover", handleMouseOver_website) 
 					.on("mouseout", handleMouseOut_website)
+					.on("click", handleClick_website)
 
 				let strip_website_rect = strip_website.append("rect")
 					.attr("x", (d,i) => {
@@ -213,24 +206,35 @@ function load_data() {
 					.attr("fill", (d) => {
 						let fill = new_page_color
 						if (d[0].domain_status == "SEEN") {
-							fill = '#fdc780'
+							fill = '#f8b55c' //'#fdc780'
 						}
 						return fill
 					})
 				
-				let strip_text_box = strip_box.append("text")
+				let strip_text_box = strip_box.append("a")
+					.attr("xlink:href", (d) => {
+						return d.url
+					})
+					.attr("target","_blank")
+					.append("text")
 					.attr("transform","translate(" + start_shift + "," + ((strip_height*3/1)-30) + ")")
 					.attr("x", 0)
 					.attr("y", 0)
 					.attr("alignment-baseline","middle")
-					.attr("opacity",0)
+					.attr("visibility","hidden")
 
-				let strip_website_textBox = strip_website.append("text")
+				let strip_website_textBox = strip_website.append("a")
+					.attr("xlink:href", (d) => {
+						console.log(d.url)
+						return d[0].url
+					})
+					.attr("target","_blank")
+					.append("text")
 					.attr("transform","translate(" + start_shift + "," + ((strip_height*3/1)-30) + ")")
 					.attr("x", 0)
 					.attr("y", 0)
 					.attr("alignment-baseline","middle")
-					.attr("opacity",0)
+					.attr("visibility","hidden")
 
 				let strip_website_text_a = strip_website_textBox.append("tspan")
 					.text((d) => {
@@ -271,7 +275,6 @@ function load_data() {
 				let info_b = strip_text_box.append("tspan")
 					.text((d) => (
 						convertSecondsToMinutes(d.duration)
-						// Math.floor(d.duration/60 * 60)) + ' seconds / ' + convertSecondsToMinutes(d.duration) + ' minutes'
 					))
 					.attr("dy", 20)
 					.attr("x",0)
@@ -330,26 +333,26 @@ function load_data() {
 
 				// handle Mouse Over
 				function handleMouseOver(){
-					d3.select(this).select("text")
-						.transition()
-						.duration(duration)
-						.attr("opacity",1)
+					// d3.select(this).select("text")
+					// 	.transition()
+					// 	.duration(duration)
+					// 	.attr("opacity",1)
 
 					d3.selectAll(".strip_box")
-						.attr("opacity",0.4)
+						.attr("opacity",over_opacity)
 
 					d3.select(this)
 						.attr("opacity",1)
 
 					d3.selectAll(".website")
-						.attr("opacity",0.4)
+						.attr("opacity",over_opacity)
 				}
 
 				function handleMouseOut(){
-					d3.select(this).select("text")
-						.transition()
-						.duration(duration)
-						.attr("opacity",0)
+					// d3.select(this).select("text")
+					// 	.transition()
+					// 	.duration(duration)
+					// 	.attr("opacity",0)
 
 					d3.selectAll(".strip_box")
 						.attr("opacity",1)
@@ -358,44 +361,61 @@ function load_data() {
 						.attr("opacity",1)
 				}
 
-				function handleClick(){
+				function handleClick_strip() {
+					d3.selectAll(".strip_box").select("text")
+						.attr("visibility","hidden")
+
+					d3.selectAll(".website").select("text")
+						.attr("visibility","hidden")
+
 					d3.select(this).select("text")
-						.transition()
-						.duration(duration)
-						.attr("opacity",1)
+						.attr("visibility","visible")
+				}
+
+				function handleClick_website() {
+					d3.selectAll(".website").select("text")
+						.attr("visibility","hidden")
+
+					d3.selectAll(".strip_box").select("text")
+						.attr("visibility","hidden")
+
+					d3.select(this).select("text")
+						.attr("visibility","visible")
 				}
 
 				// - - - 
 
 				function handleMouseOver_website(){
+					// d3.select(this).select("text")
+					// 	.transition()
+					// 	.duration(duration)
+					// 	.attr("opacity",1)
+
 					d3.selectAll(".website").select("rect")
-						.attr("opacity",0.4)
+						.attr("opacity",over_opacity)
 
 					d3.selectAll(".strip_box")
-						.attr("opacity",0.4)
+						.attr("opacity",over_opacity)
 
 					d3.select(this).select("rect")
 						.transition()
 						.duration(duration)
 						.attr("opacity",1)
 
-					d3.select(this).select("text")
-						.transition()
-						.duration(duration)
-						.attr("opacity",1)
 				}
 
 				function handleMouseOut_website(){
+					// d3.select(this).select("text")
+					// 	.transition()
+					// 	.duration(duration)
+					// 	.attr("opacity",0)
+
 					d3.selectAll(".website").select("rect")
 						.attr("opacity",1)
 
 					d3.selectAll(".strip_box")
 						.attr("opacity",1)
 
-					d3.select(this).select("text")
-						.transition()
-						.duration(duration)
-						.attr("opacity",0)
 				}
 
 			function rescale_chart(mode){
@@ -522,6 +542,8 @@ function load_statistics(data){
 	output_b += '<td>' + reusedQueries + '</td></tr>'
 	output_b += '<tr><td>Reprised queries</td>'
 	output_b += '<td>' + revisedQueries + '</td></tr>'
+	output_b += '<tr><td>Total queries</td>'
+	output_b += '<td>' + (newQueries + reusedQueries + revisedQueries) + '</td></tr>'
 	output_b += '</table>'
 
 	output_c += '<table>'
@@ -530,6 +552,8 @@ function load_statistics(data){
 	output_c += '<td>' + newDomains + '</td></tr>'
 	output_c += '<tr><td>Revisited websites</td>'
 	output_c += '<td>' + revisitedDomains + '</td></tr>'
+	output_c += '<tr><td>Total websites visited</td>'
+	output_c += '<td>' + (newDomains + revisitedDomains) + '</td></tr>'
 	output_c += '<tr><td>Total pages visited</td>'
 	output_c += '<td>' + pages + '</td></tr>'
 	output_c += '</table>'
