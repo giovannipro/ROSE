@@ -160,7 +160,7 @@ function load_data() {
 						color = '#619ED4' 
 					}
 					else if (d.action == "SAME_SEARCH" || d.action == "SEEN_SEARCH"){ // reused
-						color = '#85DAE9'
+						color = '#90b8df' // '#85DAE9'
 					}
 					else if (d.action == "REFINE_SEARCH"){ // revised
 						color = '#C8DFF4' 
@@ -263,7 +263,7 @@ function load_data() {
 							url_b = url_a.split("&")[0]
 							url_c = url_b.replace(/\+/g," ")
 
-							the_url = "query on Google: " + url_c
+							the_url = url_c //"query on Google: " + url_c
 						}
 						else {
 							the_url = url
