@@ -1,8 +1,8 @@
 // const dataset = "search_story_task_8_user_1004"
 // const dataset = "search_story_task_8_user_1005"
 // const dataset = "search_story_task_8_user_1007"
-// const dataset = "search_story_task_8_user_1010"
-const dataset = "search_story_task_8_user_1013"
+const dataset = "search_story_task_8_user_1010"
+// const dataset = "search_story_task_8_user_1013"
 // const dataset = "search_story_task_1_user_300"
 
 const container = "#container";
@@ -72,29 +72,29 @@ function load_data() {
 			const website_height = strip_height * 0.5
 			const page_height = strip_height * 0.5
 
-			let line_data = [
-				[{ x: 0, y: 0 },{ x: width, y: 0 }],
-				[{ x: 0, y: strip_height*1 },{ x: width, y: strip_height*1 }],
-				[{ x: 0, y: strip_height*1.5 },{ x: width, y: strip_height*1.5 }],
-				[{ x: 0, y: strip_height*2 },{ x: width, y: strip_height*2 }],
-				[{ x: 0, y: strip_height*2.25 },{ x: width, y: strip_height*2.25 }]
+			const linePositions = [
+				strip_height * 0, 
+				strip_height * 1, 
+				strip_height * 1.5, 
+				strip_height * 2, 
+				strip_height * 2.25
 			];
-
-			const lineGenerator = d3.line()
-				.x((d) => d.x)  
-				.y((d) => d.y);
 
 			let lines = plot.append("g")
 				.attr("class","lines")
 
 			let line = lines.selectAll("path")
-				.data(line_data)
+				.data(linePositions)
 				.enter()
-				.append("path")
-				.attr("d", lineGenerator)
+				.append("line")
+				.attr("x1", 0)  
+				.attr("x2", width * 2)   
+				.attr("y1", d => d)
+				.attr("y2", d => d)
 				.attr("stroke", "#d0d0d0")
 				.attr("stroke-width", 1)
 				.attr("fill", "none")
+				.attr("class","rows")
 
 			let strips = plot.append("g")
 				.attr("class","strips")
@@ -112,11 +112,12 @@ function load_data() {
 				.on("click", handleClick_strip)
 
 			let strip_rect = strip_box.append("rect")
+				.attr("class","strip_rect")
 				.attr("data-action", (d) => d.action)
 				.attr("data-domain", (d) => d.domain)
 				.attr("x", (d,i) => {
 					x_pos = timeScale(new Date(d.time))
-					return x_pos + 1
+					return x_pos
 				})
 				.attr("y", (d,i) => {
 					let y_pos = 0
@@ -185,6 +186,7 @@ function load_data() {
 					.on("click", handleClick_website)
 
 				let strip_website_rect = strip_website.append("rect")
+					.attr("class","strip_website_rect")
 					.attr("x", (d,i) => {
 						let x_pos = timeScale(new Date(d[0].time))
 						return x_pos
@@ -295,7 +297,7 @@ function load_data() {
 					.attr("y", (strip_height*0.75))
 					.attr("dy", strip_height/2)
 					.attr("alignment-baseline","middle")
-					.text("Websites");
+					.text("Websites");  
 
 				let label_c = labels.append("text")
 					.attr("x", 10)
@@ -312,9 +314,8 @@ function load_data() {
 					.text("Other");
 
 				// x-axis
-				const xAxis = d3.axisBottom(timeScale)
-					// .ticks(18)
-				.ticks(d3.timeMinute.every(2)) 
+				let xAxis = d3.axisBottom(timeScale)
+					.ticks(d3.timeMinute.every(2)) 
 					.tickFormat(d => {
 						const hours = d.getHours();
 						const minutes = d.getMinutes();
@@ -447,7 +448,67 @@ function load_data() {
 				// 	.call(xAxis)
 				// 	.selectAll("text")
 			}
-			
+
+			function rescale_chart(resize){
+
+				svg
+					.attr("width", window_w + (margin.right + margin.right))
+					
+				timeScale = d3.scaleTime()
+					.domain([new Date(data[0].time), new Date(new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
+					.range([start_shift, width-20])
+
+				d3.selectAll(".strip_rect")
+					.transition()
+					.attr("x", (d,i) => {
+						x_pos = timeScale(new Date(d.time))
+						return x_pos
+					})
+					.attr("width", (d) => {
+						end_time = new Date(d.time).getTime() + d.duration*1000
+						width = timeScale(end_time) - timeScale(new Date(d.time))
+						return width
+					})
+
+				d3.selectAll(".strip_website_rect")
+					.transition()
+					.attr("x", (d,i) => {
+						let x_pos = timeScale(new Date(d[0].time))
+						return x_pos
+					})
+					.attr("width", (d) => {
+						const end_time = new Date(d[d.length-1].time).getTime() + d[d.length-1].duration*1000
+						const width = timeScale(end_time) - timeScale(new Date(d[0].time))
+						return width
+					})
+
+				xAxis = d3.axisBottom(timeScale)
+					.ticks(d3.timeMinute.every(2)) 
+					.tickFormat(d => {
+						const hours = d.getHours();
+						const minutes = d.getMinutes();
+						const duration = hours * 60 + minutes;
+						const start = new Date(data[0].time).getMinutes() + (new Date(data[0].time).getHours() * 60)
+
+						return (duration-start+0) + "'"//+ ":00";
+					})
+
+				d3.select("#x_axis")
+					.transition()
+					.call(xAxis)
+
+				d3.selectAll(".rows")
+					.transition()
+					.attr("x2",window_w * 2)
+			}
+
+			addEventListener("resize", (event) => {
+				window_w = document.getElementById("container").offsetWidth;
+				width = window_w + (margin.right + margin.right)
+
+				rescale_chart(1)
+			})
+
 			addEventListener("keypress", (event) => {
 				let key = event.key
 				// if (key == "1") {
