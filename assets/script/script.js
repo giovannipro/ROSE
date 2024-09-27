@@ -12,6 +12,7 @@ const interline = 2;
 
 const new_page_color = '#ff9100'
 const duration_color = '#a4a4a4'
+const stroke_color = '#aeaeae' 
 
 const over_opacity = 0.4
 
@@ -62,7 +63,7 @@ function load_data() {
 			const total_duration = data.reduce((sum, item) => sum + item.duration, 0);
 
 			let timeScale = d3.scaleTime()
-				.domain([new Date(data[0].time), new Date( new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
+				.domain([new Date(data[0].time), new Date(new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
 				.range([start_shift, width-20])
 				// .nice()
 
@@ -114,8 +115,8 @@ function load_data() {
 				.attr("data-action", (d) => d.action)
 				.attr("data-domain", (d) => d.domain)
 				.attr("x", (d,i) => {
-					let x_pos = timeScale(new Date(d.time))
-					return x_pos
+					x_pos = timeScale(new Date(d.time))
+					return x_pos + 1
 				})
 				.attr("y", (d,i) => {
 					let y_pos = 0
@@ -131,8 +132,8 @@ function load_data() {
 					return y_pos + interline
 				})
 				.attr("width", (d) => {
-					const end_time = new Date(d.time).getTime() + d.duration*1000
-					const width = timeScale(end_time) - timeScale(new Date(d.time))
+					end_time = new Date(d.time).getTime() + d.duration*1000
+					width = timeScale(end_time) - timeScale(new Date(d.time))
 					return width
 				})
 				.attr("height", (d) => {
@@ -146,8 +147,7 @@ function load_data() {
 
 					return height - interline
 				})
-				.attr("stroke","black")
-				.attr("stroke-opacity", 0.2)
+				.attr("stroke",stroke_color)
 				.attr("fill", (d) => {
 					let color = 'red'
 
@@ -332,10 +332,6 @@ function load_data() {
 
 				// handle Mouse Over
 				function handleMouseOver(){
-					// d3.select(this).select("text")
-					// 	.transition()
-					// 	.duration(duration)
-					// 	.attr("opacity",1)
 
 					d3.selectAll(".strip_box")
 						.attr("opacity",over_opacity)
@@ -348,11 +344,6 @@ function load_data() {
 				}
 
 				function handleMouseOut(){
-					// d3.select(this).select("text")
-					// 	.transition()
-					// 	.duration(duration)
-					// 	.attr("opacity",0)
-
 					d3.selectAll(".strip_box")
 						.attr("opacity",1)
 
@@ -363,6 +354,9 @@ function load_data() {
 				function handleClick_strip() {
 					d3.selectAll(".strip_box").select("text")
 						.attr("visibility","hidden")
+
+					// d3.select(this).select("rect")
+					// 	.attr("fill","url(#patt1)")
 
 					d3.selectAll(".website").select("text")
 						.attr("visibility","hidden")
@@ -419,32 +413,34 @@ function load_data() {
 
 			function rescale_chart(mode){
 
-				const max_time = 60 * 60
+				new_width = width * 2
 
 				if (mode == 1){
-					timeScale = d3.scaleTime()
-						.range([start_shift, max_time - 20])
-						
 					svg
-						.attr("width", max_time + (margin.right + margin.right))
+						.attr("width", new_width + (margin.right + margin.right))
+					
+					timeScale = d3.scaleTime()
+						.range([start_shift, new_width - 20])
+						
 				}
 				else if (mode == 2) {
-					timeScale = d3.scaleTime()
-						.range([start_shift, width-20])
-
 					svg
 						.attr("width", width + (margin.right + margin.right))
+					
+					timeScale = d3.scaleTime()
+						.range([start_shift, width-20])
 				}
+				console.log(new_width, width)
 				
-				// strip_rect.attr("x", (d,i) => {
-				// 	let x_pos = timeScale(new Date(d.time))
-				// 	return x_pos
-				// })
-				// .attr("width", (d) => {
-				// 	const end_time = new Date(d.time).getTime() + d.duration*1000
-				// 	const width = timeScale(end_time) - timeScale(new Date(d.time))
-				// 	return width
-				// })
+				strip_rect.attr("x", (d,i) => {
+					x_pos = timeScale(new Date(d.time))
+					return x_pos
+				})
+				.attr("width", (d) => {
+					end_time = new Date(d.time).getTime() + d.duration*1000
+					width = timeScale(end_time) - timeScale(new Date(d.time))
+					return width
+				})
 
 				// d3.select("#x_axis")
 				// 	.transition()
@@ -453,7 +449,7 @@ function load_data() {
 			}
 			
 			addEventListener("keypress", (event) => {
-				// let key = event.key
+				let key = event.key
 				// if (key == "1") {
 				// 	rescale_chart(1)
 				// }
@@ -495,8 +491,14 @@ function load_statistics(data){
 		.filter(item => item.indexOf('http') >= 0)
 	const unique_queries = getUniqueValues(queries) 
 
-	const websites = pageItems.map(item => item.url)
-	const unique_websites = getUniqueValues(websites) 
+	// const websites = pageItems.map(item => item.url)
+	unique_web = []
+	pageItems.forEach(item => {
+		url = item.url
+		url_ = url.split("/")[2]
+		unique_web.push(url_)
+	})
+	const unique_websites = getUniqueValues(unique_web) 
 
 	uniq_engine = []
 	searchItems.forEach(item => {
@@ -505,7 +507,6 @@ function load_statistics(data){
 		uniq_engine.push(url_)
 	})
 	const unique_searchEngines = getUniqueValues(uniq_engine) 
-	// console.log(unique_searchEngines)
 
 	let output_a = ''
 	let output_b = ''
@@ -576,17 +577,6 @@ function load_statistics(data){
 	})
 	output_b += '</table>'
 
-
-	// output_b += '<table style="margin-top: 1.5rem;">'
-	// output_b += '<tr><td><strong>Search engines</strong></td></tr>'
-	// output_b += '<tr>'
-	// unique_searchEngines.forEach(item => {
-	// 	// const engine_a = item.replace('https://www.','')
-	// 	output_b += '<tr><td>' + item + '</td></tr>'
-	// })
-	// output_b += '</table>'
-
-
 	output_c += '<table style="margin-top: 1.5rem;">'
 	output_c += '<tr><td><strong>Websites</strong></td></tr>'
 	unique_websites.forEach(item => {
@@ -603,11 +593,6 @@ function load_statistics(data){
 
 }
 
-
-
-
 window.addEventListener('load', function () {	
-
 	load_data();
-
 })
