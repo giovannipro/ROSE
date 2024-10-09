@@ -4,12 +4,11 @@ body {
 	font-family: Arial, sans-serif;
 }
 
-header, footer, h2, #statistics {
+header, footer, #controllers, #statistics {
 	margin: 0 1rem;
 }
 
 h2 {
-	margin-top: 3rem;
 	font-size: 1rem;
 }
 
@@ -33,6 +32,18 @@ h2 {
 
 .labels {
 	font-size: 0.8rem;
+}
+
+#controllers {
+	margin-top: 3rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#set_size {
+	width: 30%;
+	height: 2rem;
 }
 
 #statistics {

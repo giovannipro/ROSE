@@ -428,9 +428,9 @@ function load_data() {
 				const pixel_per_minute = 100
 
 				new_width = delta * pixel_per_minute
-				console.log(delta, new_width)
+				// console.log(delta, new_width)
 
-				if (mode == 1){ // the timeline has a constant unit size
+				if (mode == "normalize"){ // the timeline has a constant unit size
 					svg
 						.attr("width", new_width + (margin.right + margin.right))
 					
@@ -439,7 +439,7 @@ function load_data() {
 						.range([start_shift, new_width-20])
 						
 				}
-				else if (mode == 2) { // the timeline fits with the width length
+				else if (mode == "fit") { // the timeline fits with the width length
 					svg
 						.attr("width", width + (margin.right + margin.right))
 					
@@ -491,6 +491,22 @@ function load_data() {
 					.transition()
 					.attr("x2",window_w * 2)
 			}
+
+			const set_size = document.getElementById('set_size')
+			set_size.addEventListener("change", function() {
+				let size = this.value;
+				rescale(size)
+			})
+
+			addEventListener("keypress", (event) => {
+				let key = event.key
+				if (key == "1") {
+					rescale("normalize")
+				}
+				else if (key == "2"){
+					rescale("fit")
+				}
+			});
 
 			function resize_chart(resize){
 
@@ -552,15 +568,6 @@ function load_data() {
 				resize_chart(1)
 			})
 
-			addEventListener("keypress", (event) => {
-				let key = event.key
-				if (key == "1") {
-					rescale(1)
-				}
-				else if (key == "2"){
-					rescale(2)
-				}
-			});
 		}
 		display_data(data)
 
