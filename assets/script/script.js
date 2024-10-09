@@ -196,18 +196,13 @@ function load_data() {
 				.append("g")
 				.attr("class","strip_box")
 				.attr("data-url", (d) => d.url)
-				.attr("data-domain", (d) => {
-					let output = d.domain
-					if (d.domain_status == "SEEN") {
-						output += " (already seen)"
-					}
-					return  output
-				})
+				.attr("data-domain", (d) => d.domain)
 				.attr("data-duration", (d) => d.duration)
 				.attr("data-action", (d) => d.action)
+				.attr("data-domainStatus", (d) => d.domain_status)
 				.on("mouseover", handleMouseOver) 
 				.on("mouseout", handleMouseOut)
-				.on("click", handleClick_strip)
+				.on("click", handleClick)
 
 			let strip_rect = strip_box.append("rect")
 				.attr("class","strip_rect")
@@ -276,9 +271,14 @@ function load_data() {
 					.enter()
 					.append("g")
 					.attr("class","website")
+					.attr("data-url", (d) => d[0].url)
+					.attr("data-domain", (d) => d[0].domain)
+					.attr("data-duration", (d) => d[0].duration)
+					.attr("data-action", (d) => d[0].action)
+					.attr("data-domainStatus", (d) => d[0].domain_status)
 					.on("mouseover", handleMouseOver_website) 
 					.on("mouseout", handleMouseOut_website)
-					.on("click", handleClick_website)
+					.on("click", handleClick)
 
 				let strip_website_rect = strip_website.append("rect")
 					.attr("class","strip_website_rect")
@@ -309,73 +309,73 @@ function load_data() {
 					})
 
 				
-				let strip_text_box = strip_box.append("a")
-					.attr("xlink:href", (d) => {
-						return d.url
-					})
-					.attr("target","_blank")
-					.append("text")
-					.attr("transform","translate(" + start_shift + "," + ((strip_height*3/1)-30) + ")")
-					.attr("x", 0)
-					.attr("y", 0)
-					.attr("alignment-baseline","middle")
-					.attr("visibility","hidden")
+				// let strip_text_box = strip_box.append("a")
+				// 	.attr("xlink:href", (d) => {
+				// 		return d.url
+				// 	})
+				// 	.attr("target","_blank")
+				// 	.append("text")
+				// 	.attr("transform","translate(" + start_shift + "," + ((strip_height*3/1)-30) + ")")
+				// 	.attr("x", 0)
+				// 	.attr("y", 0)
+				// 	.attr("alignment-baseline","middle")
+				// 	.attr("visibility","hidden")
 
-				let strip_website_textBox = strip_website.append("a")
-					.attr("xlink:href", (d) => {
-						return d[0].url
-					})
-					.attr("target","_blank")
-					.append("text")
-					.attr("transform","translate(" + start_shift + "," + ((strip_height*3/1)-30) + ")")
-					.attr("x", 0)
-					.attr("y", 0)
-					.attr("alignment-baseline","middle")
-					.attr("visibility","hidden")
+				// let strip_website_textBox = strip_website.append("a")
+				// 	.attr("xlink:href", (d) => {
+				// 		return d[0].url
+				// 	})
+				// 	.attr("target","_blank")
+				// 	.append("text")
+				// 	.attr("transform","translate(" + start_shift + "," + ((strip_height*3/1)-30) + ")")
+				// 	.attr("x", 0)
+				// 	.attr("y", 0)
+				// 	.attr("alignment-baseline","middle")
+				// 	.attr("visibility","hidden")
 
-				let strip_website_text_a = strip_website_textBox.append("tspan")
-					.text((d) => {
-						let output = d[0].domain
-						if (d[0].domain_status == "SEEN") {
-							output += " (already seen)"
-						}
-						return  output
-					})
+				// let strip_website_text_a = strip_website_textBox.append("tspan")
+				// 	.text((d) => {
+				// 		let output = d[0].domain
+				// 		if (d[0].domain_status == "SEEN") {
+				// 			output += " (already seen)"
+				// 		}
+				// 		return  output
+				// 	})
 					
-				let strip_website_text_b = strip_website_textBox.append("tspan")
-					.text((d) => {
-						const totalDuration = d.reduce((accumulator, currentObject) => {
-    						return accumulator + currentObject.duration
-						}, 0)
-						return convertSecondsToMinutes(totalDuration) //Math.floor(totalDuration/60 * 60) + ' seconds / ' + convertSecondsToMinutes(totalDuration) + ' minutes'
-					})
-					.attr("x",0)
-					.attr("dy", 20)
-					.attr("fill",duration_color)
+				// let strip_website_text_b = strip_website_textBox.append("tspan")
+				// 	.text((d) => {
+				// 		const totalDuration = d.reduce((accumulator, currentObject) => {
+    			// 			return accumulator + currentObject.duration
+				// 		}, 0)
+				// 		return convertSecondsToMinutes(totalDuration) //Math.floor(totalDuration/60 * 60) + ' seconds / ' + convertSecondsToMinutes(totalDuration) + ' minutes'
+				// 	})
+				// 	.attr("x",0)
+				// 	.attr("dy", 20)
+				// 	.attr("fill",duration_color)
 
-				let info_a = strip_text_box.append("tspan")
-					.text((d) => {
-						let url = d.url
-						if (url.indexOf("google") >= 0 ){ // && url.indexOf("safe=active") == -1
-							url_a = url.replace("https://www.google.com/search?q=","")
-							url_b = url_a.split("&")[0]
-							url_c = url_b.replace(/\+/g," ")
+				// let info_a = strip_text_box.append("tspan")
+				// 	.text((d) => {
+				// 		let url = d.url
+				// 		if (url.indexOf("google") >= 0 ){ // && url.indexOf("safe=active") == -1
+				// 			url_a = url.replace("https://www.google.com/search?q=","")
+				// 			url_b = url_a.split("&")[0]
+				// 			url_c = url_b.replace(/\+/g," ")
 
-							the_url = url_c //"query on Google: " + url_c
-						}
-						else {
-							the_url = url
-						}
-						return the_url
-					})
+				// 			the_url = url_c //"query on Google: " + url_c
+				// 		}
+				// 		else {
+				// 			the_url = url
+				// 		}
+				// 		return the_url
+				// 	})
 
-				let info_b = strip_text_box.append("tspan")
-					.text((d) => (
-						convertSecondsToMinutes(d.duration)
-					))
-					.attr("dy", 20)
-					.attr("x",0)
-					.attr('fill',duration_color)
+				// let info_b = strip_text_box.append("tspan")
+				// 	.text((d) => (
+				// 		convertSecondsToMinutes(d.duration)
+				// 	))
+				// 	.attr("dy", 20)
+				// 	.attr("x",0)
+				// 	.attr('fill',duration_color)
 
 				// x-axis
 				let xAxis = d3.axisBottom(timeScale)
@@ -416,19 +416,24 @@ function load_data() {
 						.attr("opacity",1)
 				}
 
-				function handleClick_strip() {
-
+				function handleClick() {
 					const infobox = document.getElementById('infobox')
 
 					const url = this.getAttribute('data-url')
 					const domain = this.getAttribute('data-domain')
 					const duration = this.getAttribute('data-duration')
 					const action = this.getAttribute('data-action')
-					console.log(action)
+					const domainStatus = this.getAttribute('data-domainStatus')
+					// console.log(action)
 
 					let output = ''	
 					if (action == 'SAME_DOMAIN_RESULT' || action == 'SEEN_DOMAIN_RESULT' || action == 'NEW_RESULT'){
-						output += '<span><a href="' + url + '" target="_blank">' + url + '</a></span><br/>'
+						if (domainStatus == "SEEN") {
+							output += '<span><a href="' + url + '" target="_blank">' + url + '</a> <span style="color: gray">(already seen)</span></span><br/>'
+						}
+						else {
+							output += '<span><a href="' + url + '" target="_blank">' + url + '</a></span><br/>'
+						}
 					}
 					else if (action == 'NEW_SEARCH' || action == 'NEW_SEARCH_SAME_ENGINE' || action == 'SAME_SEARCH' || action == 'REFINE_SEARCH') {
 						let the_domain = url
@@ -446,17 +451,6 @@ function load_data() {
 					output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>'
 
 					infobox.innerHTML = output
-				}
-
-				function handleClick_website() {
-					d3.selectAll(".website").select("text")
-						.attr("visibility","hidden")
-
-					d3.selectAll(".strip_box").select("text")
-						.attr("visibility","hidden")
-
-					d3.select(this).select("text")
-						.attr("visibility","visible")
 				}
 
 				// - - - 
