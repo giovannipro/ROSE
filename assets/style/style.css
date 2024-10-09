@@ -16,6 +16,7 @@ h2 {
 #container {
 	height: 500px;
 	margin-top: 0.5rem;
+	overflow-y: scroll;
 }
 
 .strip_box, .website {
