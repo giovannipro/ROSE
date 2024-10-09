@@ -299,75 +299,6 @@ function load_data() {
 						return fill
 					})
 
-				
-				// let strip_text_box = strip_box.append("a")
-				// 	.attr("xlink:href", (d) => {
-				// 		return d.url
-				// 	})
-				// 	.attr("target","_blank")
-				// 	.append("text")
-				// 	.attr("transform","translate(" + start_shift + "," + ((strip_height*3/1)-30) + ")")
-				// 	.attr("x", 0)
-				// 	.attr("y", 0)
-				// 	.attr("alignment-baseline","middle")
-				// 	.attr("visibility","hidden")
-
-				// let strip_website_textBox = strip_website.append("a")
-				// 	.attr("xlink:href", (d) => {
-				// 		return d[0].url
-				// 	})
-				// 	.attr("target","_blank")
-				// 	.append("text")
-				// 	.attr("transform","translate(" + start_shift + "," + ((strip_height*3/1)-30) + ")")
-				// 	.attr("x", 0)
-				// 	.attr("y", 0)
-				// 	.attr("alignment-baseline","middle")
-				// 	.attr("visibility","hidden")
-
-				// let strip_website_text_a = strip_website_textBox.append("tspan")
-				// 	.text((d) => {
-				// 		let output = d[0].domain
-				// 		if (d[0].domain_status == "SEEN") {
-				// 			output += " (already seen)"
-				// 		}
-				// 		return  output
-				// 	})
-					
-				// let strip_website_text_b = strip_website_textBox.append("tspan")
-				// 	.text((d) => {
-				// 		const totalDuration = d.reduce((accumulator, currentObject) => {
-    			// 			return accumulator + currentObject.duration
-				// 		}, 0)
-				// 		return convertSecondsToMinutes(totalDuration) //Math.floor(totalDuration/60 * 60) + ' seconds / ' + convertSecondsToMinutes(totalDuration) + ' minutes'
-				// 	})
-				// 	.attr("x",0)
-				// 	.attr("dy", 20)
-				// 	.attr("fill",duration_color)
-
-				// let info_a = strip_text_box.append("tspan")
-				// 	.text((d) => {
-				// 		let url = d.url
-				// 		if (url.indexOf("google") >= 0 ){ // && url.indexOf("safe=active") == -1
-				// 			url_a = url.replace("https://www.google.com/search?q=","")
-				// 			url_b = url_a.split("&")[0]
-				// 			url_c = url_b.replace(/\+/g," ")
-
-				// 			the_url = url_c //"query on Google: " + url_c
-				// 		}
-				// 		else {
-				// 			the_url = url
-				// 		}
-				// 		return the_url
-				// 	})
-
-				// let info_b = strip_text_box.append("tspan")
-				// 	.text((d) => (
-				// 		convertSecondsToMinutes(d.duration)
-				// 	))
-				// 	.attr("dy", 20)
-				// 	.attr("x",0)
-				// 	.attr('fill',duration_color)
-
 				// x-axis
 				let xAxis = d3.axisBottom(timeScale)
 					.ticks(d3.timeMinute.every(2)) 
@@ -406,6 +337,7 @@ function load_data() {
 					d3.selectAll(".website")
 						.attr("opacity",1)
 				}
+
 
 				function handleClick() {
 					const infobox = document.getElementById('infobox')
@@ -455,6 +387,8 @@ function load_data() {
 
 					infobox.innerHTML = output
 				}
+
+				document.getElementById("")
 
 				// - - - 
 
@@ -572,14 +506,25 @@ function load_data() {
 				}
 			});
 
-			function resize_chart(resize){
+			function resize_chart(mode){
 
-				svg
-					.attr("width", window_w + (margin.right + margin.right))
+				if (mode == "normalize"){ // the timeline has a constant unit size
+					svg
+						.attr("width", new_width + (margin.right + margin.right))
 					
-				timeScale = d3.scaleTime()
-					.domain([new Date(data[0].time), new Date(new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
-					.range([start_shift, width-20])
+					timeScale = d3.scaleTime()
+						.domain([new Date(data[0].time), new Date(new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
+						.range([start_shift, new_width-20])
+						
+				}
+				else if (mode == "fit") { // the timeline fits with the width length
+					svg
+						.attr("width", width + (margin.right + margin.right))
+					
+					timeScale = d3.scaleTime()
+						.domain([new Date(data[0].time), new Date(new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
+						.range([start_shift, width-20])
+				}
 
 				d3.selectAll(".strip_rect")
 					.transition()
@@ -622,14 +567,27 @@ function load_data() {
 
 				d3.selectAll(".rows")
 					.transition()
-					.attr("x2",window_w * 2)
+					.attr("x2", new_width)
 			}
 
 			addEventListener("resize", (event) => {
-				window_w = document.getElementById("container").offsetWidth;
-				width = window_w + (margin.right + margin.right)
 
-				resize_chart(1)
+				window_w = document.getElementById("plot_box").offsetWidth;
+				width = window_w + (margin.right + margin.right);
+
+				const date1 = new Date(data[0].time);
+				const date2 = new Date(data[data.length-1].time)
+				const delta = Math.abs(date2 - date1) / 1000 / 60; // in minutes
+
+				const pixel_per_minute = 100
+
+				new_width = delta * pixel_per_minute
+
+				const set_size = document.getElementById('set_size')
+				let size = set_size.value;
+				// console.log(set_size)
+
+				resize_chart(size)
 			})
 
 		}
