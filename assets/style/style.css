@@ -4,7 +4,7 @@ body {
 	font-family: Arial, sans-serif;
 }
 
-header, footer, #controllers, #statistics {
+header, footer, #controllers, #statistics, #infobox {
 	margin: 0 1rem;
 }
 
@@ -12,7 +12,7 @@ h2 {
 	font-size: 1rem;
 }
 
-#container {
+#chart {
 	height: 500px;
 	margin-top: 0.5rem;
 	display: flex;
@@ -27,6 +27,12 @@ h2 {
 	width: calc(100% - 120px);
 	overflow-y: hidden;
 	overflow-x: scroll;
+}
+
+#infobox {
+	margin-left: 120px;
+	padding-top: 1rem;
+	height: 3rem;
 }
 
 .strip_box, .website {

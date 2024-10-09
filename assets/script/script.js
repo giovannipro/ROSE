@@ -195,6 +195,16 @@ function load_data() {
 				.enter()
 				.append("g")
 				.attr("class","strip_box")
+				.attr("data-url", (d) => d.url)
+				.attr("data-domain", (d) => {
+					let output = d.domain
+					if (d.domain_status == "SEEN") {
+						output += " (already seen)"
+					}
+					return  output
+				})
+				.attr("data-duration", (d) => d.duration)
+				.attr("data-action", (d) => d.action)
 				.on("mouseover", handleMouseOver) 
 				.on("mouseout", handleMouseOut)
 				.on("click", handleClick_strip)
@@ -254,8 +264,6 @@ function load_data() {
 					else if (d.action == "REFINE_SEARCH"){ // revised
 						color = '#C8DFF4' 
 					}
-
-					// results
 					else if (d.action == "NEW_RESULT" || d.action == "SAME_DOMAIN_RESULT" || d.action == "SEEN_DOMAIN_RESULT"){
 						color = new_page_color 
 					}
@@ -263,7 +271,6 @@ function load_data() {
 				})
 
 				// website strips
-				// console.log(website_strip_data)
 				let strip_website = strip_website_box.selectAll("g")
 					.data(website_strip_data)
 					.enter()
@@ -300,6 +307,7 @@ function load_data() {
 						}
 						return fill
 					})
+
 				
 				let strip_text_box = strip_box.append("a")
 					.attr("xlink:href", (d) => {
@@ -409,14 +417,35 @@ function load_data() {
 				}
 
 				function handleClick_strip() {
-					d3.selectAll(".strip_box").select("text")
-						.attr("visibility","hidden")
 
-					d3.selectAll(".website").select("text")
-						.attr("visibility","hidden")
+					const infobox = document.getElementById('infobox')
 
-					d3.select(this).select("text")
-						.attr("visibility","visible")
+					const url = this.getAttribute('data-url')
+					const domain = this.getAttribute('data-domain')
+					const duration = this.getAttribute('data-duration')
+					const action = this.getAttribute('data-action')
+					console.log(action)
+
+					let output = ''	
+					if (action == 'SAME_DOMAIN_RESULT' || action == 'SEEN_DOMAIN_RESULT' || action == 'NEW_RESULT'){
+						output += '<span><a href="' + url + '" target="_blank">' + url + '</a></span><br/>'
+					}
+					else if (action == 'NEW_SEARCH' || action == 'NEW_SEARCH_SAME_ENGINE' || action == 'SAME_SEARCH' || action == 'REFINE_SEARCH') {
+						let the_domain = url
+						if (url.indexOf("google") >= 0 ){
+							url_a = url.replace("https://www.google.com/search?q=","")
+							url_b = url_a.split("&")[0]
+							url_c = url_b.replace(/\+/g," ")
+							the_domain = url_c
+						}
+						output += '<span><a href="' + url + '" target="_blank">' + the_domain + '</a></span><br/>'
+					}
+					else {
+						output += '<span>' + url + '</span><br/>'
+					}
+					output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>'
+
+					infobox.innerHTML = output
 				}
 
 				function handleClick_website() {
