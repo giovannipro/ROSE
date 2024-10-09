@@ -1,9 +1,9 @@
 // const dataset = "search_story_task_8_user_1004"
 // const dataset = "search_story_task_8_user_1005"
 // const dataset = "search_story_task_8_user_1007"
- const dataset = "search_story_task_8_user_1010"
+ // const dataset = "search_story_task_8_user_1010"
 //const dataset = "search_story_task_8_user_1013"
-// const dataset = "search_story_task_1_user_300"
+const dataset = "search_story_task_1_user_300"
 
 const duration = 100;
 const start_shift = 10;
@@ -42,7 +42,7 @@ function load_data() {
 
 			const container = "#label_box";
 			let window_w = document.getElementById("label_box").offsetWidth;
-				window_h = document.getElementById("container").offsetHeight;
+				window_h = document.getElementById("label_box").offsetHeight;
 
 			let margin = {top: 10, left: 0, bottom: 20, right: 0},
 				width = window_w - (margin.right + margin.right),
@@ -54,7 +54,7 @@ function load_data() {
 				.attr("height",height + (margin.top + margin.bottom))
 				.attr("id", "svg_labels")
 
-			const strip_height = height/2.9
+			const strip_height = height/2.4
 
 			const linePositions = [
 				strip_height * 0, 
@@ -122,7 +122,7 @@ function load_data() {
 
 			const container = "#plot_box";
 			let window_w = document.getElementById("plot_box").offsetWidth;
-				window_h = document.getElementById("container").offsetHeight;
+				window_h = document.getElementById("plot_box").offsetHeight;
 
 			let margin = {top: 10, left: 0, bottom: 20, right: 0},
 				width = window_w - (margin.right + margin.right),
@@ -147,7 +147,7 @@ function load_data() {
 				.range([start_shift, width-20])
 				// .nice()
 
-			const strip_height = height/2.9
+			const strip_height = height/2.4
 			const search_height = strip_height * 1
 			const website_height = strip_height * 0.5
 			const page_height = strip_height * 0.5
