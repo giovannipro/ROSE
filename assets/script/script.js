@@ -6,7 +6,7 @@
 // const dataset = "search_story_task_1_user_300"
 
 const duration = 100;
-const start_shift = 100;
+const start_shift = 10;
 const interline = 2;
 
 const new_page_color = '#ff9100'
@@ -24,20 +24,12 @@ function load_data() {
 	function loaded(data) {
 		// console.log(data)
 
-		// let window_w = document.getElementById("container").offsetWidth;
-		// 	window_h = document.getElementById("container").offsetHeight;
-
-		// let margin = {top: 10, left: 0, bottom: 20, right: 0},
-		// 	width = window_w - (margin.right + margin.right),
-		// 	height = window_h - (margin.top + margin.bottom);
-
 		data.forEach(function(d) {
 			d.duration = parseFloat(d.duration);  
 		});
 		load_statistics(data)
 
 		const website_strip_data = groupConsecutiveDomains(data);
-		// console.log(website_strip_data)
 
 		const values = dataset.match(/\d+/g)
 		const task_name = values[0]
@@ -298,8 +290,7 @@ function load_data() {
 					.attr("height", (d) => {
 						return website_height - (interline*2)
 					})
-					.attr("stroke","black")
-					.attr("stroke-opacity", 0.2)
+					.attr("stroke",stroke_color)
 					.attr("fill", (d) => {
 						let fill = new_page_color
 						if (d[0].domain_status == "SEEN") {
@@ -419,6 +410,18 @@ function load_data() {
 				function handleClick() {
 					const infobox = document.getElementById('infobox')
 
+					d3.selectAll('.strip_rect')
+						.attr("stroke",stroke_color)
+						.attr("stroke-width",1)
+
+					d3.selectAll('.strip_website_rect')
+						.attr("stroke",stroke_color)
+						.attr("stroke-width",1)
+
+					d3.select(this).select("rect")
+						.attr("stroke","red")
+						.attr("stroke-width",3)
+
 					const url = this.getAttribute('data-url')
 					const domain = this.getAttribute('data-domain')
 					const duration = this.getAttribute('data-duration')
@@ -446,7 +449,7 @@ function load_data() {
 						output += '<span><a href="' + url + '" target="_blank">' + the_domain + '</a></span><br/>'
 					}
 					else {
-						output += '<span>' + url + '</span><br/>'
+						output += '<span>' + 'Other activity' + '</span><br/>'
 					}
 					output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>'
 
