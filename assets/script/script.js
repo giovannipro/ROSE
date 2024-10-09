@@ -2,8 +2,8 @@
 // const dataset = "search_story_task_8_user_1005"
 // const dataset = "search_story_task_8_user_1007"
  // const dataset = "search_story_task_8_user_1010"
-//const dataset = "search_story_task_8_user_1013"
-const dataset = "search_story_task_1_user_300"
+const dataset = "search_story_task_8_user_1013"
+// const dataset = "search_story_task_1_user_300"
 
 const duration = 100;
 const start_shift = 10;
@@ -54,7 +54,7 @@ function load_data() {
 				.attr("height",height + (margin.top + margin.bottom))
 				.attr("id", "svg_labels")
 
-			const strip_height = height/2.4
+			const strip_height = height/2.45
 
 			const linePositions = [
 				strip_height * 0, 
@@ -147,7 +147,7 @@ function load_data() {
 				.range([start_shift, width-20])
 				// .nice()
 
-			const strip_height = height/2.4
+			const strip_height = height/2.45
 			const search_height = strip_height * 1
 			const website_height = strip_height * 0.5
 			const page_height = strip_height * 0.5

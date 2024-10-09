@@ -24,9 +24,11 @@ h2 {
 }
 
 #plot_box {
-	width: calc(100% - 120px);
 	overflow-y: hidden;
 	overflow-x: scroll;
+	width: calc(100% - 120px);
+/*	background: rgb(1,255,255);
+	background: linear-gradient(90deg, rgba(1,255,255,1) 90%, rgba(1,255,255,0.01) 100%);*/
 }
 
 #infobox {
