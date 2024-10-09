@@ -5,7 +5,6 @@
 //const dataset = "search_story_task_8_user_1013"
 // const dataset = "search_story_task_1_user_300"
 
-const container = "#container";
 const duration = 100;
 const start_shift = 100;
 const interline = 2;
@@ -23,14 +22,14 @@ function load_data() {
 		.then(loaded)
 
 	function loaded(data) {
-		console.log(data)
+		// console.log(data)
 
-		let window_w = document.getElementById("container").offsetWidth;
-			window_h = document.getElementById("container").offsetHeight;
+		// let window_w = document.getElementById("container").offsetWidth;
+		// 	window_h = document.getElementById("container").offsetHeight;
 
-		let margin = {top: 10, left: 0, bottom: 20, right: 0},
-			width = window_w - (margin.right + margin.right),
-			height = window_h - (margin.top + margin.bottom);
+		// let margin = {top: 10, left: 0, bottom: 20, right: 0},
+		// 	width = window_w - (margin.right + margin.right),
+		// 	height = window_h - (margin.top + margin.bottom);
 
 		data.forEach(function(d) {
 			d.duration = parseFloat(d.duration);  
@@ -47,16 +46,105 @@ function load_data() {
 		document.getElementById("task_name").innerHTML = task_name
 		document.getElementById("user_name").innerHTML = user_name
 
+		function display_labels(data) {
+
+			const container = "#label_box";
+			let window_w = document.getElementById("label_box").offsetWidth;
+				window_h = document.getElementById("container").offsetHeight;
+
+			let margin = {top: 10, left: 0, bottom: 20, right: 0},
+				width = window_w - (margin.right + margin.right),
+				height = window_h - (margin.top + margin.bottom);
+
+			let svg = d3.select(container)
+				.append("svg")
+				.attr("width", width)
+				.attr("height",height + (margin.top + margin.bottom))
+				.attr("id", "svg_labels")
+
+			const strip_height = height/2.9
+
+			const linePositions = [
+				strip_height * 0, 
+				strip_height * 1, 
+				strip_height * 1.5, 
+				strip_height * 2, 
+				strip_height * 2.25
+			];
+
+			let plot = svg.append('g')
+				.attr("id", "plot")
+				.attr("transform", "translate(" + margin.right + "," + margin.top + ")");
+
+			let lines = plot.append("g")
+				.attr("class","lines")
+
+			let line = lines.selectAll("path")
+				.data(linePositions)
+				.enter()
+				.append("line")
+				.attr("x1", 0)  
+				.attr("x2", width * 2)   
+				.attr("y1", d => d)
+				.attr("y2", d => d)
+				.attr("stroke", "#d0d0d0")
+				.attr("stroke-width", 1)
+				.attr("fill", "none")
+				.attr("class","rows")
+
+			// strip labels
+			let labels = plot.append("g")
+				.attr("class","labels")
+
+			let label_a = labels.append("text")
+				.attr("x", 10)
+				.attr("y", (strip_height*0))
+				.attr("dy", strip_height/2)
+				.attr("alignment-baseline","middle")
+				.text("Search");
+
+			let label_b = labels.append("text")
+				.attr("x", 10)
+				.attr("y", (strip_height*0.75))
+				.attr("dy", strip_height/2)
+				.attr("alignment-baseline","middle")
+				.text("Websites");  
+
+			let label_c = labels.append("text")
+				.attr("x", 10)
+				.attr("y", (strip_height*1.25))
+				.attr("dy", strip_height/2)
+				.attr("alignment-baseline","middle")
+				.text("Pages");
+
+			let label_d = labels.append("text")
+				.attr("x", 10)
+				.attr("y", (strip_height*1.625))
+				.attr("dy", strip_height/2)
+				.attr("alignment-baseline","middle")
+				.text("Other");
+		}
+		display_labels(data)
+
 		function display_data(data){
+
+			const container = "#plot_box";
+			let window_w = document.getElementById("plot_box").offsetWidth;
+				window_h = document.getElementById("container").offsetHeight;
+
+			let margin = {top: 10, left: 0, bottom: 20, right: 0},
+				width = window_w - (margin.right + margin.right),
+				height = window_h - (margin.top + margin.bottom);
+
 
 			let svg = d3.select(container)
 				.append("svg")
 				.attr("width", width + (margin.right + margin.right))
 				.attr("height",height + (margin.top + margin.bottom))
-				.attr("id", "svg")
+				.attr("id", "svg_main")
 
 			let plot = svg.append("g")
-				.attr("id", "plot")
+				.attr("id", "plot_main")
 				.attr("transform", "translate(" + margin.right + "," + margin.top + ")");
 
 			// scale time
@@ -133,9 +221,6 @@ function load_data() {
 					return y_pos + interline
 				})
 				.attr("width", (d) => {
-					// time = new Date(d.time).getTime()
-					// time_ = new Date(d.time).getTime() + 60 * 60 * 1000
-					// console.log(time + ' ' + time_) 
 					end_time = new Date(d.time).getTime() + d.duration*1000
 					width = timeScale(end_time) - timeScale(new Date(d.time))
 					return width
@@ -284,38 +369,6 @@ function load_data() {
 					.attr("x",0)
 					.attr('fill',duration_color)
 
-				// strip labels
-				let labels = plot.append("g")
-					.attr("class","labels")
-
-				let label_a = labels.append("text")
-					.attr("x", 10)
-					.attr("y", (strip_height*0))
-					.attr("dy", strip_height/2)
-					.attr("alignment-baseline","middle")
-					.text("Search");
-
-				let label_b = labels.append("text")
-					.attr("x", 10)
-					.attr("y", (strip_height*0.75))
-					.attr("dy", strip_height/2)
-					.attr("alignment-baseline","middle")
-					.text("Websites");  
-
-				let label_c = labels.append("text")
-					.attr("x", 10)
-					.attr("y", (strip_height*1.25))
-					.attr("dy", strip_height/2)
-					.attr("alignment-baseline","middle")
-					.text("Pages");
-
-				let label_d = labels.append("text")
-					.attr("x", 10)
-					.attr("y", (strip_height*1.625))
-					.attr("dy", strip_height/2)
-					.attr("alignment-baseline","middle")
-					.text("Other");
-
 				// x-axis
 				let xAxis = d3.axisBottom(timeScale)
 					.ticks(d3.timeMinute.every(2)) 
@@ -359,9 +412,6 @@ function load_data() {
 					d3.selectAll(".strip_box").select("text")
 						.attr("visibility","hidden")
 
-					// d3.select(this).select("rect")
-					// 	.attr("fill","url(#patt1)")
-
 					d3.selectAll(".website").select("text")
 						.attr("visibility","hidden")
 
@@ -383,11 +433,6 @@ function load_data() {
 				// - - - 
 
 				function handleMouseOver_website(){
-					// d3.select(this).select("text")
-					// 	.transition()
-					// 	.duration(duration)
-					// 	.attr("opacity",1)
-
 					d3.selectAll(".website").select("rect")
 						.attr("opacity",over_opacity)
 
@@ -398,28 +443,21 @@ function load_data() {
 						.transition()
 						.duration(duration)
 						.attr("opacity",1)
-
 				}
 
 				function handleMouseOut_website(){
-					// d3.select(this).select("text")
-					// 	.transition()
-					// 	.duration(duration)
-					// 	.attr("opacity",0)
-
 					d3.selectAll(".website").select("rect")
 						.attr("opacity",1)
 
 					d3.selectAll(".strip_box")
 						.attr("opacity",1)
-
 				}
 
 			// switch between the fitting and the normalized scale
 			function rescale(mode){ 
 
-				window_w = document.getElementById("container").offsetWidth;
-				width = window_w + (margin.right + margin.right)
+				window_w = document.getElementById("plot_box").offsetWidth;
+				width = window_w + (margin.right + margin.right);
 
 				const date1 = new Date(data[0].time);
 				const date2 = new Date(data[data.length-1].time)
@@ -489,7 +527,7 @@ function load_data() {
 
 				d3.selectAll(".rows")
 					.transition()
-					.attr("x2",window_w * 2)
+					.attr("x2",new_width)
 			}
 
 			const set_size = document.getElementById('set_size')

@@ -15,7 +15,18 @@ h2 {
 #container {
 	height: 500px;
 	margin-top: 0.5rem;
-	overflow-y: scroll;
+	display: flex;
+	justify-content: space-between;
+}
+
+#label_box {
+	width: 120px;
+}
+
+#plot_box {
+	width: calc(100% - 120px);
+	overflow-y: hidden;
+	overflow-x: scroll;
 }
 
 .strip_box, .website {
@@ -64,4 +75,18 @@ h2 {
 
 table td:nth-child(2){
 	text-align: right;
+}
+
+/*table td {
+	border-bottom: 1px solid black;
+}
+*/
+@media only screen and (max-width: 725px) {
+	#statistics {
+		display: block;
+	}
+
+	.statistics_box {
+		width: 100%;
+	}
 }
