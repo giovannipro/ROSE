@@ -45,7 +45,7 @@ function load_data(task,user) {
 				.attr("height",height + (margin.top + margin.bottom))
 				.attr("id", "svg_labels")
 
-			const strip_height = height/2.45
+			const strip_height = height/2.5
 
 			const linePositions = [
 				strip_height * 0, 
@@ -144,7 +144,7 @@ function load_data(task,user) {
 				.range([start_shift, width-20])
 				// .nice()
 
-			const strip_height = height/2.45
+			const strip_height = height/2.5
 			const search_height = strip_height * 1
 			const website_height = strip_height * 0.5
 			const page_height = strip_height * 0.5
