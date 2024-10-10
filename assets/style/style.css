@@ -60,7 +60,7 @@ h2 {
 	align-items: center;
 }
 
-#set_size {
+#controllers select {
 	width: 30%;
 	height: 2rem;
 }

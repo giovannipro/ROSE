@@ -1,8 +1,3 @@
-// const dataset = "search_story_task_8_user_1004"
-// const dataset = "search_story_task_8_user_1005"
-const dataset = "search_story_task_8_user_1007"
- // const dataset = "search_story_task_8_user_1010"
-// const dataset = "search_story_task_8_user_1013"
 // const dataset = "search_story_task_1_user_300"
 
 const duration = 100;
@@ -15,10 +10,11 @@ const stroke_color = '#aeaeae'
 
 const over_opacity = 0.4
 
-function load_data() {
+function load_data(task,user) {
+	// console.log(task, user)
 	
 	// load data
-	d3.csv("../assets/data/" + dataset + '.csv')
+	d3.csv("../assets/data/search_story_task_" + task + '_user_' + user + '.csv')
 		.then(loaded)
 
 	function loaded(data) {
@@ -31,14 +27,9 @@ function load_data() {
 
 		const website_strip_data = groupConsecutiveDomains(data);
 
-		const values = dataset.match(/\d+/g)
-		const task_name = values[0]
-		const user_name = values[1]
+		function display_labels() {
 
-		document.getElementById("task_name").innerHTML = task_name
-		document.getElementById("user_name").innerHTML = user_name
-
-		function display_labels(data) {
+			document.getElementById("label_box").innerHTML = ''
 
 			const container = "#label_box";
 			let window_w = document.getElementById("label_box").offsetWidth;
@@ -116,9 +107,15 @@ function load_data() {
 				.attr("alignment-baseline","middle")
 				.text("Other");
 		}
-		display_labels(data)
+		display_labels()
 
 		function display_data(data){
+			// console.log(data)
+
+			document.getElementById("plot_box").innerHTML = ''
+
+			const set_size = document.getElementById('set_size')
+			set_size.value = 'fit'
 
 			const container = "#plot_box";
 			let window_w = document.getElementById("plot_box").offsetWidth;
@@ -490,7 +487,6 @@ function load_data() {
 					.attr("x2",new_width)
 			}
 
-			const set_size = document.getElementById('set_size')
 			set_size.addEventListener("change", function() {
 				let size = this.value;
 				rescale(size)
@@ -594,10 +590,19 @@ function load_data() {
 
 		}
 		display_data(data)
-
 	}
 }	
 
+const set_story = document.getElementById('set_story')
+set_story.addEventListener("change", function() {
+	let value = this.value
+		task = parseInt(value.split('_')[0])
+		user = parseInt(value.split('_')[1])
+
+	// console.log(story, user)
+	load_data(task,user)
+})
+
 window.addEventListener('load', function () {	
-	load_data();
+	load_data(1,300);
 })
