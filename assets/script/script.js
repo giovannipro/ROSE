@@ -14,7 +14,7 @@ function load_data(task,user) {
 	// console.log(task, user)
 	
 	// load data
-	d3.csv("../assets/data/search_story_task_" + task + '_user_' + user + '.csv')
+	d3.csv("assets/data/search_story_task_" + task + '_user_' + user + '.csv')
 		.then(loaded)
 
 	function loaded(data) {
