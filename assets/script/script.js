@@ -335,9 +335,8 @@ function load_data(task,user) {
 						.attr("opacity",1)
 				}
 
-
+				const infobox = document.getElementById('infobox')
 				function handleClick() {
-					const infobox = document.getElementById('infobox')
 
 					d3.selectAll('.strip_rect')
 						.attr("stroke",stroke_color)
@@ -485,6 +484,8 @@ function load_data(task,user) {
 				d3.selectAll(".rows")
 					.transition()
 					.attr("x2",new_width)
+
+				infobox.innerHTML = ''
 			}
 
 			set_size.addEventListener("change", function() {
@@ -502,6 +503,7 @@ function load_data(task,user) {
 					rescale("fit")
 					set_size.value = 'fit'
 				}
+
 			});
 
 			function resize_chart(mode){
@@ -599,7 +601,7 @@ set_story.addEventListener("change", function() {
 		task = parseInt(value.split('_')[0])
 		user = parseInt(value.split('_')[1])
 
-	// console.log(story, user)
+	infobox.innerHTML = ''
 	load_data(task,user)
 })
 
