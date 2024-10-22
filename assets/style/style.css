@@ -61,8 +61,39 @@ h2 {
 }
 
 #controllers select {
-	width: 30%;
 	height: 2rem;
+}
+
+#story_selection {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 60%;
+}
+
+#story_selection div, input{
+	width: 25%;
+	display: block;
+}
+
+#feedback {
+	width: 30%;
+}
+
+#set_task, #set_user, #set_story {
+	width: 90%;
+}
+
+#set_user {
+	height: 2rem;
+}
+
+#set_story {
+	height: 2.3rem;
+}
+
+#set_size {
+	width: 30%;
 }
 
 #statistics {

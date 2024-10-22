@@ -12,15 +12,29 @@
 		</header>
 		<main>
 			<div id="controllers">
-				<select id="set_story">
-					<option value="1_300">Task 1 - User 300</option>
-					<option value="8_1004">Task 8 - User 1004</option>
-					<option value="8_1005">Task 8 - User 1005</option>
-					<option value="8_1007">Task 8 - User 1007</option>
-					<option value="8_1010">Task 8 - User 1010</option>
-					<option value="8_1012">Task 8 - User 1012</option>
-					<option value="8_1013">Task 8 - User 1013</option>
-				</select>
+				<div id="story_selection">
+					<div>
+						<label>Task</label>
+						<select id="set_task" required>
+							<option value="1">1</option>
+							<option value="8">8</option>
+						</select>
+					</div>
+
+					<div>
+						<label>User</label>
+						<input type="text" id="set_user" maxlength="4" required />
+					</div>
+
+					<div>
+						<label>&nbsp; </label>
+						<input type="submit" id="set_story" value="display data">
+					</div>
+					
+					<div id="feedback"></div>
+					
+				</div>
+
 				<select id="set_size">
 					<option value="fit">Fit scale</option>
 					<option value="normalize">Normalize scale</option>

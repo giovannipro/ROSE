@@ -16,6 +16,16 @@ function load_data(task,user) {
 	// load data
 	d3.csv("assets/data/search_story_task_" + task + '_user_' + user + '.csv')
 		.then(loaded)
+		.then(
+			feedback.innerHTML = ''
+		)
+		.catch(function(error){
+			the_error = String(error)
+			if (the_error.indexOf("404") !== -1) {
+    			const feedback = document.getElementById("feedback")
+    			feedback.innerHTML = "please select another timeline"
+			}
+		})
 
 	function loaded(data) {
 		// console.log(data)
@@ -493,18 +503,17 @@ function load_data(task,user) {
 				rescale(size)
 			})
 
-			addEventListener("keypress", (event) => {
-				let key = event.key
-				if (key == "1") {
-					rescale("normalize")
-					set_size.value = 'normalize'
-				}
-				else if (key == "2"){
-					rescale("fit")
-					set_size.value = 'fit'
-				}
-
-			});
+			// addEventListener("keypress", (event) => {
+			// 	let key = event.key
+			// 	if (key == "1") {
+			// 		rescale("normalize")
+			// 		set_size.value = 'normalize'
+			// 	}
+			// 	else if (key == "2"){
+			// 		rescale("fit")
+			// 		set_size.value = 'fit'
+			// 	}
+			// });
 
 			function resize_chart(mode){
 
@@ -596,13 +605,20 @@ function load_data(task,user) {
 }	
 
 const set_story = document.getElementById('set_story')
-set_story.addEventListener("change", function() {
-	let value = this.value
-		task = parseInt(value.split('_')[0])
-		user = parseInt(value.split('_')[1])
+
+set_story.addEventListener("click", function() {
+
+	const set_task = document.getElementById('set_task').value
+	const set_user = document.getElementById('set_user').value
+
+	// let value = this.value
+		// task = parseInt(value.split('_')[0])
+		// user = parseInt(value.split('_')[1])
+
+	console.log(set_task,set_user)
 
 	infobox.innerHTML = ''
-	load_data(task,user)
+	load_data(set_task,set_user)
 })
 
 window.addEventListener('load', function () {	
