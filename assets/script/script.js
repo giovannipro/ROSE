@@ -397,7 +397,7 @@ function load_data(task,user) {
 							output += '<span><a href="' + url + '" target="_blank">' + url + '</a></span><br/>'
 						}
 					}
-					else if (action == 'NEW_SEARCH' || action == 'NEW_SEARCH_SAME_ENGINE' || action == 'SAME_SEARCH' || action == 'REFINE_SEARCH') {
+					else if (action == 'NEW_SEARCH' || action == 'NEW_SEARCH_SAME_ENGINE' || action == 'SAME_SEARCH' || action == 'REFINE_SEARCH' || action == 'SEEN_SEARCH') {
 						let the_domain = url
 						if (url.indexOf("google") >= 0 ){
 							url_a = url.replace("https://www.google.com/search?q=","")
@@ -408,6 +408,7 @@ function load_data(task,user) {
 						output += '<span><a href="' + url + '" target="_blank">' + the_domain + '</a></span><br/>'
 					}
 					else {
+						console.log(action)
 						output += '<span>' + 'Other activity' + '</span><br/>'
 					}
 					output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>'
@@ -640,6 +641,7 @@ set_story.addEventListener("click", function() {
 })
 
 window.addEventListener('load', function () {	
-	load_data(8,1005);
+	load_data(7,826);
+	// load_data(8,1005);
 	// load_data(1,300);
 })
