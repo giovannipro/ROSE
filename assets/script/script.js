@@ -102,7 +102,6 @@ function load_data(task,user) {
 				.attr("dy", strip_height/2)
 				.attr("alignment-baseline","middle")
 				.text("Search");
-			console.log(linePositions[1])
 
 			let label_b = labels.append("text")
 				.attr("x", 10)
@@ -405,7 +404,11 @@ function load_data(task,user) {
 							url_c = url_b.replace(/\+/g," ")
 							the_domain = url_c
 						}
-						output += '<span><a href="' + url + '" target="_blank">' + the_domain + '</a></span><br/>'
+						seen = ''
+						if (action == "SAME_SEARCH" || action == "SEEN_SEARCH"){ // reused
+							seen = '(already seen)'
+						}
+						output += '<span><a href="' + url + '" target="_blank">' + the_domain +  '</a> ' + '<span style="color: gray">' + seen + '</span><br/>'
 					}
 					else {
 						console.log(action)
