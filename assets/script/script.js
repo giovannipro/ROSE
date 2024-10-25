@@ -49,6 +49,13 @@ function load_data(task,user) {
 				width = window_w - (margin.right + margin.right),
 				height = window_h - (margin.top + margin.bottom);
 
+			// const date1 = new Date(data[0].time);
+			// const date2 = new Date(data[data.length-1].time)
+			// const delta = Math.abs(date2 - date1) / 1000 / 60; // in minutes
+			// const pixel_per_minute = 100
+			// new_width = delta * pixel_per_minute
+			// console.log(data, new_width)
+
 			let svg = d3.select(container)
 				.append("svg")
 				.attr("width", width)
@@ -77,7 +84,7 @@ function load_data(task,user) {
 				.enter()
 				.append("line")
 				.attr("x1", 0)  
-				.attr("x2", width * 2)   
+				.attr("x2", width)   
 				.attr("y1", d => d)
 				.attr("y2", d => d)
 				.attr("stroke", "#d0d0d0")
@@ -125,7 +132,13 @@ function load_data(task,user) {
 			document.getElementById("plot_box").innerHTML = ''
 
 			const set_size = document.getElementById('set_size')
-			set_size.value = 'fit'
+			set_size.value = 'normalize'
+
+			const date1 = new Date(data[0].time);
+			const date2 = new Date(data[data.length-1].time)
+			const delta = Math.abs(date2 - date1) / 1000 / 60; // in minutes
+			const pixel_per_minute = 100
+			new_width = delta * pixel_per_minute
 
 			const container = "#plot_box";
 			let window_w = document.getElementById("plot_box").offsetWidth;
@@ -138,7 +151,8 @@ function load_data(task,user) {
 
 			let svg = d3.select(container)
 				.append("svg")
-				.attr("width", width + (margin.right + margin.right))
+				.attr("width", new_width + (margin.right + margin.right))
+				// .attr("width", width + (margin.right + margin.right))
 				.attr("height",height + (margin.top + margin.bottom))
 				.attr("id", "svg_main")
 
@@ -151,7 +165,8 @@ function load_data(task,user) {
 
 			let timeScale = d3.scaleTime()
 				.domain([new Date(data[0].time), new Date(new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
-				.range([start_shift, width-20])
+				.range([start_shift, new_width-20])
+				// .domain([new Date(data[0].time), new Date(new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
 				// .nice()
 
 			const strip_height = height/2.5
@@ -175,7 +190,7 @@ function load_data(task,user) {
 				.enter()
 				.append("line")
 				.attr("x1", 0)  
-				.attr("x2", width * 2)   
+				.attr("x2", new_width)   
 				.attr("y1", d => d)
 				.attr("y2", d => d)
 				.attr("stroke", "#d0d0d0")
@@ -428,11 +443,8 @@ function load_data(task,user) {
 				const date1 = new Date(data[0].time);
 				const date2 = new Date(data[data.length-1].time)
 				const delta = Math.abs(date2 - date1) / 1000 / 60; // in minutes
-
 				const pixel_per_minute = 100
-
 				new_width = delta * pixel_per_minute
-				// console.log(delta, new_width)
 
 				if (mode == "normalize"){ // the timeline has a constant unit size
 					svg
