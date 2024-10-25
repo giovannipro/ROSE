@@ -9,7 +9,8 @@ function getTextAfterX(query,x) {
 }
 
 function groupConsecutiveDomains(data) {
-	data = data.filter(d => d.page_type == 'RESULT')
+	// data = data.filter(d => d.page_type == 'RESULT')
+	console.log(data)
 
   	const groupedData = [];
   	let currentGroup = [];
@@ -17,6 +18,8 @@ function groupConsecutiveDomains(data) {
   	for (let i = 0; i < data.length; i++) {
 		const currentItem = data[i];
 		const previousItem = data[i - 1];
+
+		// console.log(currentItem.time - previousItem.item)
 
 		if (previousItem && currentItem.domain !== previousItem.domain) {
 	  	// New domain encountered, start a new group
@@ -26,7 +29,11 @@ function groupConsecutiveDomains(data) {
 		  	currentGroup = [];
 		}
 
-		currentGroup.push(currentItem);
+		// console.log(currentItem)
+
+		if (currentItem.page_type == 'RESULT'){
+			currentGroup.push(currentItem);
+		}
   	}
 
   	// Add the last group if it's not empty
@@ -49,6 +56,7 @@ function convertSecondsToMinutes(seconds){
 }
 
 function getUniqueValues(values) {
+	// console.log(values)
 	const uniqueValuesSet = new Set(values);
 	return Array.from(uniqueValuesSet);
 }
@@ -103,7 +111,10 @@ function load_statistics(data){
 		url_ = url.split("/")[2]
 		unique_web.push(url_)
 	})
+	// console.log(pageItems)
+	// console.log(unique_web)
 	const unique_websites = getUniqueValues(unique_web) 
+	// console.log(unique_websites)
 
 	uniq_engine = []
 	searchItems.forEach(item => {
