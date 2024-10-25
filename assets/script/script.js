@@ -67,9 +67,9 @@ function load_data(task,user) {
 			const linePositions = [
 				strip_height * 0, 
 				strip_height * 1, 
-				strip_height * 1.5, 
-				strip_height * 2, 
-				strip_height * 2.25
+				strip_height * 1.1, 
+				strip_height * 2.1, 
+				strip_height * 2.3
 			];
 
 			let plot = svg.append('g')
@@ -98,29 +98,30 @@ function load_data(task,user) {
 
 			let label_a = labels.append("text")
 				.attr("x", 10)
-				.attr("y", (strip_height*0))
+				.attr("y", linePositions[0])
 				.attr("dy", strip_height/2)
 				.attr("alignment-baseline","middle")
 				.text("Search");
+			console.log(linePositions[1])
 
 			let label_b = labels.append("text")
 				.attr("x", 10)
-				.attr("y", (strip_height*0.75))
-				.attr("dy", strip_height/2)
+				.attr("y", (strip_height*1.1-5))
+				.attr("dy",0)
 				.attr("alignment-baseline","middle")
 				.text("Websites");  
 
 			let label_c = labels.append("text")
 				.attr("x", 10)
-				.attr("y", (strip_height*1.25))
-				.attr("dy", strip_height/2)
+				.attr("y", (strip_height*2.1))
+				.attr("dy", -70)
 				.attr("alignment-baseline","middle")
 				.text("Pages");
 
 			let label_d = labels.append("text")
 				.attr("x", 10)
-				.attr("y", (strip_height*1.625))
-				.attr("dy", strip_height/2)
+				.attr("y", (strip_height*2.3))
+				.attr("dy", -13)
 				.attr("alignment-baseline","middle")
 				.text("Other");
 		}
@@ -142,17 +143,19 @@ function load_data(task,user) {
 
 			const container = "#plot_box";
 			let window_w = document.getElementById("plot_box").offsetWidth;
-				window_h = document.getElementById("plot_box").offsetHeight;
-
+			window_h = document.getElementById("plot_box").offsetHeight;
+			
 			let margin = {top: 10, left: 0, bottom: 20, right: 0},
-				width = window_w - (margin.right + margin.right),
-				height = window_h - (margin.top + margin.bottom);
-
+			width = window_w - (margin.right + margin.right),
+			height = window_h - (margin.top + margin.bottom);
+			
+			if (new_width < window_w){
+				new_width = window_w
+			}
 
 			let svg = d3.select(container)
 				.append("svg")
 				.attr("width", new_width + (margin.right + margin.right))
-				// .attr("width", width + (margin.right + margin.right))
 				.attr("height",height + (margin.top + margin.bottom))
 				.attr("id", "svg_main")
 
@@ -171,15 +174,16 @@ function load_data(task,user) {
 
 			const strip_height = height/2.5
 			const search_height = strip_height * 1
-			const website_height = strip_height * 0.5
-			const page_height = strip_height * 0.5
+			const website_height = strip_height * 0.1
+			const page_height = strip_height * 1
+			const other_height = strip_height * 0.2
 
 			const linePositions = [
 				strip_height * 0, 
 				strip_height * 1, 
-				strip_height * 1.5, 
-				strip_height * 2, 
-				strip_height * 2.25
+				strip_height * 1.1, 
+				strip_height * 2.1, 
+				strip_height * 2.3
 			];
 
 			let lines = plot.append("g")
@@ -190,7 +194,7 @@ function load_data(task,user) {
 				.enter()
 				.append("line")
 				.attr("x1", 0)  
-				.attr("x2", new_width)   
+				.attr("x2", new_width * 1.2)   
 				.attr("y1", d => d)
 				.attr("y2", d => d)
 				.attr("stroke", "#d0d0d0")
@@ -232,10 +236,10 @@ function load_data(task,user) {
 						y_pos = strip_height * 0
 					}
 					else if (d.page_type == 'RESULT') {
-						y_pos = strip_height * 1.5
+						y_pos = strip_height * 1.1
 					}
 					else {
-						y_pos = strip_height * 2
+						y_pos = strip_height * 2.1
 					}
 					return y_pos + interline
 				})
@@ -250,9 +254,11 @@ function load_data(task,user) {
 						height = search_height - interline
 					}
 					else if (d.page_type == 'RESULT') {
-						height = website_height - interline
+						height = page_height - interline
 					}
-
+					else {
+						height = other_height - interline
+					}
 					return height - interline
 				})
 				.attr("stroke",stroke_color)
@@ -336,7 +342,7 @@ function load_data(task,user) {
 				const xAxis_box = plot.append("g")
 					.attr("class","x_axis")
 					.attr("id","x_axis")
-					.attr("transform", "translate(0, " + (strip_height * 2.25 + interline) + ")")
+					.attr("transform", "translate(0, " + (strip_height * 2.3 + interline) + ")")
 					.call(xAxis)
 
 				// handle Mouse Over
