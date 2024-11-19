@@ -379,6 +379,7 @@ function load_data(task,user) {
 					d3.select(this).select("rect")
 						.attr("stroke","red")
 						.attr("stroke-width",2)
+						.attr("vector-effect","non-scaling-stroke")
 
 					const url = this.getAttribute('data-url')
 					const domain = this.getAttribute('data-domain')
@@ -397,7 +398,7 @@ function load_data(task,user) {
 						}
 					}
 					else if (action == 'NEW_SEARCH' || action == 'NEW_SEARCH_SAME_ENGINE' || action == 'SAME_SEARCH' || action == 'REFINE_SEARCH' || action == 'SEEN_SEARCH') {
-						let the_domain = url
+						let the_domain = decodeURIComponent(url)
 
 						// url_a = the_domain.split("?")[1]
 						url_b = the_domain.split("q=")[1]
