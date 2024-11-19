@@ -6,7 +6,7 @@ const interline = 2;
 
 const new_page_color = '#ff9100'
 const duration_color = '#a4a4a4'
-const stroke_color = '#aeaeae' 
+const stroke_color = 'white' // '#aeaeae' 
 
 const over_opacity = 0.4
 
@@ -378,7 +378,7 @@ function load_data(task,user) {
 
 					d3.select(this).select("rect")
 						.attr("stroke","red")
-						.attr("stroke-width",3)
+						.attr("stroke-width",2)
 
 					const url = this.getAttribute('data-url')
 					const domain = this.getAttribute('data-domain')
@@ -398,15 +398,32 @@ function load_data(task,user) {
 					}
 					else if (action == 'NEW_SEARCH' || action == 'NEW_SEARCH_SAME_ENGINE' || action == 'SAME_SEARCH' || action == 'REFINE_SEARCH' || action == 'SEEN_SEARCH') {
 						let the_domain = url
-						if (url.indexOf("google") >= 0 ){
-							url_a = url.replace("https://www.google.com/search?q=","")
-							url_b = url_a.split("&")[0]
-							url_c = url_b.replace(/\+/g," ")
-							the_domain = url_c
+
+						// url_a = the_domain.split("?")[1]
+						url_b = the_domain.split("q=")[1]
+						
+						index_start = url_b.indexOf("q=") + 1
+						index_end = url_b.length
+
+						if (url_b.indexOf("&") != -1){
+							index_end = url_b.indexOf("&")
 						}
+						// console.log(index_end)
+
+						url_c = url_b.substring(index_start,index_end)
+						console.log(url_b.length, index_start,index_end, url_c)
+
+						url_d = url_c.replace(/\+/g," ")
+						// console.log(url_b)
+						
+						the_domain = url_d
+
 						seen = ''
 						if (action == "SAME_SEARCH" || action == "SEEN_SEARCH"){ // reused
-							seen = '(already seen)'
+							seen = '(reused query)'
+						}
+						if (action == "REFINE_SEARCH"){ 
+							seen = '(modified query)'
 						}
 						output += '<span><a href="' + url + '" target="_blank">' + the_domain +  '</a> ' + '<span style="color: gray">' + seen + '</span><br/>'
 					}

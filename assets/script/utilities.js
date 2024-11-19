@@ -130,56 +130,65 @@ function load_statistics(data){
 
 	output_a += '<table>'
 	output_a += '<tr><td><strong>Duration</strong></td></tr>'
-	output_a += '<tr><td>Search (shortest)</td>'
-	output_a += '<td>' + convertSecondsToMinutes(minSearchDuration) + '</td></tr>'
-	output_a += '<tr><td>Search (average)</td>'
-	output_a += '<td>' + convertSecondsToMinutes(avgSearchDuration) + '</td></tr>'
-	output_a += '<tr><td>Search (longest)</td>'
-	output_a += '<td>' + convertSecondsToMinutes(maxSearchDuration) + '</td></tr>' 
-	output_a += '<tr><td>Search (total)</td>'
-	output_a += '<td>' + convertSecondsToMinutes(searchDuration) + '</td></tr>' // '<td>' + parseInt(searchDuration) + ' seconds / ' + convertSecondsToMinutes(searchDuration) + ' minutes</td></tr>'
-	output_a += '<tr><td>&nbsp;</td></tr>'
-
-	output_a += '<tr><td>Pages (shortest)</td>'
-	output_a += '<td>' + convertSecondsToMinutes(minPageDuration) + '</td></tr>'
-	output_a += '<tr><td>Pages (average)</td>'
-	output_a += '<td>' + convertSecondsToMinutes(avgPageDuration) + '</td></tr>' 
-	output_a += '<tr><td>Pages (longest)</td>'
-	output_a += '<td>' + convertSecondsToMinutes(maxPageDuration) + '</td></tr>' 
-	output_a += '<tr><td>Pages (total)</td>'
-	output_a += '<td>' + convertSecondsToMinutes(pageDuration) + '</td></tr>' // '<td>' + parseInt(pageDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration) + ' minutes</td></tr>'
-	output_a += '<tr><td>&nbsp;</td></tr>'
-
+	
 	output_a += '<tr><td>Total</td>'
 	output_a += '<td>' + convertSecondsToMinutes(pageDuration + searchDuration) + '</td></tr>' // '<td>' + parseInt(pageDuration + searchDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration + searchDuration) + ' minutes</td></tr>'
+	
+	output_a += "<tr><td>Barra (grafico)<br/><br/></td></tr>"
+	output_a += '<tr><td>Search</td>'
+	output_a += '<td>' + convertSecondsToMinutes(searchDuration) + '</td></tr>' // '<td>' + parseInt(searchDuration) + ' seconds / ' + convertSecondsToMinutes(searchDuration) + ' minutes</td></tr>'
+	output_a += '<tr><td>Pages<br/><br/></td>'
+	output_a += '<td>' + convertSecondsToMinutes(pageDuration) + '</td></tr>' // '<td>' + parseInt(pageDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration) + ' minutes</td></tr>'
+	
+
+	output_a += '<tr><td>Search</td>'
+	output_a += '<tr><td>- shortest</td>'
+	output_a += '<td>' + convertSecondsToMinutes(minSearchDuration) + '</td></tr>'
+	output_a += '<tr><td>- average</td>'
+	output_a += '<td>' + convertSecondsToMinutes(avgSearchDuration) + '</td></tr>'
+	output_a += '<tr><td>- longest</td>'
+	output_a += '<td>' + convertSecondsToMinutes(maxSearchDuration) + '</td></tr>' 
+	output_a += '<tr><td>&nbsp;</td></tr>'
+	
+	output_a += '<tr><td>Pages</td>'
+	output_a += '<tr><td>- shortest</td>'
+	output_a += '<td>' + convertSecondsToMinutes(minPageDuration) + '</td></tr>'
+	output_a += '<tr><td>- average</td>'
+	output_a += '<td>' + convertSecondsToMinutes(avgPageDuration) + '</td></tr>' 
+	output_a += '<tr><td>- longest</td>'
+	output_a += '<td>' + convertSecondsToMinutes(maxPageDuration) + '</td></tr>' 
+	output_a += '<tr><td>&nbsp;</td></tr>'
+	
 	output_a += '</table>'
 
 	output_b += '<table>'
 	output_b += '<tr><td><strong>Search</strong></td></tr>'
-	output_b += '<tr><td>New queries</td>'
-	output_b += '<td>' + newQueries + '</td></tr>'
-	output_b += '<tr><td>Reused queries</td>'
-	output_b += '<td>' + reusedQueries + '</td></tr>'
-	output_b += '<tr><td>Reprised queries</td>'
-	output_b += '<td>' + revisedQueries + '</td></tr>'
-	output_b += '<tr><td>Total queries</td>'
+	output_b += '<tr><td>Queries</td></tr>'
+	output_b += '<tr><td>- total</td>'
 	output_b += '<td>' + (newQueries + reusedQueries + revisedQueries) + '</td></tr>'
+	output_b += '<tr><td>- new</td>'
+	output_b += '<td>' + newQueries + '</td></tr>'
+	output_b += '<tr><td>- reused</td>'
+	output_b += '<td>' + reusedQueries + '</td></tr>'
+	output_b += '<tr><td>- modified</td>'
+	output_b += '<td>' + revisedQueries + '</td></tr>'
 	output_b += '</table>'
 
 	output_c += '<table>'
 	output_c += '<tr><td><strong>Websites</strong></td></tr>'
-	output_c += '<tr><td>New websites</td>'
-	output_c += '<td>' + newDomains + '</td></tr>'
-	output_c += '<tr><td>Revisited websites</td>'
-	output_c += '<td>' + revisitedDomains + '</td></tr>'
-	output_c += '<tr><td>Total websites visited</td>'
+	output_c += '<tr><td>- total</td>'
 	output_c += '<td>' + (newDomains + revisitedDomains) + '</td></tr>'
-	output_c += '<tr><td>Total pages visited</td>'
+	output_c += '<tr><td>- new</td>'
+	output_c += '<td>' + newDomains + '</td></tr>'
+	output_c += '<tr><td>- revisited</td>'
+	output_c += '<td>' + revisitedDomains + '</td></tr>'
+	output_c += '<tr><td>&nbsp; </td></tr>'
+	output_c += '<tr><td>- total pages</td>'
 	output_c += '<td>' + pages + '</td></tr>'
 	output_c += '</table>'
 
 	output_b += '<table style="margin-top: 1.5rem;">'
-	output_b += '<tr><td><strong>Queries</strong> (chronological order)</td></tr>'
+	output_b += '<tr><td><strong>Queries</strong></td></tr>'
 	unique_queries.forEach(item => {
 		the_query = short_url(item,60)
 		if (item.split('?q=')[1]){
@@ -206,7 +215,7 @@ function load_statistics(data){
 	output_b += '</table>'
 
 	output_c += '<table style="margin-top: 1.5rem;">'
-	output_c += '<tr><td><strong>Websites</strong> (chronological order)</td></tr>'
+	output_c += '<tr><td><strong>Domains</strong></td></tr>'
 	unique_websites.forEach(item => {
 		const web_a = item.replace('https://','')
 		const web_b = web_a.replace('www.','')
