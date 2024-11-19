@@ -111,8 +111,7 @@ function load_statistics(data){
 		url_ = url.split("/")[2]
 		unique_web.push(url_)
 	})
-	// console.log(pageItems)
-	// console.log(unique_web)
+
 	const unique_websites = getUniqueValues(unique_web) 
 	// console.log(unique_websites)
 
@@ -190,6 +189,7 @@ function load_statistics(data){
 	output_b += '<table style="margin-top: 1.5rem;">'
 	output_b += '<tr><td><strong>Queries</strong></td></tr>'
 	unique_queries.forEach(item => {
+		item = decodeURIComponent(item)
 		the_query = short_url(item,60)
 		if (item.split('?q=')[1]){
 			the_query_a = item.split('?q=')[1]

@@ -543,18 +543,6 @@ function load_data(task,user) {
 				rescale(size)
 			})
 
-			// addEventListener("keypress", (event) => {
-			// 	let key = event.key
-			// 	if (key == "1") {
-			// 		rescale("normalize")
-			// 		set_size.value = 'normalize'
-			// 	}
-			// 	else if (key == "2"){
-			// 		rescale("fit")
-			// 		set_size.value = 'fit'
-			// 	}
-			// });
-
 			function resize_chart(mode){
 
 				if (mode == "normalize"){ // the timeline has a constant unit size
@@ -650,11 +638,6 @@ set_story.addEventListener("click", function() {
 
 	const set_task = document.getElementById('set_task').value
 	const set_user = document.getElementById('set_user').value
-
-	// let value = this.value
-		// task = parseInt(value.split('_')[0])
-		// user = parseInt(value.split('_')[1])
-
 	console.log(set_task,set_user)
 
 	infobox.innerHTML = ''
