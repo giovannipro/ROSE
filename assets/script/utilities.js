@@ -80,6 +80,17 @@ function short_url(url,max){
 	return shortUrl
 }
 
+function search_engine(item){
+	if (item.includes('google')){
+		searchEngine = 'Google'
+	}
+	else {
+		searchEngine = item
+	}
+
+	return searchEngine
+}
+
 function load_statistics(data){
 
 	const max_link_char = 50
@@ -219,7 +230,9 @@ function load_statistics(data){
 	output_b += '<table style="margin-top: 1.5rem;">'
 	output_b += '<tr><td><strong>Search engines</strong></td></tr>'
 	unique_searchEngines.forEach(item => {
-		output_b += '<tr><td><a href="' + item + '" target="_blank">' + short_url(item,max_link_char) + '</a></td></tr>'
+		output_b += '<tr><td>' + search_engine(item) + '</td></tr>'
+
+		// output_b += '<tr><td><a href="' + item + '" target="_blank">' + short_url(item,max_link_char) + '</a></td></tr>'
 	})
 	output_b += '</table>'
 
