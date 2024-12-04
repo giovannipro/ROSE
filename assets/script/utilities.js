@@ -234,6 +234,7 @@ function load_statistics(data){
 
 		// output_b += '<tr><td><a href="' + item + '" target="_blank">' + short_url(item,max_link_char) + '</a></td></tr>'
 	})
+	output_b += '<tr><td>&nbsp;</td></tr>'
 	output_b += '</table>'
 
 	output_c += '<table style="margin-top: 1.5rem;">'
@@ -243,6 +244,7 @@ function load_statistics(data){
 		const web_b = web_a.replace('www.','')
 		output_c += '<tr><td><a href="' + item + '" target="_blank">' + short_url(web_b,max_link_char) + '</a></td><tr>' // 
 	})
+	output_c += '<tr><td>&nbsp;</td></tr>'
 	output_c += '</tr>'
 	output_c += '</table>'
 

@@ -98,10 +98,20 @@ h2 {
 
 #statistics {
 	margin: 2rem 1rem 3rem;
-	display: flex;
-	justify-content: space-between;
 	border-top: 1px solid #ccc;
 	padding-top: 0.5rem;
+}
+
+#statistics_container {
+	display: flex;
+	justify-content: space-between;
+}
+
+.tab_label {
+	font-weight: bold;
+	padding: 1rem 0;
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 1rem;
 }
 
 .statistics_box {
@@ -129,11 +139,13 @@ footer {
 
 
 @media only screen and (max-width: 725px) {
-	#statistics {
+	#statistics_container {
 		display: block;
 	}
 
 	.statistics_box {
 		width: 100%;
+		border-bottom: 1px solid #ccc;
+		margin-bottom: 1rem;
 	}
 }
