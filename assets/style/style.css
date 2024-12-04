@@ -138,13 +138,18 @@ footer {
 }
 
 @media only screen and (max-width: 725px) {
-	#statistics_container {
+	#statistics_container div {
 		display: block;
+		width: 100%;
 	}
 
 	.statistics_box {
 		width: 100%;
 		border-bottom: 1px solid #ccc;
 		margin-bottom: 1rem;
+	}
+
+	.statistics_box:last-child {
+		border-bottom: none;
 	}
 }

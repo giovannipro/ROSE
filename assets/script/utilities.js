@@ -267,6 +267,7 @@ function open_tabs(){
 	const SUGG_ARROW = document.getElementById("open_sugg")
 
 	STAT_BUTTON.addEventListener("click", () => {
+		
 		if (open_stat == false){
 			STAT_TAB.style.display = 'flex'
 			open_stat = true
@@ -280,6 +281,7 @@ function open_tabs(){
 	})
 
 	SUGG_BUTTON.addEventListener("click", () => {
+
 		if (open_sugg == false){
 			SUGG_TAB.style.display = 'flex'
 			open_sugg = true
