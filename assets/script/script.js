@@ -30,12 +30,19 @@ function load_data(task,user) {
 	function loaded(data) {
 		// console.log(data)
 
-		data.forEach(function(d) {
-			d.duration = parseFloat(d.duration);  
+		data.forEach(function(d,i) {
+			d.duration = parseFloat(d.duration);
+			d.id = i
 		});
 		load_statistics(data)
 
 		const website_strip_data = groupConsecutiveDomains(data);
+		// console.log(website_strip_data)
+
+		website_strip_data.forEach((item,i)  => {
+			item[0].the_id = i
+			// console.log(item[0])
+		})
 
 		function display_labels() {
 
@@ -214,15 +221,18 @@ function load_data(task,user) {
 				.data(data)
 				.enter()
 				.append("g")
-				.attr("class","strip_box")
+				.attr("class","strip strip_box")
 				.attr("data-url", (d) => d.url)
 				.attr("data-domain", (d) => d.domain)
 				.attr("data-duration", (d) => d.duration)
 				.attr("data-action", (d) => d.action)
 				.attr("data-domainStatus", (d) => d.domain_status)
+				.attr("data-index", (d, i) => i)
 				.on("mouseover", handleMouseOver) 
 				.on("mouseout", handleMouseOut)
-				.on("click", handleClick)
+				.on("click", (event, d) => {
+					handleClick(d.id)
+				})
 
 			let strip_rect = strip_box.append("rect")
 				.attr("class","strip_rect")
@@ -297,10 +307,13 @@ function load_data(task,user) {
 					.attr("data-domain", (d) => d[0].domain)
 					.attr("data-duration", (d) => d[0].duration)
 					.attr("data-action", (d) => d[0].action)
+					.attr("id", (d) => d[0].the_id)
 					.attr("data-domainStatus", (d) => d[0].domain_status)
 					.on("mouseover", handleMouseOver_website) 
 					.on("mouseout", handleMouseOut_website)
-					.on("click", handleClick)
+					.on("click", (event, d) => {
+						handleClick(-1 - d[0].the_id);
+					});
 
 				let strip_website_rect = strip_website.append("rect")
 					.attr("class","strip_website_rect")
@@ -369,7 +382,15 @@ function load_data(task,user) {
 				}
 
 				const infobox = document.getElementById('infobox')
-				function handleClick() {
+				function handleClick(id) {
+					console.log(id)
+					console.log(this)
+
+					selectedIndex = id
+					
+					if (id < 0){
+						console.log(d3.select('#website_' + id+1))
+					}
 
 					d3.selectAll('.strip_rect')
 						.attr("stroke",stroke_color)
@@ -379,23 +400,26 @@ function load_data(task,user) {
 						.attr("stroke",stroke_color)
 						.attr("stroke-width",1)
 
-					d3.select(this).select("rect")
+					const item = d3.select('[data-index="' + id + '"]')
+						
+					item.select("rect")
 						.attr("stroke","red")
 						.attr("stroke-width",2)
 						.attr("vector-effect","non-scaling-stroke")
 
-					const url = this.getAttribute('data-url')
-					const domain = this.getAttribute('data-domain')
-					const duration = this.getAttribute('data-duration')
-					const action = this.getAttribute('data-action')
-					const domainStatus = this.getAttribute('data-domainStatus')
-					// console.log(domain)
+					const url = item._groups[0][0].getAttribute('data-url')
+					const domain = item._groups[0][0].getAttribute('data-domain')
+					const duration = item._groups[0][0].getAttribute('data-duration')
+					const action = item._groups[0][0].getAttribute('data-action')
+					const domainStatus = item._groups[0][0].getAttribute('data-domainStatus')
+					const class_ = item._groups[0][0].getAttribute('class')
+					// console.log(class_)
 
 					let output = ''	
 					if (action == 'SAME_DOMAIN_RESULT' || action == 'SEEN_DOMAIN_RESULT' || action == 'NEW_RESULT'){
 						// console.log(this.getAttribute("class"))
 
-						if (this.getAttribute("class") == 'website'){
+						if (class_ == 'website'){
 							output += '<span><a href="https://' + domain + '" target="_blank">' + domain + '</a><br/>'
 						}
 						else {
@@ -448,14 +472,35 @@ function load_data(task,user) {
 						output += '<span>' + 'System (' + system_status + ')' + '</span><br/>'
 					}
 
-					if (this.getAttribute("class") !== 'website'){
+					if (class_ !== 'website'){
 						output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>'
 					}
 
 					infobox.innerHTML = output
 				}
 
-				document.getElementById("")
+				let selectedIndex = 0;
+
+				// function arrow_highlights(){
+				// 	svg.selectAll(".strip")
+				// 		.classed("selected", false);
+				// 	svg.select(`.strip[data-index="${selectedIndex}"]`)
+				// 		.classed("selected", true);	
+				// }
+		
+				document.addEventListener("keydown", (event) => {
+					// console.log(selectedIndex)
+
+					if (event.key === "ArrowRight") {
+						selectedIndex = (selectedIndex + 1) % data.length; // Move to the next strip
+					} else if (event.key === "ArrowLeft") {
+						selectedIndex = (selectedIndex - 1 + data.length) % data.length; // Move to the previous strip
+					}
+					// arrow_highlights()
+					handleClick(selectedIndex) 
+				});
+
+				// document.getElementById("")
 
 				// - - - 
 
@@ -480,6 +525,7 @@ function load_data(task,user) {
 						.attr("opacity",1)
 				}
 
+
 			// switch between the fitting and the normalized scale
 			function rescale(mode){ 
 
@@ -491,7 +537,7 @@ function load_data(task,user) {
 				const delta = Math.abs(date2 - date1) / 1000 / 60; // in minutes
 				const pixel_per_minute = 100
 				new_width = delta * pixel_per_minute
-				console.log(new_width, window_w)
+				// console.log(new_width, window_w)
 
 				if (new_width < window_w){
 					the_scale = window_w
