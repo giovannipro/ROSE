@@ -45,13 +45,22 @@ function groupConsecutiveDomains(data) {
 }
 
 function convertSecondsToMinutes(seconds){
+	// console.log(seconds)
+
 	const minutes = Math.floor(seconds / 60);
 	const remainingSeconds = seconds % 60;
 
 	const formattedMinutes = (minutes < 10 ? "0" : "") + minutes;
 	const formattedSeconds = (remainingSeconds < 10 ? "0" : "") + parseInt(remainingSeconds);
+	// console.log(formattedMinutes + ':' + formattedSeconds)
+	
+	if (String(formattedMinutes) == "Infinity" || String(formattedMinutes) == "NaN" || String(formattedSeconds) == "Infinity" || String(formattedSeconds) == "NaN"){
+		time = 0
+	}
+	else {
+		time = formattedMinutes + ':' + formattedSeconds
+	}
 
-  	const time = formattedMinutes + ':' + formattedSeconds
 	return time
 }
 
