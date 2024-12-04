@@ -67,9 +67,9 @@ function load_data(task,user) {
 			const linePositions = [
 				strip_height * 0, 
 				strip_height * 1, 
-				strip_height * 1.1, 
-				strip_height * 2.1, 
-				strip_height * 2.3
+				strip_height * 1.2, 
+				strip_height * 2.2, 
+				strip_height * 2.35
 			];
 
 			let plot = svg.append('g')
@@ -105,14 +105,14 @@ function load_data(task,user) {
 
 			let label_b = labels.append("text")
 				.attr("x", 10)
-				.attr("y", (strip_height*1.1-5))
+				.attr("y", (strip_height*1.1))
 				.attr("dy",0)
 				.attr("alignment-baseline","middle")
 				.text("Websites");  
 
 			let label_c = labels.append("text")
 				.attr("x", 10)
-				.attr("y", (strip_height*2.1))
+				.attr("y", (strip_height*2.2))
 				.attr("dy", -70)
 				.attr("alignment-baseline","middle")
 				.text("Pages");
@@ -120,9 +120,9 @@ function load_data(task,user) {
 			let label_d = labels.append("text")
 				.attr("x", 10)
 				.attr("y", (strip_height*2.3))
-				.attr("dy", -13)
+				.attr("dy", -2)
 				.attr("alignment-baseline","middle")
-				.text("Other");
+				.text("System");
 		}
 		display_labels()
 
@@ -173,16 +173,16 @@ function load_data(task,user) {
 
 			const strip_height = height/2.5
 			const search_height = strip_height * 1
-			const website_height = strip_height * 0.1
+			const website_height = strip_height * 0.2
 			const page_height = strip_height * 1
-			const other_height = strip_height * 0.2
+			const other_height = strip_height * 0.15
 
 			const linePositions = [
 				strip_height * 0, 
 				strip_height * 1, 
-				strip_height * 1.1, 
-				strip_height * 2.1, 
-				strip_height * 2.3
+				strip_height * 1.2, 
+				strip_height * 2.2, 
+				strip_height * 2.35
 			];
 
 			let lines = plot.append("g")
@@ -235,10 +235,10 @@ function load_data(task,user) {
 						y_pos = strip_height * 0
 					}
 					else if (d.page_type == 'RESULT') {
-						y_pos = strip_height * 1.1
+						y_pos = strip_height * 1.2
 					}
 					else {
-						y_pos = strip_height * 2.1
+						y_pos = strip_height * 2.2
 					}
 					return y_pos + interline
 				})
@@ -341,7 +341,7 @@ function load_data(task,user) {
 				const xAxis_box = plot.append("g")
 					.attr("class","x_axis")
 					.attr("id","x_axis")
-					.attr("transform", "translate(0, " + (strip_height * 2.3 + interline) + ")")
+					.attr("transform", "translate(0, " + (strip_height * 2.35 + interline) + ")")
 					.call(xAxis)
 
 				// handle Mouse Over
