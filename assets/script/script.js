@@ -149,12 +149,15 @@ function load_data(task,user) {
 			height = window_h - (margin.top + margin.bottom);
 			
 			if (new_width < window_w){
-				new_width = window_w
+				the_scale = window_w
+			}
+			else {
+				the_scale = new_width
 			}
 
 			let svg = d3.select(container)
 				.append("svg")
-				.attr("width", new_width + (margin.right + margin.right))
+				.attr("width", the_scale + (margin.right + margin.right))
 				.attr("height",height + (margin.top + margin.bottom))
 				.attr("id", "svg_main")
 
@@ -193,7 +196,7 @@ function load_data(task,user) {
 				.enter()
 				.append("line")
 				.attr("x1", 0)  
-				.attr("x2", new_width * 1.2)   
+				.attr("x2", the_scale * 2)   
 				.attr("y1", d => d)
 				.attr("y2", d => d)
 				.attr("stroke", "#d0d0d0")
@@ -488,10 +491,18 @@ function load_data(task,user) {
 				const delta = Math.abs(date2 - date1) / 1000 / 60; // in minutes
 				const pixel_per_minute = 100
 				new_width = delta * pixel_per_minute
+				console.log(new_width, window_w)
+
+				if (new_width < window_w){
+					the_scale = window_w
+				}
+				else {
+					the_scale = new_width
+				}
 
 				if (mode == "normalize"){ // the timeline has a constant unit size
 					svg
-						.attr("width", new_width + (margin.right + margin.right))
+						.attr("width", the_scale + (margin.right + margin.right))
 					
 					timeScale = d3.scaleTime()
 						.domain([new Date(data[0].time), new Date(new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
@@ -548,7 +559,7 @@ function load_data(task,user) {
 
 				d3.selectAll(".rows")
 					.transition()
-					.attr("x2",new_width)
+					.attr("x2",the_scale)
 
 				infobox.innerHTML = ''
 			}
@@ -560,9 +571,16 @@ function load_data(task,user) {
 
 			function resize_chart(mode){
 
+				if (new_width < window_w){
+					the_scale = window_w
+				}
+				else {
+					the_scale = new_width
+				}
+
 				if (mode == "normalize"){ // the timeline has a constant unit size
 					svg
-						.attr("width", new_width + (margin.right + margin.right))
+						.attr("width", the_scale + (margin.right + margin.right))
 					
 					timeScale = d3.scaleTime()
 						.domain([new Date(data[0].time), new Date(new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
@@ -599,7 +617,7 @@ function load_data(task,user) {
 					.attr("width", (d) => {
 						const end_time = new Date(d[d.length-1].time).getTime() + d[d.length-1].duration*1000
 						const width = timeScale(end_time) - timeScale(new Date(d[0].time))
-						return width
+						return the_scale
 					})
 
 				xAxis = d3.axisBottom(timeScale)
@@ -619,7 +637,7 @@ function load_data(task,user) {
 
 				d3.selectAll(".rows")
 					.transition()
-					.attr("x2", new_width)
+					.attr("x2", the_scale)
 			}
 
 			addEventListener("resize", (event) => {
@@ -660,8 +678,8 @@ set_story.addEventListener("click", function() {
 })
 
 window.addEventListener('load', function () {	
-	// load_data(7,826);
+	load_data(7,826);
 	// load_data(1,1324);
 	// load_data(8,1005);
-	load_data(1,300);
+	// load_data(1,300);
 })
