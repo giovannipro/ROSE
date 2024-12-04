@@ -108,7 +108,7 @@ function load_data(task,user) {
 				.attr("y", (strip_height*1.1))
 				.attr("dy",0)
 				.attr("alignment-baseline","middle")
-				.text("Websites");  
+				.text("Domains");  
 
 			let label_c = labels.append("text")
 				.attr("x", 10)
@@ -262,7 +262,7 @@ function load_data(task,user) {
 				})
 				.attr("stroke",stroke_color)
 				.attr("fill", (d) => {
-					let color = 'red'
+					let color = '#dbdbdb'
 
 					if (d.action == "TASK_STARTED" || d.action == "PRE_SURVEY_STARTED" || d.action == "PRE_SURVEY_ENDED" || d.action == 'POST_SURVEY_STARTED' || d.action == "NEW_TAB" || d.action == "SEARCH_STARTED" || d.action == "SEARCH_ENDED" || d.action == "SEARCH_RESUMED" || d.action == "POST_SURVEY_ENDED"){
 						color = '#dbdbdb' // #afafaf #9aa4ac
@@ -434,6 +434,9 @@ function load_data(task,user) {
 							seen = '(modified query)'
 						}
 						output += '<span><a href="' + url + '" target="_blank">' + the_domain +  '</a> ' + '<span style="color: gray">' + seen + '</span><br/>'
+					}
+					else if (action == 'UNKNOWN'){
+						output += '<span>query unknown</span><br/>'
 					}
 					else {
 						// console.log(action)
@@ -657,7 +660,8 @@ set_story.addEventListener("click", function() {
 })
 
 window.addEventListener('load', function () {	
-	load_data(7,826);
+	// load_data(7,826);
+	load_data(1,1324);
 	// load_data(8,1005);
 	// load_data(1,300);
 })
