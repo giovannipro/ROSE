@@ -44,6 +44,25 @@ function groupConsecutiveDomains(data) {
   	return groupedData;
 }
 
+function duration_chart(searchDuration, pageDuration){
+
+	const total = searchDuration + pageDuration
+	const search_width = searchDuration * 100 / total
+	const page_width = pageDuration * 100 / total
+
+	const min_search = convertSecondsToMinutes(searchDuration)
+	const min_pages = convertSecondsToMinutes(pageDuration)
+
+	let chart = `
+		<div style="display: flex; justify-content: space-between;">
+			<div class="duration_chart" style="background-color: #ff9100; width: ${search_width}%;">${min_search}</div>
+			<div class="duration_chart" style="background-color: #619ED4; width: ${page_width}%; justify-content: flex-end;">${min_pages}</div>
+		</div>
+	`
+
+	return chart
+}
+
 function convertSecondsToMinutes(seconds){
 	// console.log(seconds)
 
@@ -153,12 +172,14 @@ function load_statistics(data){
 	output_a += '<tr><td>Total</td>'
 	output_a += '<td>' + convertSecondsToMinutes(pageDuration + searchDuration) + '</td></tr>' // '<td>' + parseInt(pageDuration + searchDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration + searchDuration) + ' minutes</td></tr>'
 	
-	output_a += "<tr><td>Barra (grafico)<br/><br/></td></tr>"
+	output_a += "<tr><td colspan='2'>" + duration_chart(searchDuration, pageDuration) + "</td></tr>"
+	output_a += '<tr><td>&nbsp;</td></tr>'
+
 	output_a += '<tr><td>Search</td>'
 	output_a += '<td>' + convertSecondsToMinutes(searchDuration) + '</td></tr>' // '<td>' + parseInt(searchDuration) + ' seconds / ' + convertSecondsToMinutes(searchDuration) + ' minutes</td></tr>'
-	output_a += '<tr><td>Pages<br/><br/></td>'
+	output_a += '<tr><td>Pages</td>'
 	output_a += '<td>' + convertSecondsToMinutes(pageDuration) + '</td></tr>' // '<td>' + parseInt(pageDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration) + ' minutes</td></tr>'
-	
+	output_a += '<tr><td>&nbsp;</td></tr>'
 
 	output_a += '<tr><td>Search</td>'
 	output_a += '<tr><td>- shortest</td>'
@@ -261,8 +282,6 @@ function open_tabs(){
 	const STAT_BUTTON = document.getElementById("stat_txt")
 	const STAT_TAB = document.querySelector("#statistics_container")
 	const STAT_ARROW = document.getElementById("open_stat")
-
-	console.log(STAT_TAB)
 
 	const SUGG_BUTTON = document.getElementById("sugg_txt")
 	const SUGG_TAB = document.querySelector("#suggestions_container")

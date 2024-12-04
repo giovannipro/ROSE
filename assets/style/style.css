@@ -140,6 +140,15 @@ footer {
 	margin: 2rem 1rem 3rem;
 }
 
+.duration_chart {
+	color: white;
+	font-size: 0.6rem;
+	height: 1rem;
+	display: flex;
+	align-items: center;
+	padding: 0.1rem;
+}
+
 @media only screen and (max-width: 725px) {
 	#statistics_container .tab_content, #suggestions_container .tab_content {
 		display: block;
