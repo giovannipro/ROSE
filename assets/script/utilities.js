@@ -244,7 +244,7 @@ function load_statistics(data){
 			the_query_c = the_query_b.split('&')[0]
 			the_query = the_query_c.replace(/\+/g,' ')
 		}
-		output_b += '<tr><td><a href="' + item + '" target="_blank">' + short_url(the_query,max_link_char) + '</a></td></tr>'
+		output_b += '<tr><td>- <a href="' + item + '" target="_blank">' + short_url(the_query,max_link_char) + '</a></td></tr>'
 	})
 	output_b += '</table>'
 

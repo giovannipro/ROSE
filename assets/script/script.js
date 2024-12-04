@@ -585,7 +585,6 @@ function load_data(task,user) {
 					timeScale = d3.scaleTime()
 						.domain([new Date(data[0].time), new Date(new Date(data[data.length-1].time).getTime() + data[data.length-1].duration * 1000) ]) 
 						.range([start_shift, new_width-20])
-						
 				}
 				else if (mode == "fit") { // the timeline fits with the width length
 					svg
@@ -617,7 +616,7 @@ function load_data(task,user) {
 					.attr("width", (d) => {
 						const end_time = new Date(d[d.length-1].time).getTime() + d[d.length-1].duration*1000
 						const width = timeScale(end_time) - timeScale(new Date(d[0].time))
-						return the_scale
+						return width
 					})
 
 				xAxis = d3.axisBottom(timeScale)
