@@ -386,15 +386,22 @@ function load_data(task,user) {
 					const duration = this.getAttribute('data-duration')
 					const action = this.getAttribute('data-action')
 					const domainStatus = this.getAttribute('data-domainStatus')
-					// console.log(action)
+					// console.log(domain)
 
 					let output = ''	
 					if (action == 'SAME_DOMAIN_RESULT' || action == 'SEEN_DOMAIN_RESULT' || action == 'NEW_RESULT'){
-						if (domainStatus == "SEEN") {
-							output += '<span><a href="' + url + '" target="_blank">' + url + '</a> <span style="color: gray">(already seen)</span></span><br/>'
+						// console.log(this.getAttribute("class"))
+
+						if (this.getAttribute("class") == 'website'){
+							output += '<span><a href="https://' + domain + '" target="_blank">' + domain + '</a><br/>'
 						}
 						else {
-							output += '<span><a href="' + url + '" target="_blank">' + url + '</a></span><br/>'
+							if (domainStatus == "SEEN") {
+								output += '<span><a href="' + url + '" target="_blank">' + url + '</a> <span style="color: gray">(already seen)</span></span><br/>'
+							}
+							else {
+								output += '<span><a href="' + url + '" target="_blank">' + url + '</a></span><br/>'
+							}
 						}
 					}
 					else if (action == 'NEW_SEARCH' || action == 'NEW_SEARCH_SAME_ENGINE' || action == 'SAME_SEARCH' || action == 'REFINE_SEARCH' || action == 'SEEN_SEARCH') {
@@ -412,7 +419,7 @@ function load_data(task,user) {
 						// console.log(index_end)
 
 						url_c = url_b.substring(index_start,index_end)
-						console.log(url_b.length, index_start,index_end, url_c)
+						// console.log(url_b.length, index_start,index_end, url_c)
 
 						url_d = url_c.replace(/\+/g," ")
 						// console.log(url_b)
@@ -429,10 +436,13 @@ function load_data(task,user) {
 						output += '<span><a href="' + url + '" target="_blank">' + the_domain +  '</a> ' + '<span style="color: gray">' + seen + '</span><br/>'
 					}
 					else {
-						console.log(action)
+						// console.log(action)
 						output += '<span>' + 'Other activity' + '</span><br/>'
 					}
-					output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>'
+
+					if (this.getAttribute("class") !== 'website'){
+						output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>'
+					}
 
 					infobox.innerHTML = output
 				}
