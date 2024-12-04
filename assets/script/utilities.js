@@ -253,3 +253,45 @@ function load_statistics(data){
 	container_c.innerHTML = output_c
 
 }
+
+function open_tabs(){
+	let open_stat = false
+	let open_sugg = false
+
+	const STAT_BUTTON = document.getElementById("stat_txt")
+	const STAT_TAB = document.getElementById("statistics_container")
+	const STAT_ARROW = document.getElementById("open_stat")
+
+	const SUGG_BUTTON = document.getElementById("sugg_txt")
+	const SUGG_TAB = document.getElementById("suggestions_container")
+	const SUGG_ARROW = document.getElementById("open_sugg")
+
+	STAT_BUTTON.addEventListener("click", () => {
+		if (open_stat == false){
+			STAT_TAB.style.display = 'flex'
+			open_stat = true
+			STAT_ARROW.innerHTML = '&uarr;'
+		}
+		else {
+			STAT_TAB.style.display = 'none'
+			open_stat = false
+			STAT_ARROW.innerHTML = '&darr;'
+		}
+	})
+
+	SUGG_BUTTON.addEventListener("click", () => {
+		if (open_sugg == false){
+			SUGG_TAB.style.display = 'flex'
+			open_sugg = true
+			SUGG_ARROW.innerHTML = '&uarr;'
+		}
+		else {
+			SUGG_TAB.style.display = 'none'
+			open_sugg = false
+			SUGG_ARROW.innerHTML = '&darr;'
+		}
+	})
+
+}
+
+open_tabs()
