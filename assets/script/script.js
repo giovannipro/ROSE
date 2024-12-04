@@ -660,8 +660,8 @@ set_story.addEventListener("click", function() {
 })
 
 window.addEventListener('load', function () {	
-	load_data(7,826);
+	// load_data(7,826);
 	// load_data(1,1324);
 	// load_data(8,1005);
-	// load_data(1,300);
+	load_data(1,300);
 })
