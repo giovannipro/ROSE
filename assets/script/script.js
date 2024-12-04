@@ -437,7 +437,9 @@ function load_data(task,user) {
 					}
 					else {
 						// console.log(action)
-						output += '<span>' + 'Other activity' + '</span><br/>'
+						let system_status = domain.toLowerCase().replace(/\_/g," ")
+
+						output += '<span>' + 'System (' + system_status + ')' + '</span><br/>'
 					}
 
 					if (this.getAttribute("class") !== 'website'){
