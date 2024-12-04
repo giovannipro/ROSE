@@ -105,13 +105,16 @@ h2 {
 	float: right;
 }
 
-#statistics_container,  #suggestions_container{
+#statistics_container, #suggestions_container {
+	display: none;
+}
+
+#statistics_container .tab_content,  #suggestions_container .tab_content {
 	display: flex;
 	justify-content: space-between;
-	display: none;
-	padding-top: 1rem;
-	border-bottom: 1px solid #ccc;
 	min-height: 4rem;
+	border-bottom: 1px solid #ccc;
+	padding-top: 1rem;
 }
 
 .tab_label {
@@ -138,7 +141,7 @@ footer {
 }
 
 @media only screen and (max-width: 725px) {
-	#statistics_container div {
+	#statistics_container .tab_content, #suggestions_container .tab_content {
 		display: block;
 		width: 100%;
 	}

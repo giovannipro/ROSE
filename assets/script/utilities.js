@@ -259,17 +259,19 @@ function open_tabs(){
 	let open_sugg = false
 
 	const STAT_BUTTON = document.getElementById("stat_txt")
-	const STAT_TAB = document.getElementById("statistics_container")
+	const STAT_TAB = document.querySelector("#statistics_container")
 	const STAT_ARROW = document.getElementById("open_stat")
 
+	console.log(STAT_TAB)
+
 	const SUGG_BUTTON = document.getElementById("sugg_txt")
-	const SUGG_TAB = document.getElementById("suggestions_container")
+	const SUGG_TAB = document.querySelector("#suggestions_container")
 	const SUGG_ARROW = document.getElementById("open_sugg")
 
 	STAT_BUTTON.addEventListener("click", () => {
 		
 		if (open_stat == false){
-			STAT_TAB.style.display = 'flex'
+			STAT_TAB.style.display = 'block'
 			open_stat = true
 			STAT_ARROW.innerHTML = '&uarr;'
 		}
@@ -283,7 +285,7 @@ function open_tabs(){
 	SUGG_BUTTON.addEventListener("click", () => {
 
 		if (open_sugg == false){
-			SUGG_TAB.style.display = 'flex'
+			SUGG_TAB.style.display = 'block'
 			open_sugg = true
 			SUGG_ARROW.innerHTML = '&uarr;'
 		}
