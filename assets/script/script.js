@@ -381,15 +381,21 @@ function load_data(task,user) {
 						.attr("opacity",1)
 				}
 
+				let selectedIndex = 0;
+				let previous_id = 0;
+				
 				const infobox = document.getElementById('infobox')
 				function handleClick(id) {
-					console.log(id)
-					console.log(this)
+					console.log(id, previous_id)
+					// console.log(this)
 
 					selectedIndex = id
 					
-					if (id < 0){
-						console.log(d3.select('#website_' + id+1))
+					if (id > 0){
+						previous_id = selectedIndex
+					}
+					else {
+						selectedIndex = previous_id
 					}
 
 					d3.selectAll('.strip_rect')
@@ -479,7 +485,7 @@ function load_data(task,user) {
 					infobox.innerHTML = output
 				}
 
-				let selectedIndex = 0;
+				
 
 				// function arrow_highlights(){
 				// 	svg.selectAll(".strip")
