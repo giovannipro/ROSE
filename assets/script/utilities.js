@@ -55,8 +55,8 @@ function duration_chart(searchDuration, pageDuration){
 
 	let chart = `
 		<div style="display: flex; justify-content: space-between;">
-			<div class="duration_chart" style="background-color: #ff9100; width: ${search_width}%;">${min_search}</div>
-			<div class="duration_chart" style="background-color: #619ED4; width: calc(${page_width}% - 9px); justify-content: flex-end;">${min_pages}</div>
+			<div class="duration_chart" style="background-color: #619ED4; width: calc(${page_width}% - 9px);">${min_pages}</div>
+			<div class="duration_chart" style="background-color: #ff9100; width: ${search_width}%; justify-content: flex-end;">${min_search}</div>
 		</div>
 	`
 	
@@ -252,7 +252,6 @@ function load_statistics(data){
 	output_b += '<tr><td><strong>Search engines</strong></td></tr>'
 	unique_searchEngines.forEach(item => {
 		output_b += '<tr><td>' + search_engine(item) + '</td></tr>'
-
 		// output_b += '<tr><td><a href="' + item + '" target="_blank">' + short_url(item,max_link_char) + '</a></td></tr>'
 	})
 	output_b += '<tr><td>&nbsp;</td></tr>'
