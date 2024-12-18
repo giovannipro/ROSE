@@ -7,36 +7,12 @@
 		<link rel="stylesheet" type="text/css" href="assets/style/style.css">
 	</head>
 	<body> 
-		<header>
-			<h1>ROSE project</h1>
-		</header>
 		<main>
 			<div id="controllers">
-				<div id="story_selection">
-					<div>
-						<label>Task</label>
-						<select id="set_task" required>
-							<option value="1">1</option>
-							<option value="5">5</option>
-							<option value="7">7</option>
-							<option value="8">8</option>
-						</select>
-					</div>
-
-					<div>
-						<label>User</label>
-						<input type="text" id="set_user" maxlength="4" required />
-					</div>
-
-					<div>
-						<label>&nbsp; </label>
-						<input type="submit" id="set_story" value="display data">
-					</div>
-					
-					<div id="feedback"></div>
-					
+				<div id="header">
+					<h2>User: <span id="the_user"></span></h2>
+					<h2>Task: <span id="the_task"></span></h2>
 				</div>
-
 				<select id="set_size">
 					<option value="normalize">Normalize scale</option>
 					<option value="fit">Fit scale</option>
@@ -80,12 +56,6 @@
 				</div>
 			</div>
 		</main>
-
-		<footer>
-			<a href="https://github.com/giovannipro/ROSE" target="_blank">
-				Project on GitHub
-			</a>
-		</footer>
 
 		<script src="assets/script/d3@7.js"></script>
 		<script src="assets/script/utilities.js"></script>

@@ -11,19 +11,14 @@ const stroke_color = 'white' // '#aeaeae'
 const over_opacity = 0.4
 
 function load_data(task,user) {
-	// console.log(task, user)
 	
 	// load data
 	d3.csv("assets/data/search_story_task_" + task + '_user_' + user + '.csv')
 		.then(loaded)
-		.then(
-			feedback.innerHTML = ''
-		)
 		.catch(function(error){
 			the_error = String(error)
 			if (the_error.indexOf("404") !== -1) {
-    			const feedback = document.getElementById("feedback")
-    			feedback.innerHTML = "please select another timeline"
+    			console.log("Something went wrong with the data loading")
 			}
 		})
 
@@ -37,16 +32,18 @@ function load_data(task,user) {
 		load_statistics(data)
 
 		const website_strip_data = groupConsecutiveDomains(data);
-		// console.log(website_strip_data)
 
 		website_strip_data.forEach((item,i)  => {
 			item[0].the_id = i
-			// console.log(item[0])
 		})
 
 		function display_labels() {
+			console.log(data)
 
 			document.getElementById("label_box").innerHTML = ''
+
+			document.getElementById("the_user").innerHTML = data[0].user_id
+			document.getElementById("the_task").innerHTML = data[0].task_id
 
 			const container = "#label_box";
 			let window_w = document.getElementById("label_box").offsetWidth;
@@ -715,18 +712,6 @@ function load_data(task,user) {
 		display_data(data)
 	}
 }	
-
-const set_story = document.getElementById('set_story')
-
-set_story.addEventListener("click", function() {
-
-	const set_task = document.getElementById('set_task').value
-	const set_user = document.getElementById('set_user').value
-	console.log(set_task,set_user)
-
-	infobox.innerHTML = ''
-	load_data(set_task,set_user)
-})
 
 window.addEventListener('load', function () {	
 	load_data(7,826);

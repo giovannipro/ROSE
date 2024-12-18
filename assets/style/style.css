@@ -12,6 +12,18 @@ h2 {
 	font-size: 1rem;
 }
 
+#header {
+	display: flex;
+}
+
+#header h2 {
+	width: 160px;
+}
+
+#header span {
+	font-weight: normal;
+}
+
 #chart {
 	height: 400px;
 	margin-top: 0.5rem;
@@ -52,7 +64,7 @@ h2 {
 }
 
 #controllers {
-	margin-top: 3rem;
+	margin-top: 1rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -105,6 +117,10 @@ h2 {
 
 #statistics_container, #suggestions_container {
 	display: none;
+}
+
+#suggestions {
+	margin-bottom: 3rem;
 }
 
 #statistics_container .tab_content,  #suggestions_container .tab_content {
