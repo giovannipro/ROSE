@@ -10,10 +10,24 @@ const stroke_color = 'white' // '#aeaeae'
 
 const over_opacity = 0.4
 
-function load_data(task,user) {
+function load_data() {
+
+	// Get the query string from the current URL
+	const queryString = window.location.search;
 	
+	// Create a URLSearchParams object
+	const urlParams = new URLSearchParams(queryString);
+
+	// Get the value of the 'path' parameter
+	const pathValue = urlParams.get('path');
+	console.log(pathValue)
+
+	// Decode the 'pathValue'
+	// const source = "assets/data/search_story_task_" + 1 + '_user_' + 1324 + '.csv'
+	const source = decodeURI(pathValue);
+
 	// load data
-	d3.csv("assets/data/search_story_task_" + task + '_user_' + user + '.csv')
+	d3.csv(source)
 		.then(loaded)
 		.catch(function(error){
 			the_error = String(error)
@@ -378,18 +392,21 @@ function load_data(task,user) {
 						.attr("opacity",1)
 				}
 
-				let selectedIndex = 0;
+				let selectedIndex = -1;
 				let previous_id = 0;
 				
 				const infobox = document.getElementById('infobox')
 				function handleClick(id) {
 					console.log(id, previous_id)
-					// console.log(this)
 
 					selectedIndex = id
 					
-					if (id > 0){
+					if (id > -1){
 						previous_id = selectedIndex
+
+						if (selectedIndex > data.lenght-1){
+							selectedIndex = -1
+						}
 					}
 					else {
 						selectedIndex = previous_id
@@ -714,8 +731,5 @@ function load_data(task,user) {
 }	
 
 window.addEventListener('load', function () {	
-	load_data(7,826);
-	// load_data(1,1324);
-	// load_data(8,1005);
-	// load_data(1,300);
+	load_data();
 })
