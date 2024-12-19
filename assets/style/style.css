@@ -163,6 +163,17 @@ footer {
 	padding: 0.1rem;
 }
 
+table {
+	table-layout: fixed;
+	width: 100%;
+}
+
+td {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 @media only screen and (max-width: 725px) {
 	#statistics_container .tab_content, #suggestions_container .tab_content {
 		display: block;
