@@ -1,64 +1,67 @@
 <!DOCTYPE HTML>
 <html lang="en">
-	<head>
-		<title>ROSE project</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
-		<link rel="stylesheet" type="text/css" href="assets/style/style.css">
-	</head>
-	<body> 
-		<main>
-			<div id="controllers">
-				<div id="header">
-					<h2>User: <span id="the_user"></span></h2>
-					<h2>Task: <span id="the_task"></span></h2>
-				</div>
-				<select id="set_size">
-					<option value="normalize">Normalize scale</option>
-					<option value="fit">Fit scale</option>
-				</select>
-			</div>
 
-			<div id="container">
-				<div id="chart">
-					<div id="label_box"></div>
-					<div id="plot_box"></div>	
-				</div>
-				<div id="infobox"></div>
-			</div>
+<head>
+	<title>ROSE project</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+	<link rel="stylesheet" type="text/css" href="assets/style/style.css">
+</head>
 
-			<div id="statistics" class="main_tab" style="border-top: 1px solid #ccc ;">
-				<div id="stat_txt" class="tab_label">
-					<span>Statistics</span>
-					<span class="open_tab" id="open_stat">&darr;</span> 
-					<!-- &darr; &uarr; -->
-				</div>
-				<div id="statistics_container">
-					<div class="tab_content">
-						<div id="statistics_a" class="statistics_box"></div>
-						<div id="statistics_b" class="statistics_box"></div>
-						<div id="statistics_c" class="statistics_box"></div>
-					</div>
-				</div>
+<body>
+	<main>
+		<div id="controllers">
+			<div id="header">
+				<h2>User: <span id="the_user"></span></h2>
+				<h2>Task: <span id="the_task"></span></h2>
 			</div>
+			<select id="set_size">
+				<option value="normalize">Normalize scale</option>
+				<option value="fit">Fit scale</option>
+			</select>
+		</div>
 
-			<div id="suggestions" class="main_tab">
-				<div id="sugg_txt" class="tab_label">
-					<span>
-						Suggestions
-					</span>
-					<span class="open_tab" id="open_sugg">&darr;</span>
-				</div>
-				<div id="suggestions_container">
-					<div class="tab_content">
-						<span style="color: #ababab"><em>Some suggestions here</em></span>
-					</div>
+		<div id="container">
+			<div id="chart">
+				<div id="label_box"></div>
+				<div id="plot_box"></div>
+			</div>
+			<div id="infobox"></div>
+		</div>
+
+		<div id="statistics" class="main_tab" style="border-top: 1px solid #ccc ;">
+			<div id="stat_txt" class="tab_label">
+				<span>Statistics</span>
+				<span class="open_tab" id="open_stat">&darr;</span>
+				<!-- &darr; &uarr; -->
+			</div>
+			<div id="statistics_container">
+				<div class="tab_content">
+					<div id="statistics_a" class="statistics_box"></div>
+					<div id="statistics_b" class="statistics_box"></div>
+					<div id="statistics_c" class="statistics_box"></div>
 				</div>
 			</div>
-		</main>
+		</div>
 
-		<script src="assets/script/d3@7.js"></script>
-		<script src="assets/script/utilities.js"></script>
-		<script src="assets/script/script.js"></script>
-	</body>
+		<div id="suggestions" class="main_tab">
+			<div id="sugg_txt" class="tab_label">
+				<span>
+					Suggestions
+				</span>
+				<span class="open_tab" id="open_sugg">&darr;</span>
+			</div>
+			<div id="suggestions_container">
+				<div class="tab_content">
+					<span style="color: #ababab"><em>Some suggestions here</em></span>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+	<script src="assets/script/utilities.js"></script>
+	<script src="assets/script/script.js"></script>
+</body>
+
 </html>
