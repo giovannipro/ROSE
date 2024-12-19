@@ -20,11 +20,12 @@ function load_data() {
 
 	// Get the value of the 'source' parameter
 	const sourceValue = urlParams.get('source');
-	console.log(sourceValue);
 
 	// Decode the 'sourceValue'
 	// const source = "assets/data/search_story_task_" + 1 + '_user_' + 1324 + '.csv'
+	// http://127.0.0.1:5501/index.html?source=assets/data/search_story_task_5_user_1015.csv
 	const source = decodeURI(sourceValue);
+	console.log(source)
 
 	// load data
 	d3.csv(source)
