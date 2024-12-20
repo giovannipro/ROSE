@@ -10,7 +10,7 @@ function getTextAfterX(query, x) {
 
 function groupConsecutiveDomains(data) {
 	// data = data.filter(d => d.page_type == 'RESULT')
-	console.log(data);
+	// console.log(data);
 
 	const groupedData = [];
 	let currentGroup = [];
@@ -163,7 +163,20 @@ function load_statistics(data) {
 	const pages = data.filter(item => item.action === 'NEW_RESULT' || item.action === 'SAME_DOMAIN_RESULT' || item.action === 'SEEN_DOMAIN_RESULT').length;
 
 	const searchQueries = data.filter(item => item.page_type === 'SEARCH_ENGINE').map(item => ({ url: item.url, query: item.query }));
-	const unique_queries = searchQueries.filter((item, index, self) => index === self.findIndex((t) => t.query === item.query));
+	for (item of searchQueries){
+		url = decodeURIComponent(item.url);
+		item.query = clean_query(url)
+	}
+	const uniqueObjects = new Set();
+	const unique_queries = searchQueries.filter(item => {
+		if (!uniqueObjects.has(item.query)) {
+			uniqueObjects.add(item.query);
+			return true;
+		}
+		return false;
+	});
+	// console.log(searchQueries)
+	// console.log(unique_queries)
 
 	// const websites = pageItems.map(item => item.url)
 	unique_web = searchItems.map(item => {
@@ -171,7 +184,6 @@ function load_statistics(data) {
 		return { url: url.origin, domain: url.hostname.replace(/^www\./, '') };
 	});
 	const unique_websites = unique_web.filter((item, index, self) => index === self.findIndex((t) => t.domain === item.domain));
-	// console.log(unique_websites)
 
 	uniq_engine = searchItems.map(item => item.url.match(/(?<=www\.).*?(?=\.\w+\/)/)[0]);
 	const unique_searchEngines = getUniqueValues(uniq_engine);
@@ -243,7 +255,9 @@ function load_statistics(data) {
 
 	output_b += '<table style="margin-top: 1.5rem;">';
 	output_b += '<tr><td><strong>Queries</strong></td></tr>';
+	console.log(unique_queries)
 	unique_queries.forEach(item => {
+		// console.log(item)
 		output_b += '<tr><td>- <a href="' + item.url + '" target="_blank">' + item.query + '</a></td></tr>';
 	});
 	output_b += '</table>';
@@ -252,7 +266,6 @@ function load_statistics(data) {
 	output_b += '<tr><td><strong>Search engines</strong></td></tr>';
 	unique_searchEngines.forEach(item => {
 		output_b += '<tr><td>' + search_engine(item) + '</td></tr>';
-		// output_b += '<tr><td><a href="' + item + '" target="_blank">' + short_url(item,max_link_char) + '</a></td></tr>'
 	});
 	output_b += '<tr><td>&nbsp;</td></tr>';
 	output_b += '</table>';
