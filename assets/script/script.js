@@ -438,7 +438,6 @@ function load_data() {
 					.attr("stroke", "red")
 					.attr("stroke-width", 2)
 					.attr("vector-effect", "non-scaling-stroke");
-
 					
 				const domain = document.querySelector('[data-index="' + id + '"]');
 				const class_ = (domain.getAttribute("data-class")).toString();
