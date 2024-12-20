@@ -242,7 +242,7 @@ function load_data() {
 				.attr("data-index", (d, i) => i)
 				.attr("data-class", (d,i) => {
 					let the_class = ""
-					if (d.page_type == "SYSTEM"){
+					if (d.page_type == "SYSTEM" || d.page_type == "NEW_TAB"){
 						the_class = "system"
 					}
 					else {
@@ -495,8 +495,8 @@ function load_data() {
 				else {
 					// console.log(domain)
 					const domain_ = domain.getAttribute("data-domain")
-					let system_status = domain_.toLowerCase().replace(/\_/g, " ");
-					output = `<span>System (${system_status})</span><br/>`;
+					const the_domain = domain_.toLowerCase().replace(/\_/g, " ");
+					output = `<span>System (${the_domain})</span><br/>`;
 					output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>';
 				}
 
