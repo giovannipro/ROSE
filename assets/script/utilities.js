@@ -103,6 +103,36 @@ function search_engine(item) {
 	return item[0].toUpperCase() + item.slice(1);
 }
 
+function clean_query(url){
+	url_a = url.split("q=")[1];
+
+	index_start = url_a.indexOf("q=") + 1;
+	index_end = url_a.length;
+
+	if (url_a.indexOf("&") != -1) {
+		index_end = url_a.indexOf("&");
+	}
+
+	url_b = url_a.substring(index_start, index_end);
+	url_c = url_b.replace(/\+/g, " ");
+
+	return url_c
+}
+
+function clean_domain(url){
+	index_1 = url.indexOf("//") + 2;
+	url_a = url.substring(index_1);
+
+	index_2 = url_a.indexOf("/") ;
+	url_b = url.substring(0,index_1 + index_2 + 1);
+
+	url_c = url.substring(0,index_2);
+
+	// console.log(url_a)
+	// console.log(url_b, index_1)
+	return url_b
+}
+
 function load_statistics(data) {
 
 	const max_link_char = 50;

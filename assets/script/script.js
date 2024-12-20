@@ -23,7 +23,7 @@ function load_data() {
 
 	// Decode the 'sourceValue'
 	// const source = "assets/data/search_story_task_" + 1 + '_user_' + 1324 + '.csv'
-	// http://127.0.0.1:5501/index.html?source=assets/data/search_story_task_5_user_1015.csv
+	// http://127.0.0.1:5501/index.html?source=https://raw.githubusercontent.com/giovannipro/ROSE/refs/heads/main/assets/data/search_story_task_8_user_1004.csv
 	const source = decodeURI(sourceValue);
 	console.log(source)
 
@@ -240,6 +240,16 @@ function load_data() {
 				.attr("data-action", (d) => d.action)
 				.attr("data-domainStatus", (d) => d.domain_status)
 				.attr("data-index", (d, i) => i)
+				.attr("data-class", (d,i) => {
+					let the_class = ""
+					if (d.page_type == "SYSTEM"){
+						the_class = "system"
+					}
+					else {
+						the_class = "strip"
+					}
+					return the_class
+				})
 				.on("mouseover", handleMouseOver)
 				.on("mouseout", handleMouseOut)
 				.on("click", (event, d) => {
@@ -319,12 +329,13 @@ function load_data() {
 				.attr("data-domain", (d) => d[0].domain)
 				.attr("data-duration", (d) => d[0].duration)
 				.attr("data-action", (d) => d[0].action)
-				.attr("id", (d) => d[0].the_id)
+				.attr("data-class", "website")
+				.attr("data-index", (d, i) => "w_" + i)
 				.attr("data-domainStatus", (d) => d[0].domain_status)
 				.on("mouseover", handleMouseOver_website)
 				.on("mouseout", handleMouseOut_website)
 				.on("click", (event, d) => {
-					handleClick(-1 - d[0].the_id);
+					handleClick("w_" + d[0].the_id);
 				});
 
 			let strip_website_rect = strip_website.append("rect")
@@ -398,7 +409,7 @@ function load_data() {
 
 			const infobox = document.getElementById('infobox');
 			function handleClick(id) {
-				console.log(id, previous_id);
+				// console.log(id, previous_id);
 
 				selectedIndex = id;
 
@@ -428,86 +439,69 @@ function load_data() {
 					.attr("stroke-width", 2)
 					.attr("vector-effect", "non-scaling-stroke");
 
-				const url = item._groups[0][0].getAttribute('data-url');
-				const domain = item._groups[0][0].getAttribute('data-domain');
-				const duration = item._groups[0][0].getAttribute('data-duration');
-				const action = item._groups[0][0].getAttribute('data-action');
-				const domainStatus = item._groups[0][0].getAttribute('data-domainStatus');
-				const class_ = item._groups[0][0].getAttribute('class');
-				// console.log(class_)
+					
+				const domain = document.querySelector('[data-index="' + id + '"]');
+				const class_ = (domain.getAttribute("data-class")).toString();
+				// console.log(domain, class_)
+					
+				let output;
 
-				let output = '';
-				if (action == 'SAME_DOMAIN_RESULT' || action == 'SEEN_DOMAIN_RESULT' || action == 'NEW_RESULT') {
-					// console.log(this.getAttribute("class"))
+				if (class_ == 'strip'){
+					const url = domain.getAttribute("data-url")
+					const domain_ = domain.getAttribute("data-domain")
+					const duration = domain.getAttribute("data-duration")
+					const action = domain.getAttribute("data-action")
+					const domainStatus = domain.getAttribute("data-domainStatus")
 
-					if (class_ == 'website') {
-						output += '<span><a href="https://' + domain + '" target="_blank">' + domain + '</a><br/>';
-					}
-					else {
+					if (action == 'SAME_DOMAIN_RESULT' || action == 'SEEN_DOMAIN_RESULT' || action == 'NEW_RESULT') {
 						if (domainStatus == "SEEN") {
-							output += '<span><a href="' + url + '" target="_blank">' + url + '</a> <span style="color: gray">(already seen)</span></span><br/>';
+							output = `<span><a href="${url}" target="_blank">${url}</a><span style="color: gray"> (already seen)</span></span><br/>`;
 						}
 						else {
-							output += '<span><a href="' + url + '" target="_blank">' + url + '</a></span><br/>';
+							output = `<span><a href="${url}" target="_blank">${url}</a></span><br/>`;
 						}
+
+						output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
+					}
+					else if (action == 'NEW_SEARCH' || action == 'NEW_SEARCH_SAME_ENGINE' || action == 'SAME_SEARCH' || action == 'REFINE_SEARCH' || action == 'SEEN_SEARCH') {
+						let the_domain = decodeURIComponent(url);
+						the_domain = clean_query(the_domain)
+
+						let seen = '';
+						if (action == "SAME_SEARCH" || action == "SEEN_SEARCH") { // reused
+							seen = '(reused query)';
+						}
+						if (action == "REFINE_SEARCH") {
+							seen = '(modified query)';
+						}
+						
+						output = `<span><a href="${url}" target="_blank">${the_domain}</a> <span style="color: gray">${seen}</span><br/>`;
+						output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
 					}
 				}
-				else if (action == 'NEW_SEARCH' || action == 'NEW_SEARCH_SAME_ENGINE' || action == 'SAME_SEARCH' || action == 'REFINE_SEARCH' || action == 'SEEN_SEARCH') {
-					let the_domain = decodeURIComponent(url);
+				else if (class_ == 'website'){
+					const domain_ = domain.getAttribute("data-domain")
+					const action = domain.getAttribute("data-action")
+					const url = domain.getAttribute("data-url")
+					const the_url = clean_domain(url)
 
-					// url_a = the_domain.split("?")[1]
-					url_b = the_domain.split("q=")[1];
-
-					index_start = url_b.indexOf("q=") + 1;
-					index_end = url_b.length;
-
-					if (url_b.indexOf("&") != -1) {
-						index_end = url_b.indexOf("&");
+					let seen = '';
+					if (action == "SEEN_DOMAIN_RESULT") { // reused
+						seen = '(already seen)';
 					}
-					// console.log(index_end)
-
-					url_c = url_b.substring(index_start, index_end);
-					// console.log(url_b.length, index_start,index_end, url_c)
-
-					url_d = url_c.replace(/\+/g, " ");
-					// console.log(url_b)
-
-					the_domain = url_d;
-
-					seen = '';
-					if (action == "SAME_SEARCH" || action == "SEEN_SEARCH") { // reused
-						seen = '(reused query)';
-					}
-					if (action == "REFINE_SEARCH") {
-						seen = '(modified query)';
-					}
-					output += '<span><a href="' + url + '" target="_blank">' + the_domain + '</a> ' + '<span style="color: gray">' + seen + '</span><br/>';
-				}
-				else if (action == 'UNKNOWN') {
-					output += '<span>query unknown</span><br/>';
+					output = `<span><a href="${the_url}" target="_blank">${domain_}</a> </span><span style="color: gray">${seen}</span><br/>`;
+					output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
 				}
 				else {
-					// console.log(action)
-					let system_status = domain.toLowerCase().replace(/\_/g, " ");
-
-					output += '<span>' + 'System (' + system_status + ')' + '</span><br/>';
-				}
-
-				if (class_ !== 'website') {
+					// console.log(domain)
+					const domain_ = domain.getAttribute("data-domain")
+					let system_status = domain_.toLowerCase().replace(/\_/g, " ");
+					output = `<span>System (${system_status})</span><br/>`;
 					output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>';
 				}
 
 				infobox.innerHTML = output;
 			}
-
-
-
-			// function arrow_highlights(){
-			// 	svg.selectAll(".strip")
-			// 		.classed("selected", false);
-			// 	svg.select(`.strip[data-index="${selectedIndex}"]`)
-			// 		.classed("selected", true);
-			// }
 
 			document.addEventListener("keydown", (event) => {
 				// console.log(selectedIndex)
@@ -520,8 +514,6 @@ function load_data() {
 				// arrow_highlights()
 				handleClick(selectedIndex);
 			});
-
-			// document.getElementById("")
 
 			// - - -
 
