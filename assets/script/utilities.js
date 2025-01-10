@@ -141,17 +141,19 @@ function load_statistics(data) {
 	const container_b = document.getElementById('statistics_b');
 	const container_c = document.getElementById('statistics_c');
 
-	const searchItems = data.filter(item => item.action === 'NEW_SEARCH' || item.action === 'NEW_SEARCH_SAME_ENGINE' || item.action === 'REFINE_SEARCH');
+	const searchItems = data.filter(item => item.action === 'NEW_SEARCH' || item.action === 'NEW_SEARCH_SAME_ENGINE' || item.action === 'SAME_SEARCH' || item.action === 'SEEN_SEARCH'  || item.action === 'REFINE_SEARCH');
 	const searchDuration = searchItems.reduce((sum, item) => sum + item.duration, 0);
 	const avgSearchDuration = searchDuration / searchItems.length;
 	const minSearchDuration = Math.min(...searchItems.map(item => item.duration));
 	const maxSearchDuration = Math.max(...searchItems.map(item => item.duration));
+	// console.log(searchItems)
 
 	const pageItems = data.filter(item => item.action === 'NEW_RESULT' || item.action === 'SAME_DOMAIN_RESULT' || item.action == "SEEN_DOMAIN_RESULT");
 	const pageDuration = pageItems.reduce((sum, item) => sum + item.duration, 0);
 	const avgPageDuration = pageDuration / pageItems.length;
 	const minPageDuration = Math.min(...pageItems.map(item => item.duration));
 	const maxPageDuration = Math.max(...pageItems.map(item => item.duration));
+	// console.log(pageItems)
 
 	const newQueries = data.filter(item => item.action === 'NEW_SEARCH' || item.action === 'NEW_SEARCH_SAME_ENGINE').length;
 	const reusedQueries = data.filter(item => item.action === 'SAME_SEARCH' || item.action === 'SEEN_SEARCH').length;
@@ -183,7 +185,7 @@ function load_statistics(data) {
 		const url = new URL(item.url);
 		return { url: url.origin, domain: url.hostname.replace(/^www\./, '') };
 	});
-	console.log(unique_web)
+	// console.log(unique_web)
 	const unique_websites = unique_web.filter((item, index, self) => index === self.findIndex((t) => t.domain === item.domain));
 
 	uniq_engine = searchItems.map(item => item.url.match(/(?<=www\.).*?(?=\.\w+\/)/)[0]);
@@ -199,6 +201,7 @@ function load_statistics(data) {
 	output_a += '<table>';
 	output_a += '<tr><td>Total</td>';
 	output_a += '<td>' + convertSecondsToMinutes(pageDuration + searchDuration) + '</td></tr>'; // '<td>' + parseInt(pageDuration + searchDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration + searchDuration) + ' minutes</td></tr>'
+	// console.log(pageDuration, searchDuration)
 
 	output_a += "<tr><td colspan='2'>" + duration_chart(searchDuration, pageDuration) + "</td></tr>";
 	output_a += '<tr><td>&nbsp;</td></tr>';
@@ -260,7 +263,7 @@ function load_statistics(data) {
 
 	output_b += '<table style="margin-top: 1.5rem;">';
 	output_b += '<tr><td>Queries</td></tr>';
-	console.log(unique_queries)
+	// console.log(unique_queries)
 	unique_queries.forEach(item => {
 		output_b += '<tr><td>- <a href="' + item.url + '" target="_blank">' + item.query + '</a></td></tr>';
 	});

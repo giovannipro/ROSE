@@ -53,7 +53,7 @@ function load_data() {
 		});
 
 		function display_labels() {
-			console.log(data);
+			// console.log(data);
 
 			document.getElementById("label_box").innerHTML = '';
 
@@ -313,6 +313,8 @@ function load_data() {
 					else if (d.action == "REFINE_SEARCH") { // revised
 						color = '#C8DFF4';
 					}
+
+					// pages
 					else if (d.action == "NEW_RESULT" || d.action == "SAME_DOMAIN_RESULT" || d.action == "SEEN_DOMAIN_RESULT") {
 						color = new_page_color;
 					}
