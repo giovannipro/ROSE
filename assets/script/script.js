@@ -344,6 +344,7 @@ function load_data() {
 				.attr("class", "strip_website_rect")
 				.attr("x", (d, i) => {
 					let x_pos = timeScale(new Date(d[0].time));
+					// console.log(d[0].time)
 					return x_pos;
 				})
 				.attr("y", (d, i) => {
@@ -362,7 +363,7 @@ function load_data() {
 				.attr("fill", (d) => {
 					let fill = new_page_color;
 					if (d[0].domain_status == "SEEN") {
-						fill = '#f8b55c'; //'#fdc780'
+						fill = '#f8b55c';
 					}
 					return fill;
 				});
@@ -724,6 +725,4 @@ function load_data() {
 	}
 }
 
-window.addEventListener('load', function () {
-	load_data();
-});
+load_data()
