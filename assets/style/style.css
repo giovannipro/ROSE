@@ -12,6 +12,18 @@ h2 {
 	font-size: 1rem;
 }
 
+#header {
+	display: flex;
+}
+
+#header h2 {
+	width: 160px;
+}
+
+#header span {
+	font-weight: normal;
+}
+
 #chart {
 	height: 400px;
 	margin-top: 0.5rem;
@@ -52,7 +64,7 @@ h2 {
 }
 
 #controllers {
-	margin-top: 3rem;
+	margin-top: 1rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -96,7 +108,6 @@ h2 {
 
 .main_tab {
 	margin: 0 1rem;
-	/* border-top: 1.5px solid #ccc; */
 }
 
 .open_tab {
@@ -107,7 +118,11 @@ h2 {
 	display: none;
 }
 
-#statistics_container .tab_content,  #suggestions_container .tab_content {
+#suggestions {
+	margin-bottom: 3rem;
+}
+
+#statistics_container .tab_content {
 	display: flex;
 	justify-content: space-between;
 	min-height: 4rem;
@@ -117,13 +132,27 @@ h2 {
 
 .tab_label {
 	font-weight: bold;
+	font-size: 1.2rem;
 	padding: 1rem 0;
 	border-bottom: 1px solid #ccc;
 	cursor: pointer;
 }
 
 .statistics_box {
-	width: 28%;
+	width: 30%;
+}
+
+#hints div {
+	width: 100%;
+}
+
+#hints div {	
+	display: flex;
+	justify-content: space-between;
+}
+
+#hints div p {
+	width: 30%;
 }
 
 .statistics_box table {
@@ -145,6 +174,17 @@ footer {
 	display: flex;
 	align-items: center;
 	padding: 0.1rem;
+}
+
+table {
+	table-layout: fixed;
+	width: 100%;
+}
+
+td {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 @media only screen and (max-width: 725px) {

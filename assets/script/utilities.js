@@ -262,7 +262,7 @@ function load_statistics(data){
 	unique_websites.forEach(item => {
 		const web_a = item.replace('https://','')
 		const web_b = web_a.replace('www.','')
-		output_c += '<tr><td><a href="' + item + '" target="_blank">' + short_url(web_b,max_link_char) + '</a></td><tr>' // 
+		output_c += '<tr><td>- <a href="' + item + '" target="_blank">' + short_url(web_b,max_link_char) + '</a></td><tr>' // 
 	})
 	output_c += '<tr><td>&nbsp;</td></tr>'
 	output_c += '</tr>'
