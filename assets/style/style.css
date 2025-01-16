@@ -4,7 +4,7 @@ body {
 	font-family: Arial, sans-serif;
 }
 
-header, footer, #controllers, #statistics, #infobox {
+header, footer, #controllers, #infobox {
 	margin: 0 1rem;
 }
 
@@ -68,6 +68,7 @@ h2 {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	height: 3rem;
 }
 
 #controllers select {
@@ -106,12 +107,12 @@ h2 {
 	width: 30%;
 }
 
-.main_tab {
-	margin: 0 1rem;
-}
-
 .open_tab {
 	float: right;
+}
+
+#statistics, #suggestions {
+	border-top: 1px solid #bfbfbf;
 }
 
 #statistics_container, #suggestions_container {
@@ -122,20 +123,20 @@ h2 {
 	margin-bottom: 3rem;
 }
 
-#statistics_container .tab_content {
-	display: flex;
-	justify-content: space-between;
-	min-height: 4rem;
-	border-bottom: 1px solid #ccc;
-	padding-top: 1rem;
-}
-
 .tab_label {
 	font-weight: bold;
 	font-size: 1.2rem;
-	padding: 1rem 0;
-	border-bottom: 1px solid #ccc;
+	padding: 1rem;
+	background-color: #eee;
+	border-bottom: 1px solid #bfbfbf;
 	cursor: pointer;
+}
+
+.tab_content {
+	display: flex;
+	justify-content: space-between;
+	min-height: 4rem;
+	margin: 1.5rem 1rem;
 }
 
 .statistics_box {
@@ -144,6 +145,7 @@ h2 {
 
 #hints div {
 	width: 100%;
+	border-bottom: 1px solid #ccc;
 }
 
 #hints div {	
