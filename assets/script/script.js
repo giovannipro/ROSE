@@ -27,8 +27,8 @@ function load_data() {
 	// const source = decodeURI(sourceValue);
 	// console.log(source)
 
-	task = 7
-	user = 826
+	task = 2 // 7
+	user = 97 // 826
 	source = "assets/data/search_story_task_" + task + '_user_' + user + '.csv'
 
 	// load data
