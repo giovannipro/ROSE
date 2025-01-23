@@ -188,7 +188,7 @@ function load_statistics(data) {
 	// console.log(unique_web)
 	const unique_websites = unique_web.filter((item, index, self) => index === self.findIndex((t) => t.domain === item.domain));
 
-	uniq_engine = searchItems.map(item => item.url.match(/(?<=www\.).*?(?=\.\w+\/)/)[0]);
+	uniq_engine = searchItems.map(item => item.url.match(/(?<=\/\/|www\.).*?(?=\.\w+\/)/)[0]);
 	const unique_searchEngines = getUniqueValues(uniq_engine);
 
 	let output_a = '';
