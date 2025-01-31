@@ -22,8 +22,8 @@ function load_data() {
 	const sourceValue = urlParams.get('source');
 
 	// Decode the 'sourceValue'
-	// http://127.0.0.1:5501/index.html?source=https://raw.githubusercontent.com/giovannipro/ROSE/refs/heads/main/assets/data/search_story_task_8_user_1004.csv
-	// const source = 'assets/data/search_story_task_2_user_97.csv'
+	// const source = 'assets/data/_stats_7_2.csv'
+	// const source = 'https://raw.githubusercontent.com/giovannipro/ROSE/refs/heads/main/assets/data/search_story_task_8_user_1004.csv'
 	
 	const source = decodeURI(sourceValue);
 	console.log(source)
@@ -32,26 +32,36 @@ function load_data() {
 	d3.csv(source)
 		.then(loaded)
 		.catch(function (error) {
-			the_error = String(error);
-			if (the_error.indexOf("404") !== -1) {
+			if (error.message.includes("404")) {
 				console.log("Something went wrong with the data loading");
+			}
+			else {
+				console.error("Data loading error:", error);
 			}
 		});
 
 	function loaded(data) {
-		// console.log(data)
+		console.log(data)
 
 		data.forEach(function (d, i) {
 			d.duration = parseFloat(d.duration);
 			d.id = i;
 		});
-		load_statistics(data);
+
+		try {
+			load_statistics(data);
+		}
+		catch (error) {
+			console.log('We got some error with the statistics')
+			console.log(error);
+		}
 
 		const website_strip_data = groupConsecutiveDomains(data);
 
 		website_strip_data.forEach((item, i) => {
 			item[0].the_id = i;
 		});
+		// console.log(data);
 
 		function display_labels() {
 			// console.log(data);
@@ -239,6 +249,7 @@ function load_data() {
 				.attr("data-domain", (d) => d.domain)
 				.attr("data-duration", (d) => d.duration)
 				.attr("data-action", (d) => d.action)
+				.attr("data-type", (d) => d.page_type)
 				.attr("data-domainStatus", (d) => d.domain_status)
 				.attr("data-index", (d, i) => i)
 				.attr("data-class", (d,i) => {
@@ -268,7 +279,12 @@ function load_data() {
 				.attr("y", (d, i) => {
 					let y_pos = 0;
 					if (d.page_type == 'SEARCH_ENGINE') {
-						y_pos = strip_height * 0;
+						if(d.action == 'UNKNOWN'){
+							y_pos = strip_height * 2.2;
+						}
+						else {
+							y_pos = strip_height * 0;
+						}
 					}
 					else if (d.page_type == 'RESULT') {
 						y_pos = strip_height * 1.2;
@@ -286,7 +302,12 @@ function load_data() {
 				.attr("height", (d) => {
 					let height = (strip_height / 4) - (interline);
 					if (d.page_type == 'SEARCH_ENGINE') {
-						height = search_height - interline;
+						if(d.action == 'UNKNOWN'){
+							height = other_height - interline
+						}
+						else {
+							height = search_height - interline;
+						}
 					}
 					else if (d.page_type == 'RESULT') {
 						height = page_height - interline;
