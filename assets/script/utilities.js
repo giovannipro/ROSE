@@ -96,27 +96,40 @@ function short_url(url, max) {
 }
 
 function search_engine(item) {
-	se_0 = item.split('//')[1]
-	se_1 = se_0.split('/')[0]
-	se_2 = se_1.replace('www.','')
-	searchEngine = se_2.split('.com')[0]
+	// console.log(item)
 
-	return searchEngine
+	searchEngine = item
+	if (item.includes('//')){
+		searchEngine = item.split('//')[1]
+	}
+
+	// se_1 = se_0.split('/')[0]
+	// se_2 = se_1.replace('www.','')
+	// searchEngine = se_2.split('.com')[0]
+
 	// return item[0].toUpperCase() + item.slice(1);
+	return searchEngine
 }
 
 function clean_query(url){
-	url_a = url.split("q=")[1];
+	// console.log(url)
 
-	index_start = url_a.indexOf("q=") + 1;
-	index_end = url_a.length;
+	let url_c = ''
+	if (url.includes('q=')){
+		url_a = url.split('q=')[1];
 
-	if (url_a.indexOf("&") != -1) {
-		index_end = url_a.indexOf("&");
+		if (url_a.includes('&')){
+			url_b = url_a.split('&')[0]
+		}
+		else {
+			url_b = url_a 
+		}
+
+		url_c = url_b.replace(/\+/g,' ')
 	}
-
-	url_b = url_a.substring(index_start, index_end);
-	url_c = url_b.replace(/\+/g, " ");
+	else {
+		url_c = url
+	}
 
 	return url_c
 }
@@ -190,7 +203,11 @@ function load_statistics(data) {
 	// console.log(unique_web)
 	const unique_websites = unique_web.filter((item, index, self) => index === self.findIndex((t) => t.domain === item.domain));
 
-	uniq_engine = searchItems.map(item => item.url.match(/(?<=www\.).*?(?=\.\w+\/)/)[0]);
+	// console.log(searchItems)
+	uniq_engine = searchItems.map(item => {
+		const match = item.url.match(/https?:\/\/(?:www\.)?([^\/.]+)\./);
+		return match ? match[1] : null; // Return null if no match
+	});
 	const unique_searchEngines = getUniqueValues(uniq_engine);
 
 	let output_a = '';
