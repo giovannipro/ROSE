@@ -192,11 +192,11 @@ td {
 @media only screen and (max-width: 725px) {
 	#statistics_container .tab_content, #suggestions_container .tab_content {
 		display: block;
-		width: 100%;
+		/* width: 100%; */
 	}
 
 	.statistics_box {
-		width: 100%;
+		width: calc(100% - 0.25rem);
 		border-bottom: 1px solid #ccc;
 		margin-bottom: 1rem;
 	}
