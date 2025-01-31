@@ -22,8 +22,9 @@ function load_data() {
 	const sourceValue = urlParams.get('source');
 
 	// Decode the 'sourceValue'
-	// const source = "assets/data/search_story_task_" + 1 + '_user_' + 1324 + '.csv'
 	// http://127.0.0.1:5501/index.html?source=https://raw.githubusercontent.com/giovannipro/ROSE/refs/heads/main/assets/data/search_story_task_8_user_1004.csv
+	// const source = 'assets/data/search_story_task_2_user_97.csv'
+	
 	const source = decodeURI(sourceValue);
 	console.log(source)
 

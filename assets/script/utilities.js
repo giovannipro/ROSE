@@ -19,8 +19,6 @@ function groupConsecutiveDomains(data) {
 		const currentItem = data[i];
 		const previousItem = data[i - 1];
 
-		// console.log(currentItem.time - previousItem.item)
-
 		if (previousItem && currentItem.domain !== previousItem.domain) {
 			// New domain encountered, start a new group
 			if (currentGroup.length > 0) {
@@ -28,8 +26,6 @@ function groupConsecutiveDomains(data) {
 			}
 			currentGroup = [];
 		}
-
-		// console.log(currentItem)
 
 		if (currentItem.page_type == 'RESULT') {
 			currentGroup.push(currentItem);
@@ -100,7 +96,13 @@ function short_url(url, max) {
 }
 
 function search_engine(item) {
-	return item[0].toUpperCase() + item.slice(1);
+	se_0 = item.split('//')[1]
+	se_1 = se_0.split('/')[0]
+	se_2 = se_1.replace('www.','')
+	searchEngine = se_2.split('.com')[0]
+
+	return searchEngine
+	// return item[0].toUpperCase() + item.slice(1);
 }
 
 function clean_query(url){
@@ -331,7 +333,6 @@ function open_tabs() {
 			SUGG_ARROW.innerHTML = '&darr;';
 		}
 	});
-
 }
 
 open_tabs();
