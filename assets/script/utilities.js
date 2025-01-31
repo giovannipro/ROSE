@@ -238,6 +238,11 @@ function load_statistics(data){
 			the_query_c = the_query_b.split('&')[0]
 			the_query = the_query_c.replace(/\+/g,' ')
 		}
+		else if (item.split('&q=')[1]){
+			the_query_a = item.split('&q=')[1]
+			the_query_b = the_query_a.split('&')[0]
+			the_query = the_query_b.replace(/\+/g,' ')
+		}
 		else if (item.split('?safe=')[1]){
 			the_query_a = item.split('?safe=')[1]
 			the_query_b = the_query_a.split('=')[0]
@@ -271,7 +276,6 @@ function load_statistics(data){
 	container_a.innerHTML = output_a
 	container_b.innerHTML = output_b
 	container_c.innerHTML = output_c
-
 }
 
 function open_tabs(){
