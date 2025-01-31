@@ -100,12 +100,11 @@ function short_url(url,max){
 }
 
 function search_engine(item){
-	if (item.includes('google')){
-		searchEngine = 'Google'
-	}
-	else {
-		searchEngine = item
-	}
+	se_0 = item.split('//')[1]
+	se_1 = se_0.split('/')[0]
+	se_2 = se_1.replace('www.','')
+	searchEngine = se_2.split('.com')[0]
+	// console.log(se_1,searchEngine)
 
 	return searchEngine
 }
@@ -256,8 +255,7 @@ function load_statistics(data){
 	output_b += '<table style="margin-top: 1.5rem;">'
 	output_b += '<tr><td><strong>Search engines</strong></td></tr>'
 	unique_searchEngines.forEach(item => {
-		output_b += '<tr><td>' + search_engine(item) + '</td></tr>'
-		// output_b += '<tr><td><a href="' + item + '" target="_blank">' + short_url(item,max_link_char) + '</a></td></tr>'
+		output_b += '<tr><td>- ' + search_engine(item) + '</td></tr>'
 	})
 	output_b += '<tr><td>&nbsp;</td></tr>'
 	output_b += '</table>'

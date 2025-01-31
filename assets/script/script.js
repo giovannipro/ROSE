@@ -30,7 +30,7 @@ function load_data() {
 	task = 2 // 7
 	user = 97 // 826
 	// source = "assets/data/search_story_task_" + //+ task + '_user_' + user + '.csv'
-	source = "assets/data/"  + "_stats_5_1.csv"
+	source = "assets/data/"  + "_stats_9_2.csv"
 
 	// load data
 	d3.csv(source)
