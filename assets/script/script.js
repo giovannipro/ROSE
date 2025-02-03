@@ -22,6 +22,7 @@ function load_data() {
 	const sourceValue = urlParams.get('source');
 
 	// Decode the 'sourceValue'
+	// ?source=
 	// const source = 'assets/data/_stats_7_2.csv'
 	// const source = 'https://raw.githubusercontent.com/giovannipro/ROSE/refs/heads/main/assets/data/search_story_task_8_user_1004.csv'
 	

@@ -135,7 +135,7 @@ function clean_query(url){
 }
 
 function clean_domain(url){
-	index_1 = url.indexOf("//") + 2;
+	index_1 = url.indexOf("://") + 2;
 	url_a = url.substring(index_1);
 
 	index_2 = url_a.indexOf("/") ;
@@ -192,6 +192,7 @@ function load_statistics(data) {
 		}
 		return false;
 	});
+	// console.log(searchQueries)
 	// console.log(searchQueries)
 	// console.log(unique_queries)
 
