@@ -3,7 +3,7 @@
       "s1": {
           "id": 1,
           "priority": 1,
-          "category": "Limit case / Literature on click restraint",
+          "source": "Limit case / Literature on click restraint",
           "description": "Student spends very short time on search results",
           "condition": "Average SEARCH Duration < 3",
           "feedback": {
@@ -16,13 +16,65 @@
     "s2": {
         "id": 1,
         "priority": 2,
-        "category": "LOIS/Variation",
+        "source": "LOIS/Variation",
         "description": "Student almost always changes query",
         "condition": "SEARCH action with same query < 20% && SEARCH actions > 3",
         "feedback": {
             "en": "It looks like you are changing your search string at every search. Another way of searching would be to explore more than one result for a search query, you may find more relevant documents this way."
         },
         "advice": "Take time to explore multiple websites from a single search keyword. Open and explore at least 3 results for each search query that you make."
+    }
+  },
+  {
+    "s3": {
+        "id": 3,
+        "priority": 3,
+        "source": "LOIS/Variation",
+        "description": "Student makes most searches with the same query.",
+        "condition": "SEARCH actions with same query in a row > 70% of all SEARCH actions && SEARCH actions > 3",
+        "feedback": {
+            "en": "It looks like you are exploring one search string only. If you have chosen a very precise and appropriate term, this is just fine. Another way of searching would be to try different search queries, maybe with keywords from the documents you have already read. This may lead to different results."
+        },
+        "advice": "Take time to think of possible keywords. For example, check if your first query returned suitable results; re-read the task and see what keywords are used there; think about synonyms; identify new keywords in the documents you have already found. When you face a difficult search task, try at least 4 different search queries. Compare the results you get when you use different keywords (you can perform different searches in different tabs)."
+    }
+  },
+  {
+    "s4": {
+        "id": 4,
+        "priority": 4,
+        "source": "Teachers, literature",
+        "description": "Students tends to use sentences.",
+        "condition": "Average number of words in query string > 6 && Queries include filler-words",
+        "feedback": {
+            "en": "It looks like you are using complex search terms, such as long sentences or complete questions, in your search. This is not always the best strategy. Instead, you could use only (a few) important, well-chosen search terms. This could make the search more focused and effective. For example: Instead of 'What did Hansel and Gretel use to find their way home when they were abandoned in the forest’, you could just type 'Hansel Gretel way home’."
+        },
+        "advice": "Take time to find the most important keywords for your search (you can also write them down) and use them in your search. See if your first search brought good results. Re-read the task and think about which keywords are used there. Also think of similar words. Find new keywords in the documents you have already found. Try performing different searches (with keywords and with sentences) in different tabs to compare them Directly."
+    }
+  },
+  {
+    "c1": {
+        "id": 5,
+        "priority": 1,
+        "source": "Limit case",
+        "description": "Student never opens a web page",
+        "condition": "RES actions == 0",
+        "feedback": {
+            "en": "It looks like you are only reading the short previews on the search page without clicking on the links to open the full web pages. However, there is much more information on the web pages than just what is in the preview. When you visit the websites, you can also check whether the information is trustworthy. Take a little time to choose the right links, then you won't have to read too much."
+        },
+        "advice": "When you get search results, take a moment to select and open the most important and interesting links. You can also use several tabs to save good documents and read them later."
+    }
+  },
+  {
+    "c2": {
+        "id": 6,
+        "priority": 2,
+        "source": "LOIS/Variation",
+        "description": "Student reads document very briefly",
+        "condition": "Average RES Duration < 15",
+        "feedback": {
+            "en": "It looks like you are just skimming the selected documents without really reading them. If you find a good document, take your time to read it - sometimes the most important information is not immediately visible."
+        },
+        "advice": "When you are sure a document is important and trustworthy, take the time to read and understand it thoroughly. After all, we search online to find and learn new information."
     }
   }
 ]
