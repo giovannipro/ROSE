@@ -1,40 +1,52 @@
 function load_hints(){
 
+    const predefined_hints = 'assets/content/hints.json'
+    const source_stats = 'assets/data/hints_3_1.json'
+    // console.log(source_stats)
+    
+    Promise.all([
+        d3.json(predefined_hints),
+        d3.json(source_stats)
+    ]).
+    then(function([data0, data1]) {
+        loaded(data0,data1)
+    })
+    .catch(function(error) {
+        console.error("Error loading JSON files:", error);
+    });
+    
     const container = document.getElementById('hints');
 
-    let output = '';
+    function loaded(texts,ids){
 
-    output = `<div>
-            <p>
-                It looks like you are very fast in selecting the search engine results to click upon. However, the results page provides a lot of information that can be useful. You could take more time when searching and look at the URLs or short texts (snippets) on the page. Also keep in mind that the first results don't always have to be "the best".
-            </p>
-            <p>
-                Take your time to carefully decide which links to click on. Scroll down the search engine results page to see results beyond the first few ones. Get an overview of the whole page. 
-                <br/><br/>
-                👍  👎
-            </p>
-            <p>
-                &nbsp;
-            </p>
-        </div>
+        // get the feedback ids
+        const feedback_ids = ids.map(item => item.hint.name);
+        console.log(feedback_ids);
 
-        <div>
-            <p>
-               It looks like you are only reading the short previews on the search page without clicking on the links to open the full web pages. However, there is much more information on the web pages than just what is in the preview. When you visit the websites, you can also check whether the information is trustworthy. Take a little time to choose the right links, then you won't have to read too much.
-            </p>
-            <p>
-                When you get search results, take a moment to select and open the most important and interesting links. You can also use several tabs to save good documents and read them later.
-                <br/><br/>
-                👍  👎
-            </p>
-            <p>
-                &nbsp;
-            </p>
-        </div>
-    `
+        let output = ''
 
-    container.innerHTML = output;
+        // get the feedback text
+        for (let x = 0; x <= 1; x++){ // feedback_ids.length
 
+            try{
+                const item_obj = getObjectByKey(texts,feedback_ids[x])
+                console.log(item_obj)
+                
+                // .feedback.en
+
+                output += `
+                    <div>
+                        <p>
+                            ${item_obj.feedback.en}   
+                        </p>
+                    </div>
+                `
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+
+        container.innerHTML = output;
+    }
 }
-
-load_hints()

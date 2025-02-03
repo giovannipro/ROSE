@@ -1,0 +1,28 @@
+[
+  {
+      "s1": {
+          "id": 1,
+          "priority": 1,
+          "category": "Limit case / Literature on click restraint",
+          "description": "Student spends very short time on search results",
+          "condition": "Average SEARCH Duration < 3",
+          "feedback": {
+              "en": "It looks like you are very fast in selecting the search engine results to click upon. However, the results page provides a lot of information that can be useful. You could take more time when searching and look at the URLs or short texts (snippets) on the page. Also keep in mind that the first results don't always have to be \"the best\"."
+          },
+          "advice": "Take your time to carefully decide which links to click on. Scroll down the search engine results page to see results beyond the first few ones. Get an overview of the whole page."
+      }
+  },
+  {
+    "s2": {
+        "id": 1,
+        "priority": 2,
+        "category": "LOIS/Variation",
+        "description": "Student almost always changes query",
+        "condition": "SEARCH action with same query < 20% && SEARCH actions > 3",
+        "feedback": {
+            "en": "It looks like you are changing your search string at every search. Another way of searching would be to explore more than one result for a search query, you may find more relevant documents this way."
+        },
+        "advice": "Take time to explore multiple websites from a single search keyword. Open and explore at least 3 results for each search query that you make."
+    }
+  }
+]

@@ -58,6 +58,14 @@ function load_data() {
 			console.log(error);
 		}
 
+		try {
+			load_hints();
+		}
+		catch (error) {
+			console.log('We got some error with the hints')
+			console.log(error);
+		}
+
 		const website_strip_data = groupConsecutiveDomains(data);
 
 		website_strip_data.forEach((item, i) => {
