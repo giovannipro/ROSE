@@ -36,7 +36,7 @@ function load_hints(){
 
                 output += `
                     <div>
-                        <p>
+                        <p class="${item_obj}">
                             ${item_obj.feedback.en}   
                         </p>
                     </div>
