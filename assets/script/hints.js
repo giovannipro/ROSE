@@ -21,30 +21,37 @@ function load_hints(){
 
         // get the feedback ids
         const feedback_ids = ids.map(item => item.hint.name);
-        console.log(feedback_ids);
+        // console.log(feedback_ids.length);
 
         let output = ''
 
         // get the feedback text
-        for (let x = 0; x <= 1; x++){ // feedback_ids.length
+        for (let x = 0; x < feedback_ids.length; x++){ // 
 
-            try{
-                const item_obj = getObjectByKey(texts,feedback_ids[x])
+            // try{
+                const item_obj = getObjectById(texts,feedback_ids[x])
                 console.log(item_obj)
                 
                 // .feedback.en
 
                 output += `
-                    <div>
-                        <p class="${item_obj}">
-                            ${item_obj.feedback.en}   
+                    <div class="${item_obj.id}">
+                        <p>
+                            ${item_obj.advice}   
                         </p>
+                        <p>
+                            ${item_obj.feedback.en}
+                            <br/><br/>
+                            👍  👎
+                        </p>
+                        <p></p>
+
                     </div>
                 `
-            }
-            catch (error) {
-                console.log(error)
-            }
+            // }
+            // catch (error) {
+            //     console.log(error)
+            // }
         }
 
         container.innerHTML = output;

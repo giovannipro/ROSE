@@ -191,7 +191,6 @@ function open_tabs() {
 open_tabs();
 
 // to get the feedback text
-function getObjectByKey(data,key) {
-	const foundObject = data.find(obj => obj[key]);
-	return foundObject ? foundObject[key] : null;
+function getObjectById(data,id) {
+    return data.find(item => item.id === id) || null;
 }
