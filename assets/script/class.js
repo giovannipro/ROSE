@@ -25,8 +25,8 @@ function load_data() {
 
         load_list(data)
         
-        const container = "#plot_box";
-		let window_w = document.getElementById("plot_box").offsetWidth;
+        const container = "#plot_class";
+		let window_w = document.getElementById("plot_class").offsetWidth;
 		window_h = 500; // document.getElementById("plot_box").offsetHeight;
 
         let margin = { top: 10, left: 0, bottom: 20, right: 0 },
@@ -51,18 +51,24 @@ function load_data() {
         // Scales for x and y axes
         const xScale = d3.scaleLinear()
             .domain([0, max_x])
-            .range([margin.left + 30, width - margin.right - 30]);
+            .range([margin.left + 30, width - margin.right - 30])
+            
 
         const yScale = d3.scaleLinear()
             .domain([0, max_y])
-            .range([height - margin.bottom, margin.top]);
+            .range([height - margin.bottom, margin.top])
 
         // create percentiles
         make_percentiles()
 
         // Create axes
-        const xAxis = d3.axisBottom(xScale);
-        const yAxis = d3.axisLeft(yScale);
+        const xAxis = d3.axisBottom(xScale)
+            .ticks(5)
+            .tickFormat(d3.format("d"))
+
+        const yAxis = d3.axisLeft(yScale)
+            .ticks(5)
+            .tickFormat(d3.format("d"))
 
         let axis = plot.append("g")
             .attr("class","axis")

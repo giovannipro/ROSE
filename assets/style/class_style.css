@@ -4,9 +4,13 @@
 }
 
 aside {
-    width: 30%
+    width: 35%
 }
 
 #container {
     width: 65%
+}
+
+#plot_class {
+    width: 100%;
 }
