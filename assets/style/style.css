@@ -4,8 +4,13 @@ body {
 	font-family: Arial, sans-serif;
 }
 
-header, footer, #controllers, #infobox {
+header, footer, #infobox {
 	margin: 0 1rem;
+}
+
+#controllers {
+	padding: 0 1rem 1rem;
+	border-bottom: 1px solid #bfbfbf;
 }
 
 h2 {
