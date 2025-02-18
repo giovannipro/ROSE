@@ -7,7 +7,7 @@ function load_data() {
 	const source = decodeURI(sourceValue);
     console.log(source)
 
-    // source = http://127.0.0.1:5501/class/?source=http://127.0.0.1:5501/assets/data/LME-1C_task_1_aggregated_stats.csv
+    // source = http://127.0.0.1:5501/class/?source=http://127.0.0.1:5501/assets/data/LU-INF1_task_6_aggregated_stats.csv
 
     d3.csv(source)
 		.then(loaded)
@@ -24,7 +24,7 @@ function load_data() {
         console.log(data)
 
         load_list(data)
-
+        
         const container = "#plot_box";
 		let window_w = document.getElementById("plot_box").offsetWidth;
 		window_h = 500; // document.getElementById("plot_box").offsetHeight;
@@ -56,6 +56,9 @@ function load_data() {
         const yScale = d3.scaleLinear()
             .domain([0, max_y])
             .range([height - margin.bottom, margin.top]);
+
+        // create percentiles
+        make_percentiles()
 
         // Create axes
         const xAxis = d3.axisBottom(xScale);
@@ -100,41 +103,97 @@ function load_data() {
            .attr("r", 5)
            .attr("fill", "blue");
 
-        const sortedX = data.map(d => +d.S_ResultDomain_New).sort(d3.ascending);
-        const sortedY = data.map(d => +d.S_Queries_New).sort(d3.ascending);
+           
+        function make_percentiles(){
 
-        percentiles = [25, 50, 75]
+            percentiles = [25, 50, 75]
 
-        // percentiles
-        let percentiles_box = plot.append("g")
-            .attr("class","percentiles")
+            const sortedX = data.map(d => +d.S_ResultDomain_New).sort(d3.ascending);
+            const sortedY = data.map(d => +d.S_Queries_New).sort(d3.ascending);
 
-        for (perc of percentiles){
-            normalized = perc / 100
-
-            const p_indexX = Math.floor(normalized * sortedX.length); 
-            const p_indexY = Math.floor(normalized * sortedY.length); 
-            const pX = sortedX[p_indexX];
-            const pY = sortedY[p_indexY];
-            console.log(pX, pY)
+            // percentiles
+            let percentiles_box = plot.append("g")
+                .attr("class","percentiles")
     
-            const squareSize = 20;
+            for (perc of percentiles){
+                normalized = perc / 100
     
-            percentiles_box.append("rect")
-                .attr("x", xScale(pX))
-                .attr("y", yScale(pY) - squareSize)  // Adjust to fit coordinate system
-                .attr("width", squareSize)
-                .attr("height", squareSize)
-                .attr("fill", "red")
-                // .attr("opacity", 0.5);
+                const p_indexX = Math.floor(normalized * sortedX.length); 
+                const p_indexY = Math.floor(normalized * sortedY.length); 
+                const pX = sortedX[p_indexX];
+                const pY = sortedY[p_indexY];
+                console.log(pX, pY)
+
+                let percentile_box = percentiles_box.append("g")
+                
+                percentile_box.append("rect")
+                    .attr("x", xScale(0) + 5)
+                    .attr("y", yScale(pY) - 15)
+                    .attr("width", 70)
+                    .attr("height", 12)
+                    .attr("fill", "white")
+                    // .attr("opacity", 0.5);
+
+                // horizontal line
+                percentile_box.append("line")
+                    .attr("x1", xScale(0))
+                    .attr("y1", yScale(pY))
+                    .attr("x2", xScale(pX))
+                    .attr("y2", yScale(pY))
+                    .attr("stroke", "#ccc")
+                    .attr("stroke-width", 1)
+                    .attr("stroke-dasharray","5,5")
     
-            // Add text label
-            percentiles_box.append("text")
-                .attr("x", xScale(pX) + 3)
-                .attr("y", yScale(pY) - 3)
+                // vertical line
+                percentile_box.append("line")
+                    .attr("x1", xScale(pX))
+                    .attr("y1", yScale(0))
+                    .attr("x2", xScale(pX))
+                    .attr("y2", yScale(pY))
+                    .attr("stroke", "#ccc")
+                    .attr("stroke-width", 1)
+                    .attr("stroke-dasharray","5,5")
+        
+                // Add text label
+                percentile_box.append("text")
+                    .attr("x", xScale(0) + 5)
+                    .attr("y", yScale(pY) - 5)
+                    .attr("fill", "black")
+                    .attr("font-size", "10px")
+                    .text((perc-25) + ' - ' + perc);
+
+            }
+
+            let percentile_box = percentiles_box.append("g")
+
+            // horizontal line 100%
+            percentile_box.append("line")
+                .attr("x1", xScale(0))
+                .attr("y1", yScale(max_y))
+                .attr("x2", xScale(max_x))
+                .attr("y2", yScale(max_y))
+                .attr("stroke", "#ccc")
+                .attr("stroke-width", 1)
+                .attr("stroke-dasharray","5,5")
+            
+            // vertical line 100%
+            percentile_box.append("line")
+                .attr("x1", xScale(max_x))
+                .attr("y1", yScale(max_y))
+                .attr("x2", xScale(max_x))
+                .attr("y2", yScale(0))
+                .attr("stroke", "#ccc")
+                .attr("stroke-width", 1)
+                .attr("stroke-dasharray","5,5")
+
+            // Add text label 100%
+            percentile_box.append("text")
+                .attr("x", xScale(0) + 5)
+                .attr("y", yScale(max_y) - 5)
                 .attr("fill", "black")
-                .attr("font-size", "12px")
-                .text(perc);
+                .attr("font-size", "10px")
+                .text(percentiles[percentiles.length - 1] + ' - ' + 100);
+
         }
     }
 }
