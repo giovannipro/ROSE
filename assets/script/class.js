@@ -191,7 +191,7 @@ function load_data() {
                     .attr("y", yScale(pY) - 5)
                     .attr("fill", "gray")
                     .attr("font-size", "10px")
-                    .text((perc-25) + ' - ' + perc);
+                    .text((perc-25) + ' - ' + (perc - 1));
             }
 
             let percentile_box = percentiles_box.append("g")
@@ -233,6 +233,7 @@ function load_list(data){
     let items = ''
 
     const max_duration = d3.max(data, d => +d.S_Duration_GloAvg)
+    console.log(max_duration)
 
     // sorting options
     duration_sort = data.sort((a,b) => {
