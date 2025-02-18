@@ -31,8 +31,8 @@ function load_statistics(data) {
 
 	const searchQueries = data.filter(item => item.page_type === 'SEARCH_ENGINE').map(item => ({ url: item.url, query: item.query }));
 	for (item of searchQueries){
-		url = decodeURIComponent(item.url);
-		item.query = clean_query(url)
+		the_url = decodeURIComponent(item.url);
+		item.query = clean_query(the_url)
 	}
 	const uniqueObjects = new Set();
 	const unique_queries = searchQueries.filter(item => {
