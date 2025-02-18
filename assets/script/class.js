@@ -11,6 +11,7 @@ function load_data() {
 
     d3.csv(source)
 		.then(loaded)
+        .then(highlight)
 		.catch(function (error) {
 			if (error.message.includes("404")) {
 				console.log("Something went wrong with the data loading");
@@ -104,10 +105,13 @@ function load_data() {
            .data(data)
            .enter()
            .append("circle")
+           .attr("id", d => "bubble_" + d.user_id)
+           .attr("class", "bubble")
            .attr("cx", d => xScale(+d.S_ResultDomain_New))
            .attr("cy", d => yScale(+d.S_Queries_New))
            .attr("r", 5)
-           .attr("fill", "gray");
+           .attr("fill", "gray")
+           .attr("opacity",0.25)
 
         function make_percentiles(){
 
@@ -213,13 +217,47 @@ function load_list(data){
         let the_duration_chart = duration_chart(+item.S_Duration_SeaAvg, +item.S_Duration_ResAvg)
 
         items += `
-            <li class="student_item">
+            <li class="student_item" id="${item.user_id}">
                 <span>id: ${item.user_id}</span><br/>
                 <div style="width:95%">${the_duration_chart}</div>
             </li>
         `
-                // <span>duration: ${item.S_Duration}</span>
-
     }
     container.innerHTML = items
+}
+
+function highlight(){
+
+    const items = document.querySelectorAll('.student_item')
+    const bubbles = document.querySelectorAll('.bubble')
+    // console.log(bubbles)
+
+    items.forEach(item => {
+        item.addEventListener("click", (e) => {
+            const id = item.id;
+
+            // reset the list item border 
+            items.forEach(item => {
+                item.style.borderLeft = "3px solid transparent"
+            })
+
+            // highlight the list item border 
+            the_item = document.getElementById(id)
+            the_item.style.borderLeft = "3px solid red"
+            // console.log(the_item)
+
+            // reset bubble style
+            bubbles.forEach(bubble => {
+                bubble.style.fill = "gray";
+                bubble.style.opacity = 0.2;
+            });
+
+            // highlight bubble
+            const bubble = document.getElementById("bubble_" + id);
+            if (bubble) {
+                bubble.style.fill = "red"
+                bubble.style.opacity = 1;
+            }
+        })
+    })
 }

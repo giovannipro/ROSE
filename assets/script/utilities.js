@@ -46,13 +46,23 @@ function duration_chart(searchDuration, pageDuration) {
 	const search_width = searchDuration * 100 / total;
 	const page_width = pageDuration * 100 / total;
 
-	const min_search = convertSecondsToMinutes(searchDuration);
-	const min_pages = convertSecondsToMinutes(pageDuration);
+	let min_search = convertSecondsToMinutes(searchDuration);
+	let min_pages = convertSecondsToMinutes(pageDuration);
+
+	let min_ration = 0.1
+	if ((searchDuration / pageDuration) < min_ration){
+		min_search = ''
+	}
+
+	if ((pageDuration / searchDuration) < min_ration){
+		min_pages = ''
+	}
+
 
 	let chart = `
 		<div style="display: flex; justify-content: space-between;">
-			<div class="duration_chart" style="background-color: #619ED4; width: ${search_width}%; justify-content: flex-end;">${min_search}</div>
-			<div class="duration_chart" style="background-color: #ff9100; width: calc(${page_width}% - 9px); justify-content: flex-end;">${min_pages}</div>
+			<div class="duration_chart" data-duration="${searchDuration}"  style="background-color: #619ED4; width: ${search_width}%; justify-content: flex-end;">${min_search}</div>
+			<div class="duration_chart" data-duration="${pageDuration}" style="background-color: #ff9100; width: calc(${page_width}% - 9px); justify-content: flex-end;">${min_pages}</div>
 		</div>
 	`;
 
