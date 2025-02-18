@@ -1,0 +1,12 @@
+#class_box {
+    display: flex;
+    justify-content: space-between;
+}
+
+aside {
+    width: 30%
+}
+
+#container {
+    width: 65%
+}

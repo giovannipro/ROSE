@@ -188,7 +188,11 @@ function open_tabs() {
 		}
 	});
 }
-open_tabs();
+
+const url = window.location.href
+if (!url.includes('class')){
+	open_tabs();
+}
 
 // to get the feedback text
 function getObjectById(data,id) {
