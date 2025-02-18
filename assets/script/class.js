@@ -1,3 +1,5 @@
+const bubble_size = 10;
+
 function load_data() {
 
     const queryString = window.location.search;
@@ -64,11 +66,11 @@ function load_data() {
 
         // Create axes
         const xAxis = d3.axisBottom(xScale)
-            .ticks(5)
+            .ticks(3)
             .tickFormat(d3.format("d"))
 
         const yAxis = d3.axisLeft(yScale)
-            .ticks(5)
+            .ticks(3)
             .tickFormat(d3.format("d"))
 
         let axis = plot.append("g")
@@ -129,7 +131,7 @@ function load_data() {
            .attr("class", "bubble")
            .attr("cx", d => xScale(+d.S_ResultDomain_New))
            .attr("cy", d => yScale(+d.S_Queries_New))
-           .attr("r", 5)
+           .attr("r", bubble_size)
            .attr("fill", "gray")
            .attr("opacity",0.25)
 
@@ -187,7 +189,7 @@ function load_data() {
                 percentile_box.append("text")
                     .attr("x", xScale(0) + 5)
                     .attr("y", yScale(pY) - 5)
-                    .attr("fill", "black")
+                    .attr("fill", "gray")
                     .attr("font-size", "10px")
                     .text((perc-25) + ' - ' + perc);
             }
@@ -218,7 +220,7 @@ function load_data() {
             percentile_box.append("text")
                 .attr("x", xScale(0) + 5)
                 .attr("y", yScale(max_y) - 5)
-                .attr("fill", "black")
+                .attr("fill", "gray")
                 .attr("font-size", "10px")
                 .text(percentiles[percentiles.length - 1] + ' - ' + 100);
         }
