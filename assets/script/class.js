@@ -232,14 +232,35 @@ function load_list(data){
     const container = document.getElementById("student_list");
     let items = ''
 
-    for (item of data){
+    const max_duration = d3.max(data, d => +d.S_Duration_GloAvg)
 
+    // sorting options
+    duration_sort = data.sort((a,b) => {
+        return +b.S_Duration_GloAvg - +a.S_Duration_GloAvg
+    })
+
+    search_sort = data.sort((a,b) => {
+        return +b.S_Duration_ReaAvg - +a.S_Duration_ReaAvg
+    })
+
+    page_sort = data.sort((a,b) => {
+        return +b.S_Duration_SeaAvg - +a.S_Duration_SeaAvg
+    })
+    
+    for (item of duration_sort){
+        
         let the_duration_chart = duration_chart(+item.S_Duration_SeaAvg, +item.S_Duration_ResAvg)
+
+        const duration = parseFloat(item.S_Duration_GloAvg)
+        const max_width = 100 * duration / max_duration
+        // console.log(duration,max_width)
 
         items += `
             <li class="student_item" id="${item.user_id}">
                 <span>id: ${item.user_id}</span><br/>
-                <div style="width:95%">${the_duration_chart}</div>
+                <div style="width: calc(${max_width}% - 5%)">
+                    ${the_duration_chart}
+                </div>
             </li>
         `
     }
