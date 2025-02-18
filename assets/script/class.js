@@ -75,25 +75,45 @@ function load_data() {
             .attr("class","axis")
 
         // Append X axis
-        axis.append("g")
-           .attr("transform", `translate(0, ${height - margin.bottom})`)
+        let x_Axis = axis.append("g")
+            .attr("transform", `translate(0, ${height - margin.bottom})`)
            .call(xAxis)
-           .append("text")
+        
+        let x_Axis_group = x_Axis.append("g")
+
+        x_Axis_group.append("text")
            .attr("class", "axis-label")
-           .attr("x", width / 2)
-           .attr("y", 30)
+           .attr("x", width - 80)
+           .attr("y", -18)
            .attr("fill", "black")
            .text("new websites");
 
+        x_Axis_group.append("rect")
+           .attr("x",width - 130)
+           .attr("y",-25)
+           .attr("width",10)
+           .attr("height",10)
+           .attr("fill","#ff9100")
+
         // Append Y axis
-        axis.append("g")
+        let y_Axis = axis.append("g")
            .attr("transform", `translate(${margin.left + 30}, 0)`)
            .call(yAxis)
-           .append("text")
+
+        let y_Axis_group = y_Axis.append("g")
+
+        y_Axis_group.append("rect")
+            .attr("x",10)
+            .attr("y",20)
+            .attr("width",10)
+            .attr("height",10)
+            .attr("fill","#619ED4")
+
+        y_Axis_group.append("text")
            .attr("class", "axis-label")
-           .attr("transform", "rotate(-90)")
-           .attr("x", -height / 2)
-           .attr("y", 20)
+           .attr("x",80)
+           .attr("y",30)
+           .attr("dy",-2)
            .attr("fill", "black")
            .text("new queries");
 
@@ -170,7 +190,6 @@ function load_data() {
                     .attr("fill", "black")
                     .attr("font-size", "10px")
                     .text((perc-25) + ' - ' + perc);
-
             }
 
             let percentile_box = percentiles_box.append("g")
@@ -212,7 +231,6 @@ function load_list(data){
     let items = ''
 
     for (item of data){
-        // console.log(item)
 
         let the_duration_chart = duration_chart(+item.S_Duration_SeaAvg, +item.S_Duration_ResAvg)
 
