@@ -444,7 +444,7 @@ function load_data() {
 
 			const infobox = document.getElementById('infobox');
 			function handleClick(id) {
-				console.log(id, previous_id);
+				// console.log(id, previous_id);
 
 				selectedIndex = id;
 
@@ -490,8 +490,8 @@ function load_data() {
 				if (class_ == 'strip'){
 
 					if (action == 'SAME_DOMAIN_RESULT' || action == 'SEEN_DOMAIN_RESULT' || action == 'NEW_RESULT') {
-						the_url = short_text(url,120)
-						console.log(the_url)
+						the_url = short_text(url,140)
+						// console.log(the_url)
 
 						if (domainStatus == "SEEN") {
 							output = `<span><a href="${url}" target="_blank">${the_url}</a><span style="color: gray"> (already seen)</span></span><br/>`;

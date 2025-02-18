@@ -43,8 +43,9 @@ h2 {
 
 #infobox {
 	margin-left: 120px;
-	padding-top: 2rem;
-	height: 5rem;
+	padding: 2rem 0 3rem;
+	overflow: scroll;
+	min-height: 4rem;
 }
 
 .strip_box, .website {
