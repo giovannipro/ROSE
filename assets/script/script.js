@@ -444,7 +444,7 @@ function load_data() {
 
 			const infobox = document.getElementById('infobox');
 			function handleClick(id) {
-				// console.log(id, previous_id);
+				console.log(id, previous_id);
 
 				selectedIndex = id;
 
@@ -476,23 +476,28 @@ function load_data() {
 					
 				const domain = document.querySelector('[data-index="' + id + '"]');
 				const class_ = (domain.getAttribute("data-class")).toString();
+
+				const url = domain.getAttribute("data-url")
+				const duration = domain.getAttribute("data-duration")
+				const action = domain.getAttribute("data-action")
+				const domainStatus = domain.getAttribute("data-domainStatus")
+				// console.log(action, duration)
+				// const domain_ = domain.getAttribute("data-domain")
 				// console.log(domain, class_)
 					
 				let output;
 
 				if (class_ == 'strip'){
-					const url = domain.getAttribute("data-url")
-					const domain_ = domain.getAttribute("data-domain")
-					const duration = domain.getAttribute("data-duration")
-					const action = domain.getAttribute("data-action")
-					const domainStatus = domain.getAttribute("data-domainStatus")
 
 					if (action == 'SAME_DOMAIN_RESULT' || action == 'SEEN_DOMAIN_RESULT' || action == 'NEW_RESULT') {
+						the_url = short_text(url,120)
+						console.log(the_url)
+
 						if (domainStatus == "SEEN") {
-							output = `<span><a href="${url}" target="_blank">${url}</a><span style="color: gray"> (already seen)</span></span><br/>`;
+							output = `<span><a href="${url}" target="_blank">${the_url}</a><span style="color: gray"> (already seen)</span></span><br/>`;
 						}
 						else {
-							output = `<span><a href="${url}" target="_blank">${url}</a></span><br/>`;
+							output = `<span><a href="${url}" target="_blank">${the_url}</a></span><br/>`;
 						}
 
 						output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;

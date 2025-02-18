@@ -30,10 +30,8 @@ function load_hints(){
 
             // try{
                 const item_obj = getObjectById(texts,feedback_ids[x])
-                console.log(item_obj)
+                // console.log(item_obj)
                 
-                // .feedback.en
-
                 output += `
                     <div class="${item_obj.id}">
                         <p>

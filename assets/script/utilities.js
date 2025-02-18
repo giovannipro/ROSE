@@ -194,3 +194,12 @@ open_tabs();
 function getObjectById(data,id) {
     return data.find(item => item.id === id) || null;
 }
+
+// make url shorter
+function short_text(text,characters){
+	let output = text
+	if (text.length > characters){
+		output = text.slice(0,characters) + ' ...'
+	}
+	return output
+}
