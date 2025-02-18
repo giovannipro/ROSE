@@ -1,12 +1,14 @@
 #class_box {
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid #bfbfbf;
 }
 
 aside {
     width: 35%;
     height: 60vh;
     overflow-y: scroll;
+    border-right: 1px solid #bfbfbf;
 }
 
 #container {
@@ -18,7 +20,13 @@ aside {
     height: 60vh;
 }
 
+#student_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
 .student_item {
     border-bottom: 1px solid #ccc;
-    padding: 0.5rem 0;
+    padding: 0.75rem 0 0.75rem 1rem;
 }

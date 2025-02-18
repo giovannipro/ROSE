@@ -46,7 +46,7 @@ function load_data() {
         // Get max 
         const max_x = d3.max(data, d => +d.S_ResultDomain_New);
         const max_y = d3.max(data, d => +d.S_Queries_New);
-        console.log(max_x, max_y)
+        // console.log(max_x, max_y)
 
         // Scales for x and y axes
         const xScale = d3.scaleLinear()
@@ -80,7 +80,7 @@ function load_data() {
            .append("text")
            .attr("class", "axis-label")
            .attr("x", width / 2)
-           .attr("y", 40)
+           .attr("y", 30)
            .attr("fill", "black")
            .text("new websites");
 
@@ -107,7 +107,7 @@ function load_data() {
            .attr("cx", d => xScale(+d.S_ResultDomain_New))
            .attr("cy", d => yScale(+d.S_Queries_New))
            .attr("r", 5)
-           .attr("fill", "blue");
+           .attr("fill", "gray");
 
         function make_percentiles(){
 
@@ -127,7 +127,7 @@ function load_data() {
                 const p_indexY = Math.floor(normalized * sortedY.length); 
                 const pX = sortedX[p_indexX];
                 const pY = sortedY[p_indexY];
-                console.log(pX, pY)
+                // console.log(pX, pY)
 
                 let percentile_box = percentiles_box.append("g")
                 
@@ -198,7 +198,6 @@ function load_data() {
                 .attr("fill", "black")
                 .attr("font-size", "10px")
                 .text(percentiles[percentiles.length - 1] + ' - ' + 100);
-
         }
     }
 }
@@ -209,14 +208,17 @@ function load_list(data){
     let items = ''
 
     for (item of data){
-        console.log(item)
+        // console.log(item)
+
+        let the_duration_chart = duration_chart(+item.S_Duration_SeaAvg, +item.S_Duration_ResAvg)
 
         items += `
             <li class="student_item">
-                <span>id: ${item.user_id}</span>
-                <span>duration: ${item.S_Duration}</span>
+                <span>id: ${item.user_id}</span><br/>
+                <div style="width:95%">${the_duration_chart}</div>
             </li>
         `
+                // <span>duration: ${item.S_Duration}</span>
 
     }
     container.innerHTML = items
