@@ -4,13 +4,21 @@
 }
 
 aside {
-    width: 35%
+    width: 35%;
+    height: 60vh;
+    overflow-y: scroll;
 }
 
 #container {
-    width: 65%
+    width: 65%;
 }
 
 #plot_class {
     width: 100%;
+    height: 60vh;
+}
+
+.student_item {
+    border-bottom: 1px solid #ccc;
+    padding: 0.5rem 0;
 }

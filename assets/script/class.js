@@ -27,7 +27,7 @@ function load_data() {
         
         const container = "#plot_class";
 		let window_w = document.getElementById("plot_class").offsetWidth;
-		window_h = 500; // document.getElementById("plot_box").offsetHeight;
+		window_h = document.getElementById("plot_class").offsetHeight;
 
         let margin = { top: 10, left: 0, bottom: 20, right: 0 },
 			width = window_w - (margin.right + margin.right),
@@ -109,7 +109,6 @@ function load_data() {
            .attr("r", 5)
            .attr("fill", "blue");
 
-           
         function make_percentiles(){
 
             percentiles = [25, 50, 75]
@@ -213,11 +212,10 @@ function load_list(data){
         console.log(item)
 
         items += `
-            <li>
+            <li class="student_item">
                 <span>id: ${item.user_id}</span>
                 <span>duration: ${item.S_Duration}</span>
             </li>
-            <hr/>
         `
 
     }
