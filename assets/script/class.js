@@ -27,15 +27,18 @@ function load_data() {
         console.log(data)
 
         data.forEach(item => {
+            item.user_id = +item.user_id
             item.S_Queries_Glo = +item.S_Queries_Glo
             item.S_ResultDomain_New = +item.S_ResultDomain_New
             
-            item.S_Duration_GloAvg = +item.S_Duration_GloAvg
-            item.S_Duration = +item.S_Duration
             item.S_Duration_Net = +item.S_Duration_Net
+            item.S_Duration_ResAvg = +item.S_Duration_ResAvg
+            item.S_Duration_SeaAvg = +item.S_Duration_SeaAvg
+
+            item.Que_Pag = item.S_Duration_ResAvg + item.S_Duration_SeaAvg
         })
 
-        load_list(data)
+        load_list(data, 'total')
         
         const container = "#plot_class";
 		let window_w = document.getElementById("plot_class").offsetWidth;
@@ -105,7 +108,7 @@ function load_data() {
            .attr("y",-25)
            .attr("width",10)
            .attr("height",10)
-           .attr("fill","#ff9100")
+           .attr("fill","#619ED4")
 
         // Append Y axis
         let y_Axis = axis.append("g")
@@ -119,7 +122,7 @@ function load_data() {
             .attr("y",20)
             .attr("width",10)
             .attr("height",10)
-            .attr("fill","#619ED4")
+            .attr("fill","#ff9100")
 
         y_Axis_group.append("text")
            .attr("class", "axis-label")
@@ -239,48 +242,53 @@ function load_data() {
 }
 load_data()
 
-function load_list(data){
+function load_list(data, sort){
     const container = document.getElementById("student_list");
     let items = ''
 
-    const max_duration = d3.max(data, d => d.S_Duration_Net)
-    // console.log(max_duration)
+    const max_duration = d3.max(data, d => d.S_Duration_SeaAvg) + d3.max(data, d => d.S_Duration_ResAvg)
 
     // sorting options
-    duration_sort = data.sort((a,b) => {
-        return b.S_Duration_Net - a.S_Duration_Net
+    const duration_sort = data.slice().sort((a,b) => {
+        return b.Que_Pag - a.Que_Pag
     })
 
-    search_sort = data.sort((a,b) => {
-        return b.S_Duration_ReaAvg - a.S_Duration_ReaAvg
-    })
-
-    page_sort = data.sort((a,b) => {
+    const queries_sort = data.slice().sort((a,b) => {
         return b.S_Duration_SeaAvg - a.S_Duration_SeaAvg
     })
     
-    console.log(duration_sort)
+    const page_sort = data.slice().sort((a,b) => {
+        return b.S_Duration_ResAvg - a.S_Duration_ResAvg
+    })
+    
+    let sorted_dataset;
+    if (sort == 'queries'){
+        sorted_dataset = queries_sort
+    }
+    else if (sort == 'pages'){
+        sorted_dataset = page_sort
+    }
+    else {
+        sorted_dataset = duration_sort
+    }
 
-    duration_sort.forEach(item => {
-        console.log(item.user_id, item.S_Duration_Net)
+    sorted_dataset.forEach(item => {
+        console.log(item.user_id, item.S_Duration_SeaAvg)
         
-        let the_duration_chart = duration_chart(+item.S_Duration_SeaAvg, +item.S_Duration_ResAvg)
+        let the_duration_chart = duration_chart(item.S_Duration_SeaAvg, item.S_Duration_ResAvg)
     
-        const max_width = (100 * item.S_Duration) / max_duration
-        // const duration = parseFloat(item.S_Duration_Net)
-        // console.log(duration,max_width)
-    
+        const bar_width = (item.Que_Pag / max_duration) * 100;
+
         items += `
             <li class="student_item" id="${item.user_id}">
                 <div class="inside">
                     <span>id: ${item.user_id}</span><br/>
-                    <div style="width: 100%">
+                    <div style="width: ${bar_width}%">
                         ${the_duration_chart}
                     </div>
                 </div>
             </li>
         `
-        // <div style="width: calc(${max_width}% - 5%)">
     })
 
 
