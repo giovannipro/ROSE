@@ -6,8 +6,7 @@
 
 aside {
     width: 35%;
-    height: 70vh;
-    overflow-y: scroll;
+    
     border-right: 1px solid #bfbfbf;
 }
 
@@ -22,6 +21,8 @@ aside {
 
 #student_list {
     list-style: none;
+    height: 70vh;
+    overflow-y: scroll;
     margin: 0;
     padding: 0;
 }
@@ -37,14 +38,17 @@ aside {
 }
 
 .student_item:nth-child(even){
-    background-color: #fcfcfc;
+    background-color: #f8f8f8;
 }
 
 .student_item:hover {
     background-color: #eaeaea;
 }
 
-.inside {
-    border-bottom: 1px solid #e7e7e7;
-    /* border-left: 3px solid transparent; */
+#sort_box {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border-bottom: 1px solid #ccc;
+    border-left: 3px solid transparent;
 }
