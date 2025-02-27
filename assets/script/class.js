@@ -1,4 +1,4 @@
-const bubble_size = 10;
+const bubble_size = 12;
 
 function load_data() {
 
@@ -9,7 +9,7 @@ function load_data() {
 	const source = decodeURI(sourceValue);
     console.log(source)
 
-    // source = http://127.0.0.1:5501/class/?source=http://127.0.0.1:5501/assets/data/LU-INF1_task_6_aggregated_stats.csv
+    // http://127.0.0.1:5501/class/?source=http://127.0.0.1:5501/assets/data/LU-INF1_task_5_aggregated_stats.csv
 
     d3.csv(source)
 		.then(loaded)
@@ -25,6 +25,15 @@ function load_data() {
 
     function loaded(data) {
         console.log(data)
+
+        data.forEach(item => {
+            item.S_Queries_Glo = +item.S_Queries_Glo
+            item.S_ResultDomain_New = +item.S_ResultDomain_New
+            
+            item.S_Duration_GloAvg = +item.S_Duration_GloAvg
+            item.S_Duration = +item.S_Duration
+            item.S_Duration_Net = +item.S_Duration_Net
+        })
 
         load_list(data)
         
@@ -47,8 +56,8 @@ function load_data() {
             .attr("transform", "translate(" + margin.right + "," + margin.top + ")");
 
         // Get max 
-        const max_x = d3.max(data, d => +d.S_ResultDomain_New);
-        const max_y = d3.max(data, d => +d.S_Queries_New);
+        const max_x = d3.max(data, d => +d.S_Queries_Glo);
+        const max_y = d3.max(data, d => +d.S_ResultDomain_New);
         // console.log(max_x, max_y)
 
         // Scales for x and y axes
@@ -85,10 +94,11 @@ function load_data() {
 
         x_Axis_group.append("text")
            .attr("class", "axis-label")
-           .attr("x", width - 80)
+           .attr("x", width - 110)
            .attr("y", -18)
            .attr("fill", "black")
-           .text("new websites");
+           .attr("text-anchor", "start")
+           .text("unique queries");
 
         x_Axis_group.append("rect")
            .attr("x",width - 130)
@@ -113,11 +123,12 @@ function load_data() {
 
         y_Axis_group.append("text")
            .attr("class", "axis-label")
-           .attr("x",80)
+           .attr("x",30)
            .attr("y",30)
            .attr("dy",-2)
            .attr("fill", "black")
-           .text("new queries");
+           .attr("text-anchor", "start")
+           .text("unique pages");
 
         // Plot points
         let circles = plot.append("g")
@@ -129,8 +140,8 @@ function load_data() {
            .append("circle")
            .attr("id", d => "bubble_" + d.user_id)
            .attr("class", "bubble")
-           .attr("cx", d => xScale(+d.S_ResultDomain_New))
-           .attr("cy", d => yScale(+d.S_Queries_New))
+           .attr("cx", d => xScale(+d.S_Queries_Glo))
+           .attr("cy", d => yScale(+d.S_ResultDomain_New))
            .attr("r", bubble_size)
            .attr("fill", "gray")
            .attr("opacity",0.25)
@@ -139,8 +150,8 @@ function load_data() {
 
             percentiles = [25, 50, 75]
 
-            const sortedX = data.map(d => +d.S_ResultDomain_New).sort(d3.ascending);
-            const sortedY = data.map(d => +d.S_Queries_New).sort(d3.ascending);
+            const sortedX = data.map(d => d.S_Queries_Glo).sort(d3.ascending);
+            const sortedY = data.map(d => d.S_ResultDomain_New).sort(d3.ascending);
 
             // percentiles
             let percentiles_box = plot.append("g")
@@ -232,39 +243,49 @@ function load_list(data){
     const container = document.getElementById("student_list");
     let items = ''
 
-    const max_duration = d3.max(data, d => +d.S_Duration_GloAvg)
-    console.log(max_duration)
+    const max_duration = d3.max(data, d => d.S_Duration_Net)
+    // console.log(max_duration)
 
     // sorting options
     duration_sort = data.sort((a,b) => {
-        return +b.S_Duration_GloAvg - +a.S_Duration_GloAvg
+        return b.S_Duration_Net - a.S_Duration_Net
     })
 
     search_sort = data.sort((a,b) => {
-        return +b.S_Duration_ReaAvg - +a.S_Duration_ReaAvg
+        return b.S_Duration_ReaAvg - a.S_Duration_ReaAvg
     })
 
     page_sort = data.sort((a,b) => {
-        return +b.S_Duration_SeaAvg - +a.S_Duration_SeaAvg
+        return b.S_Duration_SeaAvg - a.S_Duration_SeaAvg
     })
     
-    for (item of duration_sort){
+    console.log(duration_sort)
+
+    duration_sort.forEach(item => {
+        console.log(item.user_id, item.S_Duration_Net)
         
         let the_duration_chart = duration_chart(+item.S_Duration_SeaAvg, +item.S_Duration_ResAvg)
-
-        const duration = parseFloat(item.S_Duration_GloAvg)
-        const max_width = 100 * duration / max_duration
+    
+        const max_width = (100 * item.S_Duration) / max_duration
+        // const duration = parseFloat(item.S_Duration_Net)
         // console.log(duration,max_width)
-
+    
         items += `
             <li class="student_item" id="${item.user_id}">
-                <span>id: ${item.user_id}</span><br/>
-                <div style="width: calc(${max_width}% - 5%)">
-                    ${the_duration_chart}
+                <div class="inside">
+                    <span>id: ${item.user_id}</span><br/>
+                    <div style="width: 100%">
+                        ${the_duration_chart}
+                    </div>
                 </div>
             </li>
         `
-    }
+        // <div style="width: calc(${max_width}% - 5%)">
+    })
+
+
+    // for (item of duration_sort){
+    
     container.innerHTML = items
 }
 
