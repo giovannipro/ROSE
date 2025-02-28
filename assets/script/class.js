@@ -28,10 +28,14 @@ function load_data() {
     function loaded(data) {
         console.log(data)
 
+        document.getElementById("the_class").innerHTML = "?"
+		document.getElementById("the_task").innerHTML = data[0].task_id;
+
         data.forEach(item => {
             item.user_id = +item.user_id
             item.S_Queries_New = +item.S_Queries_New
             item.S_ResultDomain_New = +item.S_ResultDomain_New
+            // item.S_ResultDomain_New = +item.S_ResultDomain_New
             
             item.S_Duration_Net = +item.S_Duration_Net
             item.S_Duration_ResAvg = +item.S_Duration_ResAvg
@@ -296,9 +300,26 @@ function load_list(data, sort){
                     <div style="width: ${bar_width}%">
                         ${the_duration_chart}
                     </div>
+                    <div id="${item.user_id}_more" class="student_more" style="color: #a2a2a2; font-size: 0.8rem;">
+                        <div class="student_more_box">
+                            <div>
+                                <div>queries</div>
+                                <div style="justify-content: flex-end;">${item.S_Queries_New}</div>
+                            </div>
+                            <div>
+                                <div>pages</div>
+                                <div style="justify-content: flex-end;">${item.S_ResultDomain_New}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </li>
         `
+        // <div>
+        //     <div>domains</div>
+        //     <div style="justify-content: flex-end;">10</div>
+        // </div>
+                            
     })
     
     container.innerHTML = items
@@ -321,6 +342,7 @@ resort_list()
 function highlight(){
 
     const items = document.querySelectorAll('.student_item')
+    const more_items = document.querySelectorAll('.student_more')
     const bubbles = document.querySelectorAll('.bubble')
     // console.log(bubbles)
 
@@ -335,17 +357,24 @@ function highlight(){
 
             // highlight the list item border 
             the_item = document.getElementById(id)
+            more_info = document.getElementById(id + '_more')
             the_item.style.borderLeft = "3px solid red"
-            // console.log(the_item)
-
+            
+            more_items.forEach(more => {
+                more.style.display = "none"
+            })
+            
             // reset bubble style
             bubbles.forEach(bubble => {
                 bubble.style.stroke = "transparent";
                 bubble.style.opacity = bubble_default_opacity;
                 bubble.style.fillOpacity = 1;
             });
-
+            
             // highlight bubble
+            console.log(more_info)
+            more_info.style.display = "block"
+
             const bubble = document.getElementById("bubble_" + id);
             if (bubble) {
                 bubble.style.stroke = "red"

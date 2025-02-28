@@ -61,3 +61,24 @@ aside {
     justify-content: space-between;
     align-items: center;
 }
+
+.student_more {
+    border-top: 1px solid #ccc;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    display: none;
+}
+
+.student_more div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.student_more_box div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.student_more_box div div {
+    width: 2rem;
+}
