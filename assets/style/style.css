@@ -184,6 +184,10 @@ footer {
 	padding: 0.1rem;
 }
 
+.pages_bar {
+	margin-left: 2px;
+}
+
 table {
 	table-layout: fixed;
 	width: 100%;

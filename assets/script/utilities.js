@@ -64,7 +64,7 @@ function duration_chart(searchDuration, pageDuration) {
 	let chart = `
 		<div style="display: flex; justify-content: space-between;">
 			<div class="duration_chart" data-queDur="${searchDuration}"  style="background-color: #619ED4; width: calc(${search_width}% - 5px); justify-content: flex-end;">${min_search}</div>
-			<div class="duration_chart" data-pagDur="${pageDuration}" style="background-color: #ff9100; width: calc(${page_width}% - 5px); justify-content: flex-end;">${min_pages}</div>
+			<div class="duration_chart pages_bar" data-pagDur="${pageDuration}" style="background-color: #ff9100; width: calc(${page_width}% - 5px); justify-content: flex-end;">${min_pages}</div>
 		</div>
 	`;
 

@@ -1,4 +1,5 @@
 const bubble_size = 12;
+const bubble_default_opacity = 0.2;
 
 function load_data() {
 
@@ -152,7 +153,7 @@ function load_data() {
            .attr("cy", d => yScale(d.S_ResultDomain_New))
            .attr("r", bubble_size)
            .attr("fill", "gray")
-           .attr("opacity",0.25)
+           .attr("opacity",bubble_default_opacity)
 
         function make_percentiles(){
 
@@ -278,7 +279,7 @@ function load_list(data, sort){
     }
 
     sorted_dataset.forEach(item => {
-        console.log(item.user_id, item.queries_duration, item.pages_duration)
+        // console.log(item.user_id, item.queries_duration, item.pages_duration)
         
         let the_duration_chart = duration_chart(item.queries_duration, item.pages_duration)
     
@@ -295,9 +296,6 @@ function load_list(data, sort){
             </li>
         `
     })
-
-
-    // for (item of duration_sort){
     
     container.innerHTML = items
 }
@@ -324,16 +322,21 @@ function highlight(){
 
             // reset bubble style
             bubbles.forEach(bubble => {
-                bubble.style.fill = "gray";
-                bubble.style.opacity = 0.2;
+                bubble.style.stroke = "transparent";
+                bubble.style.opacity = bubble_default_opacity;
+                bubble.style.fillOpacity = 1;
             });
 
             // highlight bubble
             const bubble = document.getElementById("bubble_" + id);
             if (bubble) {
-                bubble.style.fill = "red"
+                bubble.style.stroke = "red"
+                bubble.style.strokeWidth = 3;
+
                 bubble.style.opacity = 1;
+                bubble.style.fillOpacity = 0.2;
             }
         })
     })
 }
+
