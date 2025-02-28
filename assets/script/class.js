@@ -11,7 +11,7 @@ function load_data() {
 	const source = decodeURI(sourceValue);
     console.log(source)
 
-    // http://127.0.0.1:5501/class/?source=http://127.0.0.1:5501/assets/data/LU-INF1_task_5_aggregated_stats.csv
+    // http://127.0.0.1:5501/class/?source=http://127.0.0.1:5501/assets/data/class/LU-INF1_task_5_aggregated_stats.csv
 
     d3.csv(source)
 		.then(loaded)
@@ -315,11 +315,7 @@ function load_list(data, sort){
                 </div>
             </li>
         `
-        // <div>
-        //     <div>domains</div>
-        //     <div style="justify-content: flex-end;">10</div>
-        // </div>
-                            
+         
     })
     
     container.innerHTML = items
