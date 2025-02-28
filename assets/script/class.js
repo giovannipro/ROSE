@@ -28,14 +28,19 @@ function load_data() {
 
         data.forEach(item => {
             item.user_id = +item.user_id
-            item.S_Queries_Glo = +item.S_Queries_Glo
+            item.S_Queries_New = +item.S_Queries_New
             item.S_ResultDomain_New = +item.S_ResultDomain_New
             
             item.S_Duration_Net = +item.S_Duration_Net
             item.S_Duration_ResAvg = +item.S_Duration_ResAvg
             item.S_Duration_SeaAvg = +item.S_Duration_SeaAvg
 
+            item.queries_duration = item.S_Duration_SeaAvg * item.S_Actions_Sea
+            item.pages_duration = item.S_Duration_ResAvg * item.S_Actions_Res
+
             item.Que_Pag = item.S_Duration_ResAvg + item.S_Duration_SeaAvg
+
+            console.log(item.S_Queries_New)
         })
 
         load_list(data, 'total')
@@ -59,8 +64,8 @@ function load_data() {
             .attr("transform", "translate(" + margin.right + "," + margin.top + ")");
 
         // Get max 
-        const max_x = d3.max(data, d => +d.S_Queries_Glo);
-        const max_y = d3.max(data, d => +d.S_ResultDomain_New);
+        const max_x = d3.max(data, d => d.S_Queries_New);
+        const max_y = d3.max(data, d => d.S_ResultDomain_New);
         // console.log(max_x, max_y)
 
         // Scales for x and y axes
@@ -143,8 +148,8 @@ function load_data() {
            .append("circle")
            .attr("id", d => "bubble_" + d.user_id)
            .attr("class", "bubble")
-           .attr("cx", d => xScale(+d.S_Queries_Glo))
-           .attr("cy", d => yScale(+d.S_ResultDomain_New))
+           .attr("cx", d => xScale(d.S_Queries_New))
+           .attr("cy", d => yScale(d.S_ResultDomain_New))
            .attr("r", bubble_size)
            .attr("fill", "gray")
            .attr("opacity",0.25)
@@ -153,7 +158,7 @@ function load_data() {
 
             percentiles = [25, 50, 75]
 
-            const sortedX = data.map(d => d.S_Queries_Glo).sort(d3.ascending);
+            const sortedX = data.map(d => d.S_Queries_New).sort(d3.ascending);
             const sortedY = data.map(d => d.S_ResultDomain_New).sort(d3.ascending);
 
             // percentiles
@@ -246,7 +251,7 @@ function load_list(data, sort){
     const container = document.getElementById("student_list");
     let items = ''
 
-    const max_duration = d3.max(data, d => d.S_Duration_SeaAvg) + d3.max(data, d => d.S_Duration_ResAvg)
+    const max_duration = d3.max(data, d => d.Que_Pag)
 
     // sorting options
     const duration_sort = data.slice().sort((a,b) => {
@@ -254,11 +259,11 @@ function load_list(data, sort){
     })
 
     const queries_sort = data.slice().sort((a,b) => {
-        return b.S_Duration_SeaAvg - a.S_Duration_SeaAvg
+        return b.queries_duration - a.queries_duration
     })
     
     const page_sort = data.slice().sort((a,b) => {
-        return b.S_Duration_ResAvg - a.S_Duration_ResAvg
+        return b.pages_duration - a.pages_duration
     })
     
     let sorted_dataset;
@@ -273,9 +278,9 @@ function load_list(data, sort){
     }
 
     sorted_dataset.forEach(item => {
-        console.log(item.user_id, item.S_Duration_SeaAvg)
+        console.log(item.user_id, item.queries_duration, item.pages_duration)
         
-        let the_duration_chart = duration_chart(item.S_Duration_SeaAvg, item.S_Duration_ResAvg)
+        let the_duration_chart = duration_chart(item.queries_duration, item.pages_duration)
     
         const bar_width = (item.Que_Pag / max_duration) * 100;
 
