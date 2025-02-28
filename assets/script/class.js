@@ -39,7 +39,6 @@ function load_data() {
 
             item.queries_duration = item.S_Duration_SeaAvg * item.S_Actions_Sea
             item.pages_duration = item.S_Duration_ResAvg * item.S_Actions_Res
-
             item.Que_Pag = item.queries_duration + item.pages_duration
             // console.log(item.S_Queries_New)
         })
@@ -100,19 +99,19 @@ function load_data() {
             .attr("transform", `translate(0, ${height - margin.bottom})`)
            .call(xAxis)
         
+        let x_Axis_group_position = width - 120
         let x_Axis_group = x_Axis.append("g")
+        .attr("transform", `translate(${x_Axis_group_position},-20)`)
 
         x_Axis_group.append("text")
            .attr("class", "axis-label")
-           .attr("x", width - 110)
-           .attr("y", -18)
+           .attr("x", 15)
+           .attr("y", 10)
            .attr("fill", "black")
            .attr("text-anchor", "start")
            .text("unique queries");
 
         x_Axis_group.append("rect")
-           .attr("x",width - 130)
-           .attr("y",-25)
            .attr("width",10)
            .attr("height",10)
            .attr("fill","#619ED4")
@@ -123,22 +122,21 @@ function load_data() {
            .call(yAxis)
 
         let y_Axis_group = y_Axis.append("g")
+            .attr("transform", "translate(10,20)")
 
         y_Axis_group.append("rect")
-            .attr("x",10)
-            .attr("y",20)
             .attr("width",10)
             .attr("height",10)
             .attr("fill","#ff9100")
 
         y_Axis_group.append("text")
-           .attr("class", "axis-label")
-           .attr("x",30)
-           .attr("y",30)
-           .attr("dy",-2)
-           .attr("fill", "black")
-           .attr("text-anchor", "start")
-           .text("unique pages");
+            .attr("x", 15)
+            .attr("y", 10)
+            .attr("class", "axis-label")
+            .attr("dy",-2)
+            .attr("fill", "black")
+            .attr("text-anchor", "start")
+            .text("unique pages");
 
         // Plot points
         let circles = plot.append("g")
@@ -254,7 +252,7 @@ function load_list(data, sort){
     let items = ''
 
     const max_duration = d3.max(data, d => d.Que_Pag)
-    console.log(max_duration)
+    // console.log(max_duration)
 
     // sorting options
     const duration_sort = data.slice().sort((a,b) => {
@@ -291,7 +289,10 @@ function load_list(data, sort){
         items += `
             <li class="student_item" id="${item.user_id}">
                 <div class="inside">
-                    <span>id: ${item.user_id} (${total_duration})</span><br/>
+                    <div class="item_data">
+                        <div>id: ${item.user_id}</div>
+                        <div style="color: #a2a2a2; font-size: 0.8rem;">(${total_duration})</div>
+                    </div>
                     <div style="width: ${bar_width}%">
                         ${the_duration_chart}
                     </div>
