@@ -72,23 +72,23 @@ function duration_chart(searchDuration, pageDuration) {
 }
 
 function convertSecondsToMinutes(seconds) {
-	// console.log(seconds)
+	console.log(seconds);
 
-	const minutes = Math.floor(seconds / 60);
-	const remainingSeconds = seconds % 60;
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
 
-	const formattedMinutes = (minutes < 10 ? "0" : "") + minutes;
-	const formattedSeconds = (remainingSeconds < 10 ? "0" : "") + parseInt(remainingSeconds);
-	// console.log(formattedMinutes + ':' + formattedSeconds)
+    const formattedHours = hours > 0 ? (hours < 10 ? "0" : "") + hours + ":" : "";
+    const formattedMinutes = (minutes < 10 ? "0" : "") + minutes;
+    const formattedSeconds = (remainingSeconds < 10 ? "0" : "") + parseInt(remainingSeconds);
 
-	if (String(formattedMinutes) == "Infinity" || String(formattedMinutes) == "NaN" || String(formattedSeconds) == "Infinity" || String(formattedSeconds) == "NaN") {
-		time = 0;
-	}
-	else {
-		time = formattedMinutes + ':' + formattedSeconds;
-	}
+    if (String(formattedMinutes) == "Infinity" || String(formattedMinutes) == "NaN" || String(formattedSeconds) == "Infinity" || String(formattedSeconds) == "NaN") {
+        time = "00:00";
+    } else {
+        time = formattedHours + formattedMinutes + ":" + formattedSeconds;
+    }
 
-	return time;
+    return time;
 }
 
 function getUniqueValues(values) {

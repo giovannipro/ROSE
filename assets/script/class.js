@@ -1,5 +1,6 @@
 const bubble_size = 12;
 const bubble_default_opacity = 0.2;
+let the_data;
 
 function load_data() {
 
@@ -39,11 +40,11 @@ function load_data() {
             item.queries_duration = item.S_Duration_SeaAvg * item.S_Actions_Sea
             item.pages_duration = item.S_Duration_ResAvg * item.S_Actions_Res
 
-            item.Que_Pag = item.S_Duration_ResAvg + item.S_Duration_SeaAvg
-
-            console.log(item.S_Queries_New)
+            item.Que_Pag = item.queries_duration + item.pages_duration
+            // console.log(item.S_Queries_New)
         })
 
+        the_data = data
         load_list(data, 'total')
         
         const container = "#plot_class";
@@ -253,6 +254,7 @@ function load_list(data, sort){
     let items = ''
 
     const max_duration = d3.max(data, d => d.Que_Pag)
+    console.log(max_duration)
 
     // sorting options
     const duration_sort = data.slice().sort((a,b) => {
@@ -281,14 +283,15 @@ function load_list(data, sort){
     sorted_dataset.forEach(item => {
         // console.log(item.user_id, item.queries_duration, item.pages_duration)
         
-        let the_duration_chart = duration_chart(item.queries_duration, item.pages_duration)
-    
-        const bar_width = (item.Que_Pag / max_duration) * 100;
+        const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration)
+        const total_duration = convertSecondsToMinutes(item.queries_duration + item.pages_duration)
+
+        const bar_width = ( (item.queries_duration + item.pages_duration) / max_duration) * 100;
 
         items += `
             <li class="student_item" id="${item.user_id}">
                 <div class="inside">
-                    <span>id: ${item.user_id}</span><br/>
+                    <span>id: ${item.user_id} (${total_duration})</span><br/>
                     <div style="width: ${bar_width}%">
                         ${the_duration_chart}
                     </div>
@@ -298,7 +301,21 @@ function load_list(data, sort){
     })
     
     container.innerHTML = items
+
 }
+
+function resort_list(){
+    const sortSelect = document.getElementById('get_sort');
+
+    document.getElementById('get_sort').addEventListener('change', () => {
+        sortValue = sortSelect.value;
+        // console.log(the_data)
+
+        load_list(the_data, sortValue)
+        highlight()
+    });
+}
+resort_list()
 
 function highlight(){
 
@@ -339,4 +356,3 @@ function highlight(){
         })
     })
 }
-
