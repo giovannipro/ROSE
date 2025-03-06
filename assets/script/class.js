@@ -54,7 +54,7 @@ function load_data() {
 		let window_w = document.getElementById("plot_class").offsetWidth;
 		window_h = document.getElementById("plot_class").offsetHeight;
 
-        let margin = { top: 10, left: 0, bottom: 20, right: 0 },
+        let margin = { top: 40, left: 10, bottom: 20, right: 10},
 			width = window_w - (margin.right + margin.right),
 			height = window_h - (margin.top + margin.bottom);
 
@@ -78,7 +78,6 @@ function load_data() {
             .domain([0, max_x])
             .range([margin.left + 30, width - margin.right - 30])
             
-
         const yScale = d3.scaleLinear()
             .domain([0, max_y])
             .range([height - margin.bottom, margin.top])
@@ -101,11 +100,11 @@ function load_data() {
         // Append X axis
         let x_Axis = axis.append("g")
             .attr("transform", `translate(0, ${height - margin.bottom})`)
-           .call(xAxis)
+            .call(xAxis)
         
-        let x_Axis_group_position = width - 120
+        let x_Axis_group_position = width - 140
         let x_Axis_group = x_Axis.append("g")
-        .attr("transform", `translate(${x_Axis_group_position},-20)`)
+            .attr("transform", `translate(${x_Axis_group_position},-20)`)
 
         x_Axis_group.append("text")
            .attr("class", "axis-label")
@@ -126,7 +125,7 @@ function load_data() {
            .call(yAxis)
 
         let y_Axis_group = y_Axis.append("g")
-            .attr("transform", "translate(10,20)")
+            .attr("transform", "translate(20,50)")
 
         y_Axis_group.append("rect")
             .attr("width",10)
@@ -245,7 +244,7 @@ function load_data() {
                 .attr("y", yScale(max_y) - 5)
                 .attr("fill", "gray")
                 .attr("font-size", "10px")
-                .text(percentiles[percentiles.length - 1] + ' - ' + 100);
+                .text(percentiles[percentiles.length - 1] + ' - ' + 100 + ' percentile');
         }
     }
 }
@@ -401,13 +400,12 @@ function highlight() {
                         labelY -= 15;
                     }
                     labelPositions.push(labelY);
-
                     
                     let color = "black"
                     
                     if (id == matchingBubble.id.replace("bubble_","") ){
                         color = "red"
-                        console.log(matchingBubble.id)
+                        // console.log(matchingBubble.id)
                     }
                     
                     svg.append("text")
