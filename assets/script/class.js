@@ -383,6 +383,7 @@ function highlight() {
                 matchingBubbles.forEach((matchingBubble, index) => {
                     const matchingId = matchingBubble.id.replace("bubble_", "");
                     const matchingData = the_data.find(d => d.user_id == matchingId);
+                    // console.log(matchingData)
 
                     let labelY = cy - 20 - (index * 15); // Adjust the position above the bubble
 
@@ -396,7 +397,6 @@ function highlight() {
                     
                     if (id == matchingBubble.id.replace("bubble_","") ){
                         color = "red"
-                        // console.log(matchingBubble.id)
                     }
                     
                     svg.append("text")
@@ -406,7 +406,7 @@ function highlight() {
                         .attr("text-anchor", "middle")
                         .attr("fill", color)
                         .attr("font-size", "12px")
-                        .text(`ID: ${matchingData.user_id}`);
+                        .text(`${matchingData.user_id}`);
                 });
             }
         });
