@@ -304,18 +304,21 @@ function load_list(data, sort){
                         <div class="student_more_box">
                             <div>
                                 <div>queries</div>
-                                <div style="justify-content: flex-end;">${item.S_Queries_New}</div>
+                                <div style="justify-content: flex-end;" data-log="S_Queries_New">${item.S_Queries_New}</div>
+                            </div>
+                            <div>
+                                <div>domains</div>
+                                <div style="justify-content: flex-end;" data-log="?">?</div>
                             </div>
                             <div>
                                 <div>pages</div>
-                                <div style="justify-content: flex-end;">${item.S_ResultDomain_New}</div>
+                                <div style="justify-content: flex-end;" data-log="S_ResultDomain_New">${item.S_ResultDomain_New}</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </li>
         `
-         
     })
     
     container.innerHTML = items
@@ -335,12 +338,11 @@ function resort_list(){
 }
 resort_list()
 
-function highlight(){
-
-    const items = document.querySelectorAll('.student_item')
-    const more_items = document.querySelectorAll('.student_more')
-    const bubbles = document.querySelectorAll('.bubble')
-    // console.log(bubbles)
+function highlight() {
+    const items = document.querySelectorAll('.student_item');
+    const more_items = document.querySelectorAll('.student_more');
+    const bubbles = document.querySelectorAll('.bubble');
+    const svg = d3.select("#plot_main");
 
     items.forEach(item => {
         item.addEventListener("click", (e) => {
@@ -348,17 +350,17 @@ function highlight(){
 
             // reset the list item border 
             items.forEach(item => {
-                item.style.borderLeft = "3px solid transparent"
-            })
+                item.style.borderLeft = "3px solid transparent";
+            });
 
             // highlight the list item border 
-            the_item = document.getElementById(id)
-            more_info = document.getElementById(id + '_more')
-            the_item.style.borderLeft = "3px solid red"
+            const the_item = document.getElementById(id);
+            const more_info = document.getElementById(id + '_more');
+            the_item.style.borderLeft = "3px solid red";
             
             more_items.forEach(more => {
-                more.style.display = "none"
-            })
+                more.style.display = "none";
+            });
             
             // reset bubble style
             bubbles.forEach(bubble => {
@@ -366,19 +368,58 @@ function highlight(){
                 bubble.style.opacity = bubble_default_opacity;
                 bubble.style.fillOpacity = 1;
             });
+
+            svg.selectAll(".bubble-label").remove();
             
             // highlight bubble
-            console.log(more_info)
-            more_info.style.display = "block"
+            more_info.style.display = "block";
 
             const bubble = document.getElementById("bubble_" + id);
             if (bubble) {
-                bubble.style.stroke = "red"
+                bubble.style.stroke = "red";
                 bubble.style.strokeWidth = 3;
 
                 bubble.style.opacity = 1;
                 bubble.style.fillOpacity = 0.2;
+
+                // Get the position of the clicked bubble
+                const cx = bubble.getAttribute("cx");
+                const cy = bubble.getAttribute("cy");
+
+                // Find and display labels for all elements in the scatterplot that have the same position
+                const matchingBubbles = Array.from(bubbles).filter(b => b.getAttribute("cx") === cx && b.getAttribute("cy") === cy);
+                const labelPositions = [];
+
+                matchingBubbles.forEach((matchingBubble, index) => {
+                    const matchingId = matchingBubble.id.replace("bubble_", "");
+                    const matchingData = the_data.find(d => d.user_id == matchingId);
+
+                    let labelY = cy - 20 - (index * 15); // Adjust the position above the bubble
+
+                    // Check for overlapping labels and adjust position
+                    while (labelPositions.some(pos => Math.abs(pos - labelY) < 15)) {
+                        labelY -= 15;
+                    }
+                    labelPositions.push(labelY);
+
+                    
+                    let color = "black"
+                    
+                    if (id == matchingBubble.id.replace("bubble_","") ){
+                        color = "red"
+                        console.log(matchingBubble.id)
+                    }
+                    
+                    svg.append("text")
+                        .attr("class", "bubble-label")
+                        .attr("x", cx)
+                        .attr("y", labelY)
+                        .attr("text-anchor", "middle")
+                        .attr("fill", color)
+                        .attr("font-size", "12px")
+                        .text(`ID: ${matchingData.user_id}`);
+                });
             }
-        })
-    })
+        });
+    });
 }
