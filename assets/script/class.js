@@ -255,20 +255,11 @@ function load_list(data, sort){
     let items = ''
 
     const max_duration = d3.max(data, d => d.Que_Pag)
-    // console.log(max_duration)
 
     // sorting options
-    const duration_sort = data.slice().sort((a,b) => {
-        return b.Que_Pag - a.Que_Pag
-    })
-
-    const queries_sort = data.slice().sort((a,b) => {
-        return b.queries_duration - a.queries_duration
-    })
-    
-    const page_sort = data.slice().sort((a,b) => {
-        return b.pages_duration - a.pages_duration
-    })
+    const duration_sort = data.slice().sort((a,b) => b.Que_Pag - a.Que_Pag)
+    const queries_sort = data.slice().sort((a,b) => b.queries_duration - a.queries_duration)
+    const page_sort = data.slice().sort((a,b) => b.pages_duration - a.pages_duration)
     
     let sorted_dataset;
     if (sort == 'queries'){
@@ -282,11 +273,8 @@ function load_list(data, sort){
     }
 
     sorted_dataset.forEach(item => {
-        // console.log(item.user_id, item.queries_duration, item.pages_duration)
-        
         const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration)
         const total_duration = convertSecondsToMinutes(item.queries_duration + item.pages_duration)
-
         const bar_width = ( (item.queries_duration + item.pages_duration) / max_duration) * 100;
 
         items += `
@@ -318,10 +306,13 @@ function load_list(data, sort){
                 </div>
             </li>
         `
+
+        // <input type="checkbox" class="student_checkbox" id="checkbox_${item.user_id}">
+                        
     })
     
     container.innerHTML = items
-
+    highlight();
 }
 
 function resort_list(){
