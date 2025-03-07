@@ -126,7 +126,7 @@ function load_data() {
            .call(yAxis)
 
         let y_Axis_group = y_Axis.append("g")
-            .attr("transform", "translate(20,50)")
+            .attr("transform", "translate(10,50)")
 
         y_Axis_group.append("rect")
             .attr("width",10)
@@ -186,7 +186,7 @@ function load_data() {
                                 .attr("x", x)
                                 .attr("y", y - 20 - offset) // Position above bubble with offset
                                 .attr("text-anchor", "middle")
-                                .attr("fill", "gray")
+                                .attr("fill", "black")
                                 .attr("font-size", "12px")
                                 .attr("opacity", 0)
                                 .text(d.user_id)
@@ -199,11 +199,11 @@ function load_data() {
             });
 
         function make_grid() {
-            const color = "red" 
 
             grid_box = plot.append("g")
                 .attr("class", "grid_box")
             
+            // Add X gridlines
             grid_box.append("g")
                 .attr("class", "grid x-grid")
                 .attr("transform", `translate(0,${height - margin.bottom})`)
@@ -213,113 +213,21 @@ function load_data() {
                         .tickFormat("")
                     )
                 .attr("stroke-dasharray","5,5")
-                .style("stroke", color)
                 .style("opacity", 0.2); 
                 
-                // Add Y gridlines
+            // Add Y gridlines
             grid_box.append("g")
                 .attr("class", "grid y-grid")
                 .attr("transform", `translate(${margin.left + 30},0)`)
                 .call(d3.axisLeft(yScale)
                     .ticks(max_y)
-                    .tickSize(-width + margin.left + margin.right + 30)
+                    .tickSize(-(width - margin.left - margin.right - 60))
                     .tickFormat("")
                 )
                 .attr("stroke-dasharray","5,5")
                 .attr("stroke-width", 1)
-                .style("stroke", color)
                 .style("opacity", 0.2); 
             }
-
-        function make_percentiles(){
-
-            percentiles = [25, 50, 75]
-
-            const sortedX = data.map(d => d.S_Queries_New).sort(d3.ascending);
-            const sortedY = data.map(d => d.S_ResultDomain_New).sort(d3.ascending);
-
-            // percentiles
-            let percentiles_box = plot.append("g")
-                .attr("class","percentiles")
-    
-            for (perc of percentiles){
-                normalized = perc / 100
-    
-                const p_indexX = Math.floor(normalized * sortedX.length); 
-                const p_indexY = Math.floor(normalized * sortedY.length); 
-                const pX = sortedX[p_indexX];
-                const pY = sortedY[p_indexY];
-                // console.log(pX, pY)
-
-                let percentile_box = percentiles_box.append("g")
-                
-                percentile_box.append("rect")
-                    .attr("x", xScale(0) + 5)
-                    .attr("y", yScale(pY) - 15)
-                    .attr("width", 70)
-                    .attr("height", 12)
-                    .attr("fill", "white")
-                    // .attr("opacity", 0.5);
-
-                // horizontal line
-                percentile_box.append("line")
-                    .attr("x1", xScale(0))
-                    .attr("y1", yScale(pY))
-                    .attr("x2", xScale(pX))
-                    .attr("y2", yScale(pY))
-                    .attr("stroke", "#ccc")
-                    .attr("stroke-width", 1)
-                    .attr("stroke-dasharray","5,5")
-    
-                // vertical line
-                percentile_box.append("line")
-                    .attr("x1", xScale(pX))
-                    .attr("y1", yScale(0))
-                    .attr("x2", xScale(pX))
-                    .attr("y2", yScale(pY))
-                    .attr("stroke", "#ccc")
-                    .attr("stroke-width", 1)
-                    .attr("stroke-dasharray","5,5")
-        
-                // Add text label
-                percentile_box.append("text")
-                    .attr("x", xScale(0) + 5)
-                    .attr("y", yScale(pY) - 5)
-                    .attr("fill", "gray")
-                    .attr("font-size", "10px")
-                    .text((perc-25) + ' - ' + (perc - 1));
-            }
-
-            let percentile_box = percentiles_box.append("g")
-
-            // horizontal line 100%
-            percentile_box.append("line")
-                .attr("x1", xScale(0))
-                .attr("y1", yScale(max_y))
-                .attr("x2", xScale(max_x))
-                .attr("y2", yScale(max_y))
-                .attr("stroke", "#ccc")
-                .attr("stroke-width", 1)
-                .attr("stroke-dasharray","5,5")
-            
-            // vertical line 100%
-            percentile_box.append("line")
-                .attr("x1", xScale(max_x))
-                .attr("y1", yScale(max_y))
-                .attr("x2", xScale(max_x))
-                .attr("y2", yScale(0))
-                .attr("stroke", "#ccc")
-                .attr("stroke-width", 1)
-                .attr("stroke-dasharray","5,5")
-
-            // Add text label 100%
-            percentile_box.append("text")
-                .attr("x", xScale(0) + 5)
-                .attr("y", yScale(max_y) - 5)
-                .attr("fill", "gray")
-                .attr("font-size", "10px")
-                .text(percentiles[percentiles.length - 1] + ' - ' + 100 + ' percentile');
-        }
     }
 }
 load_data()
