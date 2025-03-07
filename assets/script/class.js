@@ -265,6 +265,7 @@ function load_list(data, sort){
     const duration_sort = data.slice().sort((a,b) => b.Que_Pag - a.Que_Pag)
     const queries_sort = data.slice().sort((a,b) => b.queries_duration - a.queries_duration)
     const page_sort = data.slice().sort((a,b) => b.pages_duration - a.pages_duration)
+    const alphabetical_sort = data.slice().sort((a,b) => String(a.user_id).localeCompare(String(b.user_id)));
     
     let sorted_dataset;
     if (sort == 'queries'){
@@ -272,6 +273,9 @@ function load_list(data, sort){
     }
     else if (sort == 'pages'){
         sorted_dataset = page_sort
+    }
+    else if (sort == 'name'){
+        sorted_dataset = alphabetical_sort;
     }
     else {
         sorted_dataset = duration_sort
