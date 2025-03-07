@@ -157,7 +157,7 @@ function load_data() {
             .attr("r", 0)
             .transition()
             .duration(t_duration)
-            .delay((d,i) => 500 + i * t_duration)
+            .delay((d,i) => 200 + i * t_duration)
             .attr("fill", "gray")
             .attr("r", bubble_size)
             .attr("opacity",bubble_default_opacity)
@@ -289,51 +289,56 @@ function load_list(data, sort){
         sorted_dataset = duration_sort
     }
 
-    sorted_dataset.forEach(item => {
-        const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration)
-        const total_duration = convertSecondsToMinutes(item.queries_duration + item.pages_duration)
-        const bar_width = ( (item.queries_duration + item.pages_duration) / max_duration) * 100;
-        const student_page = "../?source=assets/data/_stats_5_1.csv"
+    sorted_dataset.forEach((item, index) => {
+        setTimeout(() => {
+            const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration)
+            const total_duration = convertSecondsToMinutes(item.queries_duration + item.pages_duration)
+            const bar_width = ( (item.queries_duration + item.pages_duration) / max_duration) * 100;
+            const student_page = "../?source=assets/data/_stats_5_1.csv"
 
-        items += `
-            <li class="student_item" id="${item.user_id}">
-                <div class="inside">
-                    <div class="item_data">
-                        <div>
-                            <span>${item.user_id}</span>
-                            <a href="${student_page}" target="blank" style="text-decoration: none">&#8599;</a>
+            items += `
+                <li class="student_item" id="${item.user_id}">
+                    <div class="inside">
+                        <div class="item_data">
+                            <div>
+                                <span>${item.user_id}</span>
+                                <a href="${student_page}" target="blank" style="text-decoration: none">&#8599;</a>
+                            </div>
+                            <div style="color: #a2a2a2; font-size: 0.8rem;">(${total_duration})</div>
                         </div>
-                        <div style="color: #a2a2a2; font-size: 0.8rem;">(${total_duration})</div>
-                    </div>
-                    <div style="width: ${bar_width}%">
-                        ${the_duration_chart}
-                    </div>
-                    <div id="${item.user_id}_more" class="student_more" style="color: #a2a2a2; font-size: 0.8rem;">
-                        <div class="student_more_box">
-                            <div>
-                                <div>queries</div>
-                                <div style="justify-content: flex-end;" data-log="S_Queries_New">${item.S_Queries_New}</div>
-                            </div>
-                            <div>
-                                <div>domains</div>
-                                <div style="justify-content: flex-end;" data-log="?">?</div>
-                            </div>
-                            <div>
-                                <div>pages</div>
-                                <div style="justify-content: flex-end;" data-log="S_ResultDomain_New">${item.S_ResultDomain_New}</div>
+                        <div style="width: ${bar_width}%">
+                            ${the_duration_chart}
+                        </div>
+                        <div id="${item.user_id}_more" class="student_more" style="color: #a2a2a2; font-size: 0.8rem;">
+                            <div class="student_more_box">
+                                <div>
+                                    <div>queries</div>
+                                    <div style="justify-content: flex-end;" data-log="S_Queries_New">${item.S_Queries_New}</div>
+                                </div>
+                                <div>
+                                    <div>domains</div>
+                                    <div style="justify-content: flex-end;" data-log="?">?</div>
+                                </div>
+                                <div>
+                                    <div>pages</div>
+                                    <div style="justify-content: flex-end;" data-log="S_ResultDomain_New">${item.S_ResultDomain_New}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </li>
-        `
+                </li>
+            `
+            // <input type="checkbox" class="student_checkbox" id="checkbox_${item.user_id}">
 
-        // <input type="checkbox" class="student_checkbox" id="checkbox_${item.user_id}">
+            container.innerHTML = items
+            
+            if (index === sorted_dataset.length - 1) {
+                highlight();
+            }
+            
+        }, index * 100);
                         
-    })
-    
-    container.innerHTML = items
-    highlight();
+    }) 
 }
 
 function resort_list(){
@@ -384,8 +389,7 @@ function highlight() {
             more_info.style.display = "block";
 
             const bubble = document.getElementById("bubble_" + id);
-            console.log(bubble)
-
+            
             if (bubble) {
                 bubble.style.stroke = "red";
                 bubble.style.strokeWidth = 3;
@@ -400,7 +404,7 @@ function highlight() {
                 // Find and display labels for all elements in the scatterplot that have the same position
                 const matchingBubbles = Array.from(bubbles).filter(b => b.getAttribute("cx") === cx && b.getAttribute("cy") === cy);
                 const labelPositions = [];
-                console.log(matchingBubbles)
+                // console.log(matchingBubbles)
 
                 matchingBubbles.forEach((matchingBubble, index) => {
                     const matchingId = matchingBubble.id.replace("bubble_", "");
@@ -419,9 +423,6 @@ function highlight() {
                     if (id == matchingBubble.id.replace("bubble_","") ){
                         color = "red"
                     }
-
-                    console.log(`Appending label at (${cx}, ${labelY}) with text: ${matchingData.user_id}`);
-
                     
                     svg.append("text")
                         .attr("class", "bubble-label")
