@@ -260,11 +260,12 @@ function load_list(data, sort){
 
     sorted_dataset.forEach((item, index) => {
         setTimeout(() => {
-            const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration)
             const total_duration = convertSecondsToMinutes(item.queries_duration + item.pages_duration)
             const queries_duration = convertSecondsToMinutes(item.queries_duration)
             const pages_duration = convertSecondsToMinutes(item.pages_duration)
             const bar_width = ( (item.queries_duration + item.pages_duration) / max_duration) * 100;
+
+            const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration, bar_width)
             
             // link to the student page
             const student_page = "../?source=assets/data/search_story_task_5_user_1015.csv"
@@ -355,7 +356,7 @@ function highlight() {
                 bubble.style.fillOpacity = 1;
             });
 
-            svg.selectAll(".bubble-label").style("fill", "gray");
+            svg.selectAll(".bubble-label").style("fill", "black");
             
             // highlight bubble
             more_info.style.display = "block";

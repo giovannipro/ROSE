@@ -40,35 +40,90 @@ function groupConsecutiveDomains(data) {
 	return groupedData;
 }
 
-function duration_chart(searchDuration, pageDuration) {
+function duration_chart(searchDuration, pageDuration, width) {
+    const visualization_treshold = 20;
+    const total = searchDuration + pageDuration;
+    const search_width = searchDuration * 100 / total;
+    const page_width = pageDuration * 100 / total;
 
-	const total = searchDuration + pageDuration;
-	const search_width = searchDuration * 100 / total;
-	const page_width = pageDuration * 100 / total;
+    let min_search = convertSecondsToMinutes(searchDuration);
+    let min_pages = convertSecondsToMinutes(pageDuration);
 
+    let min_ration = 0.1;
+    if ((searchDuration / pageDuration) < min_ration) {
+        min_search = '';
+    }
+    if ((pageDuration / searchDuration) < min_ration) {
+        min_pages = '';
+    }
 
-	// se to = x : 100
+    let val_queries = '';
+    let val_pages = '';
+    if (width >= visualization_treshold) {
+		if (search_width >= visualization_treshold){
+			val_queries = min_search;
+		}
 
-	let min_search = convertSecondsToMinutes(searchDuration);
-	let min_pages = convertSecondsToMinutes(pageDuration);
+		if (page_width >= visualization_treshold){
+			val_pages = min_pages;
+		}
+    }
 
-	let min_ration = 0.1
-	if ((searchDuration / pageDuration) < min_ration){
-		min_search = ''
-	}
+    // Create container div
+    const container = document.createElement('div');
+	const bar_height = 20;
+	const font_size = "0.7rem"
 
-	if ((pageDuration / searchDuration) < min_ration){
-		min_pages = ''
-	}
+    container.style.width = '100%';
+    container.style.height = '20px';
 
-	let chart = `
-		<div style="display: flex; justify-content: space-between;">
-			<div class="duration_chart" data-queDur="${searchDuration}"  style="background-color: #619ED4; width: calc(${search_width}% - 5px); justify-content: flex-end;">${min_search}</div>
-			<div class="duration_chart pages_bar" data-pagDur="${pageDuration}" style="background-color: #ff9100; width: calc(${page_width}% - 5px); justify-content: flex-end;">${min_pages}</div>
-		</div>
-	`;
+    // Create SVG using D3
+    const svg = d3.select(container)
+        .append('svg')
+        .attr('width', '100%')
+        .attr('height', '20');
 
-	return chart;
+    // Add queries rect
+    svg.append('rect')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', search_width + '%')
+        .attr('height', bar_height)
+        .attr('fill', '#619ED4')
+        .attr('data-queDur', searchDuration);
+
+    // Add pages rect
+    svg.append('rect')
+        .attr('x', search_width + '%')
+        .attr('y', 0)
+        .attr('width', page_width + '%')
+        .attr('height', bar_height)
+        .attr('fill', '#ff9100')
+        .attr('data-pagDur', pageDuration);
+
+    // Add queries text
+    if (val_queries) {
+        svg.append('text')
+            .attr('x', (search_width - 3) + '%')
+            .attr('y', 14)
+            .attr('text-anchor', 'end')
+            .attr('fill', 'white')
+            .attr('font-size', font_size)
+            .text(val_queries);
+    }
+
+    // Add pages text
+    if (val_pages) {
+        svg.append('text')
+            .attr('x', (search_width + page_width - 3) + '%')
+            .attr('y', 14)
+            .attr('text-anchor', 'end')
+            .attr('fill', 'white')
+            .attr('font-size', font_size)
+            .text(val_pages);
+    }
+
+    return container.outerHTML;
 }
 
 function convertSecondsToMinutes(seconds) {
