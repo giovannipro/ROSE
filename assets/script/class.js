@@ -239,9 +239,21 @@ function load_data() {
                 .attr("stroke-dasharray","5,5")
 
             // Add text label 100%
-            percentile_box.append("text")
-                .attr("x", xScale(0) + 5)
-                .attr("y", yScale(max_y) - 5)
+            x_pos = xScale(0) + 5
+            y_pos = yScale(max_y) - 5
+            last_box = percentile_box.append("g")
+                .attr("transform", "translate(" + x_pos + "," + y_pos + ")")
+                
+            last_box.append("rect")
+                .attr("width", 100)
+                .attr("height", 12)
+                .attr("x", 0)
+                .attr("y", -10)
+                .attr("fill", "white")
+            
+            last_box.append("text")
+            // .attr("x", xScale(0) + 5)
+            // .attr("y", yScale(max_y) - 5)
                 .attr("fill", "gray")
                 .attr("font-size", "10px")
                 .text(percentiles[percentiles.length - 1] + ' - ' + 100 + ' percentile');
@@ -276,12 +288,16 @@ function load_list(data, sort){
         const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration)
         const total_duration = convertSecondsToMinutes(item.queries_duration + item.pages_duration)
         const bar_width = ( (item.queries_duration + item.pages_duration) / max_duration) * 100;
+        const student_page = "../?source=assets/data/_stats_5_1.csv"
 
         items += `
             <li class="student_item" id="${item.user_id}">
                 <div class="inside">
                     <div class="item_data">
-                        <div>${item.user_id}</div>
+                        <div>
+                            <span>${item.user_id}</span>
+                            <a href="${student_page}" target="blank" style="text-decoration: none">&#8599;</a>
+                        </div>
                         <div style="color: #a2a2a2; font-size: 0.8rem;">(${total_duration})</div>
                     </div>
                     <div style="width: ${bar_width}%">
