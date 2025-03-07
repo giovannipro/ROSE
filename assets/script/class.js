@@ -1,7 +1,7 @@
 const bubble_size = 12;
-const bubble_default_opacity = 0.2;
+const bubble_default_opacity = 0.3;
 let the_data;
-const t_duration = 100;
+const t_duration = 50;
 
 function load_data() {
 
@@ -27,7 +27,6 @@ function load_data() {
 		});
 
     function loaded(data) {
-        console.log(data)
 
         document.getElementById("the_class").innerHTML = "?"
 		document.getElementById("the_task").innerHTML = data[0].task_id;
@@ -161,6 +160,42 @@ function load_data() {
             .attr("fill", "gray")
             .attr("r", bubble_size)
             .attr("opacity",bubble_default_opacity)
+            .on("end", function(d, i) {
+                if (i === data.length - 1) {
+                    // Add labels after all circles are drawn
+                    const labels = plot.append("g")
+                        .attr("class", "labels");
+        
+                    // Group data points by position to handle overlapping
+                    const positionGroups = d3.group(data, 
+                        d => `${xScale(d.S_Queries_New)},${yScale(d.S_ResultDomain_New)}`
+                    );
+        
+                    positionGroups.forEach((group, position) => {
+                        const [x, y] = position.split(",").map(Number);
+                        
+                        group.forEach((d, i) => {
+                            const offset = i * 15;
+                            
+                            labels.append("text")
+                                .attr("class", "bubble-label")
+                                // .attr("id", (d,i) =>  d.user_id)  // "label_" +
+                                // .attr("id", d => "label_" + d.user_id)
+                                .attr("id", "label_" + d.user_id)
+                                .attr("x", x)
+                                .attr("y", y - 20 - offset) // Position above bubble with offset
+                                .attr("text-anchor", "middle")
+                                .attr("fill", "gray")
+                                .attr("font-size", "12px")
+                                .attr("opacity", 0)
+                                .text(d.user_id)
+                                .transition()
+                                .duration(500)
+                                .attr("opacity", 0.7);
+                        });
+                    });
+                }
+            });
 
         function make_percentiles(){
 
@@ -311,7 +346,7 @@ function load_list(data, sort){
                                 </div>
                                 <div>
                                     <div>domains</div>
-                                    <div style="justify-content: flex-end;" data-log="?">?</div>
+                                    <div style="justify-content: flex-end;" data-log="?">${item.S_ResultDomain_New}</div>
                                 </div>
                                 <div>
                                     <div>pages</div>
@@ -377,12 +412,14 @@ function highlight() {
                 bubble.style.fillOpacity = 1;
             });
 
-            svg.selectAll(".bubble-label").remove();
+            svg.selectAll(".bubble-label").style("fill", "gray");
             
             // highlight bubble
             more_info.style.display = "block";
 
             const bubble = document.getElementById("bubble_" + id);
+            const label_id = document.getElementById("label_" + id);
+
             if (bubble) {
                 bubble.style.stroke = "red";
                 bubble.style.strokeWidth = 3;
@@ -390,42 +427,8 @@ function highlight() {
                 bubble.style.opacity = 1;
                 bubble.style.fillOpacity = 0.2;
 
-                // Get the position of the clicked bubble
-                const cx = bubble.getAttribute("cx");
-                const cy = bubble.getAttribute("cy");
-
-                // Find and display labels for all elements in the scatterplot that have the same position
-                const matchingBubbles = Array.from(bubbles).filter(b => b.getAttribute("cx") === cx && b.getAttribute("cy") === cy);
-                const labelPositions = [];
-
-                matchingBubbles.forEach((matchingBubble, index) => {
-                    const matchingId = matchingBubble.id.replace("bubble_", "");
-                    const matchingData = the_data.find(d => d.user_id == matchingId);
-                    // console.log(matchingData)
-
-                    let labelY = cy - 20 - (index * 15); // Adjust the position above the bubble
-
-                    // Check for overlapping labels and adjust position
-                    while (labelPositions.some(pos => Math.abs(pos - labelY) < 15)) {
-                        labelY -= 15;
-                    }
-                    labelPositions.push(labelY);
-                    
-                    let color = "black"
-                    
-                    if (id == matchingBubble.id.replace("bubble_","") ){
-                        color = "red"
-                    }
-                    
-                    svg.append("text")
-                        .attr("class", "bubble-label")
-                        .attr("x", cx)
-                        .attr("y", labelY)
-                        .attr("text-anchor", "middle")
-                        .attr("fill", color)
-                        .attr("font-size", "12px")
-                        .text(`${matchingData.user_id}`);
-                });
+                label_id.style.opacity = 1;
+                label_id.style.fill = "red";
             }
         });
     });
