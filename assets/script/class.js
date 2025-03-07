@@ -1,7 +1,7 @@
 const bubble_size = 12;
-const bubble_default_opacity = 0.3;
+const bubble_default_opacity = 0.5;
 let the_data;
-const t_duration = 50;
+const t_duration = 100;
 
 let svg, plot, xScale, yScale;
 let width, height, margin;
@@ -185,13 +185,16 @@ function load_data() {
                 .attr("class", "bubble")
                 .attr("cx", d => xScale(d.S_Queries_New))
                 .attr("cy", d => yScale(d.S_ResultDomain_New))
+                .attr("opacity",bubble_default_opacity)
+                .attr("fill", "gray")
                 .attr("r", 0)
                 .transition()
                 .duration(t_duration)
                 .delay((d,i) => 200 + i * t_duration)
-                .attr("fill", "gray")
+                .attr("r", bubble_size * 1.2)
+                .transition()
+                .duration(t_duration)
                 .attr("r", bubble_size)
-                .attr("opacity",bubble_default_opacity)
                 .on("end", function(d, i) {
                     if (i === data.length - 1) {
                         // Add labels after all circles are drawn
