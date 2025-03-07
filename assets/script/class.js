@@ -1,6 +1,7 @@
 const bubble_size = 12;
 const bubble_default_opacity = 0.2;
 let the_data;
+const t_duration = 100;
 
 function load_data() {
 
@@ -146,16 +147,20 @@ function load_data() {
             .attr("class","circles")
 
         circles.selectAll("circle")
-           .data(data)
-           .enter()
-           .append("circle")
-           .attr("id", d => "bubble_" + d.user_id)
-           .attr("class", "bubble")
-           .attr("cx", d => xScale(d.S_Queries_New))
-           .attr("cy", d => yScale(d.S_ResultDomain_New))
-           .attr("r", bubble_size)
-           .attr("fill", "gray")
-           .attr("opacity",bubble_default_opacity)
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("id", d => "bubble_" + d.user_id)
+            .attr("class", "bubble")
+            .attr("cx", d => xScale(d.S_Queries_New))
+            .attr("cy", d => yScale(d.S_ResultDomain_New))
+            .attr("r", 0)
+            .transition()
+            .duration(t_duration)
+            .delay((d,i) => 200 + i * t_duration)
+            .attr("fill", "gray")
+            .attr("r", bubble_size)
+            .attr("opacity",bubble_default_opacity)
 
         function make_percentiles(){
 
@@ -272,47 +277,56 @@ function load_list(data, sort){
         sorted_dataset = duration_sort
     }
 
-    sorted_dataset.forEach(item => {
-        const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration)
-        const total_duration = convertSecondsToMinutes(item.queries_duration + item.pages_duration)
-        const bar_width = ( (item.queries_duration + item.pages_duration) / max_duration) * 100;
+    sorted_dataset.forEach((item, index) => {
+        setTimeout(() => {
+            const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration)
+            const total_duration = convertSecondsToMinutes(item.queries_duration + item.pages_duration)
+            const bar_width = ( (item.queries_duration + item.pages_duration) / max_duration) * 100;
+            const student_page = "../?source=assets/data/_stats_5_1.csv"
 
-        items += `
-            <li class="student_item" id="${item.user_id}">
-                <div class="inside">
-                    <div class="item_data">
-                        <div>id: ${item.user_id}</div>
-                        <div style="color: #a2a2a2; font-size: 0.8rem;">(${total_duration})</div>
-                    </div>
-                    <div style="width: ${bar_width}%">
-                        ${the_duration_chart}
-                    </div>
-                    <div id="${item.user_id}_more" class="student_more" style="color: #a2a2a2; font-size: 0.8rem;">
-                        <div class="student_more_box">
+            items += `
+                <li class="student_item" id="${item.user_id}">
+                    <div class="inside">
+                        <div class="item_data">
                             <div>
-                                <div>queries</div>
-                                <div style="justify-content: flex-end;" data-log="S_Queries_New">${item.S_Queries_New}</div>
+                                <span>${item.user_id}</span>
+                                <a href="${student_page}" target="blank" style="text-decoration: none">&#8599;</a>
                             </div>
-                            <div>
-                                <div>domains</div>
-                                <div style="justify-content: flex-end;" data-log="?">?</div>
-                            </div>
-                            <div>
-                                <div>pages</div>
-                                <div style="justify-content: flex-end;" data-log="S_ResultDomain_New">${item.S_ResultDomain_New}</div>
+                            <div style="color: #a2a2a2; font-size: 0.8rem;">(${total_duration})</div>
+                        </div>
+                        <div style="width: ${bar_width}%">
+                            ${the_duration_chart}
+                        </div>
+                        <div id="${item.user_id}_more" class="student_more" style="color: #a2a2a2; font-size: 0.8rem;">
+                            <div class="student_more_box">
+                                <div>
+                                    <div>queries</div>
+                                    <div style="justify-content: flex-end;" data-log="S_Queries_New">${item.S_Queries_New}</div>
+                                </div>
+                                <div>
+                                    <div>domains</div>
+                                    <div style="justify-content: flex-end;" data-log="?">?</div>
+                                </div>
+                                <div>
+                                    <div>pages</div>
+                                    <div style="justify-content: flex-end;" data-log="S_ResultDomain_New">${item.S_ResultDomain_New}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </li>
-        `
+                </li>
+            `
+            // <input type="checkbox" class="student_checkbox" id="checkbox_${item.user_id}">
 
-        // <input type="checkbox" class="student_checkbox" id="checkbox_${item.user_id}">
+            container.innerHTML = items
+            
+            if (index === sorted_dataset.length - 1) {
+                highlight();
+            }
+            
+        }, index * 100);
                         
-    })
-    
-    container.innerHTML = items
-    highlight();
+    }) 
 }
 
 function resort_list(){

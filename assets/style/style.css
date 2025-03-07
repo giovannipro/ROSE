@@ -1,0 +1,217 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+}
+
+header, footer, #infobox {
+	margin: 0 1rem;
+}
+
+#controllers {
+	padding: 0 1rem 1rem;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+h2 {
+	font-size: 1rem;
+}
+
+#header {
+	display: flex;
+}
+
+#header h2 {
+	width: 160px;
+}
+
+#header span {
+	font-weight: normal;
+}
+
+#chart {
+	height: 400px;
+	margin-top: 0.5rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+#label_box {
+	width: 80px;
+}
+
+#plot_box {
+	overflow-y: hidden;
+	overflow-x: scroll;
+	width: calc(100% - 80px);
+}
+
+#infobox {
+	margin-left: 120px;
+	padding: 2rem 0 3rem;
+	overflow: scroll;
+	min-height: 4rem;
+}
+
+.strip_box, .website {
+	cursor: pointer;
+}
+
+.x_axis path {
+	stroke: none;
+}
+
+.x_axis text, .x_axis .tick line {
+	fill: gray;
+}
+
+.labels {
+	font-size: 0.8rem;
+}
+
+#controllers {
+	margin-top: 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 3rem;
+}
+
+#controllers select {
+	height: 2rem;
+}
+
+#story_selection {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 60%;
+}
+
+#story_selection div, input{
+	width: 25%;
+	display: block;
+}
+
+#feedback {
+	width: 30%;
+}
+
+#set_task, #set_user, #set_story {
+	width: 90%;
+}
+
+#set_user {
+	height: 2rem;
+}
+
+#set_story {
+	height: 2.3rem;
+}
+
+#set_size {
+	width: 30%;
+}
+
+.open_tab {
+	float: right;
+}
+
+#statistics, #suggestions {
+	border-top: 1px solid #bfbfbf;
+}
+
+#statistics_container, #suggestions_container {
+	display: none;
+}
+
+#suggestions {
+	margin-bottom: 3rem;
+}
+
+.tab_label {
+	font-weight: bold;
+	font-size: 1.2rem;
+	padding: 1rem;
+	background-color: #eee;
+	border-bottom: 1px solid #bfbfbf;
+	cursor: pointer;
+}
+
+.tab_content {
+	display: flex;
+	justify-content: space-between;
+	min-height: 4rem;
+	margin: 1.5rem 1rem;
+}
+
+.statistics_box {
+	width: 30%;
+}
+
+#hints div {
+	width: 100%;
+	border-bottom: 1px solid #ccc;
+}
+
+#hints div {	
+	display: flex;
+	justify-content: space-between;
+}
+
+#hints div p {
+	width: 30%;
+}
+
+.statistics_box table {
+	width: 100%;
+}
+
+table td:nth-child(2){
+	text-align: right;
+}
+
+footer {
+	margin: 2rem 1rem 3rem;
+}
+
+.duration_chart {
+	color: white;
+	font-size: 0.6rem;
+	height: 1rem;
+	display: flex;
+	align-items: center;
+	padding: 0.1rem;
+}
+
+.pages_bar {
+	margin-left: 2px;
+}
+
+table {
+	table-layout: fixed;
+	width: 100%;
+}
+
+td {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 725px) {
+	#statistics_container .tab_content, #suggestions_container .tab_content {
+		display: block;
+		/* width: 100%; */
+	}
+
+	.statistics_box {
+		width: calc(100% - 0.25rem);
+		border-bottom: 1px solid #ccc;
+		margin-bottom: 1rem;
+	}
+
+	.statistics_box:last-child {
+		border-bottom: none;
+	}
+}
