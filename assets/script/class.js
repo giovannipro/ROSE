@@ -3,6 +3,9 @@ const bubble_default_opacity = 0.3;
 let the_data;
 const t_duration = 50;
 
+let svg, plot, xScale, yScale;
+let width, height, margin;
+
 function load_data() {
 
     const queryString = window.location.search;
@@ -28,9 +31,6 @@ function load_data() {
 
     function loaded(data) {
 
-        document.getElementById("the_class").innerHTML = "?"
-		document.getElementById("the_task").innerHTML = data[0].task_id;
-
         data.forEach(item => {
             item.user_id = +item.user_id
             item.S_Queries_New = +item.S_Queries_New
@@ -48,154 +48,185 @@ function load_data() {
         })
 
         the_data = data
+        
+        document.getElementById("the_class").innerHTML = "?"
+        document.getElementById("the_task").innerHTML = data[0].task_id;
+
         load_list(data, 'total')
+
+        function createChart() {
+            const container = "#container";
+            let window_w = document.getElementById("container").offsetWidth;
+            window_h = document.getElementById("container").offsetHeight;
         
-        const container = "#plot_class";
-		let window_w = document.getElementById("plot_class").offsetWidth;
-		window_h = document.getElementById("plot_class").offsetHeight;
+            margin = { top: 40, left: 10, bottom: 20, right: 10 };
+            width = window_w - (margin.right + margin.right);
+            height = window_h - (margin.top + margin.bottom);
+        
+            d3.select("#svg_main").remove();
+        
+            // Set the global svg variable
+            svg = d3.select(container)
+                .append("svg")
+                .attr("width", window_w + (margin.right + margin.right))
+                .attr("height", height + (margin.top + margin.bottom))
+                .attr("id", "svg_main");
+        
+            // Set the global plot variable
+            plot = svg.append("g")
+                .attr("id", "plot_main")
+                .attr("transform", "translate(" + margin.right + "," + margin.top + ")");
+        
+            // Get max 
+            const max_x = d3.max(data, d => d.S_Queries_New);
+            const max_y = d3.max(data, d => d.S_ResultDomain_New);
+        
+            // Set the global scale variables
+            xScale = d3.scaleLinear()
+                .domain([0, max_x])
+                .range([margin.left + 30, width - margin.right - 30]);
+                
+            yScale = d3.scaleLinear()
+                .domain([0, max_y])
+                .range([height - margin.bottom, margin.top]);
+        
+            make_grid();
+            make_axis();
+            updateBubbles();
+        }
 
-        let margin = { top: 40, left: 10, bottom: 20, right: 10},
-			width = window_w - (margin.right + margin.right),
-			height = window_h - (margin.top + margin.bottom);
-
-        let svg = d3.select(container)
-            .append("svg")
-            .attr("width", window_w + (margin.right + margin.right))
-            .attr("height", height + (margin.top + margin.bottom))
-            .attr("id", "svg_main");
-
-        let plot = svg.append("g")
-            .attr("id", "plot_main")
-            .attr("transform", "translate(" + margin.right + "," + margin.top + ")");
-
-        // Get max 
-        const max_x = d3.max(data, d => d.S_Queries_New);
-        const max_y = d3.max(data, d => d.S_ResultDomain_New);
-        // console.log(max_x, max_y)
-
-        // Scales for x and y axes
-        const xScale = d3.scaleLinear()
-            .domain([0, max_x])
-            .range([margin.left + 30, width - margin.right - 30])
+        function make_axis() {
+            const xAxis = d3.axisBottom(xScale)
+                .ticks(3)
+                .tickFormat(d3.format("d"))
+    
+            const yAxis = d3.axisLeft(yScale)
+                .ticks(3)
+                .tickFormat(d3.format("d"))
+    
+            let axis = plot.append("g")
+                .attr("class","axis")
+    
+            // Append X axis
+            let x_Axis = axis.append("g")
+                .attr("transform", `translate(0, ${height - margin.bottom})`)
+                .call(xAxis)
             
-        const yScale = d3.scaleLinear()
-            .domain([0, max_y])
-            .range([height - margin.bottom, margin.top])
+            let x_Axis_group_position = width - 140
+            let x_Axis_group = x_Axis.append("g")
+                .attr("transform", `translate(${x_Axis_group_position},-20)`)
+    
+            x_Axis_group.append("text")
+               .attr("class", "axis-label")
+               .attr("x", 15)
+               .attr("y", 10)
+               .attr("fill", "black")
+               .attr("text-anchor", "start")
+               .text("unique queries");
+    
+            x_Axis_group.append("rect")
+               .attr("width",10)
+               .attr("height",10)
+               .attr("fill","#619ED4")
+    
+            // Append Y axis
+            let y_Axis = axis.append("g")
+               .attr("transform", `translate(${margin.left + 30}, 0)`)
+               .call(yAxis)
+    
+            let y_Axis_group = y_Axis.append("g")
+                .attr("transform", "translate(10,50)")
+    
+            y_Axis_group.append("rect")
+                .attr("width",10)
+                .attr("height",10)
+                .attr("fill","#ff9100")
+    
+            y_Axis_group.append("text")
+                .attr("x", 15)
+                .attr("y", 10)
+                .attr("class", "axis-label")
+                .attr("dy",-2)
+                .attr("fill", "black")
+                .attr("text-anchor", "start")
+                .text("unique pages");
+        }
 
-        // create percentiles
-        // make_percentiles()
-        make_grid()
-
-        // Create axes
-        const xAxis = d3.axisBottom(xScale)
-            .ticks(3)
-            .tickFormat(d3.format("d"))
-
-        const yAxis = d3.axisLeft(yScale)
-            .ticks(3)
-            .tickFormat(d3.format("d"))
-
-        let axis = plot.append("g")
-            .attr("class","axis")
-
-        // Append X axis
-        let x_Axis = axis.append("g")
-            .attr("transform", `translate(0, ${height - margin.bottom})`)
-            .call(xAxis)
+        window.addEventListener('resize', debounce(() => {
+            createChart();
+        }, 500));
         
-        let x_Axis_group_position = width - 140
-        let x_Axis_group = x_Axis.append("g")
-            .attr("transform", `translate(${x_Axis_group_position},-20)`)
-
-        x_Axis_group.append("text")
-           .attr("class", "axis-label")
-           .attr("x", 15)
-           .attr("y", 10)
-           .attr("fill", "black")
-           .attr("text-anchor", "start")
-           .text("unique queries");
-
-        x_Axis_group.append("rect")
-           .attr("width",10)
-           .attr("height",10)
-           .attr("fill","#619ED4")
-
-        // Append Y axis
-        let y_Axis = axis.append("g")
-           .attr("transform", `translate(${margin.left + 30}, 0)`)
-           .call(yAxis)
-
-        let y_Axis_group = y_Axis.append("g")
-            .attr("transform", "translate(10,50)")
-
-        y_Axis_group.append("rect")
-            .attr("width",10)
-            .attr("height",10)
-            .attr("fill","#ff9100")
-
-        y_Axis_group.append("text")
-            .attr("x", 15)
-            .attr("y", 10)
-            .attr("class", "axis-label")
-            .attr("dy",-2)
-            .attr("fill", "black")
-            .attr("text-anchor", "start")
-            .text("unique pages");
-
-        // Plot points
-        let circles = plot.append("g")
-            .attr("class","circles")
-
-        circles.selectAll("circle")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("id", d => "bubble_" + d.user_id)
-            .attr("class", "bubble")
-            .attr("cx", d => xScale(d.S_Queries_New))
-            .attr("cy", d => yScale(d.S_ResultDomain_New))
-            .attr("r", 0)
-            .transition()
-            .duration(t_duration)
-            .delay((d,i) => 200 + i * t_duration)
-            .attr("fill", "gray")
-            .attr("r", bubble_size)
-            .attr("opacity",bubble_default_opacity)
-            .on("end", function(d, i) {
-                if (i === data.length - 1) {
-                    // Add labels after all circles are drawn
-                    const labels = plot.append("g")
-                        .attr("class", "labels");
+        createChart();
         
-                    // Group data points by position to handle overlapping
-                    const positionGroups = d3.group(data, 
-                        d => `${xScale(d.S_Queries_New)},${yScale(d.S_ResultDomain_New)}`
-                    );
-        
-                    positionGroups.forEach((group, position) => {
-                        const [x, y] = position.split(",").map(Number);
-                        
-                        group.forEach((d, i) => {
-                            const offset = i * 15;
+        // Add a debounce function to prevent too many resize events
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function updateBubbles() {
+
+            let circles = plot.append("g")
+                .attr("class","circles")
+    
+            circles.selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("id", d => "bubble_" + d.user_id)
+                .attr("class", "bubble")
+                .attr("cx", d => xScale(d.S_Queries_New))
+                .attr("cy", d => yScale(d.S_ResultDomain_New))
+                .attr("r", 0)
+                .transition()
+                .duration(t_duration)
+                .delay((d,i) => 200 + i * t_duration)
+                .attr("fill", "gray")
+                .attr("r", bubble_size)
+                .attr("opacity",bubble_default_opacity)
+                .on("end", function(d, i) {
+                    if (i === data.length - 1) {
+                        // Add labels after all circles are drawn
+                        const labels = plot.append("g")
+                            .attr("class", "labels");
+            
+                        // Group data points by position to handle overlapping
+                        const positionGroups = d3.group(data, 
+                            d => `${xScale(d.S_Queries_New)},${yScale(d.S_ResultDomain_New)}`
+                        );
+            
+                        positionGroups.forEach((group, position) => {
+                            const [x, y] = position.split(",").map(Number);
                             
-                            labels.append("text")
-                                .attr("class", "bubble-label")
-                                .attr("id", "label_" + d.user_id)
-                                .attr("x", x)
-                                .attr("y", y - 20 - offset)
-                                .attr("text-anchor", "middle")
-                                .attr("fill", "black")
-                                .attr("font-size", "12px")
-                                .attr("opacity", 0)
-                                .text(d.user_id)
-                                .on("click", label_highlight)
-                                .transition()
-                                .duration(500)
-                                .attr("opacity", 0.7)
+                            group.forEach((d, i) => {
+                                const offset = i * 15;
+                                
+                                labels.append("text")
+                                    .attr("class", "bubble-label")
+                                    .attr("id", "label_" + d.user_id)
+                                    .attr("x", x)
+                                    .attr("y", y - 20 - offset)
+                                    .attr("text-anchor", "middle")
+                                    .attr("fill", "black")
+                                    .attr("font-size", "12px")
+                                    .attr("opacity", 0)
+                                    .text(d.user_id)
+                                    .on("click", label_highlight)
+                                    .transition()
+                                    .duration(500)
+                                    .attr("opacity", 0.7)
+                            });
                         });
-                    });
-                }
-            });
+                    }
+                });
+        }
 
         function label_highlight(event, d) {
             
@@ -237,9 +268,12 @@ function load_data() {
 
         function make_grid() {
 
+            const max_x = d3.max(data, d => d.S_Queries_New);
+            const max_y = d3.max(data, d => d.S_ResultDomain_New);
+            
             grid_box = plot.append("g")
                 .attr("class", "grid_box")
-            
+
             // Add X gridlines
             grid_box.append("g")
                 .attr("class", "grid x-grid")
