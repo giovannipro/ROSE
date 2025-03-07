@@ -79,6 +79,12 @@ aside {
     justify-content: space-between;
 }
 
-.student_more_box div {
-    width: 4rem;
+.student_more_box > div {
+    display: flex;
+    justify-content: flex-start;
+    width: 30%;
+}
+
+.student_more_box > div > div {
+    margin-right: 0.5rem;
 }

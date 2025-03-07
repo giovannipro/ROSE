@@ -320,6 +320,8 @@ function load_list(data, sort){
         setTimeout(() => {
             const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration)
             const total_duration = convertSecondsToMinutes(item.queries_duration + item.pages_duration)
+            const queries_duration = convertSecondsToMinutes(item.queries_duration)
+            const pages_duration = convertSecondsToMinutes(item.pages_duration)
             const bar_width = ( (item.queries_duration + item.pages_duration) / max_duration) * 100;
             
             // link to the student page
@@ -342,7 +344,7 @@ function load_list(data, sort){
                             <div class="student_more_box">
                                 <div>
                                     <div>queries</div>
-                                    <div style="justify-content: flex-end;" data-log="S_Queries_New">${item.S_Queries_New}</div>
+                                    <div style="justify-content: flex-end;" data-log="S_Queries_New">${item.S_Queries_New} / ${queries_duration}</div>
                                 </div>
                                 <div>
                                     <div>domains</div>
@@ -350,14 +352,13 @@ function load_list(data, sort){
                                 </div>
                                 <div>
                                     <div>pages</div>
-                                    <div style="justify-content: flex-end;" data-log="S_ResultDomain_New">${item.S_ResultDomain_New}</div>
+                                    <div style="justify-content: flex-end;" data-log="S_ResultDomain_New">${item.S_ResultDomain_New} / ${pages_duration}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </li>
             `
-            // <input type="checkbox" class="student_checkbox" id="checkbox_${item.user_id}">
 
             container.innerHTML = items
             
