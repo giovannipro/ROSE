@@ -77,7 +77,7 @@ function duration_chart(searchDuration, pageDuration, width) {
 	const bar_height = 20;
 	const font_size = "0.7rem"
 
-    container.style.width = '100%';
+    container.style.width = '95%';
     container.style.height = '20px';
 
     // Create SVG using D3

@@ -112,14 +112,15 @@ function load_data() {
                 .attr("transform", `translate(0, ${height - margin.bottom})`)
                 .call(xAxis)
             
-            let x_Axis_group_position = width - 140
+            let x_Axis_group_position = width - 130
             let x_Axis_group = x_Axis.append("g")
-                .attr("transform", `translate(${x_Axis_group_position},-20)`)
+                .attr("transform", `translate(${x_Axis_group_position}, -20)`)
     
             x_Axis_group.append("text")
                .attr("class", "axis-label")
                .attr("x", 15)
                .attr("y", 10)
+               .attr("dy", -2)
                .attr("fill", "black")
                .attr("text-anchor", "start")
                .text("unique queries");
@@ -143,10 +144,10 @@ function load_data() {
                 .attr("fill","#ff9100")
     
             y_Axis_group.append("text")
+                .attr("class", "axis-label")
                 .attr("x", 15)
                 .attr("y", 10)
-                .attr("class", "axis-label")
-                .attr("dy",-2)
+                .attr("dy", -2)
                 .attr("fill", "black")
                 .attr("text-anchor", "start")
                 .text("unique pages");
@@ -359,21 +360,21 @@ function load_list(data, sort){
                                 </div>
                             </div>
                         </div>
-                        <div style="width: ${bar_width}%">
+                        <div style="width: ${bar_width}%; margin-top: 0.25rem;">
                             ${the_duration_chart}
                         </div>
                         <div id="${item.user_id}_more" class="student_more" style="color: #a2a2a2; font-size: 0.8rem;">
                             <div class="student_more_box">
                                 <div>
-                                    <div>queries</div>
+                                    <div>queries: </div>
                                     <div style="justify-content: flex-end;" data-log="S_Queries_New">${item.S_Queries_New} / ${queries_duration}</div>
                                 </div>
                                 <div>
-                                    <div>domains</div>
+                                    <div>domains: </div>
                                     <div style="justify-content: flex-end;" data-log="?">${item.S_ResultDomain_New}</div>
                                 </div>
                                 <div>
-                                    <div>pages</div>
+                                    <div>pages: </div>
                                     <div style="justify-content: flex-end;" data-log="S_ResultDomain_New">${item.S_ResultDomain_New} / ${pages_duration}</div>
                                 </div>
                             </div>
@@ -413,16 +414,17 @@ function highlight() {
     items.forEach(item => {
         item.addEventListener("click", (e) => {
             const id = item.id;
+            border_size = "4px"
 
             // reset the list item border 
             items.forEach(item => {
-                item.style.borderLeft = "3px solid transparent";
+                item.style.borderLeft = border_size + " solid transparent";
             });
 
             // highlight the list item border 
             const the_item = document.getElementById(id);
             const more_info = document.getElementById(id + '_more');
-            the_item.style.borderLeft = "3px solid red";
+            the_item.style.borderLeft = border_size + " solid red";
             
             more_items.forEach(more => {
                 more.style.display = "none";
