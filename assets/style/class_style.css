@@ -32,6 +32,7 @@ aside {
     padding: 0.75rem;
     border-bottom: 1px solid #ccc;
     border-left: 3px solid transparent;
+    cursor: pointer;
 }
 
 .student_item:last-child {
