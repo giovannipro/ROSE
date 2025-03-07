@@ -107,3 +107,7 @@ aside {
     position: relative;
     left: 5px
 }
+
+.bubble-label {
+    cursor: pointer;
+}

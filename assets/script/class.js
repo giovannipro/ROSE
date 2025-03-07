@@ -180,23 +180,60 @@ function load_data() {
                             
                             labels.append("text")
                                 .attr("class", "bubble-label")
-                                // .attr("id", (d,i) =>  d.user_id)  // "label_" +
-                                // .attr("id", d => "label_" + d.user_id)
                                 .attr("id", "label_" + d.user_id)
                                 .attr("x", x)
-                                .attr("y", y - 20 - offset) // Position above bubble with offset
+                                .attr("y", y - 20 - offset)
                                 .attr("text-anchor", "middle")
                                 .attr("fill", "black")
                                 .attr("font-size", "12px")
                                 .attr("opacity", 0)
                                 .text(d.user_id)
+                                .on("click", label_highlight)
                                 .transition()
                                 .duration(500)
-                                .attr("opacity", 0.7);
+                                .attr("opacity", 0.7)
                         });
                     });
                 }
             });
+
+        function label_highlight(event, d) {
+            
+            const target = event.target.id
+            const userId = target.replace('label_','')
+            const listItem = document.getElementById(userId);
+            
+            // Reset all items
+            document.querySelectorAll('.student_item').forEach(item => {
+                item.style.borderLeft = "3px solid transparent";
+            });
+            document.querySelectorAll('.student_more').forEach(more => {
+                more.style.display = "none";
+            });
+            document.querySelectorAll('.bubble').forEach(bubble => {
+                bubble.style.stroke = "transparent";
+                bubble.style.opacity = bubble_default_opacity;
+                bubble.style.fillOpacity = 1;
+            });
+            d3.selectAll(".bubble-label").style("fill", "black");
+
+            // Highlight selected items
+            listItem.style.borderLeft = "3px solid red";
+            document.getElementById(userId + '_more').style.display = "block";
+            const bubble = document.getElementById("bubble_" + userId);
+            bubble.style.stroke = "red";
+            bubble.style.strokeWidth = 3;
+            bubble.style.opacity = 1;
+            bubble.style.fillOpacity = 0.2;
+            
+            // Highlight label
+            d3.select(this)
+                .style("fill", "red")
+                .style("opacity", 1);
+
+            // Scroll list item into view
+            listItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
 
         function make_grid() {
 
