@@ -41,7 +41,9 @@ function groupConsecutiveDomains(data) {
 }
 
 function duration_chart(searchDuration, pageDuration, width) {
-    const visualization_treshold = 20;
+    const visualization_treshold = 15;
+	const duration_treshold = 120;
+
     const total = searchDuration + pageDuration;
     const search_width = searchDuration * 100 / total;
     const page_width = pageDuration * 100 / total;
@@ -60,11 +62,12 @@ function duration_chart(searchDuration, pageDuration, width) {
     let val_queries = '';
     let val_pages = '';
     if (width >= visualization_treshold) {
-		if (search_width >= visualization_treshold){
+		
+		if (search_width >= (visualization_treshold) && searchDuration > duration_treshold){
 			val_queries = min_search;
 		}
 
-		if (page_width >= visualization_treshold){
+		if (page_width >= (visualization_treshold) && pageDuration > duration_treshold){
 			val_pages = min_pages;
 		}
     }
@@ -94,7 +97,7 @@ function duration_chart(searchDuration, pageDuration, width) {
 
     // Add pages rect
     svg.append('rect')
-        .attr('x', search_width + '%')
+        .attr('x', search_width + '%') 
         .attr('y', 0)
         .attr('width', page_width + '%')
         .attr('height', bar_height)

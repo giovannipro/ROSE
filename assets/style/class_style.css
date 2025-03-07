@@ -100,7 +100,7 @@ aside {
     color: black;
     padding: 10px;
     left: 0;
-    transition: left 0.3s ease;
+    transition: left 0.1s ease;
 }
 
 .arrow_link:hover {
