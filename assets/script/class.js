@@ -83,7 +83,8 @@ function load_data() {
             .range([height - margin.bottom, margin.top])
 
         // create percentiles
-        make_percentiles()
+        // make_percentiles()
+        make_grid()
 
         // Create axes
         const xAxis = d3.axisBottom(xScale)
@@ -196,6 +197,39 @@ function load_data() {
                     });
                 }
             });
+
+        function make_grid() {
+            const color = "red" 
+
+            grid_box = plot.append("g")
+                .attr("class", "grid_box")
+            
+            grid_box.append("g")
+                .attr("class", "grid x-grid")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                    .call(d3.axisBottom(xScale)
+                        .ticks(max_x)
+                        .tickSize(-height + margin.top + margin.bottom)
+                        .tickFormat("")
+                    )
+                .attr("stroke-dasharray","5,5")
+                .style("stroke", color)
+                .style("opacity", 0.2); 
+                
+                // Add Y gridlines
+            grid_box.append("g")
+                .attr("class", "grid y-grid")
+                .attr("transform", `translate(${margin.left + 30},0)`)
+                .call(d3.axisLeft(yScale)
+                    .ticks(max_y)
+                    .tickSize(-width + margin.left + margin.right + 30)
+                    .tickFormat("")
+                )
+                .attr("stroke-dasharray","5,5")
+                .attr("stroke-width", 1)
+                .style("stroke", color)
+                .style("opacity", 0.2); 
+            }
 
         function make_percentiles(){
 
