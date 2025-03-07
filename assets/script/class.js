@@ -267,8 +267,10 @@ function load_list(data, sort){
 
             const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration, bar_width)
             
-            // link to the student page
+
+            // link to the student page ---------------- 
             const student_page = "../?source=assets/data/search_story_task_5_user_1015.csv"
+            // ------------------------------------------ 
 
             items += `
                 <li class="student_item" id="${item.user_id}">
@@ -276,9 +278,15 @@ function load_list(data, sort){
                         <div class="item_data">
                             <div>
                                 <span>${item.user_id}</span>
-                                <a href="${student_page}" target="blank" style="text-decoration: none">&#8599;</a>
                             </div>
-                            <div style="color: #a2a2a2; font-size: 0.8rem;">${total_duration}</div>
+                            <div style="color: #a2a2a2; font-size: 0.8rem; display: flex; justify-content: space-between; width: 3.5rem;">
+                                <div>
+                                    ${total_duration}
+                                </div>
+                                <div>
+                                    <a href="${student_page}" target="blank" class="arrow_link">&rarr;</a>
+                                </div>
+                            </div>
                         </div>
                         <div style="width: ${bar_width}%">
                             ${the_duration_chart}

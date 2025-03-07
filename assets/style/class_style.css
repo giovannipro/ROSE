@@ -32,6 +32,7 @@ aside {
     padding: 0.75rem;
     border-bottom: 1px solid #ccc;
     border-left: 3px solid transparent;
+    cursor: pointer;
 }
 
 .student_item:last-child {
@@ -87,4 +88,22 @@ aside {
 
 .student_more_box > div > div {
     margin-right: 0.5rem;
+}
+
+#get_sort {
+    height: 2rem;
+    width: 10rem;
+}
+
+.arrow_link {
+    text-decoration: none; 
+    color: black;
+    padding: 10px;
+    left: 0;
+    transition: left 0.3s ease;
+}
+
+.arrow_link:hover {
+    position: relative;
+    left: 5px
 }
