@@ -82,3 +82,8 @@ aside {
 .student_more_box div {
     width: 4rem;
 }
+
+#get_sort {
+    height: 2rem;
+    width: 12rem
+}

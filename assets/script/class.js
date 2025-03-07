@@ -281,7 +281,7 @@ function load_list(data, sort){
             <li class="student_item" id="${item.user_id}">
                 <div class="inside">
                     <div class="item_data">
-                        <div>id: ${item.user_id}</div>
+                        <div>${item.user_id}</div>
                         <div style="color: #a2a2a2; font-size: 0.8rem;">(${total_duration})</div>
                     </div>
                     <div style="width: ${bar_width}%">
