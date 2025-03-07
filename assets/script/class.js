@@ -1,6 +1,7 @@
 const bubble_size = 12;
 const bubble_default_opacity = 0.2;
 let the_data;
+const t_duration = 100;
 
 function load_data() {
 
@@ -146,16 +147,20 @@ function load_data() {
             .attr("class","circles")
 
         circles.selectAll("circle")
-           .data(data)
-           .enter()
-           .append("circle")
-           .attr("id", d => "bubble_" + d.user_id)
-           .attr("class", "bubble")
-           .attr("cx", d => xScale(d.S_Queries_New))
-           .attr("cy", d => yScale(d.S_ResultDomain_New))
-           .attr("r", bubble_size)
-           .attr("fill", "gray")
-           .attr("opacity",bubble_default_opacity)
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("id", d => "bubble_" + d.user_id)
+            .attr("class", "bubble")
+            .attr("cx", d => xScale(d.S_Queries_New))
+            .attr("cy", d => yScale(d.S_ResultDomain_New))
+            .attr("r", 0)
+            .transition()
+            .duration(t_duration)
+            .delay((d,i) => 500 + i * t_duration)
+            .attr("fill", "gray")
+            .attr("r", bubble_size)
+            .attr("opacity",bubble_default_opacity)
 
         function make_percentiles(){
 
@@ -336,8 +341,6 @@ function resort_list(){
 
     document.getElementById('get_sort').addEventListener('change', () => {
         sortValue = sortSelect.value;
-        // console.log(the_data)
-
         load_list(the_data, sortValue)
         highlight()
     });
@@ -381,6 +384,8 @@ function highlight() {
             more_info.style.display = "block";
 
             const bubble = document.getElementById("bubble_" + id);
+            console.log(bubble)
+
             if (bubble) {
                 bubble.style.stroke = "red";
                 bubble.style.strokeWidth = 3;
@@ -395,11 +400,11 @@ function highlight() {
                 // Find and display labels for all elements in the scatterplot that have the same position
                 const matchingBubbles = Array.from(bubbles).filter(b => b.getAttribute("cx") === cx && b.getAttribute("cy") === cy);
                 const labelPositions = [];
+                console.log(matchingBubbles)
 
                 matchingBubbles.forEach((matchingBubble, index) => {
                     const matchingId = matchingBubble.id.replace("bubble_", "");
                     const matchingData = the_data.find(d => d.user_id == matchingId);
-                    // console.log(matchingData)
 
                     let labelY = cy - 20 - (index * 15); // Adjust the position above the bubble
 
@@ -414,6 +419,9 @@ function highlight() {
                     if (id == matchingBubble.id.replace("bubble_","") ){
                         color = "red"
                     }
+
+                    console.log(`Appending label at (${cx}, ${labelY}) with text: ${matchingData.user_id}`);
+
                     
                     svg.append("text")
                         .attr("class", "bubble-label")
