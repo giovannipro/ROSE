@@ -11,7 +11,7 @@ function load_data() {
 	const source = decodeURI(sourceValue);
     console.log(source)
 
-    // http://127.0.0.1:5501/class/?source=http://127.0.0.1:5501/assets/data/class/LU-INF1_task_5_aggregated_stats.csv
+    // http://127.0.0.1:5501/?source=http://127.0.0.1:5501/assets/data/class/LU-INF1_task_5_aggregated_stats.csv
 
     d3.csv(source)
 		.then(loaded)
@@ -320,8 +320,6 @@ function resort_list(){
 
     document.getElementById('get_sort').addEventListener('change', () => {
         sortValue = sortSelect.value;
-        // console.log(the_data)
-
         load_list(the_data, sortValue)
         highlight()
     });

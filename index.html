@@ -2,71 +2,44 @@
 <html lang="en">
 
 <head>
-	<title>ROSE project</title>
+	<title>ROSE project | Class</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
-	<link rel="stylesheet" type="text/css" href="assets/style/style.css">
+	<link rel="stylesheet" type="text/css" href="../assets/style/style.css">
+	<link rel="stylesheet" type="text/css" href="../assets/style/class_style.css">
 </head>
 
 <body>
 	<main>
 		<div id="controllers">
 			<div id="header">
-				<h2>User: <span id="the_user"></span></h2>
+				<h2>Class: <span id="the_class"></span></h2>
 				<h2>Task: <span id="the_task"></span></h2>
 			</div>
-			<select id="set_size">
-				<option value="normalize">Normalize scale</option>
-				<option value="fit">Fit scale</option>
-			</select>
 		</div>
 
-		<div id="container">
-			<div id="chart">
-				<div id="label_box"></div>
-				<div id="plot_box"></div>
-			</div>
-			<div id="infobox"></div>
-		</div>
-
-		<div id="stat_hints">
-			<div id="statistics" class="main_tab">
-				<div id="stat_txt" class="tab_label">
-					<span>Statistics</span>
-					<span class="open_tab" id="open_stat">&darr;</span>
-					<!-- &darr; &uarr; -->
-				</div>
-				<div id="statistics_container">
-					<div class="tab_content">
-						<div id="statistics_a" class="statistics_box"></div>
-						<div id="statistics_b" class="statistics_box"></div>
-						<div id="statistics_c" class="statistics_box"></div>
-					</div>
-				</div>
-			</div>
-	
-			<div id="suggestions" class="main_tab">
-				<div id="sugg_txt" class="tab_label">
+		<section id="class_box">
+			<aside>
+				<div id="sort_box">
 					<span>
-						Suggestions
+						sort by
 					</span>
-					<span class="open_tab" id="open_sugg">&darr;</span>
+					<select id="get_sort">
+						<option value="total">total duration</option>
+						<option value="queries">queries duration</option>
+						<option value="pages">pages duration</option>
+					</select>
 				</div>
-				<div id="suggestions_container">
-					<div class="tab_content">
-						<!-- <span style="color: #ababab"><em>Some suggestions here</em></span> -->
-						<div id="hints" class="hints_box"></div>
-					</div>
-				</div>
+				<ul id="student_list"></ul>
+			</aside>
+			<div id="container">
+				<div id="plot_class"></div>
 			</div>
-		</div>
-	</main>
+		</section>
 
 	<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-	<script src="assets/script/utilities.js" defer></script>
-	<script src="assets/script/hints.js" defer></script>
-	<script src="assets/script/statistics.js" defer></script>
-	<script src="assets/script/script.js" defer></script>
+	<script src="../assets/script/utilities.js" defer></script>
+	<script src="../assets/script/class.js" defer></script>
 </body>
 
 </html>
