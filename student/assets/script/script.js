@@ -15,7 +15,7 @@ function load_data() {
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
 
-	const user_id = 5 // urlParams.get('user_id');
+	const user_id = 3 // urlParams.get('user_id');
     const task_id = 1 // urlParams.get('task_id');
 
 	const apiEndpoint_student = `assets/data/_stats_${user_id}_${task_id}.csv` 
