@@ -84,7 +84,7 @@ aside {
 .student_more_box > div {
     display: flex;
     justify-content: flex-start;
-    /* width: 30%; */
+    width: 50%;
 }
 
 .student_more_box > div > div {

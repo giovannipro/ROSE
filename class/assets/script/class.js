@@ -18,7 +18,7 @@ function load_data() {
     // const apiEndpoint_class = `/api/analytics/aggregated-stories-extraction?clazz_id=${clazz_id}&task_id=${task_id}`
 	
     // http://127.0.0.1:5501/class/index.html?clazz_id=LME-1C&task_id=1
-    console.log(apiEndpoint_class, clazz_id,task_id)
+    console.log(clazz_id,task_id)
 
     d3.csv(apiEndpoint_class)
 		.then(loaded)
@@ -375,7 +375,7 @@ function load_list(data, sort){
                         <div id="${item.user_id}_more" class="student_more" style="color: #a2a2a2; font-size: 0.8rem;">
                             <div class="student_more_box">
                                 <div>
-                                    <div>queries: </div>
+                                    <div>searches: </div>
                                     <div style="justify-content: flex-end;" data-log="S_Queries_New">${item.S_Queries_New} / ${queries_duration}</div>
                                 </div>
                                 <div>
