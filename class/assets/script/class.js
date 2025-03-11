@@ -379,10 +379,6 @@ function load_list(data, sort){
                                     <div style="justify-content: flex-end;" data-log="S_Queries_New">${item.S_Queries_New} / ${queries_duration}</div>
                                 </div>
                                 <div>
-                                    <div>domains: </div>
-                                    <div style="justify-content: flex-end;" data-log="?">${item.S_ResultDomain_New}</div>
-                                </div>
-                                <div>
                                     <div>pages: </div>
                                     <div style="justify-content: flex-end;" data-log="S_ResultDomain_New">${item.S_ResultDomain_New} / ${pages_duration}</div>
                                 </div>
