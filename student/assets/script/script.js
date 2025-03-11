@@ -18,7 +18,8 @@ function load_data() {
 	const user_id = 3 // urlParams.get('user_id');
     const task_id = 1 // urlParams.get('task_id');
 
-	const apiEndpoint_student = `assets/data/_stats_${user_id}_${task_id}.csv` 
+	// const apiEndpoint_student = `assets/data/_stats_${user_id}_${task_id}.csv` 
+	const apiEndpoint_student = 'https://raw.githubusercontent.com/giovannipro/ROSE/6e9b0b60deb89d5481a279867a326067b17bab80/assets/data/_stats_9_2.csv'
 	// const apiEndpoint_student = `/api/analytics/stories-extraction?user_id=${user_id}&task_id=${task_id}`;
 	
 	// http://127.0.0.1:5501/student/index.html?user_id=7&task_id=2
