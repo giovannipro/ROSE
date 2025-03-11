@@ -12,26 +12,18 @@ const over_opacity = 0.4;
 
 function load_data() {
 
-	// Get the query string from the current URL
 	const queryString = window.location.search;
-
-	// Create a URLSearchParams object
 	const urlParams = new URLSearchParams(queryString);
 
-	// Get the value of the 'source' parameter
-	const sourceValue = urlParams.get('source');
+	const user_id = urlParams.get('user_id');
+    const task_id = urlParams.get('task_id');
 
-	// Decode the 'sourceValue'
-	// ?source=
-	// const source = "assets/data/search_story_task_" + 1 + '_user_' + 1324 + '.csv'
-	// const source = 'assets/data/_stats_7_2.csv'
-	// const source = 'https://raw.githubusercontent.com/giovannipro/ROSE/refs/heads/main/assets/data/search_story_task_8_user_1004.csv'
-	
-	const source = decodeURI(sourceValue);
-	console.log(source)
+	const apiEndpoint_student = `/assets/data/_stats_${user_id}_${task_id}.csv`
+	// const apiEndpoint_student = `/api/analytics/stories-extraction?user_id=${user_id}&task_id=${task_id}`;
+	console.log(user_id,task_id)
 
 	// load story data
-	d3.csv(source)
+	d3.csv(apiEndpoint_student)
 		.then(loaded)
 		.catch(function (error) {
 			if (error.message.includes("404")) {
