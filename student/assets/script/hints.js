@@ -9,7 +9,7 @@ function load_hints(){
 	const user_id = urlParams.get('user_id');
     const task_id = urlParams.get('task_id');
 
-	const apiEndpoint_hint = `/assets/data/hints_${user_id}_${task_id}.json`
+	const apiEndpoint_hint = `assets/data/hints_${user_id}_${task_id}.json`
 	// const apiEndpoint_hint = `//api/analytics/adaptive-hints?user_id=${user_id}&task_id=${task_id}`;
 	console.log(user_id,task_id)
 
