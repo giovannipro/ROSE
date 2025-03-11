@@ -30,7 +30,7 @@ function load_data() {
 	const source = decodeURI(sourceValue);
 	console.log(source)
 
-	// load data
+	// load story data
 	d3.csv(source)
 		.then(loaded)
 		.catch(function (error) {
