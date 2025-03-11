@@ -10,6 +10,8 @@ const stroke_color = 'white'; // '#aeaeae'
 
 const over_opacity = 0.4;
 
+let scale_mode = 'normalize';
+
 function load_data() {
 
 	const queryString = window.location.search;
@@ -163,9 +165,6 @@ function load_data() {
 			// console.log(data)
 
 			document.getElementById("plot_box").innerHTML = '';
-
-			const set_size = document.getElementById('set_size');
-			set_size.value = 'normalize';
 
 			const date1 = new Date(data[0].time);
 			const date2 = new Date(data[data.length - 1].time);
@@ -474,9 +473,6 @@ function load_data() {
 				const duration = domain.getAttribute("data-duration")
 				const action = domain.getAttribute("data-action")
 				const domainStatus = domain.getAttribute("data-domainStatus")
-				// console.log(action, duration)
-				// const domain_ = domain.getAttribute("data-domain")
-				// console.log(domain, class_)
 					
 				let output;
 
@@ -655,9 +651,23 @@ function load_data() {
 				infobox.innerHTML = '';
 			}
 
-			set_size.addEventListener("change", function () {
-				let size = this.value;
-				rescale(size);
+			const set_normalize = document.getElementById('normalize_size');
+			const set_fit = document.getElementById('fit_size');
+
+			set_normalize.addEventListener("click", function () {
+				rescale("normalize");
+				scale_mode = "normalize"
+
+				set_normalize.classList.add("active");
+				set_fit.classList.remove("active");
+			});
+
+			set_fit.addEventListener("click", function () {
+				rescale("fit");
+				scale_mode = "fit"
+
+				set_fit.classList.add("active");
+				set_normalize.classList.remove("active");
 			});
 
 			function resize_chart(mode) {
@@ -743,13 +753,8 @@ function load_data() {
 
 				new_width = delta * pixel_per_minute;
 
-				const set_size = document.getElementById('set_size');
-				let size = set_size.value;
-				// console.log(set_size)
-
-				resize_chart(size);
+				resize_chart(scale_mode);
 			});
-
 		}
 		display_data(data);
 	}

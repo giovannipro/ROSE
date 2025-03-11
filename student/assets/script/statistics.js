@@ -65,7 +65,7 @@ function load_statistics(data) {
 	let output_b = '';
 	let output_c = '';
 
-	output_a += '<span style="margin-bottom: 1rem; display: block;"><strong>Duration</strong></span>';
+	output_a += '<span style="margin-bottom: 1rem; display: block;"><strong>Time</strong></span>';
 	output_a += '<hr/ style="border: 0.1px solid #ccc">'
 	
 	output_a += '<table>';

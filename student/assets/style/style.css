@@ -199,6 +199,17 @@ td {
 	text-overflow: ellipsis;
 }
 
+.button {
+	height: 2rem;
+	border: 1px solid #bfbfbf;
+	cursor: pointer;
+}
+
+.active {
+	background-color: #9b9b9b;
+	color: #535353;
+}
+
 @media only screen and (max-width: 725px) {
 	#statistics_container .tab_content, #suggestions_container .tab_content {
 		display: block;
