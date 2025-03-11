@@ -8,11 +8,6 @@ header, footer, #infobox {
 	margin: 0 1rem;
 }
 
-#controllers {
-	padding: 0 1rem 1rem;
-	border-bottom: 1px solid #bfbfbf;
-}
-
 h2 {
 	font-size: 1rem;
 }
@@ -27,6 +22,19 @@ h2 {
 
 #header span {
 	font-weight: normal;
+}
+
+#controllers {
+	padding: 1rem;
+	border-bottom: 1px solid #bfbfbf;
+	position: fixed;
+	top: 0;
+	background-color: white;
+	width: calc(100% - 2rem);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 3rem;
 }
 
 #chart {
@@ -67,18 +75,6 @@ h2 {
 
 .labels {
 	font-size: 0.8rem;
-}
-
-#controllers {
-	margin-top: 1rem;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 3rem;
-}
-
-#controllers select {
-	height: 2rem;
 }
 
 #story_selection {

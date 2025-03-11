@@ -8,9 +8,8 @@ header, footer, #infobox {
 	margin: 0 1rem;
 }
 
-#controllers {
-	padding: 0 1rem 1rem;
-	border-bottom: 1px solid #bfbfbf;
+#container {
+	margin-top: 5.5rem;
 }
 
 h2 {
@@ -67,14 +66,6 @@ h2 {
 
 .labels {
 	font-size: 0.8rem;
-}
-
-#controllers {
-	margin-top: 1rem;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 3rem;
 }
 
 #controllers select {
