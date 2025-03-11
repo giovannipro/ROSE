@@ -1,0 +1,113 @@
+#class_box {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #bfbfbf;
+}
+
+aside {
+    width: 35%;
+    
+    border-right: 1px solid #bfbfbf;
+}
+
+#container {
+    width: 65%;
+    height: 75vh;
+}
+
+#plot_class {
+    width: 100%;
+    height: 75vh;
+}
+
+#student_list {
+    list-style: none;
+    height: 70vh;
+    overflow-y: scroll;
+    margin: 0;
+    padding: 0;
+}
+
+.student_item {
+    padding: 0.75rem;
+    border-bottom: 1px solid #ccc;
+    border-left: 5px solid transparent;
+    cursor: pointer;
+}
+
+.student_item:last-child {
+    border-bottom: none;
+}
+
+.student_item:nth-child(even){
+    background-color: #f8f8f8;
+}
+
+.student_item:hover {
+    background-color: #eaeaea;
+}
+
+#sort_box {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border-bottom: 1px solid #ccc;
+    border-left: 3px solid transparent;
+    height: 5vh;
+    align-items: center;
+}
+
+.item_data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.student_more {
+    border-top: 1px solid #ccc;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    display: none;
+}
+
+.student_more div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.student_more_box div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.student_more_box > div {
+    display: flex;
+    justify-content: flex-start;
+    width: 30%;
+}
+
+.student_more_box > div > div {
+    margin-right: 0.5rem;
+}
+
+#get_sort {
+    height: 2rem;
+    width: 10rem;
+}
+
+.arrow_link {
+    text-decoration: none; 
+    color: black;
+    padding: 10px;
+    left: 0;
+    transition: left 0.1s ease;
+}
+
+.arrow_link:hover {
+    position: relative;
+    left: 5px
+}
+
+.bubble-label {
+    cursor: pointer;
+}
