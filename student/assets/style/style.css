@@ -205,9 +205,10 @@ td {
 	cursor: pointer;
 }
 
-.active {
-	background-color: #9b9b9b;
-	color: #535353;
+.not_active {
+	background-color: #f5f5f5;
+    color: #a0a0a0; 
+    border: 1px solid #e0e0e0;
 }
 
 @media only screen and (max-width: 725px) {
@@ -226,3 +227,5 @@ td {
 		border-bottom: none;
 	}
 }
+
+

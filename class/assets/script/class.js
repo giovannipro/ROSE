@@ -16,7 +16,10 @@ function load_data() {
 
 	const apiEndpoint_class = `assets/data/${clazz_id}_task_${task_id}_aggregated_stats.csv`
     // const apiEndpoint_class = `/api/analytics/aggregated-stories-extraction?clazz_id=${clazz_id}&task_id=${task_id}`
-	console.log(apiEndpoint_class, clazz_id,task_id)
+	// http://127.0.0.1:5501/class/index.html?clazz_id=LME-1C&task_id=1
+    
+    console.log(apiEndpoint_class, clazz_id,task_id)
+
 
     d3.csv(apiEndpoint_class)
 		.then(loaded)
@@ -339,9 +342,9 @@ function load_list(data, sort){
             const total_duration = convertSecondsToMinutes(item.queries_duration + item.pages_duration)
             const queries_duration = convertSecondsToMinutes(item.queries_duration)
             const pages_duration = convertSecondsToMinutes(item.pages_duration)
-            const bar_width = ( (item.queries_duration + item.pages_duration) / max_duration) * 100;
+            const bar_width = (( (item.queries_duration + item.pages_duration) / max_duration) * 100);
 
-            const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration, bar_width)
+            const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration, bar_width, 'class')
             
 
             // link to the student page ---------------- 
@@ -364,7 +367,7 @@ function load_list(data, sort){
                                 </div>
                             </div>
                         </div>
-                        <div style="width: ${bar_width}%; margin-top: 0.25rem;">
+                        <div style="width: calc(${bar_width}%); margin-top: 0.25rem;">
                             ${the_duration_chart}
                         </div>
                         <div id="${item.user_id}_more" class="student_more" style="color: #a2a2a2; font-size: 0.8rem;">

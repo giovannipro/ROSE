@@ -73,7 +73,7 @@ function load_statistics(data) {
 	output_a += '<td>' + convertSecondsToMinutes(pageDuration + searchDuration) + '</td></tr>'; // '<td>' + parseInt(pageDuration + searchDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration + searchDuration) + ' minutes</td></tr>'
 	// console.log(pageDuration, searchDuration)
 
-	output_a += "<tr><td colspan='2'>" + duration_chart(searchDuration, pageDuration) + "</td></tr>";
+	output_a += "<tr><td colspan='2'>" + duration_chart(searchDuration, pageDuration, 100, 'student') + "</td></tr>";
 	output_a += '<tr><td>&nbsp;</td></tr>';
 
 	output_a += '<tr><td>Search</td>';
@@ -116,22 +116,25 @@ function load_statistics(data) {
 	output_b += '<td>' + revisedQueries + '</td></tr>';
 	output_b += '</table>';
 
-	output_c += '<span style="margin-bottom: 1rem; display: block;"><strong>Websites</strong></span>';
+	output_c += '<span style="margin-bottom: 1rem; display: block;"><strong>Pages</strong></span>';
 	output_c += '<hr/ style="border: 0.1px solid #ccc">'
 
-	output_c += '<table>';
+	output_c += '<table style="margin-bottom: 1.5rem;">';
 	output_c += '<tr><td>- total</td>';
-	output_c += '<td>' + (newDomains + revisitedDomains) + '</td></tr>';
+	output_c += '<td>' + pages + '</td></tr>';
+	output_c += '</table>';
+
+	output_c += '<table>';
+	output_c += '<tr><td>Websites</td></tr>';
+	// output_c += '<td>' + (newDomains + revisitedDomains) + '</td></tr>';
 	output_c += '<tr><td>- new</td>';
 	output_c += '<td>' + newDomains + '</td></tr>';
 	output_c += '<tr><td>- revisited</td>';
 	output_c += '<td>' + revisitedDomains + '</td></tr>';
-	output_c += '<tr><td>&nbsp; </td></tr>';
-	output_c += '<tr><td>- total pages</td>';
-	output_c += '<td>' + pages + '</td></tr>';
 	output_c += '</table>';
 
-	output_b += '<table style="margin-top: 1.5rem;">';
+
+	output_b += '<table style="margin-top: 1rem;">';
 	output_b += '<tr><td>Queries</td></tr>';
 	// console.log(unique_queries)
 	unique_queries.forEach(item => {

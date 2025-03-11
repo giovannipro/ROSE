@@ -658,16 +658,16 @@ function load_data() {
 				rescale("normalize");
 				scale_mode = "normalize"
 
-				set_normalize.classList.add("active");
-				set_fit.classList.remove("active");
+				set_normalize.classList.add("not_active");
+				set_fit.classList.remove("not_active");
 			});
 
 			set_fit.addEventListener("click", function () {
 				rescale("fit");
 				scale_mode = "fit"
 
-				set_fit.classList.add("active");
-				set_normalize.classList.remove("active");
+				set_fit.classList.add("not_active");
+				set_normalize.classList.remove("not_active");
 			});
 
 			function resize_chart(mode) {
