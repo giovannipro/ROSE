@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+	<title>ROSE project | Class</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+	<link rel="stylesheet" type="text/css" href="../assets/style/style.css">
+	<link rel="stylesheet" type="text/css" href="assets/style/style.css">
+</head>
+
+<body>
+	<main>
+		<div id="controllers">
+			<div id="header">
+				<h2>Class: <span id="the_class"></span></h2>
+				<h2>Task: <span id="the_task"></span></h2>
+			</div>
+		</div>
+
+		<section id="class_box">
+			<aside>
+				<div id="sort_box">
+					<span>
+						sort by
+					</span>
+					<select id="get_sort">
+						<option value="total">total time</option>
+						<option value="queries">search time</option>
+						<option value="pages">pages time</option>
+						<option value="name">name</option>
+					</select>
+				</div>
+				<ul id="student_list"></ul>
+			</aside>
+			<div id="container"></div>
+		</section>
+
+	<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+	<script src="../assets/script/utilities.js" defer></script>
+	<script src="assets/script/class.js" defer></script>
+</body>
+
+</html>

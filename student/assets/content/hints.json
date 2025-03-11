@@ -1,0 +1,178 @@
+[
+    {
+        "id": "s1",
+        "priority": 1,
+        "source": "Limit case / Literature on click restraint",
+        "description": "Student spends very short time on search results",
+        "condition": "Average SEARCH Duration < 3",
+        "feedback": {
+            "en": "It looks like you are very fast in selecting the search engine results to click upon. However, the results page provides a lot of information that can be useful. You could take more time when searching and look at the URLs or short texts (snippets) on the page. Also keep in mind that the first results don't always have to be \"the best\"."
+        },
+        "advice": "Take your time to carefully decide which links to click on. Scroll down the search engine results page to see results beyond the first few ones. Get an overview of the whole page."
+    },
+    {
+        "id": "s2",
+        "priority": 2,
+        "source": "LOIS/Variation",
+        "description": "Student almost always changes query",
+        "condition": "SEARCH action with same query < 20% && SEARCH actions > 3",
+        "feedback": {
+            "en": "It looks like you are changing your search string at every search. Another way of searching would be to explore more than one result for a search query, you may find more relevant documents this way."
+        },
+        "advice": "Take time to explore multiple websites from a single search keyword. Open and explore at least 3 results for each search query that you make."
+    },
+    {
+        "id": "s3",
+        "priority": 3,
+        "source": "LOIS/Variation",
+        "description": "Student makes most searches with the same query.",
+        "condition": "SEARCH actions with same query in a row > 70% of all SEARCH actions && SEARCH actions > 3",
+        "feedback": {
+            "en": "It looks like you are exploring one search string only. If you have chosen a very precise and appropriate term, this is just fine. Another way of searching would be to try different search queries, maybe with keywords from the documents you have already read. This may lead to different results."
+        },
+        "advice": "Take time to think of possible keywords. For example, check if your first query returned suitable results; re-read the task and see what keywords are used there; think about synonyms; identify new keywords in the documents you have already found. When you face a difficult search task, try at least 4 different search queries. Compare the results you get when you use different keywords (you can perform different searches in different tabs)."
+    },
+    {
+        "id": "s4",
+        "priority": 4,
+        "source": "Teachers, literature",
+        "description": "Students tends to use sentences.",
+        "condition": "Average number of words in query string > 6 && Queries include filler-words",
+        "feedback": {
+            "en": "It looks like you are using complex search terms, such as long sentences or complete questions, in your search. This is not always the best strategy. Instead, you could use only (a few) important, well-chosen search terms. This could make the search more focused and effective. For example: Instead of 'What did Hansel and Gretel use to find their way home when they were abandoned in the forest’, you could just type 'Hansel Gretel way home’."
+        },
+        "advice": "Take time to find the most important keywords for your search (you can also write them down) and use them in your search. See if your first search brought good results. Re-read the task and think about which keywords are used there. Also think of similar words. Find new keywords in the documents you have already found. Try performing different searches (with keywords and with sentences) in different tabs to compare them Directly."
+    },
+    {
+        "id": "c1",
+        "priority": 1,
+        "source": "Limit case",
+        "description": "Student never opens a web page",
+        "condition": "RES actions == 0",
+        "feedback": {
+            "en": "It looks like you are only reading the short previews on the search page without clicking on the links to open the full web pages. However, there is much more information on the web pages than just what is in the preview. When you visit the websites, you can also check whether the information is trustworthy. Take a little time to choose the right links, then you won't have to read too much."
+        },
+        "advice": "When you get search results, take a moment to select and open the most important and interesting links. You can also use several tabs to save good documents and read them later."
+    },
+    {
+        "id": "c2",
+        "priority": 2,
+        "source": "LOIS/Variation",
+        "description": "Student reads document very briefly",
+        "condition": "Average RES Duration < 15",
+        "feedback": {
+            "en": "It looks like you are just skimming the selected documents without really reading them. If you find a good document, take your time to read it - sometimes the most important information is not immediately visible."
+        },
+        "advice": "When you are sure a document is important and trustworthy, take the time to read and understand it thoroughly. After all, we search online to find and learn new information."
+    },
+    {
+        "id": "c3",
+        "priority": 3,
+        "source": "Limit case",
+        "description": "Student reads for a long time at the beginning of the story",
+        "condition": "Average RES Duration of the first 3 RES actions > 40 sec",
+        "feedback": {
+            "en": "It looks like you spend a lot of time reading. This shows that you're dedicated and accurate, but it's not always the best approach. Instead, you could read more documents quickly before deciding which ones you want to read in depth. You can also search for specific words on a website (using Ctrl+F). This will give you a quick overview and help you decide how to use your time. Also, check the trustworthiness of a website before you spend a lot of time reading."
+        },
+        "advice": "Try and read rapidly a number of documents quickly to get an overview. Then select the ones that are really important and read them in more detail. It can be helpful to open documents in new tabs so that you can easily find them again."
+    },
+    {
+        "id": "c4",
+        "priority": 4,
+        "source": "Limit case",
+        "description": "Student always opens a single page per website",
+        "condition": "Number of pages == Number of websites",
+        "feedback": {
+            "en": "It looks as if you only ever visit a single page on a website. However, it can be really useful to explore a website. You might find more information on your search topic or find out who runs the website and how trustworthy it is."
+        },
+        "advice": "When you find a good website, take some time to look at more pages, such as the “About Us” section. Find out who runs the website. This will give you more information and help you assess whether the website is trustworthy."
+    },
+    {
+        "id": "o1",
+        "priority": 1,
+        "source": "Limit case",
+        "description": "Minimal search",
+        "condition": "SEARCH actions < 2 && RESULT actions < 2",
+        "feedback": {
+            "en": "It looks like you only did one or two searches and opened very few documents. You might have been lucky, but if you want to make sure you find good information, you often need multiple searches. Using a search engine does not mean that you ask a question and get a complete answer immediately. It's more like looking for the right books in a library or being a detective looking for solid evidence."
+        },
+        "advice": "When you search for difficult tasks, do not assume that the first information you find is always correct and complete. Even if you have a first answer, keep searching and open more documents. On most topics, there are different opinions and more information to discover."
+    },
+    {
+        "id": "o2",
+        "priority": 2,
+        "source": "Advice",
+        "description": "Student works in a single window",
+        "condition": "Global number of actions > 10 && Number of tabs open <= 2",
+        "feedback": {
+            "en": "It looks like you are visiting many pages, but you close all of them. In some situations, it is useful to keep track of the pages you visit and compare them."
+        },
+        "advice": "Open pages in new tabs, so you can keep important pages at hand and you will not “lose” the results page. It will save time when you have to use, compare or reprise the information you have found!"
+    },
+    {
+        "id": "o3",
+        "priority": 3,
+        "source": "LOIS/Variation",
+        "description": "Student uses only Google",
+        "condition": "Number of search engines == 1 && Search engine is Google",
+        "feedback": {
+            "en": "It looks like you only used Google. It's the most used search engine in the world, but there are many others. Why don't you try another one? Even if you use the same search terms, you often get different results."
+        },
+        "advice": "Try and use search engines other than Google. Here you can find a list."
+    },
+    {
+        "id": "o4",
+        "priority": 4,
+        "source": "LOIS/Variation",
+        "description": "Student uses a single search engine",
+        "condition": "Number of search engines == 1",
+        "feedback": {
+            "en": "It looks like you only used one search engine. But there are many different ones! Why don't you try a different one? Even if you use the same search terms, you often get different results."
+        },
+        "advice": "Try and use other search engines. Here you can find a list."
+    },
+    {
+        "id": "w1",
+        "priority": 1,
+        "source": "Warning",
+        "description": "Student only uses chatbots",
+        "condition": "Only Chatbots appears",
+        "feedback": {
+            "en": "It looks like you relied completely on AI to find information. AI is powerful, but not always reliable - double check the information you have found!"
+        },
+        "advice": "Check the information you get from chatbots on other websites. Also ask the chatbot for links and sources for the information it gives (and don't forget to check them anyway!)."
+    },
+    {
+        "id": "w2",
+        "priority": 2,
+        "source": "Warning",
+        "description": "Student also uses chatbot",
+        "condition": "At least 1 Chatbot appears AND At least one Search engine appears",
+        "feedback": {
+            "en": "It looks like you used AI to find information. AI is powerful, but not always reliable – double check the information you have found!"
+        },
+        "advice": "Check the information you get from chatbots on other websites. Also ask the chatbot for links and sources for the information it gives (and don't forget to check them anyway!)."
+    },
+    {
+        "id": "w3",
+        "priority": 3,
+        "source": "Warning",
+        "description": "Student uses Wikipedia",
+        "condition": "Wikipedia appears at least once",
+        "feedback": {
+            "en": "It looks like you have visited Wikipedia. Wikipedia is an open encyclopedia created by many people working together. This makes it very powerful, but you should be careful. Anyone can publish information there, even if it is checked by “Wikipedians”. Wikipedia is a great secondary source: it's a good starting point to get an overview of a topic. But you should always double-check the information. For example, follow the links to the sources provided in each Wikipedia article to make sure the information is correct."
+        },
+        "advice": "Identify other encyclopedias other than Wikipedia. Here is a list."
+    },
+    {
+        "id": "d",
+        "priority": 1,
+        "source": "Default prompt",
+        "description": "Default prompt",
+        "condition": "No prompt from any category is selected",
+        "feedback": {
+            "en": "It looks like you search in a balanced and varied manner: you used several different keywords and explored them, and you seem able to manage time and attention between searching and reading."
+        },
+        "advice": "To enhance your skills, you can reflect on your search. Here are some prompt questions: Are you satisfied with your search? Do you think you have been effective? Can you think of ways to improve your search? Can you find ways to be more efficient (same or better results in a shorter time)?"
+    }
+]

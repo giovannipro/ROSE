@@ -1,86 +1,181 @@
-function getTextAfterX(query,x) {
-  const index = query.indexOf(x);
-
-  if (index !== -1) {
-	return query.substring(index + 2);
-  }
-
-  return "";
-}
-
 function groupConsecutiveDomains(data) {
 	// data = data.filter(d => d.page_type == 'RESULT')
-	console.log(data)
+	// console.log(data);
 
-  	const groupedData = [];
-  	let currentGroup = [];
+	const groupedData = [];
+	let currentGroup = [];
 
-  	for (let i = 0; i < data.length; i++) {
+	for (let i = 0; i < data.length; i++) {
 		const currentItem = data[i];
 		const previousItem = data[i - 1];
 
-		// console.log(currentItem.time - previousItem.item)
-
 		if (previousItem && currentItem.domain !== previousItem.domain) {
-	  	// New domain encountered, start a new group
-		  	if (currentGroup.length > 0) {
+			// New domain encountered, start a new group
+			if (currentGroup.length > 0) {
 				groupedData.push(currentGroup);
-		  	}
-		  	currentGroup = [];
+			}
+			currentGroup = [];
 		}
 
-		// console.log(currentItem)
-
-		if (currentItem.page_type == 'RESULT'){
+		if (currentItem.page_type == 'RESULT') {
 			currentGroup.push(currentItem);
 		}
-  	}
+	}
 
-  	// Add the last group if it's not empty
-  	if (currentGroup.length > 0) {
+	// Add the last group if it's not empty
+	if (currentGroup.length > 0) {
 		groupedData.push(currentGroup);
-  	}
+	}
 
-  	return groupedData;
+	return groupedData;
 }
 
-function duration_chart(searchDuration, pageDuration){
+function duration_chart(searchDuration, pageDuration, width, view) {
+    const visualization_treshold = 15;
+	const duration_treshold = 120;
 
-	const total = searchDuration + pageDuration
-	const search_width = searchDuration * 100 / total
-	const page_width = pageDuration * 100 / total
+    const total = searchDuration + pageDuration;
+    const search_width = searchDuration * 100 / total;
+    const page_width = pageDuration * 100 / total;
 
-	const min_search = convertSecondsToMinutes(searchDuration)
-	const min_pages = convertSecondsToMinutes(pageDuration)
+    let min_search = convertSecondsToMinutes(searchDuration);
+    let min_pages = convertSecondsToMinutes(pageDuration);
 
-	let chart = `
-		<div style="display: flex; justify-content: space-between;">
-		<div class="duration_chart" style="background-color: #619ED4; width: ${search_width}%; justify-content: flex-start;">${min_search}</div>
-			<div class="duration_chart" style="background-color: #ff9100; width: calc(${page_width}% - 9px); justify-content: flex-end;">${min_pages}</div>
-		</div>
-	`
+    let min_ration = 0.1;
+    if ((searchDuration / pageDuration) < min_ration) {
+        min_search = '';
+    }
+    if ((pageDuration / searchDuration) < min_ration) {
+        min_pages = '';
+    }
+
+    let val_queries = '';
+    let val_pages = '';
+	if (view == 'class'){
+		if (width >= visualization_treshold) {
+			
+			if (search_width >= (visualization_treshold) && searchDuration > duration_treshold){
+				val_queries = min_search;
+			}
 	
-	return chart
-}
-
-function convertSecondsToMinutes(seconds){
-	// console.log(seconds)
-
-	const minutes = Math.floor(seconds / 60);
-	const remainingSeconds = seconds % 60;
-
-	const formattedMinutes = (minutes < 10 ? "0" : "") + minutes;
-	const formattedSeconds = (remainingSeconds < 10 ? "0" : "") + parseInt(remainingSeconds);
-	// console.log(formattedMinutes + ':' + formattedSeconds)
-	
-	if (String(formattedMinutes) == "Infinity" || String(formattedMinutes) == "NaN" || String(formattedSeconds) == "Infinity" || String(formattedSeconds) == "NaN"){
-		time = 0
+			if (page_width >= (visualization_treshold) && pageDuration > duration_treshold){
+				val_pages = min_pages;
+			}
+		}
 	}
 	else {
-		time = formattedMinutes + ':' + formattedSeconds
+		val_queries = min_search;
+		val_pages = min_pages;
 	}
 
-	return time
+    // Create container div
+    const container = document.createElement('div');
+	const bar_height = 20;
+	const font_size = "0.7rem"
+
+    container.style.width = '100%';
+    container.style.height = '20px';
+
+    // Create SVG using D3
+    const svg = d3.select(container)
+        .append('svg')
+        .attr('width', '100%')
+        .attr('height', '20');
+
+    // Add queries rect
+    svg.append('rect')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', search_width + '%')
+        .attr('height', bar_height)
+        .attr('fill', '#619ED4')
+        .attr('data-queDur', searchDuration);
+
+    // Add pages rect
+    svg.append('rect')
+        .attr('x', search_width + '%') 
+        .attr('y', 0)
+        .attr('width', page_width + '%')
+        .attr('height', bar_height)
+        .attr('fill', '#ff9100')
+        .attr('data-pagDur', pageDuration);
+
+    // Add queries text
+    if (val_queries) {
+        svg.append('text')
+            .attr('x', (search_width - 3) + '%')
+            .attr('y', 14)
+            .attr('text-anchor', 'end')
+            .attr('fill', 'white')
+            .attr('font-size', font_size)
+            .text(val_queries);
+    }
+
+    // Add pages text
+    if (val_pages) {
+        svg.append('text')
+            .attr('x', (search_width + page_width - 3) + '%')
+            .attr('y', 14)
+            .attr('text-anchor', 'end')
+            .attr('fill', 'white')
+            .attr('font-size', font_size)
+            .text(val_pages);
+    }
+
+    return container.outerHTML;
+}
+
+function convertSecondsToMinutes(seconds) {
+	// console.log(seconds);
+
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    const formattedHours = hours > 0 ? (hours < 10 ? "0" : "") + hours + ":" : "";
+    const formattedMinutes = (minutes < 10 ? "0" : "") + minutes;
+    const formattedSeconds = (remainingSeconds < 10 ? "0" : "") + parseInt(remainingSeconds);
+
+    if (String(formattedMinutes) == "Infinity" || String(formattedMinutes) == "NaN" || String(formattedSeconds) == "Infinity" || String(formattedSeconds) == "NaN") {
+        time = "00:00";
+    } else {
+        time = formattedHours + formattedMinutes + ":" + formattedSeconds;
+    }
+
+    return time;
+}
+
+function clean_query(url){
+	// console.log(url)
+
+	let url_c = ''
+	if (url.includes('q=')){
+		url_a = url.split('q=')[1];
+
+		if (url_a.includes('&')){
+			url_b = url_a.split('&')[0]
+		}
+		else {
+			url_b = url_a 
+		}
+
+		url_c = url_b.replace(/\+/g,' ')
+	}
+	else {
+		url_c = url
+	}
+
+	return url_c
+}
+
+function search_engine(item) {
+
+	searchEngine = item
+	if (item.includes('//')){
+		searchEngine = item.split('//')[1]
+	}
+
+	return searchEngine
 }
 
 function getUniqueValues(values) {
@@ -89,233 +184,63 @@ function getUniqueValues(values) {
 	return Array.from(uniqueValuesSet);
 }
 
-function short_url(url,max){
-	if (url.length > max){
-		shortUrl = url.slice(0,max) + '...'
+const url = window.location.href
+if (!url.includes('class')){
+	open_tabs();
+}
+
+// to get the feedback text
+function getObjectById(data,id) {
+    return data.find(item => item.id === id) || null;
+}
+
+
+// make url shorter
+function short_text(text,characters){
+	let output = text
+	if (text.length > characters){
+		output = text.slice(0,characters) + ' ...'
 	}
-	else {
-		shortUrl = url
-	}
-	return shortUrl
+	return output
 }
 
-function search_engine(item){
-	se_0 = item.split('//')[1]
-	se_1 = se_0.split('/')[0]
-	se_2 = se_1.replace('www.','')
-	searchEngine = se_2.split('.com')[0]
-	// console.log(se_1,searchEngine)
+function open_tabs() {
+	let open_stat = false;
+	let open_sugg = false;
 
-	return searchEngine
-}
+	const STAT_BUTTON = document.getElementById("stat_txt");
+	const STAT_TAB = document.querySelector("#statistics_container");
+	const STAT_ARROW = document.getElementById("open_stat");
 
-function load_statistics(data){
-
-	const max_link_char = 50
-
-	const container_a = document.getElementById('statistics_a')
-	const container_b = document.getElementById('statistics_b')
-	const container_c = document.getElementById('statistics_c')
-
-	const searchItems = data.filter(item => item.action === 'NEW_SEARCH' || item.action === 'NEW_SEARCH_SAME_ENGINE' || item.action === 'REFINE_SEARCH');
-	const searchDuration = searchItems.reduce((sum, item) => sum + item.duration, 0);
-	const avgSearchDuration = searchDuration / searchItems.length; 
-	const minSearchDuration = Math.min(...searchItems.map(item => item.duration));
-	const maxSearchDuration = Math.max(...searchItems.map(item => item.duration));
-
-	const pageItems = data.filter(item => item.action === 'NEW_RESULT' || item.action === 'SAME_DOMAIN_RESULT' || item.action == "SEEN_DOMAIN_RESULT");
-	const pageDuration = pageItems.reduce((sum, item) => sum + item.duration, 0);
-	const avgPageDuration = pageDuration / pageItems.length; 
-	const minPageDuration = Math.min(...pageItems.map(item => item.duration));
-	const maxPageDuration = Math.max(...pageItems.map(item => item.duration));
-
-	const newQueries = data.filter(item => item.action === 'NEW_SEARCH' || item.action === 'NEW_SEARCH_SAME_ENGINE').length
-	const reusedQueries = data.filter(item => item.action === 'SAME_SEARCH' || item.action === 'SEEN_SEARCH').length
-	const revisedQueries = data.filter(item => item.action === 'REFINE_SEARCH').length
-
-
-	const newDomains = data.filter(item => item.action === 'NEW_RESULT').length
-	const revisitedDomains = data.filter(item => item.action === 'SEEN_DOMAIN_RESULT').length
-	const pages = data.filter(item => item.action === 'NEW_RESULT' || item.action === 'SAME_DOMAIN_RESULT' || item.action === 'SEEN_DOMAIN_RESULT').length
-
-	const queries = searchItems.map(item => item.url)
-		.filter(item => item.indexOf('http') >= 0)
-	const unique_queries = getUniqueValues(queries) 
-
-	// const websites = pageItems.map(item => item.url)
-	unique_web = []
-	pageItems.forEach(item => {
-		url = item.url
-		url_ = url.split("/")[2]
-		unique_web.push(url_)
-	})
-
-	const unique_websites = getUniqueValues(unique_web) 
-	// console.log(unique_websites)
-
-	uniq_engine = []
-	searchItems.forEach(item => {
-		url = item.url
-		url_ = url.split("search?")[0]
-		uniq_engine.push(url_)
-	})
-	const unique_searchEngines = getUniqueValues(uniq_engine) 
-
-	let output_a = ''
-	let output_b = ''
-	let output_c = ''
-
-	output_a += '<table>'
-	output_a += '<tr><td><strong>Duration</strong></td></tr>'
-	
-	output_a += '<tr><td>Total</td>'
-	output_a += '<td>' + convertSecondsToMinutes(pageDuration + searchDuration) + '</td></tr>' // '<td>' + parseInt(pageDuration + searchDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration + searchDuration) + ' minutes</td></tr>'
-	
-	output_a += "<tr><td colspan='2'>" + duration_chart(searchDuration, pageDuration) + "</td></tr>"
-	output_a += '<tr><td>&nbsp;</td></tr>'
-
-	output_a += '<tr><td>Search</td>'
-	output_a += '<td>' + convertSecondsToMinutes(searchDuration) + '</td></tr>' // '<td>' + parseInt(searchDuration) + ' seconds / ' + convertSecondsToMinutes(searchDuration) + ' minutes</td></tr>'
-	output_a += '<tr><td>Pages</td>'
-	output_a += '<td>' + convertSecondsToMinutes(pageDuration) + '</td></tr>' // '<td>' + parseInt(pageDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration) + ' minutes</td></tr>'
-	output_a += '<tr><td>&nbsp;</td></tr>'
-
-	output_a += '<tr><td>Search</td>'
-	output_a += '<tr><td>- shortest</td>'
-	output_a += '<td>' + convertSecondsToMinutes(minSearchDuration) + '</td></tr>'
-	output_a += '<tr><td>- average</td>'
-	output_a += '<td>' + convertSecondsToMinutes(avgSearchDuration) + '</td></tr>'
-	output_a += '<tr><td>- longest</td>'
-	output_a += '<td>' + convertSecondsToMinutes(maxSearchDuration) + '</td></tr>' 
-	output_a += '<tr><td>&nbsp;</td></tr>'
-	
-	output_a += '<tr><td>Pages</td>'
-	output_a += '<tr><td>- shortest</td>'
-	output_a += '<td>' + convertSecondsToMinutes(minPageDuration) + '</td></tr>'
-	output_a += '<tr><td>- average</td>'
-	output_a += '<td>' + convertSecondsToMinutes(avgPageDuration) + '</td></tr>' 
-	output_a += '<tr><td>- longest</td>'
-	output_a += '<td>' + convertSecondsToMinutes(maxPageDuration) + '</td></tr>' 
-	output_a += '<tr><td>&nbsp;</td></tr>'
-	
-	output_a += '</table>'
-
-	output_b += '<table>'
-	output_b += '<tr><td><strong>Search</strong></td></tr>'
-	output_b += '<tr><td>Queries</td></tr>'
-	output_b += '<tr><td>- total</td>'
-	output_b += '<td>' + (newQueries + reusedQueries + revisedQueries) + '</td></tr>'
-	output_b += '<tr><td>- new</td>'
-	output_b += '<td>' + newQueries + '</td></tr>'
-	output_b += '<tr><td>- reused</td>'
-	output_b += '<td>' + reusedQueries + '</td></tr>'
-	output_b += '<tr><td>- modified</td>'
-	output_b += '<td>' + revisedQueries + '</td></tr>'
-	output_b += '</table>'
-
-	output_c += '<table>'
-	output_c += '<tr><td><strong>Websites</strong></td></tr>'
-	output_c += '<tr><td>- total</td>'
-	output_c += '<td>' + (newDomains + revisitedDomains) + '</td></tr>'
-	output_c += '<tr><td>- new</td>'
-	output_c += '<td>' + newDomains + '</td></tr>'
-	output_c += '<tr><td>- revisited</td>'
-	output_c += '<td>' + revisitedDomains + '</td></tr>'
-	output_c += '<tr><td>&nbsp; </td></tr>'
-	output_c += '<tr><td>- total pages</td>'
-	output_c += '<td>' + pages + '</td></tr>'
-	output_c += '</table>'
-
-	output_b += '<table style="margin-top: 1.5rem;">'
-	output_b += '<tr><td><strong>Queries</strong></td></tr>'
-	unique_queries.forEach(item => {
-		item = decodeURIComponent(item)
-		the_query = short_url(item,60)
-		if (item.split('?q=')[1]){
-			the_query_a = item.split('?q=')[1]
-			the_query_b = the_query_a.split('=')[0]
-			the_query_c = the_query_b.split('&')[0]
-			the_query = the_query_c.replace(/\+/g,' ')
-		}
-		else if (item.split('&q=')[1]){
-			the_query_a = item.split('&q=')[1]
-			the_query_b = the_query_a.split('&')[0]
-			the_query = the_query_b.replace(/\+/g,' ')
-		}
-		else if (item.split('?safe=')[1]){
-			the_query_a = item.split('?safe=')[1]
-			the_query_b = the_query_a.split('=')[0]
-			the_query_c = the_query_b.split('&')[0]
-			the_query = the_query_c.replace(/\+/g,' ')
-		}
-		output_b += '<tr><td>- <a href="' + item + '" target="_blank">' + short_url(the_query,max_link_char) + '</a></td></tr>'
-	})
-	output_b += '</table>'
-
-	output_b += '<table style="margin-top: 1.5rem;">'
-	output_b += '<tr><td><strong>Search engines</strong></td></tr>'
-	unique_searchEngines.forEach(item => {
-		output_b += '<tr><td>- ' + search_engine(item) + '</td></tr>'
-	})
-	output_b += '<tr><td>&nbsp;</td></tr>'
-	output_b += '</table>'
-
-	output_c += '<table style="margin-top: 1.5rem;">'
-	output_c += '<tr><td><strong>Domains</strong></td></tr>'
-	unique_websites.forEach(item => {
-		const web_a = item.replace('https://','')
-		const web_b = web_a.replace('www.','')
-		output_c += '<tr><td>- <a href="' + item + '" target="_blank">' + short_url(web_b,max_link_char) + '</a></td><tr>' // 
-	})
-	output_c += '<tr><td>&nbsp;</td></tr>'
-	output_c += '</tr>'
-	output_c += '</table>'
-
-	container_a.innerHTML = output_a
-	container_b.innerHTML = output_b
-	container_c.innerHTML = output_c
-}
-
-function open_tabs(){
-	let open_stat = false
-	let open_sugg = false
-
-	const STAT_BUTTON = document.getElementById("stat_txt")
-	const STAT_TAB = document.querySelector("#statistics_container")
-	const STAT_ARROW = document.getElementById("open_stat")
-
-	const SUGG_BUTTON = document.getElementById("sugg_txt")
-	const SUGG_TAB = document.querySelector("#suggestions_container")
-	const SUGG_ARROW = document.getElementById("open_sugg")
+	const SUGG_BUTTON = document.getElementById("sugg_txt");
+	const SUGG_TAB = document.querySelector("#suggestions_container");
+	const SUGG_ARROW = document.getElementById("open_sugg");
 
 	STAT_BUTTON.addEventListener("click", () => {
-		
-		if (open_stat == false){
-			STAT_TAB.style.display = 'block'
-			open_stat = true
-			STAT_ARROW.innerHTML = '&uarr;'
+
+		if (open_stat == false) {
+			STAT_TAB.style.display = 'block';
+			open_stat = true;
+			STAT_ARROW.innerHTML = '&uarr;';
 		}
 		else {
-			STAT_TAB.style.display = 'none'
-			open_stat = false
-			STAT_ARROW.innerHTML = '&darr;'
+			STAT_TAB.style.display = 'none';
+			open_stat = false;
+			STAT_ARROW.innerHTML = '&darr;';
 		}
-	})
+	});
 
 	SUGG_BUTTON.addEventListener("click", () => {
 
-		if (open_sugg == false){
-			SUGG_TAB.style.display = 'block'
-			open_sugg = true
-			SUGG_ARROW.innerHTML = '&uarr;'
+		if (open_sugg == false) {
+			SUGG_TAB.style.display = 'block';
+			open_sugg = true;
+			SUGG_ARROW.innerHTML = '&uarr;';
 		}
 		else {
-			SUGG_TAB.style.display = 'none'
-			open_sugg = false
-			SUGG_ARROW.innerHTML = '&darr;'
+			SUGG_TAB.style.display = 'none';
+			open_sugg = false;
+			SUGG_ARROW.innerHTML = '&darr;';
 		}
-	})
-
+	});
 }
-
-open_tabs()

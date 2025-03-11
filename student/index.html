@@ -5,6 +5,7 @@
 	<title>ROSE project</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+	<link rel="stylesheet" type="text/css" href="../assets/style/style.css">
 	<link rel="stylesheet" type="text/css" href="assets/style/style.css">
 </head>
 
@@ -15,10 +16,10 @@
 				<h2>User: <span id="the_user"></span></h2>
 				<h2>Task: <span id="the_task"></span></h2>
 			</div>
-			<select id="set_size">
-				<option value="normalize">Normalize scale</option>
-				<option value="fit">Fit scale</option>
-			</select>
+			<div>
+				<button class="button not_active" id="normalize_size">Normalize scale</button>
+				<button class="button" id="fit_size">Fit scale</button>
+			</div>
 		</div>
 
 		<div id="container">
@@ -62,15 +63,10 @@
 		</div>
 	</main>
 
-	<footer>
-		<a href="https://github.com/giovannipro/ROSE" target="_blank">
-			Project on GitHub
-		</a>
-	</footer>
-
 	<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-	<script src="assets/script/utilities.js" defer></script>
+	<script src="../assets/script/utilities.js" defer></script>
 	<script src="assets/script/hints.js" defer></script>
+	<script src="assets/script/statistics.js" defer></script>
 	<script src="assets/script/script.js" defer></script>
 </body>
 

@@ -1,5 +1,3 @@
-// const dataset = "search_story_task_1_user_300"
-
 const duration = 100;
 const start_shift = 10;
 const interline = 2;
@@ -10,52 +8,64 @@ const stroke_color = 'white'; // '#aeaeae'
 
 const over_opacity = 0.4;
 
+let scale_mode = 'normalize';
+
 function load_data() {
 
-	// Get the query string from the current URL
-	// const queryString = window.location.search;
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
 
-	// // Create a URLSearchParams object
-	// const urlParams = new URLSearchParams(queryString);
+	const user_id = 5 // urlParams.get('user_id');
+    const task_id = 1 // urlParams.get('task_id');
 
-	// // Get the value of the 'source' parameter
-	// const sourceValue = urlParams.get('source');
+	const apiEndpoint_student = `assets/data/_stats_${user_id}_${task_id}.csv` 
+	// const apiEndpoint_student = `/api/analytics/stories-extraction?user_id=${user_id}&task_id=${task_id}`;
+	
+	// http://127.0.0.1:5501/student/index.html?user_id=7&task_id=2
+	console.log(user_id,task_id)
 
-	// Decode the 'sourceValue'
-	// const source = "assets/data/search_story_task_" + 1 + '_user_' + 1324 + '.csv'
-	// http://127.0.0.1:5501/index.html?source=https://raw.githubusercontent.com/giovannipro/ROSE/refs/heads/main/assets/data/search_story_task_8_user_1004.csv
-	// const source = decodeURI(sourceValue);
-	// console.log(source)
-
-	task = 2 // 7
-	user = 97 // 826
-	// source = "assets/data/search_story_task_" + //+ task + '_user_' + user + '.csv'
-	source = "assets/data/"  + "_stats_9_2.csv"
-
-	// load data
-	d3.csv(source)
+	// load story data
+	d3.csv(apiEndpoint_student)
 		.then(loaded)
 		.catch(function (error) {
-			the_error = String(error);
-			if (the_error.indexOf("404") !== -1) {
+			if (error.message.includes("404")) {
 				console.log("Something went wrong with the data loading");
+			}
+			else {
+				console.error("Data loading error:", error);
 			}
 		});
 
 	function loaded(data) {
-		// console.log(data)
+		console.log(data)
 
 		data.forEach(function (d, i) {
 			d.duration = parseFloat(d.duration);
 			d.id = i;
 		});
-		load_statistics(data);
+
+		try {
+			load_statistics(data);
+		}
+		catch (error) {
+			console.log('We got some error with the statistics')
+			console.log(error);
+		}
+
+		try {
+			load_hints();
+		}
+		catch (error) {
+			console.log('We got some error with the hints')
+			console.log(error);
+		}
 
 		const website_strip_data = groupConsecutiveDomains(data);
 
 		website_strip_data.forEach((item, i) => {
 			item[0].the_id = i;
 		});
+		// console.log(data);
 
 		function display_labels() {
 			// console.log(data);
@@ -155,9 +165,6 @@ function load_data() {
 
 			document.getElementById("plot_box").innerHTML = '';
 
-			const set_size = document.getElementById('set_size');
-			set_size.value = 'normalize';
-
 			const date1 = new Date(data[0].time);
 			const date2 = new Date(data[data.length - 1].time);
 			const delta = Math.abs(date2 - date1) / 1000 / 60; // in minutes
@@ -243,6 +250,7 @@ function load_data() {
 				.attr("data-domain", (d) => d.domain)
 				.attr("data-duration", (d) => d.duration)
 				.attr("data-action", (d) => d.action)
+				.attr("data-type", (d) => d.page_type)
 				.attr("data-domainStatus", (d) => d.domain_status)
 				.attr("data-index", (d, i) => i)
 				.attr("data-class", (d,i) => {
@@ -272,7 +280,12 @@ function load_data() {
 				.attr("y", (d, i) => {
 					let y_pos = 0;
 					if (d.page_type == 'SEARCH_ENGINE') {
-						y_pos = strip_height * 0;
+						if(d.action == 'UNKNOWN'){
+							y_pos = strip_height * 2.2;
+						}
+						else {
+							y_pos = strip_height * 0;
+						}
 					}
 					else if (d.page_type == 'RESULT') {
 						y_pos = strip_height * 1.2;
@@ -290,7 +303,12 @@ function load_data() {
 				.attr("height", (d) => {
 					let height = (strip_height / 4) - (interline);
 					if (d.page_type == 'SEARCH_ENGINE') {
-						height = search_height - interline;
+						if(d.action == 'UNKNOWN'){
+							height = other_height - interline
+						}
+						else {
+							height = search_height - interline;
+						}
 					}
 					else if (d.page_type == 'RESULT') {
 						height = page_height - interline;
@@ -449,23 +467,25 @@ function load_data() {
 					
 				const domain = document.querySelector('[data-index="' + id + '"]');
 				const class_ = (domain.getAttribute("data-class")).toString();
-				// console.log(domain, class_)
+
+				const url = domain.getAttribute("data-url")
+				const duration = domain.getAttribute("data-duration")
+				const action = domain.getAttribute("data-action")
+				const domainStatus = domain.getAttribute("data-domainStatus")
 					
 				let output;
 
 				if (class_ == 'strip'){
-					const url = domain.getAttribute("data-url")
-					const domain_ = domain.getAttribute("data-domain")
-					const duration = domain.getAttribute("data-duration")
-					const action = domain.getAttribute("data-action")
-					const domainStatus = domain.getAttribute("data-domainStatus")
 
 					if (action == 'SAME_DOMAIN_RESULT' || action == 'SEEN_DOMAIN_RESULT' || action == 'NEW_RESULT') {
+						the_url = short_text(url,140)
+						// console.log(the_url)
+
 						if (domainStatus == "SEEN") {
-							output = `<span><a href="${url}" target="_blank">${url}</a><span style="color: gray"> (already seen)</span></span><br/>`;
+							output = `<span><a href="${url}" target="_blank">${the_url}</a><span style="color: gray"> (already seen)</span></span><br/>`;
 						}
 						else {
-							output = `<span><a href="${url}" target="_blank">${url}</a></span><br/>`;
+							output = `<span><a href="${url}" target="_blank">${the_url}</a></span><br/>`;
 						}
 
 						output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
@@ -630,9 +650,23 @@ function load_data() {
 				infobox.innerHTML = '';
 			}
 
-			set_size.addEventListener("change", function () {
-				let size = this.value;
-				rescale(size);
+			const set_normalize = document.getElementById('normalize_size');
+			const set_fit = document.getElementById('fit_size');
+
+			set_normalize.addEventListener("click", function () {
+				rescale("normalize");
+				scale_mode = "normalize"
+
+				set_normalize.classList.add("not_active");
+				set_fit.classList.remove("not_active");
+			});
+
+			set_fit.addEventListener("click", function () {
+				rescale("fit");
+				scale_mode = "fit"
+
+				set_fit.classList.add("not_active");
+				set_normalize.classList.remove("not_active");
 			});
 
 			function resize_chart(mode) {
@@ -718,13 +752,8 @@ function load_data() {
 
 				new_width = delta * pixel_per_minute;
 
-				const set_size = document.getElementById('set_size');
-				let size = set_size.value;
-				// console.log(set_size)
-
-				resize_chart(size);
+				resize_chart(scale_mode);
 			});
-
 		}
 		display_data(data);
 	}

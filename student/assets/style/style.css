@@ -8,6 +8,10 @@ header, footer, #infobox {
 	margin: 0 1rem;
 }
 
+#container {
+	margin-top: 6rem;
+}
+
 h2 {
 	font-size: 1rem;
 }
@@ -22,19 +26,6 @@ h2 {
 
 #header span {
 	font-weight: normal;
-}
-
-#controllers {
-	padding: 1rem;
-	border-bottom: 1px solid #bfbfbf;
-	position: fixed;
-	top: 0;
-	background-color: white;
-	width: calc(100% - 2rem);
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 3rem;
 }
 
 #chart {
@@ -75,6 +66,10 @@ h2 {
 
 .labels {
 	font-size: 0.8rem;
+}
+
+#controllers select {
+	height: 2rem;
 }
 
 #story_selection {
@@ -195,6 +190,18 @@ td {
 	text-overflow: ellipsis;
 }
 
+.button {
+	height: 2rem;
+	border: 1px solid #767676;
+	cursor: pointer;
+	background-color: white;
+	border-radius: 4px;
+}
+
+.not_active {
+	opacity: 0.4;
+}
+
 @media only screen and (max-width: 725px) {
 	#statistics_container .tab_content, #suggestions_container .tab_content {
 		display: block;
@@ -211,3 +218,5 @@ td {
 		border-bottom: none;
 	}
 }
+
+
