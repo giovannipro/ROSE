@@ -93,6 +93,7 @@ aside {
 #get_sort {
     height: 2rem;
     width: 10rem;
+    border-radius: 4px;
 }
 
 .arrow_link {

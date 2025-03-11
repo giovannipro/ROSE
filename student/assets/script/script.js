@@ -1,5 +1,3 @@
-// const dataset = "search_story_task_1_user_300"
-
 const duration = 100;
 const start_shift = 10;
 const interline = 2;
@@ -22,6 +20,7 @@ function load_data() {
 
 	const apiEndpoint_student = `assets/data/_stats_${user_id}_${task_id}.csv` 
 	// const apiEndpoint_student = `/api/analytics/stories-extraction?user_id=${user_id}&task_id=${task_id}`;
+	
 	// http://127.0.0.1:5501/student/index.html?user_id=7&task_id=2
 	console.log(user_id,task_id)
 

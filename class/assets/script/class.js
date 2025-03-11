@@ -16,10 +16,9 @@ function load_data() {
 
 	const apiEndpoint_class = `assets/data/${clazz_id}_task_${task_id}_aggregated_stats.csv`
     // const apiEndpoint_class = `/api/analytics/aggregated-stories-extraction?clazz_id=${clazz_id}&task_id=${task_id}`
-	// http://127.0.0.1:5501/class/index.html?clazz_id=LME-1C&task_id=1
-    
+	
+    // http://127.0.0.1:5501/class/index.html?clazz_id=LME-1C&task_id=1
     console.log(apiEndpoint_class, clazz_id,task_id)
-
 
     d3.csv(apiEndpoint_class)
 		.then(loaded)
