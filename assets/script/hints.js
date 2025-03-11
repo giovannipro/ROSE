@@ -1,12 +1,21 @@
 function load_hints(){
 
     const predefined_hints = 'assets/content/hints.json'
-    const source_stats = 'assets/data/hints_3_1.json'
     // console.log(source_stats)
     
+    const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+
+	const user_id = urlParams.get('user_id');
+    const task_id = urlParams.get('task_id');
+
+	const apiEndpoint_hint = `/assets/data/hints_${user_id}_${task_id}.json`
+	// const apiEndpoint_hint = `//api/analytics/adaptive-hints?user_id=${user_id}&task_id=${task_id}`;
+	console.log(user_id,task_id)
+
     Promise.all([
         d3.json(predefined_hints),
-        d3.json(source_stats)
+        d3.json(apiEndpoint_hint)
     ]).
     then(function([data0, data1]) {
         loaded(data0,data1)
