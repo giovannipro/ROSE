@@ -53,8 +53,8 @@ function load_data() {
 
         the_data = data
         
-        document.getElementById("the_class").innerHTML = "?"
-        document.getElementById("the_task").innerHTML = data[0].task_id;
+        document.getElementById("the_class").innerHTML = clazz_id;
+        document.getElementById("the_task").innerHTML = task_id;
 
         load_list(data, 'total')
 
