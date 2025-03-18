@@ -14,6 +14,7 @@ aside {
 #container {
     width: 65%;
     height: 75vh;
+    overflow: hidden;
 }
 
 #plot_class {

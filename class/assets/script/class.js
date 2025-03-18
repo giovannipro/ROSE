@@ -16,53 +16,61 @@ function load_data() {
 
 	// const apiEndpoint_class = `assets/data/${clazz_id}_task_${task_id}_aggregated_stats.csv`
     const apiEndpoint_class = `https://search.rose.education/api/analytics/aggregated-stories-extraction?clazz_id=${clazz_id}&task_id=${task_id}`
-	
-    // http://127.0.0.1:5501/class/index.html?clazz_id=LME-1C&task_id=1
-    console.log(clazz_id,task_id)
+    const apiEndpoint_classInfo = `https://search.rose.education/api/dashboard/clazzes/${clazz_id}`
+        
+    // url = http://127.0.0.1:5501/class/index.html?clazz_id=LME-1C&task_id=1 
+    // console.log(clazz_id,task_id)
 
-    d3.csv(apiEndpoint_class)
-		.then(loaded)
-        .then(highlight)
-		.catch(function (error) {
-			if (error.message.includes("404")) {
-				console.log("Something went wrong with the data loading");
-			}
-			else {
-				console.error("Data loading error:", error);
-			}
-		});
+    Promise.all([
+        d3.csv(apiEndpoint_class),
+        d3.json(apiEndpoint_classInfo)
+    ])
+    .then(([classData, classInfo]) => {
+        console.log(classInfo)
+        
+        classData.forEach(item => {
+            console.log(item)
+            item.user_id = +item.user_id;
+            item.S_Queries_New = +item.S_Queries_New;
+            item.S_ResultDomain_New = +item.S_ResultDomain_New;
+            item.S_Duration_Net = +item.S_Duration_Net;
+            item.S_Duration_ResAvg = +item.S_Duration_ResAvg;
+            item.S_Duration_SeaAvg = +item.S_Duration_SeaAvg;
+            item.queries_duration = item.S_Duration_SeaAvg * item.S_Actions_Sea;
+            item.pages_duration = item.S_Duration_ResAvg * item.S_Actions_Res;
+            item.Que_Pag = item.queries_duration + item.pages_duration;
+        });
+
+        // Store both datasets
+        the_data = classData;
+        the_classInfo = classInfo;
+
+        document.getElementById("the_class").innerHTML = clazz_id;
+        document.getElementById("the_task").innerHTML = classInfo.name;
+        // console.log(classInfo.name)
+
+        // Initialize visualizations with both datasets
+        loaded(classData)
+        load_list(classData, 'total');
+        // createChart();
+        highlight();
+    })
+    .catch(function (error) {
+        if (error.message.includes("404")) {
+            console.log("Something went wrong with the data loading");
+        } else {
+            console.error("Data loading error:", error);
+        }
+    });
 
     function loaded(data) {
-
-        data.forEach(item => {
-            item.user_id = +item.user_id
-            item.S_Queries_New = +item.S_Queries_New
-            item.S_ResultDomain_New = +item.S_ResultDomain_New
-            // item.S_ResultDomain_New = +item.S_ResultDomain_New
-            
-            item.S_Duration_Net = +item.S_Duration_Net
-            item.S_Duration_ResAvg = +item.S_Duration_ResAvg
-            item.S_Duration_SeaAvg = +item.S_Duration_SeaAvg
-
-            item.queries_duration = item.S_Duration_SeaAvg * item.S_Actions_Sea
-            item.pages_duration = item.S_Duration_ResAvg * item.S_Actions_Res
-            item.Que_Pag = item.queries_duration + item.pages_duration
-            // console.log(item.S_Queries_New)
-        })
-
-        the_data = data
-        
-        document.getElementById("the_class").innerHTML = clazz_id;
-        document.getElementById("the_task").innerHTML = task_id;
-
-        load_list(data, 'total')
 
         function createChart() {
             const container = "#container";
             let window_w = document.getElementById("container").offsetWidth;
             window_h = document.getElementById("container").offsetHeight;
         
-            margin = { top: 40, left: 10, bottom: 20, right: 10 };
+            margin = { top: 40, left: 10, bottom: 20, right: 20 };
             width = window_w - (margin.right + margin.right);
             height = window_h - (margin.top + margin.bottom);
         
@@ -215,6 +223,10 @@ function load_data() {
                             group.forEach((d, i) => {
                                 const offset = i * 15;
                                 
+                                // Find student in classInfo data
+                                const student = the_classInfo.students.find(s => s.id === d.user_id);
+                                const student_name = student?.username || `#${d.user_id}`;
+
                                 labels.append("text")
                                     .attr("class", "bubble-label")
                                     .attr("id", "label_" + d.user_id)
@@ -224,7 +236,7 @@ function load_data() {
                                     .attr("fill", "black")
                                     .attr("font-size", "12px")
                                     .attr("opacity", 0)
-                                    .text(d.user_id)
+                                    .text(student_name)
                                     .on("click", label_highlight)
                                     .transition()
                                     .duration(500)
@@ -346,10 +358,14 @@ function load_list(data, sort){
             const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration, bar_width, 'class')
             const user_id = item.user_id
             const task_id = item.task_id
-            const clazz_id = item.clazz_id
+            // const clazz_id = item.clazz_id
+
+            const student = the_classInfo.students.find(s => s.id === item.user_id);
+            const student_name = student?.username || `#${item.user_id}`;
+            console.log(student, student_name)
 
             // link to the student page ---------------- 
-            const student_page = `https://search.rose.education/dashboard?&userId=${user_id}&taskId=${task_id}` // clazzId=${clazz_id}
+            const student_page = `https://search.rose.education/dashboard?userId=${user_id}&taskId=${task_id}` // clazzId=${clazz_id}
             
             // ------------------------------------------ 
 
@@ -358,7 +374,7 @@ function load_list(data, sort){
                     <div class="inside">
                         <div class="item_data">
                             <div>
-                                <span>${item.user_id}</span>
+                                <span class="student_name">${student_name}</span>
                             </div>
                             <div style="color: #a2a2a2; font-size: 0.8rem; display: flex; justify-content: space-between; width: 3.5rem;">
                                 <div>
