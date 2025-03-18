@@ -346,10 +346,10 @@ function load_list(data, sort){
             const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration, bar_width, 'class')
             const user_id = item.user_id
             const task_id = item.task_id
-            const clazz_id = 'LME-1' //item.clazz_id
+            const clazz_id = item.clazz_id
 
             // link to the student page ---------------- 
-            const student_page = `https://search.rose.education/dashboard?${clazz_id}&task_id=${task_id}&user_id=${user_id}`
+            const student_page = `https://search.rose.education/dashboard?clazz_id=${clazz_id}&task_id=${task_id}&user_id=${user_id}`
 
             // ------------------------------------------ 
 
