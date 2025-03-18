@@ -349,8 +349,8 @@ function load_list(data, sort){
             const clazz_id = item.clazz_id
 
             // link to the student page ---------------- 
-            const student_page = `https://search.rose.education/dashboard?clazz_id=${clazz_id}&task_id=${task_id}&user_id=${user_id}`
-
+            const student_page = `https://search.rose.education/dashboard?&userId=${user_id}&taskId=${task_id}` // clazzId=${clazz_id}
+            
             // ------------------------------------------ 
 
             items += `
