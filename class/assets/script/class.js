@@ -14,8 +14,8 @@ function load_data() {
 	const clazz_id = urlParams.get('clazz_id');
     const task_id = urlParams.get('task_id');
 
-	const apiEndpoint_class = `assets/data/${clazz_id}_task_${task_id}_aggregated_stats.csv`
-    // const apiEndpoint_class = `/api/analytics/aggregated-stories-extraction?clazz_id=${clazz_id}&task_id=${task_id}`
+	// const apiEndpoint_class = `assets/data/${clazz_id}_task_${task_id}_aggregated_stats.csv`
+    const apiEndpoint_class = `https://search.rose.education/api/analytics/aggregated-stories-extraction?clazz_id=${clazz_id}&task_id=${task_id}`
 	
     // http://127.0.0.1:5501/class/index.html?clazz_id=LME-1C&task_id=1
     console.log(clazz_id,task_id)
