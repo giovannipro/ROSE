@@ -20,24 +20,34 @@ function load_data() {
 
 	// const apiEndpoint_student = `assets/data/_stats_${user_id}_${task_id}.csv` 
 	const apiEndpoint_student = `https://search.rose.education/api/analytics/stories-extraction?user_id=${user_id}&task_id=${task_id}`;
-	
+	const apiEndpoint_studentInfo = `https://search.rose.education/api/dashboard/students/${user_id}`
+
 	// http://127.0.0.1:5501/student/index.html?user_id=7&task_id=2
 	console.log(user_id,task_id)
 
-	// load story data
-	d3.csv(apiEndpoint_student)
-		.then(loaded)
-		.catch(function (error) {
-			if (error.message.includes("404")) {
-				console.log("Something went wrong with the data loading");
-			}
-			else {
-				console.error("Data loading error:", error);
-			}
-		});
+	Promise.all([
+        d3.csv(apiEndpoint_student),
+        d3.json(apiEndpoint_studentInfo)
+    ])
+	.then(([studentData, studentInfo]) => {
+		console.log(studentData)
+		console.log(studentInfo)
+
+		loaded(studentData)
+
+		document.getElementById("the_user").innerHTML = studentInfo.username;
+		document.getElementById("the_task").innerHTML = studentData[0].task_id;
+	})
+	.catch(function (error) {
+        if (error.message.includes("404")) {
+            console.log("Something went wrong with the data loading");
+        } else {
+            console.error("Data loading error:", error);
+        }
+    });
 
 	function loaded(data) {
-		console.log(data)
+		// console.log(data)
 
 		data.forEach(function (d, i) {
 			d.duration = parseFloat(d.duration);
@@ -71,9 +81,6 @@ function load_data() {
 			// console.log(data);
 
 			document.getElementById("label_box").innerHTML = '';
-
-			document.getElementById("the_user").innerHTML = data[0].user_id;
-			document.getElementById("the_task").innerHTML = data[0].task_id;
 
 			const container = "#label_box";
 			let window_w = document.getElementById("label_box").offsetWidth;
