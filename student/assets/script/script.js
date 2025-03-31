@@ -35,7 +35,8 @@ function load_data() {
 
 		loaded(studentData)
 
-		document.getElementById("the_user").innerHTML = studentInfo.username;
+		const username = studentInfo.username.split("#")[0];
+		document.getElementById("the_user").innerHTML = username;
 		document.getElementById("the_task").innerHTML = studentData[0].task_id;
 	})
 	.catch(function (error) {
