@@ -400,7 +400,7 @@ function load_list(data, sort){
                         <div id="${item.user_id}_more" class="student_more" style="color: #a2a2a2; font-size: 0.8rem;">
                             <div class="student_more_box">
                                 <div>
-                                    <div>searches: </div>
+                                    <div>queries: </div>
                                     <div style="justify-content: flex-end;" data-log="S_Queries_New">${item.S_Queries_New} / ${queries_duration}</div>
                                 </div>
                                 <div>
