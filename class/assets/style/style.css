@@ -6,8 +6,9 @@
 
 aside {
     width: 35%;
+    min-height: 100vh;
+    border-right: 1px solid #bfbfbf;
     /* height: 100vh; */
-    /* border-right: 1px solid red; */
     /* border-right: 1px solid #bfbfbf; */
 }
 
@@ -43,7 +44,7 @@ aside {
     padding: 0.75rem;
     border-bottom: 1px solid #ccc;
     border-left: 5px solid transparent;
-    border-right: 1px solid #bfbfbf;
+    /* border-right: 1px solid #bfbfbf; */
     cursor: pointer;
 }
 
@@ -65,7 +66,7 @@ aside {
     padding: 0.75rem;
     border-bottom: 1px solid #ccc;
     border-left: 3px solid transparent;
-    border-right: 1px solid #bfbfbf; 
+    /* border-right: 1px solid #bfbfbf;  */
     height: 5vh;
     align-items: center;
 }
