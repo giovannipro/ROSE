@@ -5,6 +5,9 @@ function load_hints(){
 
 	const user_id = urlParams.get('user_id');
     const task_id = urlParams.get('task_id');
+    const lang_ = urlParams.get('lang');
+    const the_language = lang_.toLocaleLowerCase();
+    console.log(the_language);
 
 	// const apiEndpoint_hint = `assets/data/hints_${user_id}_${task_id}.json`
     const predefined_hints = 'assets/content/hints.json'
@@ -44,17 +47,39 @@ function load_hints(){
         for (let x = 0; x < feedback_ids.length; x++){ // 
             // console.log(feedback_ids[x])
 
-            try{
+            try {
                 const item_obj = getObjectById(predefined,feedback_ids[x])
 
+                // observation
+                if (the_language === 'de'){
+                    observation = item_obj.observation.de
+                }
+                else if (the_language === 'it'){
+                    observation = item_obj.observation.it
+                }
+                else {
+                    observation = item_obj.observation.en
+                }
+
+                // hint
+                if (the_language === 'de'){
+                    hint = item_obj.hint.de
+                }
+                else if (the_language === 'it'){
+                    hint = item_obj.hint.it
+                }
+                else {
+                    hint = item_obj.hint.en
+                }
+                
                 // 
                 output += `
                     <div class="${item_obj.id}">
                         <p>
-                            ${item_obj.observation.en}   
+                            ${observation}   
                         </p>
                         <p>
-                            ${item_obj.hint.en}
+                            ${hint}
                             <br/><br/>
                             👍  👎
                         </p>

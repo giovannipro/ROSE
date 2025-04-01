@@ -6,8 +6,8 @@
 
 aside {
     width: 35%;
-    min-height: 100vh;
     border-right: 1px solid #bfbfbf;
+    /* min-height: 50rem; */
     /* height: 100vh; */
     /* border-right: 1px solid #bfbfbf; */
 }

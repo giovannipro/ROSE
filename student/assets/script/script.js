@@ -17,13 +17,15 @@ function load_data() {
 
 	const user_id = urlParams.get('user_id');
     const task_id = urlParams.get('task_id');
+	const lang = urlParams.get('lang');
+	console.log(lang)
 
 	// const apiEndpoint_student = `assets/data/_stats_${user_id}_${task_id}.csv` 
 	const apiEndpoint_student = `https://search.rose.education/api/analytics/stories-extraction?user_id=${user_id}&task_id=${task_id}`;
 	const apiEndpoint_studentInfo = `https://search.rose.education/api/dashboard/students/${user_id}`
 
-	// http://127.0.0.1:5501/student/index.html?user_id=7&task_id=2
-	console.log(user_id,task_id)
+	// http://127.0.0.1:5501/student/index.html?user_id=7&task_id=2&lang=EN
+	// console.log(user_id,task_id)
 
 	Promise.all([
         d3.csv(apiEndpoint_student),

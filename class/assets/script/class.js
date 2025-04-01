@@ -331,7 +331,7 @@ load_data()
 
 function load_list(data, sort){
     const container = document.getElementById("student_list");
-    container.style.height = data.length * 3 + "rem";
+    // container.style.height = data.length * 3 + "rem";
     let items = ''
 
     const max_duration = d3.max(data, d => d.Que_Pag)
