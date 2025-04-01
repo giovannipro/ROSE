@@ -124,7 +124,7 @@ function load_data() {
                 .attr("transform", `translate(0, ${height - margin.bottom})`)
                 .call(xAxis)
             
-            let x_Axis_group_position = width - 130
+            let x_Axis_group_position = width - 140
             let x_Axis_group = x_Axis.append("g")
                 .attr("transform", `translate(${x_Axis_group_position}, -20)`)
     
@@ -220,7 +220,12 @@ function load_data() {
             
                         positionGroups.forEach((group, position) => {
                             const [x, y] = position.split(",").map(Number);
+                            const shift = group.length * 10
+                            console.log(group.length, shift)
                             
+                            let the_group = labels.append("g")
+                                .attr("transform", `translate(${x + 20}, ${y + (bubble_size/2) - (shift/2)})`)
+
                             group.forEach((d, i) => {
                                 const offset = i * 15;
                                 
@@ -228,11 +233,9 @@ function load_data() {
                                 const student = the_classInfo.students.find(s => s.id === d.user_id);
                                 const student_name_0 = student?.username || `#${d.user_id}`;
                                 const student_name = student_name_0.split('#')[0];
+                                // console.log(i, offset, student_name)
 
-                                let group = labels.append("g")
-                                    .attr("transform", `translate(${x + 20}, ${y + (bubble_size/2) })`)
-
-                                group.append("text")
+                                the_group.append("text")
                                     .attr("class", "bubble-label")
                                     .attr("id", "label_" + d.user_id)
                                     .attr("y", offset)
@@ -328,6 +331,7 @@ load_data()
 
 function load_list(data, sort){
     const container = document.getElementById("student_list");
+    container.style.minHeight = data.length * 3 + "rem";
     let items = ''
 
     const max_duration = d3.max(data, d => d.Que_Pag)
