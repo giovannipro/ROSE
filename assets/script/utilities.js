@@ -168,6 +168,24 @@ function clean_query(url){
 	return url_c
 }
 
+
+function clean_domain(url){
+	
+	const domain_0 = url.split('://')[1]
+	const domain_1 = domain_0.split('/')[0];
+	let domain_2 = '';
+
+	if (domain_1.includes('www.')){
+		domain_2 = domain_1.substring(4);
+	}
+	else {
+		domain_2 = domain_1
+	}
+	
+	// console.log(domain_2)
+	return domain_2
+}
+
 function search_engine(item) {
 
 	searchEngine = item

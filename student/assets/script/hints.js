@@ -40,15 +40,12 @@ function load_hints(){
             </div>
         `
 
-        console.log(getObjectById(predefined,feedback_ids[0]))
-
         // get the feedback text
         for (let x = 0; x < feedback_ids.length; x++){ // 
             // console.log(feedback_ids[x])
 
             try{
                 const item_obj = getObjectById(predefined,feedback_ids[x])
-                // console.log(item_obj)
 
                 // 
                 output += `

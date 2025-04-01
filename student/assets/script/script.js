@@ -255,7 +255,7 @@ function load_data() {
 				.append("g")
 				.attr("class", "strip strip_box")
 				.attr("data-url", (d) => d.url)
-				.attr("data-domain", (d) => d.domain)
+				// .attr("data-domain", (d) => d.domain)
 				.attr("data-duration", (d) => d.duration)
 				.attr("data-action", (d) => d.action)
 				.attr("data-type", (d) => d.page_type)
@@ -515,7 +515,7 @@ function load_data() {
 					}
 				}
 				else if (class_ == 'website'){
-					const domain_ = domain.getAttribute("data-domain")
+					// const domain_ = domain.getAttribute("data-domain")
 					const action = domain.getAttribute("data-action")
 					const url = domain.getAttribute("data-url")
 					const the_url = clean_domain(url)
@@ -524,15 +524,15 @@ function load_data() {
 					if (action == "SEEN_DOMAIN_RESULT") { // reused
 						seen = '(already seen)';
 					}
-					output = `<span><a href="${the_url}" target="_blank">${domain_}</a> </span><span style="color: gray">${seen}</span><br/>`;
-					output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
+					output = `<span><a href="${url}" target="_blank">${the_url}</a> </span><span style="color: gray">${seen}</span><br/>`;
+					// output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
 				}
 				else {
 					// console.log(domain)
 					const domain_ = domain.getAttribute("data-domain")
 					const the_domain = domain_.toLowerCase().replace(/\_/g, " ");
 					output = `<span>System (${the_domain})</span><br/>`;
-					output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>';
+					// output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>';
 				}
 
 				infobox.innerHTML = output;
