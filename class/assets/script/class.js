@@ -221,7 +221,7 @@ function load_data() {
                         positionGroups.forEach((group, position) => {
                             const [x, y] = position.split(",").map(Number);
                             const shift = group.length * 10
-                            console.log(group.length, shift)
+                            // console.log(group.length, shift)
                             
                             let the_group = labels.append("g")
                                 .attr("transform", `translate(${x + 20}, ${y + (bubble_size/2) - (shift/2)})`)
@@ -331,7 +331,7 @@ load_data()
 
 function load_list(data, sort){
     const container = document.getElementById("student_list");
-    container.style.height = data.length * 3 + "rem";
+    // container.style.height = data.length * 3 + "rem";
     let items = ''
 
     const max_duration = d3.max(data, d => d.Que_Pag)
