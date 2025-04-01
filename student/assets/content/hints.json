@@ -26,6 +26,45 @@
         }
     },
     {
+        "id": "s3",
+        "priority": 3,
+        "source": "LOIS/Variation",
+        "description": "Student makes most searches with the same query",
+        "condition": "SEARCH actions with same query in a row > 70% of all SEARCH actions && SEARCH actions > 3",
+        "hint": {
+            "en": "You could take time to think of possible search queries. For example: read over  the assignment and see what keywords are used there; think about synonyms and similar words; identify new keywords in the documents you have already found. You could compare the results you get with different search queries (you can do different searches in different tabs)."
+        },
+        "observation": {
+            "en": "You often used the same search query multiple times. If you  pick a very precise and appropriate term, it works well - but sometimes we do not know the best keywords in advance."
+        }
+    },
+    {
+        "id": "s4",
+        "priority": 4,
+        "source": "Teachers, literature",
+        "description": "Students tends to use sentences",
+        "condition": "Average number of words in query string > 6 && Queries include filler-words",
+        "hint": {
+            "en": "> You could use only (a few) important, well-chosen search queries. This will make the search more focused and effective. For example: instead of ‘What did Hansel and Gretel use to find their way home when they were abandoned in the forest?’, you could just type ‘Hansel Gretel way home’."
+        },
+        "observation": {
+            "en": "You use long sentences or full questions in your search. This works, but it is not always the best strategy."
+        }
+    },
+    {
+        "id": "c1",
+        "priority": 1,
+        "source": "Limit case",
+        "description": "Student never opens a web page",
+        "condition": "RES actions == 0",
+        "hint": {
+            "en": "You could take time to open and read the most important and interesting links. You could use multiple tabs to keep good documents at hand and read them later. When you visit websites, you could also check whether the information is trustworthy."
+        },
+        "observation": {
+            "en": "You only read the short previews on the search results page without clicking on the links to open the web pages. This saves time, but there is much more information on the web pages than just what is in the preview."
+        }
+    },
+    {
         "id": "c2",
         "priority": 2,
         "source": "LOIS/Variation",
@@ -39,7 +78,59 @@
         }
     },
     {
-        "id": "O3",
+        "id": "c3",
+        "priority": 3,
+        "source": "Limit case",
+        "description": "Student reads for a long time at the beginning of the story",
+        "condition": "Average RES Duration of the first 3 RES actions > 40 sec",
+        "hint": {
+            "en": "You could skim (read rapidly) mutiple documents  to get an overview, and then select the ones that are really important and read them in more detail. You could also search for specific words on a web page (using Ctrl+F). You could open documents in new tabs, so that you can easily find them again. You could check the trustworthiness of a website before you spend a lot of time reading."
+        },
+        "observation": {
+            "en": "You spent a long time reading. This shows that you're dedicated and accurate, but there are other ways to proceed."
+        }
+    },
+    {
+        "id": "c4",
+        "priority": 4,
+        "source": "Limit case",
+        "description": "Student always opens a single page per website",
+        "condition": "Number of pages == Number of websites",
+        "hint": {
+            "en": "When you find a good website, you could look at more pages, and see if there is more relevant information for you. You could find out who runs the website, or who wrote a specific page. This will help you assess whether the website is trustworthy."
+        },
+        "observation": {
+            "en": "You always visited a single page on a website. The information you needed might be just there; however, it can be really useful to explore a website more in depth."
+        }
+    },
+    {
+        "id": "o1",
+        "priority": 1,
+        "source": "Limit case",
+        "description": "Minimal search",
+        "condition": "SEARCH actions < 2 && RESULT actions < 2 && total time < 1 min",
+        "hint": {
+            "en": "When you search for difficult tasks, do not assume that the first information you find is always correct and complete. Even if you have a first answer, you could  keep searching and open more documents. Remember that, on some topics, there might be different opinions and more information to discover."
+        },
+        "observation": {
+            "en": "You only did one or two searches and opened only a few documents. You might be very fast, but if you want to make sure you find good information, you often need multiple searches. It is like looking for the right books in a library or being a detective looking for solid evidence."
+        }
+    },
+    {
+        "id": "o2",
+        "priority": 2,
+        "source": "Advice",
+        "description": "Student works in a single window",
+        "condition": "Global number of actions > 10 && Number of tabs open <= 2",
+        "hint": {
+            "en": "You could open pages in new tabs, so you can keep important pages at hand and you will not “lose” the results page. It will save time when you have to use, compare or reprise the information you have found!"
+        },
+        "observation": {
+            "en": "You visited many pages, but closed all of them. In some situations, it is useful to keep track of the pages you visit and compare them."
+        }
+    },
+    {
+        "id": "o3",
         "priority": 3,
         "source": "LOIS/Variation",
         "description": "Student uses only Google",
@@ -49,6 +140,58 @@
         },
         "observation": {
             "en": "You only used Google. It's the most used search engine in the world, but there are many others. Even if you use the same keywords, you often get different results."
+        }
+    },
+    {
+        "id": "w1",
+        "priority": 1,
+        "source": "Warning",
+        "description": "Student only uses chatbots",
+        "condition": "Only Chatbots appears",
+        "hint": {
+            "en": "You should check on other websites the information you get from chatbots.You could ask the chatbot for links and sources for the information it provides - and don't forget to check them anyway!"
+        },
+        "observation": {
+            "en": "You relied on AI to find information. AI is powerful, but not always reliable."
+        }
+    },
+    {
+        "id": "w2",
+        "priority": 2,
+        "source": "Warning",
+        "description": "Student also uses chatbot",
+        "condition": "At least 1 Chatbot appears AND At least one Search engine appears",
+        "hint": {
+            "en": "You should check on other websites the information you get from chatbots. You could ask the chatbot for links and sources for the information it provides - and don't forget to check them anyway!"
+        },
+        "observation": {
+            "en": "You also used AI to find information. AI is powerful, but not always reliable."
+        }
+    },
+    {
+        "id": "w3",
+        "priority": 3,
+        "source": "Warning",
+        "description": "Student uses Wikipedia",
+        "condition": "Wikipedia appears at least once",
+        "hint": {
+            "en": "Wikipedia is a great secondary source: it's a good starting point to get an overview of a topic. But you should always double-check the information on other sources. You could follow the links to the sources provided in each Wikipedia article (or page) to make sure the information is correct. You could identify online encyclopedias other than Wikipedia. Here is a list: [ENCYCLOPAEDIA_LIST]."
+        },
+        "observation": {
+            "en": "You have used Wikipedia. Wikipedia is an open encyclopedia created by many people working together. This makes it very powerful, but you should be careful. Anyone can publish information there, even if it is checked by “Wikipedians”."
+        }
+    },
+    {
+        "id": "d1",
+        "priority": 1,
+        "source": "Default prompt",
+        "description": "Default prompt",
+        "condition": "No prompt from any category is selected",
+        "hint": {
+            "en": "To enhance your search skills, you can reflect on your search. Here are some prompt questions: Are you satisfied with your search? Do you think you have been effective? Can you think of ways to improve your search? Can you find ways to be more efficient (same or better results in a shorter time)?"
+        },
+        "observation": {
+            "en": "It looks like you search in a balanced and varied manner: you used several different keywords and explored them, and you seem able to manage time and attention between searching and reading."
         }
     }
 ]

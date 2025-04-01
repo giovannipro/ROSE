@@ -25,7 +25,7 @@ function load_hints(){
     const container = document.getElementById('hints');
 
     function loaded(predefined,feedback){
-        // console.log(predefined,feedback)
+        console.log(predefined)
 
         // get the feedback ids
         const feedback_ids = feedback.map(item => item.hint.name);
