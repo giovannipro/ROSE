@@ -32,6 +32,13 @@ function load_hints(){
         // console.log(feedback_ids.length);
 
         let output = ''
+        output += `
+            <div>
+                <p><strong>Observation</strong></p>
+                <p><strong>Hint</strong></p>
+                <p></p>
+            </div>
+        `
 
         console.log(getObjectById(predefined,feedback_ids[0]))
 
@@ -55,7 +62,6 @@ function load_hints(){
                             👍  👎
                         </p>
                         <p></p>
-
                     </div>
                 `
             }
