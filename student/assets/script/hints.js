@@ -1,7 +1,4 @@
 function load_hints(){
-
-    const predefined_hints = 'assets/content/hints.json'
-    // console.log(source_stats)
     
     const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
@@ -9,16 +6,17 @@ function load_hints(){
 	const user_id = urlParams.get('user_id');
     const task_id = urlParams.get('task_id');
 
-	const apiEndpoint_hint = `assets/data/hints_${user_id}_${task_id}.json`
-	// const apiEndpoint_hint = `//api/analytics/adaptive-hints?user_id=${user_id}&task_id=${task_id}`;
-	console.log(user_id,task_id)
+	// const apiEndpoint_hint = `assets/data/hints_${user_id}_${task_id}.json`
+    const predefined_hints = 'assets/content/hints.json'
+	const apiEndpoint_hint = `https://search.rose.education/api/analytics/adaptive-hints?user_id=${user_id}&task_id=${task_id}`; // 93 20
+	// console.log(user_id,task_id)
 
     Promise.all([
         d3.json(predefined_hints),
         d3.json(apiEndpoint_hint)
-    ]).
-    then(function([data0, data1]) {
-        loaded(data0,data1)
+    ])
+    .then(function([predefined, student_hints]) {
+        loaded(predefined,student_hints)
     })
     .catch(function(error) {
         console.error("Error loading JSON files:", error);
@@ -26,28 +24,33 @@ function load_hints(){
     
     const container = document.getElementById('hints');
 
-    function loaded(texts,ids){
+    function loaded(predefined,feedback){
+        // console.log(predefined,feedback)
 
         // get the feedback ids
-        const feedback_ids = ids.map(item => item.hint.name);
+        const feedback_ids = feedback.map(item => item.hint.name);
         // console.log(feedback_ids.length);
 
         let output = ''
 
+        console.log(getObjectById(predefined,feedback_ids[0]))
+
         // get the feedback text
         for (let x = 0; x < feedback_ids.length; x++){ // 
+            // console.log(feedback_ids[x])
 
-            // try{
-                const item_obj = getObjectById(texts,feedback_ids[x])
+            try{
+                const item_obj = getObjectById(predefined,feedback_ids[x])
                 // console.log(item_obj)
-                
+
+                // 
                 output += `
                     <div class="${item_obj.id}">
                         <p>
-                            ${item_obj.advice}   
+                            ${item_obj.observation.en}   
                         </p>
                         <p>
-                            ${item_obj.feedback.en}
+                            ${item_obj.hint.en}
                             <br/><br/>
                             👍  👎
                         </p>
@@ -55,10 +58,10 @@ function load_hints(){
 
                     </div>
                 `
-            // }
-            // catch (error) {
-            //     console.log(error)
-            // }
+            }
+            catch (error) {
+                console.log(error)
+            }
         }
 
         container.innerHTML = output;

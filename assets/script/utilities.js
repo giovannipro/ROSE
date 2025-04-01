@@ -191,9 +191,8 @@ if (!url.includes('class')){
 
 // to get the feedback text
 function getObjectById(data,id) {
-    return data.find(item => item.id === id) || null;
+    return data.find(item => item.id.toLowerCase() === id) || null;
 }
-
 
 // make url shorter
 function short_text(text,characters){
