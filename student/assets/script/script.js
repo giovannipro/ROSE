@@ -72,11 +72,14 @@ function load_data() {
 		}
 
 		const website_strip_data = groupConsecutiveDomains(data);
-
 		website_strip_data.forEach((item, i) => {
+
+			const totalDuration = item.reduce((sum, item) => sum + item.duration, 0);
+
 			item[0].the_id = i;
+			item[0].the_duration = totalDuration;
 		});
-		// console.log(data);
+		console.log(website_strip_data)
 
 		function display_labels() {
 			// console.log(data);
@@ -255,7 +258,7 @@ function load_data() {
 				.append("g")
 				.attr("class", "strip strip_box")
 				.attr("data-url", (d) => d.url)
-				// .attr("data-domain", (d) => d.domain)
+				.attr("data-domain", (d) => d.domain)
 				.attr("data-duration", (d) => d.duration)
 				.attr("data-action", (d) => d.action)
 				.attr("data-type", (d) => d.page_type)
@@ -360,7 +363,7 @@ function load_data() {
 				.attr("class", "website")
 				.attr("data-url", (d) => d[0].url)
 				.attr("data-domain", (d) => d[0].domain)
-				.attr("data-duration", (d) => d[0].duration)
+				.attr("data-duration", (d) => d[0].the_duration)
 				.attr("data-action", (d) => d[0].action)
 				.attr("data-class", "website")
 				.attr("data-index", (d, i) => "w_" + i)
@@ -525,14 +528,14 @@ function load_data() {
 						seen = '(already seen)';
 					}
 					output = `<span><a href="${url}" target="_blank">${the_url}</a> </span><span style="color: gray">${seen}</span><br/>`;
-					// output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
+					output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
 				}
 				else {
 					// console.log(domain)
 					const domain_ = domain.getAttribute("data-domain")
 					const the_domain = domain_.toLowerCase().replace(/\_/g, " ");
 					output = `<span>System (${the_domain})</span><br/>`;
-					// output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>';
+					output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>';
 				}
 
 				infobox.innerHTML = output;
