@@ -1,20 +1,29 @@
 #class_box {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #bfbfbf;
     margin-top: 5rem;
 }
 
 aside {
+    height: 100vh;
+    /* border-right: 1px solid red; */
     width: 35%;
-    
-    border-right: 1px solid #bfbfbf;
+    /* border-right: 1px solid #bfbfbf; */
 }
 
 #container {
     width: 65%;
     height: 75vh;
+    position: fixed;
+    top: 5rem;
+    right: 0;
     overflow: hidden;
+}
+
+@media print {
+    #container {
+        position: relative
+    }
 }
 
 #plot_class {
@@ -24,7 +33,7 @@ aside {
 
 #student_list {
     list-style: none;
-    height: 70vh;
+    /* height: 70vh; */
     overflow-y: scroll;
     margin: 0;
     padding: 0;
@@ -34,6 +43,7 @@ aside {
     padding: 0.75rem;
     border-bottom: 1px solid #ccc;
     border-left: 5px solid transparent;
+    border-right: 1px solid #bfbfbf;
     cursor: pointer;
 }
 
@@ -55,6 +65,7 @@ aside {
     padding: 0.75rem;
     border-bottom: 1px solid #ccc;
     border-left: 3px solid transparent;
+    border-right: 1px solid #bfbfbf; 
     height: 5vh;
     align-items: center;
 }
