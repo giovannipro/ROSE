@@ -26,10 +26,11 @@ function load_data() {
         d3.json(apiEndpoint_classInfo)
     ])
     .then(([classData, classInfo]) => {
-        console.log(classInfo)
+        // console.log(classInfo)
         
         classData.forEach(item => {
-            console.log(item)
+            // console.log(item)
+
             item.user_id = +item.user_id;
             item.S_Queries_New = +item.S_Queries_New;
             item.S_ResultDomain_New = +item.S_ResultDomain_New;
@@ -225,14 +226,17 @@ function load_data() {
                                 
                                 // Find student in classInfo data
                                 const student = the_classInfo.students.find(s => s.id === d.user_id);
-                                const student_name = student?.username || `#${d.user_id}`;
+                                const student_name_0 = student?.username || `#${d.user_id}`;
+                                const student_name = student_name_0.split('#')[0];
 
-                                labels.append("text")
+                                let group = labels.append("g")
+                                    .attr("transform", `translate(${x + 20}, ${y + (bubble_size/2) })`)
+
+                                group.append("text")
                                     .attr("class", "bubble-label")
                                     .attr("id", "label_" + d.user_id)
-                                    .attr("x", x)
-                                    .attr("y", y - 20 - offset)
-                                    .attr("text-anchor", "middle")
+                                    .attr("y", offset)
+                                    .attr("text-anchor", "left")
                                     .attr("fill", "black")
                                     .attr("font-size", "12px")
                                     .attr("opacity", 0)
@@ -361,8 +365,9 @@ function load_list(data, sort){
             // const clazz_id = item.clazz_id
 
             const student = the_classInfo.students.find(s => s.id === item.user_id);
-            const student_name = student?.username || `#${item.user_id}`;
-            console.log(student, student_name)
+            const student_name_0 = student?.username || `#${item.user_id}`;
+            const student_name = student_name_0.split('#')[0];
+            // console.log(student, student_name)
 
             // link to the student page ---------------- 
             const student_page = `https://search.rose.education/dashboard?userId=${user_id}&taskId=${task_id}` // clazzId=${clazz_id}
