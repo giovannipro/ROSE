@@ -14,7 +14,8 @@ aside {
 
 #container {
     width: 65%;
-    height: 70vh;
+    height: 45rem;
+    min-height: 50vh;
     position: fixed;
     top: 5rem;
     right: 0;
