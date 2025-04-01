@@ -45,7 +45,7 @@
         "description": "Students tends to use sentences",
         "condition": "Average number of words in query string > 6 && Queries include filler-words",
         "hint": {
-            "en": "> You could use only (a few) important, well-chosen search queries. This will make the search more focused and effective. For example: instead of ‘What did Hansel and Gretel use to find their way home when they were abandoned in the forest?’, you could just type ‘Hansel Gretel way home’."
+            "en": "You could use only (a few) important, well-chosen search queries. This will make the search more focused and effective. For example: instead of ‘What did Hansel and Gretel use to find their way home when they were abandoned in the forest?’, you could just type ‘Hansel Gretel way home’."
         },
         "observation": {
             "en": "You use long sentences or full questions in your search. This works, but it is not always the best strategy."
