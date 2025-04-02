@@ -91,10 +91,14 @@
         "description": "Student reads document very briefly",
         "condition": "Average RES Duration < 15",
         "hint": {
-            "en": "When you think a document is important and trustworthy, you could take the time to read and understand it thoroughly."
+            "en": "When you think a document is important and trustworthy, you could take the time to read and understand it thoroughly.",
+            "de": "When you think a document is important and trustworthy, you could take the time to read and understand it thoroughly.",
+            "it": "When you think a document is important and trustworthy, you could take the time to read and understand it thoroughly."
         },
         "observation": {
-            "en": "You just skimmed (or read very fast) the web pages you open. This is a good strategy to get an overview, but sometimes the most important information is not immediately visible."
+            "en": "You just skimmed (or read very fast) the web pages you open. This is a good strategy to get an overview, but sometimes the most important information is not immediately visible.",
+            "de": "You just skimmed (or read very fast) the web pages you open. This is a good strategy to get an overview, but sometimes the most important information is not immediately visible.",
+            "it": "You just skimmed (or read very fast) the web pages you open. This is a good strategy to get an overview, but sometimes the most important information is not immediately visible."
         }
     },
     {
@@ -104,10 +108,14 @@
         "description": "Student reads for a long time at the beginning of the story",
         "condition": "Average RES Duration of the first 3 RES actions > 40 sec",
         "hint": {
-            "en": "You could skim (read rapidly) mutiple documents  to get an overview, and then select the ones that are really important and read them in more detail. You could also search for specific words on a web page (using Ctrl+F). You could open documents in new tabs, so that you can easily find them again. You could check the trustworthiness of a website before you spend a lot of time reading."
+            "en": "You could skim (read rapidly) mutiple documents  to get an overview, and then select the ones that are really important and read them in more detail. You could also search for specific words on a web page (using Ctrl+F). You could open documents in new tabs, so that you can easily find them again. You could check the trustworthiness of a website before you spend a lot of time reading.",
+            "de": "You could skim (read rapidly) mutiple documents  to get an overview, and then select the ones that are really important and read them in more detail. You could also search for specific words on a web page (using Ctrl+F). You could open documents in new tabs, so that you can easily find them again. You could check the trustworthiness of a website before you spend a lot of time reading.",
+            "it": "You could skim (read rapidly) mutiple documents  to get an overview, and then select the ones that are really important and read them in more detail. You could also search for specific words on a web page (using Ctrl+F). You could open documents in new tabs, so that you can easily find them again. You could check the trustworthiness of a website before you spend a lot of time reading."
         },
         "observation": {
-            "en": "You spent a long time reading. This shows that you're dedicated and accurate, but there are other ways to proceed."
+            "en": "You spent a long time reading. This shows that you're dedicated and accurate, but there are other ways to proceed.",
+            "de": "You spent a long time reading. This shows that you're dedicated and accurate, but there are other ways to proceed.",
+            "it": "You spent a long time reading. This shows that you're dedicated and accurate, but there are other ways to proceed."
         }
     },
     {
@@ -134,10 +142,14 @@
         "description": "Minimal search",
         "condition": "SEARCH actions < 2 && RESULT actions < 2 && total time < 1 min",
         "hint": {
-            "en": "When you search for difficult tasks, do not assume that the first information you find is always correct and complete. Even if you have a first answer, you could  keep searching and open more documents. Remember that, on some topics, there might be different opinions and more information to discover."
+            "en": "When you search for difficult tasks, do not assume that the first information you find is always correct and complete. Even if you have a first answer, you could  keep searching and open more documents. Remember that, on some topics, there might be different opinions and more information to discover.",
+            "de": "When you search for difficult tasks, do not assume that the first information you find is always correct and complete. Even if you have a first answer, you could  keep searching and open more documents. Remember that, on some topics, there might be different opinions and more information to discover.",
+            "it": "When you search for difficult tasks, do not assume that the first information you find is always correct and complete. Even if you have a first answer, you could  keep searching and open more documents. Remember that, on some topics, there might be different opinions and more information to discover."
         },
         "observation": {
-            "en": "You only did one or two searches and opened only a few documents. You might be very fast, but if you want to make sure you find good information, you often need multiple searches. It is like looking for the right books in a library or being a detective looking for solid evidence."
+            "en": "You only did one or two searches and opened only a few documents. You might be very fast, but if you want to make sure you find good information, you often need multiple searches. It is like looking for the right books in a library or being a detective looking for solid evidence.",
+            "de": "You only did one or two searches and opened only a few documents. You might be very fast, but if you want to make sure you find good information, you often need multiple searches. It is like looking for the right books in a library or being a detective looking for solid evidence.",
+            "it": "You only did one or two searches and opened only a few documents. You might be very fast, but if you want to make sure you find good information, you often need multiple searches. It is like looking for the right books in a library or being a detective looking for solid evidence."
         }
     },
     {
@@ -215,9 +227,9 @@
         "description": "Student uses Wikipedia",
         "condition": "Wikipedia appears at least once",
         "hint": {
-            "en": "Wikipedia is a great secondary source: it's a good starting point to get an overview of a topic. But you should always double-check the information on other sources. You could follow the links to the sources provided in each Wikipedia article (or page) to make sure the information is correct. You could identify online encyclopedias other than Wikipedia. Here is a list: [ENCYCLOPAEDIA_LIST].",
-            "de": "Wikipedia is a great secondary source: it's a good starting point to get an overview of a topic. But you should always double-check the information on other sources. You could follow the links to the sources provided in each Wikipedia article (or page) to make sure the information is correct. You could identify online encyclopedias other than Wikipedia. Here is a list: [ENCYCLOPAEDIA_LIST].",
-            "it": "Wikipedia is a great secondary source: it's a good starting point to get an overview of a topic. But you should always double-check the information on other sources. You could follow the links to the sources provided in each Wikipedia article (or page) to make sure the information is correct. You could identify online encyclopedias other than Wikipedia. Here is a list: [ENCYCLOPAEDIA_LIST]."
+            "en": "Wikipedia is a great secondary source: it's a good starting point to get an overview of a topic. But you should always double-check the information on other sources. You could follow the links to the sources provided in each Wikipedia article (or page) to make sure the information is correct. You could identify online encyclopedias other than Wikipedia. Here is a list: <ul><li><a href='https://www.treccani.it/' target='_blank'>Treccani</a></li></ul>",
+            "de": "Wikipedia is a great secondary source: it's a good starting point to get an overview of a topic. But you should always double-check the information on other sources. You could follow the links to the sources provided in each Wikipedia article (or page) to make sure the information is correct. You could identify online encyclopedias other than Wikipedia. Here is a list: <ul><li><a href='https://www.treccani.it/' target='_blank'>Treccani</a></li></ul>",
+            "it": "Wikipedia is a great secondary source: it's a good starting point to get an overview of a topic. But you should always double-check the information on other sources. You could follow the links to the sources provided in each Wikipedia article (or page) to make sure the information is correct. You could identify online encyclopedias other than Wikipedia. Here is a list: <ul><li><a href='https://www.treccani.it/' target='_blank'>Treccani</a></li></ul>"
         },
         "observation": {
             "en": "You have used Wikipedia. Wikipedia is an open encyclopedia created by many people working together. This makes it very powerful, but you should be careful. Anyone can publish information there, even if it is checked by “Wikipedians”.",
