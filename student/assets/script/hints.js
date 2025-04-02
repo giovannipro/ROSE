@@ -30,8 +30,11 @@ function load_hints(){
     function loaded(predefined,feedback){
         console.log(feedback)
 
+        const priority_order = feedback.sort((a, b) => a.hint.priority - b.hint.priority);
+        // console.log(priority_order)
+
         // get the feedback ids
-        const feedback_ids = feedback.map(item => item.hint.name);
+        const feedback_ids = priority_order.map(item => item.hint.name);
         // const feedback_ids = ['s1','s2','s3','s4','c1','c2','c3','c4','o1','o2','o3','w1','w2','w3','d1']
         // console.log(feedback_ids);
 
