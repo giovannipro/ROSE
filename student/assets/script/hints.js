@@ -7,7 +7,7 @@ function load_hints(){
     const task_id = urlParams.get('task_id');
     const lang_ = urlParams.get('lang');
     const the_language = lang_.toLocaleLowerCase();
-    console.log(the_language);
+    // console.log(the_language);
 
 	// const apiEndpoint_hint = `assets/data/hints_${user_id}_${task_id}.json`
     const predefined_hints = 'assets/content/hints.json'
@@ -28,12 +28,12 @@ function load_hints(){
     const container = document.getElementById('hints');
 
     function loaded(predefined,feedback){
-        console.log(predefined)
+        console.log(feedback)
 
         // get the feedback ids
         const feedback_ids = feedback.map(item => item.hint.name);
         // const feedback_ids = ['s1','s2','s3','s4','c1','c2','c3','c4','o1','o2','o3','w1','w2','w3','d1']
-        console.log(feedback_ids);
+        // console.log(feedback_ids);
 
         let output = ''
         output += `
@@ -43,7 +43,6 @@ function load_hints(){
                 <div class="hint_label"></div>
             </div>
         `
-
         // get the feedback text
         for (let x = 0; x < feedback_ids.length; x++){ // 
             // console.log(feedback_ids[x])
