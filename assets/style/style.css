@@ -138,24 +138,10 @@ h2 {
 	display: flex;
 	justify-content: space-between;
 	min-height: 4rem;
-	margin: 1.5rem 1rem;
+	margin: 1rem 1rem;
 }
 
 .statistics_box {
-	width: 30%;
-}
-
-#hints div {
-	width: 100%;
-	border-bottom: 1px solid #ccc;
-}
-
-#hints div {	
-	display: flex;
-	justify-content: space-between;
-}
-
-#hints div p {
 	width: 30%;
 }
 

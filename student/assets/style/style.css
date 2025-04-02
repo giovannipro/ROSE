@@ -129,29 +129,36 @@ h2 {
 	cursor: pointer;
 }
 
-.tab_content {
-	display: flex;
-	justify-content: space-between;
-	min-height: 4rem;
-	margin: 1.5rem 1rem;
-}
-
 .statistics_box {
 	width: 30%;
 }
 
-#hints div {
+#hints > div {	
 	width: 100%;
+	display: flex;
+	justify-content: space-between;
 	border-bottom: 1px solid #ccc;
 }
 
-#hints div {	
-	display: flex;
-	justify-content: space-between;
+#hints div .content {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	width: 30%;
+	display: block;
 }
 
-#hints div p {
+.content ul {
+	padding: 1.5rem;
+}
+
+.hint_label {
 	width: 30%;
+	padding: 0 0 1rem 0rem;
+	font-weight: bold;
+}
+
+.like {
+	margin-top: 1.5rem;
 }
 
 .statistics_box table {

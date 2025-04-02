@@ -32,14 +32,15 @@ function load_hints(){
 
         // get the feedback ids
         const feedback_ids = feedback.map(item => item.hint.name);
-        // console.log(feedback_ids.length);
+        // const feedback_ids = ['s1','s2','s3','s4','c1','c2','c3','c4','o1','o2','o3','w1','w2','w3','d1']
+        console.log(feedback_ids);
 
         let output = ''
         output += `
             <div>
-                <p><strong>Observation</strong></p>
-                <p><strong>Hint</strong></p>
-                <p></p>
+                <div class="hint_label">Observation</div>
+                <div class="hint_label">Hint</div>
+                <div class="hint_label"></div>
             </div>
         `
 
@@ -75,15 +76,16 @@ function load_hints(){
                 // 
                 output += `
                     <div class="${item_obj.id}">
-                        <p>
+                        <div class="content">
                             ${observation}   
-                        </p>
-                        <p>
+                        </div>
+                        <div class="content">
                             ${hint}
-                            <br/><br/>
-                            👍  👎
-                        </p>
-                        <p></p>
+                            <div class="like">
+                                👍  👎
+                            </div>
+                        </div>
+                        <div class="content"></div>
                     </div>
                 `
             }
