@@ -340,7 +340,13 @@ function load_list(data, sort){
     const duration_sort = data.slice().sort((a,b) => b.Que_Pag - a.Que_Pag)
     const queries_sort = data.slice().sort((a,b) => b.queries_duration - a.queries_duration)
     const page_sort = data.slice().sort((a,b) => b.pages_duration - a.pages_duration)
-    const alphabetical_sort = data.slice().sort((a,b) => String(a.user_id).localeCompare(String(b.user_id)));
+    const alphabetical_sort = data.slice().sort((a,b) => {
+        const studentA = the_classInfo.students.find(s => s.id === a.user_id);
+        const studentB = the_classInfo.students.find(s => s.id === b.user_id);
+        const nameA = (studentA?.username || `#${a.user_id}`).toLowerCase();
+        const nameB = (studentB?.username || `#${b.user_id}`).toLowerCase();
+        return nameA.localeCompare(nameB);
+    });
     
     let sorted_dataset;
     if (sort == 'queries'){
