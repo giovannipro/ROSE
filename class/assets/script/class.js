@@ -340,7 +340,7 @@ function load_data() {
                 .attr("class", "grid y-grid")
                 .attr("transform", `translate(${margin.left + 30},0)`)
                 .call(d3.axisLeft(yScale)
-                    .ticks(max_y)
+                    .ticks(the_max_y)
                     .tickSize(-(width - margin.left - margin.right - 60))
                     .tickFormat("")
                 )
