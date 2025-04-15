@@ -29,7 +29,7 @@ function load_data() {
         d3.json(apiEndpoint_classInfo)
     ])
     .then(([classData, classInfo]) => {
-        // console.log(classInfo)
+        
         
         classData.forEach(item => {
             // console.log(item)
@@ -44,6 +44,7 @@ function load_data() {
             item.pages_duration = item.S_Duration_ResAvg * item.S_Actions_Res;
             item.Que_Pag = item.queries_duration + item.pages_duration;
         });
+        console.log(classData)
 
         // Store both datasets
         the_data = classData;
@@ -62,9 +63,11 @@ function load_data() {
     .catch(function (error) {
         if (error.message.includes("404")) {
             console.log("Something went wrong with the data loading");
-        } else {
+        } 
+        else {
             console.error("Data loading error:", error);
         }
+        no_data()
     });
 
     function loaded(data) {
@@ -516,4 +519,19 @@ function highlight() {
             }
         });
     });
+}
+
+function no_data() {
+    
+    const container = document.getElementById("container");
+
+    container.innerHTML = `
+        <div style='width: 100%; height: 100%; display: flex; justify-content: space-around; align-items: center; text-align: center'>
+            :( 
+            <br/><br/>
+            Purtroppo non ci sono dati disponibili. <br/>
+            Prova a cercare un’altra classe.
+        </div>
+    `
+
 }
