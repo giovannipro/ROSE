@@ -6,6 +6,9 @@ const t_duration = 100;
 let svg, plot, xScale, yScale;
 let width, height, margin;
 
+const min_x = 8;
+const min_y = 8;
+
 function load_data() {
 
     const queryString = window.location.search;
@@ -92,14 +95,24 @@ function load_data() {
             // Get max 
             const max_x = d3.max(data, d => d.S_Queries_New);
             const max_y = d3.max(data, d => d.S_ResultDomain_New);
+
+            the_max_x = min_x
+            if (max_x > min_x) {
+                the_max_x = max_x
+            }
+
+            the_max_y = min_y
+            if (max_y > min_y) {
+                the_max_y = max_y
+            }
         
             // Set the global scale variables
             xScale = d3.scaleLinear()
-                .domain([0, max_x])
+                .domain([0, the_max_x])
                 .range([margin.left + 30, width - margin.right - 30]);
                 
             yScale = d3.scaleLinear()
-                .domain([0, max_y])
+                .domain([0, the_max_y])
                 .range([height - margin.bottom, margin.top]);
         
             make_grid();
@@ -297,6 +310,16 @@ function load_data() {
             const max_x = d3.max(data, d => d.S_Queries_New);
             const max_y = d3.max(data, d => d.S_ResultDomain_New);
             
+            the_max_x = min_x
+            if (max_x > min_x) {
+                the_max_x = max_x
+            }
+
+            the_max_y = min_y
+            if (max_y > min_y) {
+                the_max_y = max_y
+            }
+
             grid_box = plot.append("g")
                 .attr("class", "grid_box")
 
@@ -305,7 +328,7 @@ function load_data() {
                 .attr("class", "grid x-grid")
                 .attr("transform", `translate(0,${height - margin.bottom})`)
                     .call(d3.axisBottom(xScale)
-                        .ticks(max_x)
+                        .ticks(the_max_x)
                         .tickSize(-height + margin.top + margin.bottom)
                         .tickFormat("")
                     )
