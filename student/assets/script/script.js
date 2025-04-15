@@ -148,28 +148,28 @@ function load_data() {
 				.attr("y", linePositions[0])
 				.attr("dy", strip_height / 2)
 				.attr("alignment-baseline", "middle")
-				.text("Search");
+				.text(`${i18next.t('search')}`)
 
 			let label_b = labels.append("text")
 				.attr("x", 10)
 				.attr("y", (strip_height * 1.1))
 				.attr("dy", 0)
 				.attr("alignment-baseline", "middle")
-				.text("Domains");
+				.text(`${i18next.t('domains')}`)
 
 			let label_c = labels.append("text")
 				.attr("x", 10)
 				.attr("y", (strip_height * 2.2))
 				.attr("dy", -70)
 				.attr("alignment-baseline", "middle")
-				.text("Pages");
+				.text(`${i18next.t('pages')}`)
 
 			let label_d = labels.append("text")
 				.attr("x", 10)
 				.attr("y", (strip_height * 2.3))
 				.attr("dy", -2)
 				.attr("alignment-baseline", "middle")
-				.text("System");
+				.text(`${i18next.t('system')}`)
 		}
 		display_labels();
 
@@ -509,10 +509,10 @@ function load_data() {
 
 						let seen = '';
 						if (action == "SAME_SEARCH" || action == "SEEN_SEARCH") { // reused
-							seen = '(reused query)';
+							seen = `(${i18next.t('reused_query')})`;
 						}
 						if (action == "REFINE_SEARCH") {
-							seen = '(modified query)';
+							seen = `(${i18next.t('modified_query')})`;
 						}
 						
 						output = `<span><a href="${url}" target="_blank">${the_domain}</a> <span style="color: gray">${seen}</span><br/>`;

@@ -13,12 +13,21 @@
 	<main>
 		<div id="controllers">
 			<div id="header">
-				<h2>User: <span id="the_user"></span></h2>
-				<h2>Task: <span id="the_task"></span></h2>
+				<h2> 
+					<span id="t_user" style="font-weight: bold;">User</span>:
+					<span id="the_user"></span>
+				</h2>
+				<h2> 
+					<span id="t_task" style="font-weight: bold;">Task</span>:
+					<span id="the_task"></span></h2>
 			</div>
 			<div>
-				<button class="button not_active" id="normalize_size">Normalize scale</button>
-				<button class="button" id="fit_size">Fit scale</button>
+				<button class="button not_active" id="normalize_size">
+					<span id="t_normalize_scale">Normalize scale</span>
+				</button>
+				<button class="button" id="fit_size">
+					<span id="t_fit_scale">Fit scale</span>
+				</button>
 			</div>
 		</div>
 
@@ -33,7 +42,7 @@
 		<div id="stat_hints">
 			<div id="statistics" class="main_tab">
 				<div id="stat_txt" class="tab_label">
-					<span>Statistics</span>
+					<span id="t_statistics">Statistics</span>
 					<span class="open_tab" id="open_stat">&darr;</span>
 					<!-- &darr; &uarr; -->
 				</div>
@@ -48,7 +57,7 @@
 	
 			<div id="suggestions" class="main_tab">
 				<div id="sugg_txt" class="tab_label">
-					<span>
+					<span id="t_suggestions">
 						Suggestions
 					</span>
 					<span class="open_tab" id="open_sugg">&darr;</span>
@@ -64,10 +73,12 @@
 	</main>
 
 	<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+	<script src="https://unpkg.com/i18next@25.0.0/dist/umd/i18next.min.js"></script>
 	<script src="../assets/script/utilities.js" defer></script>
 	<script src="assets/script/hints.js" defer></script>
 	<script src="assets/script/statistics.js" defer></script>
 	<script src="assets/script/script.js" defer></script>
+	<script src="../assets/script/multilanguage.js" defer></script>
 </body>
 
 </html>

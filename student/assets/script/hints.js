@@ -45,14 +45,13 @@ function load_hints(){
         let output = ''
         output += `
             <div>
-                <div class="hint_label">Observation</div>
-                <div class="hint_label">Hint</div>
+                <div class="hint_label" id="t_observation">${i18next.t('observation')}</div>
+                <div class="hint_label" id="t_hint">${i18next.t('hint')}</div>
                 <div class="hint_label"></div>
             </div>
         `
         // get the feedback text
-        for (let x = 0; x < feedback_ids.length; x++){ // 
-            // console.log(feedback_ids[x])
+        for (let x = 0; x < feedback_ids.length; x++){
 
             try {
                 const item_obj = getObjectById(predefined,feedback_ids[x])

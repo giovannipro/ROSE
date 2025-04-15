@@ -65,20 +65,20 @@ function load_statistics(data) {
 	let output_b = '';
 	let output_c = '';
 
-	output_a += '<span style="margin-bottom: 1rem; display: block;"><strong>Time</strong></span>';
+	output_a += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('time')}</strong></span>`;
 	output_a += '<hr/ style="border: 0.1px solid #ccc">'
 	
 	output_a += '<table>';
-	output_a += '<tr><td>Total</td>';
+	output_a += `<tr><td>${i18next.t('total')}</td>`;
 	output_a += '<td>' + convertSecondsToMinutes(pageDuration + searchDuration) + '</td></tr>'; // '<td>' + parseInt(pageDuration + searchDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration + searchDuration) + ' minutes</td></tr>'
 	// console.log(pageDuration, searchDuration)
 
 	output_a += "<tr><td colspan='2'>" + duration_chart(searchDuration, pageDuration, 100, 'student') + "</td></tr>";
 	output_a += '<tr><td>&nbsp;</td></tr>';
 
-	output_a += '<tr><td>Search</td>';
+	output_a += `<tr><td>${i18next.t('search')}</td>`;
 	output_a += '<td>' + convertSecondsToMinutes(searchDuration) + '</td></tr>'; // '<td>' + parseInt(searchDuration) + ' seconds / ' + convertSecondsToMinutes(searchDuration) + ' minutes</td></tr>'
-	output_a += '<tr><td>Pages</td>';
+	output_a += `<tr><td>${i18next.t('pages')}</td>`;
 	output_a += '<td>' + convertSecondsToMinutes(pageDuration) + '</td></tr>'; // '<td>' + parseInt(pageDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration) + ' minutes</td></tr>'
 	output_a += '<tr><td>&nbsp;</td></tr>';
 
@@ -92,7 +92,7 @@ function load_statistics(data) {
 	output_a += '<td>' + convertSecondsToMinutes(maxSearchDuration) + '</td></tr>';
 	output_a += '<tr><td>&nbsp;</td></tr>';
 
-	output_a += '<tr><td>Pages</td>';
+	output_a += `<tr><td>${i18next.t('pages')}</td>`; // 
 	output_a += '<tr><td>- shortest</td>';
 	output_a += '<td>' + convertSecondsToMinutes(minPageDuration) + '</td></tr>';
 	output_a += '<tr><td>- average</td>';
@@ -102,11 +102,11 @@ function load_statistics(data) {
 	output_a += '<tr><td>&nbsp;</td></tr>';
 	output_a += '</table>';
 
-	output_b += '<span style="margin-bottom: 1rem; display: block;"><strong>Search</strong></span>';
+	output_b += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('search')}</strong></span>`;
 	output_b += '<hr/ style="border: 0.1px solid #ccc">'
 
 	output_b += '<table>';
-	output_b += '<tr><td>- total</td>';
+	output_b += `<tr><td>- ${i18next.t('total')}</td>`;
 	output_b += '<td>' + (newQueries + reusedQueries + revisedQueries) + '</td></tr>';
 	output_b += '<tr><td>- new</td>';
 	output_b += '<td>' + newQueries + '</td></tr>';
@@ -116,11 +116,11 @@ function load_statistics(data) {
 	output_b += '<td>' + revisedQueries + '</td></tr>';
 	output_b += '</table>';
 
-	output_c += '<span style="margin-bottom: 1rem; display: block;"><strong>Pages</strong></span>';
+	output_c += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('pages')}</strong></span>`;
 	output_c += '<hr/ style="border: 0.1px solid #ccc">'
 
 	output_c += '<table style="margin-bottom: 1.5rem;">';
-	output_c += '<tr><td>- total</td>';
+	output_c += `<tr><td>- ${i18next.t('total')}</td>`;
 	output_c += '<td>' + pages + '</td></tr>';
 	output_c += '</table>';
 
