@@ -29,7 +29,7 @@ function load_data() {
         d3.json(apiEndpoint_classInfo)
     ])
     .then(([classData, classInfo]) => {
-        
+        console.log(classInfo)
         
         classData.forEach(item => {
             // console.log(item)
@@ -50,14 +50,13 @@ function load_data() {
         the_data = classData;
         the_classInfo = classInfo;
 
-        document.getElementById("the_class").innerHTML = clazz_id;
-        document.getElementById("the_task").innerHTML = classInfo.name;
-        // console.log(classInfo.name)
+        document.getElementById("the_class").innerHTML = `${classInfo.name}`; //clazz_id;
+        document.getElementById("the_task").innerHTML = `(id: ${task_id})`;
+        document.getElementById("n_stories").innerHTML = classData.length;
 
         // Initialize visualizations with both datasets
         loaded(classData)
         load_list(classData, 'total');
-        // createChart();
         highlight();
     })
     .catch(function (error) {
