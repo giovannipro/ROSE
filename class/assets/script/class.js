@@ -251,7 +251,7 @@ function load_data() {
                                 // console.log(i, offset, student_name)
 
                                 the_group.append("text")
-                                    .attr("class", "bubble-label")
+                                    .attr("class", "blabel")
                                     .attr("id", "label_" + d.user_id)
                                     .attr("y", offset)
                                     .attr("text-anchor", "left")
@@ -287,7 +287,8 @@ function load_data() {
                 bubble.style.opacity = bubble_default_opacity;
                 bubble.style.fillOpacity = 1;
             });
-            d3.selectAll(".bubble-label").style("fill", "black");
+            d3.selectAll(".blabel")
+                .attr("fill","black")
 
             // Highlight selected items
             listItem.style.borderLeft = "3px solid red";
@@ -301,7 +302,7 @@ function load_data() {
             
             // Highlight label
             d3.select(this)
-                .style("fill", "red")
+                .attr("fill","red")
                 .style("opacity", 1);
 
             // Scroll list item into view
@@ -472,7 +473,14 @@ function highlight() {
     const items = document.querySelectorAll('.student_item');
     const more_items = document.querySelectorAll('.student_more');
     const bubbles = document.querySelectorAll('.bubble');
-    const svg = d3.select("#plot_main");
+    // const bubble_labels = document.querySelectorAll('.blabel');
+    // document.querySelectorAll('.blabel'); // svg.selectAll(".bubble_label")
+
+    // const svg = document.getElementById('plot_main')
+    // console.log(svg)
+    // const bubble_labels = document.querySelectorAll('#svg_main .bubble_label');
+    
+    // document.getElementById('svg_main').getElementsByClassName('.bubble-label');
 
     items.forEach(item => {
 
@@ -497,31 +505,33 @@ function highlight() {
             // reset bubble style
             // -------------------------
             bubbles.forEach(bubble => {
-                console.log(bubble)
-
                 bubble.style.stroke = "transparent";
                 bubble.style.opacity = bubble_default_opacity;
                 bubble.style.fillOpacity = 1;
             });
 
-            svg.selectAll(".bubble-label").style("fill", "black");
-            
+            d3.selectAll(".blabel")
+                .attr("fill", "black")
+                .attr("opacity", 0.7);
+
             // highlight bubble
             // -------------------------
             more_info.style.display = "block";
 
             const bubble = document.getElementById("bubble_" + id);
-            const label_id = document.getElementById("label_" + id);
+            // const label_id = document.getElementById("label_" + id);
+            // console.log(bubbles)
 
-            // if (bubble) {
-            bubble.style.stroke = "red";
-            bubble.style.strokeWidth = 3;
-            bubble.style.opacity = 1;
-            bubble.style.fillOpacity = 0.2;
+            if (bubble){
+                bubble.style.stroke = "red";
+                bubble.style.strokeWidth = 3;
+                bubble.style.opacity = 1;
+                bubble.style.fillOpacity = 0.2;
+            }
 
-            label_id.style.opacity = 1;
-            label_id.style.fill = "red";
-            // }
+            d3.select("#label_" + id)
+                .attr("fill", "red")
+                .attr("opacity", 1);
         });
     });
 }
