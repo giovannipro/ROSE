@@ -5,7 +5,7 @@ function load_hints(){
 
 	const user_id = urlParams.get('user_id');
     const task_id = urlParams.get('task_id');
-    const lang_ = urlParams.get('lang');
+    // const lang_ = urlParams.get('lang');
     // const the_language = lang_.toLocaleLowerCase();
     // console.log(the_language);
 

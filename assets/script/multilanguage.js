@@ -137,6 +137,9 @@ function updateContent() {
     document.getElementById('t_statistics').textContent = i18next.t('statistics');
     document.getElementById('t_suggestions').textContent = i18next.t('suggestions');
 
+    document.getElementById('t_observation').textContent = i18next.t('observation');
+    document.getElementById('t_hint').textContent = i18next.t('hint');
+
 }
 
 
