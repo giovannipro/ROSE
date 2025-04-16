@@ -126,7 +126,7 @@ i18next.init({
   
   // Use translations
 function updateContent() {
-    console.log('Language changed to:', i18next.language);
+    console.log(i18next.language);
 
     document.getElementById('t_user').textContent = i18next.t('user');
     document.getElementById('t_task').textContent = i18next.t('task');

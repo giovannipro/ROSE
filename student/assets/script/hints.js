@@ -6,7 +6,7 @@ function load_hints(){
 	const user_id = urlParams.get('user_id');
     const task_id = urlParams.get('task_id');
     const lang_ = urlParams.get('lang');
-    const the_language = lang_.toLocaleLowerCase();
+    // const the_language = lang_.toLocaleLowerCase();
     // console.log(the_language);
 
 	// const apiEndpoint_hint = `assets/data/hints_${user_id}_${task_id}.json`
@@ -30,6 +30,9 @@ function load_hints(){
     function loaded(predefined,feedback){
         console.log(feedback)
 
+        let the_language = (i18next.language).toLowerCase()
+        console.log(the_language)
+
         const priority_order = feedback.sort((a, b) => a.hint.priority - b.hint.priority);
         // console.log(priority_order)
 
@@ -50,6 +53,7 @@ function load_hints(){
                 <div class="hint_label"></div>
             </div>
         `
+
         // get the feedback text
         for (let x = 0; x < feedback_ids.length; x++){
 
@@ -59,26 +63,17 @@ function load_hints(){
                 // observation
                 if (the_language === 'de'){
                     observation = item_obj.observation.de
-                }
-                else if (the_language === 'it'){
-                    observation = item_obj.observation.it
-                }
-                else {
-                    observation = item_obj.observation.en
-                }
-
-                // hint
-                if (the_language === 'de'){
                     hint = item_obj.hint.de
                 }
                 else if (the_language === 'it'){
+                    observation = item_obj.observation.it
                     hint = item_obj.hint.it
                 }
                 else {
+                    observation = item_obj.observation.en
                     hint = item_obj.hint.en
                 }
                 
-                // 
                 output += `
                     <div class="${item_obj.id}">
                         <div class="content">
