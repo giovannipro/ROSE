@@ -274,6 +274,8 @@ function load_data() {
             const target = event.target.id
             const userId = target.replace('label_','')
             const listItem = document.getElementById(userId);
+
+            const bubbles = document.querySelectorAll('.bubble');
             
             // Reset all items
             document.querySelectorAll('.student_item').forEach(item => {
@@ -282,11 +284,19 @@ function load_data() {
             document.querySelectorAll('.student_more').forEach(more => {
                 more.style.display = "none";
             });
-            document.querySelectorAll('.bubble').forEach(bubble => {
-                bubble.style.stroke = "transparent";
-                bubble.style.opacity = bubble_default_opacity;
-                bubble.style.fillOpacity = 1;
-            });
+            // document.querySelectorAll('.bubble').forEach(bubble => {
+            //     bubble.style.stroke = "transparent";
+            //     bubble.style.opacity = bubble_default_opacity;
+            //     bubble.style.fillOpacity = 1;
+            // });
+            
+            bubbles.forEach(item => {
+                console.log(item)
+                item.style.stroke = "transparent";
+                item.style.opacity = bubble_default_opacity;
+                item.style.fillOpacity = 1;
+            })
+
             d3.selectAll(".blabel")
                 .attr("fill","black")
 
