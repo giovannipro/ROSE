@@ -13,6 +13,7 @@ i18next.init({
     resources: {
         en: {
             translation: {
+
                 "user": "User",
                 "task": "Task",
                 "normalize_scale": "Normalize scale",
@@ -45,10 +46,12 @@ i18next.init({
                 "suggestions": "Suggestions",
                 "observation": "Observation",
                 "hint": "Hint"
+
             }
         },
         de: {
             translation: {
+                
                 "user": "Benutzer",
                 "task": "Aktivitäten",
                 "normalize_scale": "Skala normalisieren",
@@ -80,11 +83,16 @@ i18next.init({
                 
                 "suggestions": "Vorschläge",
                 "observation": "Beobachtung",
-                "hint": "Tipp"
+                "hint": "Tipp",
+
             }
         },
         it: {
             translation: {
+
+                // student page 
+                // ---------
+
                 "user": "Utente",
                 "task": "Attività",
                 "normalize_scale": "Normalizza scala",
@@ -117,6 +125,7 @@ i18next.init({
                 "suggestions": "Suggerimenti",
                 "observation": "Osservazione",
                 "hint": "Suggerimento"
+
             }
         }
     }

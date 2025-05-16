@@ -13,8 +13,14 @@
 	<main>
 		<div id="controllers">
 			<div id="header">
-				<h2>Class: <span id="the_class"></span></h2>
-				<h2>Task: <span id="the_task"></span></h2>
+				<h2> 
+					<span id="t_class" style="font-weight: bold;">Class</span>:
+					<span id="the_class"></span>
+				</h2>
+				<h2> 
+					<span id="t_task" style="font-weight: bold;">Task</span>:
+					<span id="the_task"></span>
+				</h2>
 			</div>
 		</div>
 
@@ -23,7 +29,7 @@
 				<div id="sort_box">
 					<span>
 						<span id="n_stories">0</span>
-						<span> stories</span>
+						<span id="t_stories">stories</span>
 					</span>
 					<div>
 						<span style="font-size: 0.8rem; margin-right: 0.5rem;">sort by</span>
@@ -41,8 +47,10 @@
 		</section>
 
 	<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+	<script src="https://unpkg.com/i18next@25.0.0/dist/umd/i18next.min.js"></script>
 	<script src="../assets/script/utilities.js" defer></script>
 	<script src="assets/script/class.js" defer></script>
+	<script src="../assets/script/multilanguage_class.js" defer></script>
 </body>
 
 </html>

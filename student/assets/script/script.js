@@ -17,8 +17,8 @@ function load_data() {
 
 	const user_id = urlParams.get('user_id');
     const task_id = urlParams.get('task_id');
-	const lang = urlParams.get('lang');
-	console.log(lang)
+	// const lang = urlParams.get('lang');
+	// console.log(lang)
 
 	// const apiEndpoint_student = `assets/data/_stats_${user_id}_${task_id}.csv` 
 	const apiEndpoint_student = `https://search.rose.education/api/analytics/stories-extraction?user_id=${user_id}&task_id=${task_id}`;
