@@ -261,3 +261,12 @@ function open_tabs() {
 		}
 	});
 }
+
+function get_query(url){
+
+	const urlObj = new URL(url);
+	const url_0 = urlObj.searchParams;
+	const url_1 = url_0.get('q');
+	
+	return url_1
+}

@@ -31,7 +31,7 @@ function load_hints(){
         console.log(feedback)
 
         let the_language = (i18next.language).toLowerCase()
-        console.log(the_language)
+        // console.log(the_language)
 
         const priority_order = feedback.sort((a, b) => a.hint.priority - b.hint.priority);
         // console.log(priority_order)

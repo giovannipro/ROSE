@@ -4,6 +4,8 @@ const interline = 2;
 
 const new_page_color = '#ff9100';
 const duration_color = '#a4a4a4';
+const chatbot_color = '#c879b8';
+
 const stroke_color = 'white'; // '#aeaeae'
 
 const over_opacity = 0.4;
@@ -357,7 +359,13 @@ function load_data() {
 
 					// pages
 					else if (d.action == "NEW_RESULT" || d.action == "SAME_DOMAIN_RESULT" || d.action == "SEEN_DOMAIN_RESULT") {
-						color = new_page_color;
+
+						if (d.domain == 'chatgpt.com' || d.domain == 'deepseek.com' || d.domain == 'claude.ai' || d.domain == 'gemini.google.com' || d.domain == 'copilot.microsoft.com' || d.domain == 'meta.ai') {
+							color = chatbot_color 
+						}
+						else {
+							color = new_page_color;
+						}
 					}
 					return color;
 				});
@@ -495,10 +503,10 @@ function load_data() {
 
 				if (class_ == 'strip'){
 
+					// page
 					if (action == 'SAME_DOMAIN_RESULT' || action == 'SEEN_DOMAIN_RESULT' || action == 'NEW_RESULT') {
-						the_url = short_text(url,140)
-						// console.log(the_url)
-
+						the_url = short_text(url,120)
+						
 						if (domainStatus == "SEEN") {
 							output = `<span><a href="${url}" target="_blank">${the_url}</a><span style="color: gray"> (already seen)</span></span><br/>`;
 						}
@@ -508,9 +516,10 @@ function load_data() {
 
 						output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
 					}
+
+					// search
 					else if (action == 'NEW_SEARCH' || action == 'NEW_SEARCH_SAME_ENGINE' || action == 'SAME_SEARCH' || action == 'REFINE_SEARCH' || action == 'SEEN_SEARCH') {
-						let the_domain = decodeURIComponent(url);
-						the_domain = clean_query(the_domain)
+						let the_domain = get_query(url) //decodeURIComponent(url);
 
 						let seen = '';
 						if (action == "SAME_SEARCH" || action == "SEEN_SEARCH") { // reused
