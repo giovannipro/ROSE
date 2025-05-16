@@ -20,16 +20,20 @@ function load_data() {
 	// const apiEndpoint_class = `assets/data/${clazz_id}_task_${task_id}_aggregated_stats.csv`
     const apiEndpoint_class = `https://search.rose.education/api/analytics/aggregated-stories-extraction?clazz_id=${clazz_id}&task_id=${task_id}`
     const apiEndpoint_classInfo = `https://search.rose.education/api/dashboard/clazzes/${clazz_id}`
-        
+    const apiEndpoint_taskInfo = `https://search.rose.education/api/dashboard/tasks/${task_id}`
+
     // url = http://127.0.0.1:5501/class/index.html?clazz_id=LME-1C&task_id=1 
     // console.log(clazz_id,task_id)
 
     Promise.all([
         d3.csv(apiEndpoint_class),
-        d3.json(apiEndpoint_classInfo)
+        d3.json(apiEndpoint_classInfo),
+        d3.json(apiEndpoint_taskInfo)
     ])
-    .then(([classData, classInfo]) => {
-        console.log(classInfo)
+    .then(([classData, classInfo, taskInfo]) => {
+        // console.log(classData)
+        // console.log(classInfo)
+        // console.log(taskInfo)
         
         classData.forEach(item => {
             // console.log(item)
@@ -51,7 +55,7 @@ function load_data() {
         the_classInfo = classInfo;
 
         document.getElementById("the_class").innerHTML = `${classInfo.name}`; //clazz_id;
-        document.getElementById("the_task").innerHTML = `(id: ${task_id})`;
+        document.getElementById("the_task").innerHTML = `${taskInfo.title} (id: ${task_id})`;
         document.getElementById("n_stories").innerHTML = classData.length;
 
         // Initialize visualizations with both datasets
@@ -299,6 +303,7 @@ function load_data() {
 
             d3.selectAll(".blabel")
                 .attr("fill","black")
+                .attr("opacity", 1);
 
             // Highlight selected items
             listItem.style.borderLeft = "3px solid red";
@@ -519,8 +524,10 @@ function highlight() {
                 bubble.style.opacity = bubble_default_opacity;
                 bubble.style.fillOpacity = 1;
             });
+            
+            the_bubble_id = 'bubble_' + id
 
-            d3.selectAll(".blabel")
+            d3.selectAll('.blabel:not(#' + the_bubble_id + ')')
                 .attr("fill", "black")
                 .attr("opacity", 0.7);
 

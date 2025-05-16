@@ -20,10 +20,6 @@ h2 {
 	display: flex;
 }
 
-#header h2 {
-	width: 250px;
-}
-
 #header span {
 	font-weight: normal;
 }

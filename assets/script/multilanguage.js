@@ -13,7 +13,7 @@ i18next.init({
         en: {
             translation: {
                 "user": "User",
-                "task": "task",
+                "task": "Task",
                 "normalize_scale": "Normalize scale",
                 "fit_scale": "Fit scale",
                 "search": "Search",
