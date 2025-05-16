@@ -1,7 +1,8 @@
 function getLanguageFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
-    const langParam = urlParams.get('lang');
-    
+    const langParam = urlParams.get('lang').toLocaleLowerCase();
+    console.log(langParam)
+
     return langParam;
 }
 
@@ -124,9 +125,9 @@ i18next.init({
     updateContent();
 });
   
-  // Use translations
+// Use translations
 function updateContent() {
-    console.log(i18next.language);
+    // console.log(i18next.language);
 
     document.getElementById('t_user').textContent = i18next.t('user');
     document.getElementById('t_task').textContent = i18next.t('task');
@@ -141,7 +142,6 @@ function updateContent() {
     document.getElementById('t_hint').textContent = i18next.t('hint');
 
 }
-
 
 // Change language
 // function changeLanguage(lng) {
