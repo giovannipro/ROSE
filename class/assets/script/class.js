@@ -144,10 +144,11 @@ function load_data() {
                 .attr("transform", `translate(0, ${height - margin.bottom})`)
                 .call(xAxis)
             
-            let x_Axis_group_position = width - 140
+            let x_Axis_group_position = width - 180
             let x_Axis_group = x_Axis.append("g")
                 .attr("transform", `translate(${x_Axis_group_position}, -20)`)
-    
+            
+            let uniqueQueries = i18next.t('uniqueQueries')
             x_Axis_group.append("text")
                .attr("class", "axis-label")
                .attr("x", 15)
@@ -155,7 +156,7 @@ function load_data() {
                .attr("dy", -2)
                .attr("fill", "black")
                .attr("text-anchor", "start")
-               .text("unique queries");
+               .text(uniqueQueries);
     
             x_Axis_group.append("rect")
                .attr("width",10)
@@ -175,6 +176,7 @@ function load_data() {
                 .attr("height",10)
                 .attr("fill","#ff9100")
     
+            let uniquePages = i18next.t('uniquePages')
             y_Axis_group.append("text")
                 .attr("class", "axis-label")
                 .attr("x", 15)
@@ -182,7 +184,7 @@ function load_data() {
                 .attr("dy", -2)
                 .attr("fill", "black")
                 .attr("text-anchor", "start")
-                .text("unique pages");
+                .text(uniquePages);
         }
 
         window.addEventListener('resize', debounce(() => {
@@ -449,11 +451,11 @@ function load_list(data, sort){
                         <div id="${item.user_id}_more" class="student_more" style="color: #a2a2a2; font-size: 0.8rem;">
                             <div class="student_more_box">
                                 <div>
-                                    <div>queries: </div>
+                                    <div>${i18next.t('queries')}: </div>
                                     <div style="justify-content: flex-end;" data-log="S_Queries_New">${item.S_Queries_New} / ${queries_duration}</div>
                                 </div>
                                 <div>
-                                    <div>pages: </div>
+                                    <div>${i18next.t('pages')}: </div>
                                     <div style="justify-content: flex-end;" data-log="S_ResultDomain_New">${item.S_ResultDomain_New} / ${pages_duration}</div>
                                 </div>
                             </div>
