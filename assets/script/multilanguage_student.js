@@ -1,7 +1,7 @@
 function getLanguageFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
     const langParam = urlParams.get('lang').toLocaleLowerCase();
-    console.log(langParam)
+    // console.log(langParam)
 
     return langParam;
 }
@@ -27,7 +27,7 @@ i18next.init({
                 "reused_query": "reused query",
 
                 "statistics": "Statistics",
-                "time": "Time",
+                "time": "Time (mm:ss)",
                 "total": "total",
                 "total_cap": "Totale",
                 "shortest": "shortest",
@@ -65,7 +65,7 @@ i18next.init({
                 "reused_query": "wiederverwendete Abfrage",
                 
                 "statistics": "Statistiken",
-                "time": "Zeiten",
+                "time": "Zeiten (mm:ss)",
                 "total": "Total",
                 "total_cap": "Total",
                 "shortest": "Kürzer",
@@ -90,9 +90,6 @@ i18next.init({
         it: {
             translation: {
 
-                // student page 
-                // ---------
-
                 "user": "Utente",
                 "task": "Attività",
                 "normalize_scale": "Normalizza scala",
@@ -108,7 +105,7 @@ i18next.init({
                 "statistics": "Statistiche",
                 "total": "totale",
                 "total_cap": "Totale",
-                "time": "Tempi",
+                "time": "Tempi (mm:ss)",
                 "shortest": "più breve",
                 "average": "media",
                 "longest": "più lunga",
