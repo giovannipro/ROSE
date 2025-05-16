@@ -5,6 +5,10 @@ const interline = 2;
 const new_page_color = '#ff9100';
 const duration_color = '#a4a4a4';
 const chatbot_color = '#c879b8';
+const color_newQuery = '#619ED4';
+const colorModifiedQuery = '#C8DFF4';
+const colorReuded_query ='#90b8df';
+const color_visitedDomain = '#f8b55c';
 
 const stroke_color = 'white'; // '#aeaeae'
 
@@ -348,13 +352,13 @@ function load_data() {
 
 					// search
 					else if (d.action == "NEW_SEARCH" || d.action == "NEW_SEARCH_SAME_ENGINE") { // new
-						color = '#619ED4';
+						color = color_newQuery;
 					}
 					else if (d.action == "SAME_SEARCH" || d.action == "SEEN_SEARCH") { // reused
-						color = '#90b8df'; // '#85DAE9'
+						color = colorReuded_query // '#90b8df'; // '#85DAE9'
 					}
 					else if (d.action == "REFINE_SEARCH") { // revised
-						color = '#C8DFF4';
+						color = colorModifiedQuery // '#C8DFF4';
 					}
 
 					// pages
@@ -412,7 +416,7 @@ function load_data() {
 				.attr("fill", (d) => {
 					let fill = new_page_color;
 					if (d[0].domain_status == "SEEN") {
-						fill = '#f8b55c';
+						fill = color_visitedDomain // '#f8b55c';
 					}
 					return fill;
 				});
@@ -434,6 +438,62 @@ function load_data() {
 				.attr("id", "x_axis")
 				.attr("transform", "translate(0, " + (strip_height * 2.35 + interline) + ")")
 				.call(xAxis);
+
+			// legend
+			// ---------------
+			const legendSpacing = 30;  // Vertical space between legend items
+			const legendRectSize = 20; // Size of the colored squares
+
+			data_legend = [
+				{ cat: "New query", color: color_newQuery},
+				{ cat: "Modified query", color: colorModifiedQuery },
+				{ cat: "Reused query", color: colorReuded_query },
+				{ cat: "New domain", color: new_page_color },
+				{ cat: "New page", color: new_page_color },
+				{ cat: "Visited domain", color: color_visitedDomain },
+				{ cat: "Chatbot", color: chatbot_color }
+			]
+			console.log(data_legend)
+
+			// Create a group for each legend item
+			const w = document.getElementById("legend").offsetWidth;
+			const legend_box = d3.select('body').select('#legend')
+				.append('svg')
+				.attr("width", w)
+				.attr("height", 140 + 20)
+				.attr("transform", "translate(10, 10)")
+
+			const group = legend_box.selectAll('.legend')
+				.data(data_legend)
+				.enter()
+				.append('g')
+				.attr('class', 'legend')
+				.attr('transform', (d, i) => {
+					let horz = 0;
+					let vert = i * legendSpacing;
+
+					if (i > 2) {
+						horz = w / 2
+						vert = vert - (legendSpacing * 3);
+					}
+					
+					return `translate(${horz},${vert})`;
+				});
+
+			// Add colored squares to legend
+			group.append('rect')
+				.attr('width', legendRectSize)
+				.attr('height', legendRectSize)
+				.style('fill', d => d.color)
+				.style('stroke', d => d.color);
+
+			// Add text to legend
+			group.append('text')
+				.attr('x', legendRectSize + 5) // Position text to the right of the square
+				.attr('y', legendRectSize - 5) // Vertically align with the square
+				.attr('font-size', '0.8rem')
+				.text(d => d.cat);
+
 
 			// handle Mouse Over
 			function handleMouseOver() {
