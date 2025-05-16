@@ -463,6 +463,21 @@ function load_data() {
 				.attr("height", 140 + 20)
 				.attr("transform", "translate(10, 10)")
 
+			const titles_box = legend_box.append('g')
+				
+			titles_box.append('text')
+				.attr('font-size', '0.8rem')
+				.attr('font-weight', 'bold')
+				.attr('y', 12)
+				.text('Search')
+
+			titles_box.append('text')
+				.attr('font-size', '0.8rem')
+				.attr('font-weight', 'bold')
+				.attr('y', 12)
+				.attr('x', w / 2)
+				.text('Pages')
+
 			const group = legend_box.selectAll('.legend')
 				.data(data_legend)
 				.enter()
@@ -470,7 +485,7 @@ function load_data() {
 				.attr('class', 'legend')
 				.attr('transform', (d, i) => {
 					let horz = 0;
-					let vert = i * legendSpacing;
+					let vert = i * legendSpacing + 25; 
 
 					if (i > 2) {
 						horz = w / 2
