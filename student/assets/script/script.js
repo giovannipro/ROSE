@@ -23,23 +23,28 @@ function load_data() {
 	// const apiEndpoint_student = `assets/data/_stats_${user_id}_${task_id}.csv` 
 	const apiEndpoint_student = `https://search.rose.education/api/analytics/stories-extraction?user_id=${user_id}&task_id=${task_id}`;
 	const apiEndpoint_studentInfo = `https://search.rose.education/api/dashboard/students/${user_id}`
+	const apiEndpoint_taskInfo = `https://search.rose.education/api/dashboard/tasks/${task_id}`
 
 	// http://127.0.0.1:5501/student/index.html?user_id=7&task_id=2&lang=EN
 	// console.log(user_id,task_id)
 
 	Promise.all([
         d3.csv(apiEndpoint_student),
-        d3.json(apiEndpoint_studentInfo)
+        d3.json(apiEndpoint_studentInfo),
+		d3.json(apiEndpoint_taskInfo)
     ])
-	.then(([studentData, studentInfo]) => {
+	.then(([studentData, studentInfo, taskInfo]) => {
 		// console.log(studentData)
 		// console.log(studentInfo)
+		console.log(taskInfo)
 
 		loaded(studentData)
 
 		const username = studentInfo.username.split("#")[0];
 		document.getElementById("the_user").innerHTML = username;
-		document.getElementById("the_task").innerHTML = studentData[0].task_id;
+		// document.getElementById("the_task").innerHTML = studentData[0].task_id;
+
+		document.getElementById("the_task").innerHTML = `${taskInfo.title} (id: ${task_id})`;
 	})
 	.catch(function (error) {
         if (error.message.includes("404")) {
