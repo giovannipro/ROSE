@@ -298,7 +298,6 @@ function load_data() {
             // });
             
             bubbles.forEach(item => {
-                console.log(item)
                 item.style.stroke = "transparent";
                 item.style.opacity = bubble_default_opacity;
                 item.style.fillOpacity = 1;
