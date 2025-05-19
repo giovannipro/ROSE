@@ -444,73 +444,57 @@ function load_data() {
 			const legendSpacing = 30;  // Vertical space between legend items
 			const legendRectSize = 20; // Size of the colored squares
 
-			data_legend = [
+			data_legend_a = [
 				{ cat: "New query", color: color_newQuery},
 				{ cat: "Modified query", color: colorModifiedQuery },
-				{ cat: "Reused query", color: colorReuded_query },
+				{ cat: "Reused query", color: colorReuded_query }
+			]
+
+			data_legend_b = [
 				{ cat: "New domain", color: new_page_color },
 				{ cat: "New page", color: new_page_color },
 				{ cat: "Visited domain", color: color_visitedDomain },
 				{ cat: "Chatbot", color: chatbot_color }
 			]
-			console.log(data_legend)
 
-			// Create a group for each legend item
-			const w = document.getElementById("legend").offsetWidth;
-			const legend_box = d3.select('body').select('#legend')
-				.append('svg')
-				.attr("width", w)
-				.attr("height", 140 + 20)
-				.attr("transform", "translate(10, 10)")
+			function make_lengend(box,data){
+				console.log(data)
 
-			const titles_box = legend_box.append('g')
-				
-			titles_box.append('text')
-				.attr('font-size', '0.8rem')
-				.attr('font-weight', 'bold')
-				.attr('y', 12)
-				.text('Search')
+				const w = document.getElementById(box).offsetWidth;
+				const legend_box = d3.select('body').select('#' + box)
+					.append('svg')
+					.attr("width", w)
+					.attr("height", legendSpacing * data.length)
 
-			titles_box.append('text')
-				.attr('font-size', '0.8rem')
-				.attr('font-weight', 'bold')
-				.attr('y', 12)
-				.attr('x', w / 2)
-				.text('Pages')
+					const group = legend_box.selectAll('.legend')
+						.data(data)
+						.enter()
+						.append('g')
+						.attr('class', 'legend')
+						.attr('transform', (d, i) => {
+							let horz = 0;
+							let vert = i * legendSpacing; 
+							
+							return `translate(${horz},${vert})`;
+						});
 
-			const group = legend_box.selectAll('.legend')
-				.data(data_legend)
-				.enter()
-				.append('g')
-				.attr('class', 'legend')
-				.attr('transform', (d, i) => {
-					let horz = 0;
-					let vert = i * legendSpacing + 25; 
-
-					if (i > 2) {
-						horz = w / 2
-						vert = vert - (legendSpacing * 3);
-					}
-					
-					return `translate(${horz},${vert})`;
-				});
-
-			// Add colored squares to legend
-			group.append('rect')
-				.attr('width', legendRectSize)
-				.attr('height', legendRectSize)
-				.style('fill', d => d.color)
-				.style('stroke', d => d.color);
-
-			// Add text to legend
-			group.append('text')
-				.attr('x', legendRectSize + 5) // Position text to the right of the square
-				.attr('y', legendRectSize - 5) // Vertically align with the square
-				.attr('font-size', '0.8rem')
-				.text(d => d.cat);
-
+					group.append('rect')
+						.attr('width', legendRectSize)
+						.attr('height', legendRectSize)
+						.style('fill', d => d.color)
+						.style('stroke', d => d.color);
+		
+					group.append('text')
+						.attr('x', legendRectSize + 5)
+						.attr('y', legendRectSize - 5)
+						.attr('font-size', '0.8rem')
+						.text(d => d.cat);
+			}
+			make_lengend('legend_a',data_legend_a)
+			make_lengend('legend_b',data_legend_b)
 
 			// handle Mouse Over
+			// ---------------
 			function handleMouseOver() {
 
 				d3.selectAll(".strip_box")

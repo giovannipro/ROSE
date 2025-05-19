@@ -39,7 +39,21 @@
 			<div id="infobox"></div>
 		</div>
 
-		<div id="legend" style="border-top: 1px solid #bfbfbf"></div>
+		<div style="display: flex; justify-content: flex-end;">
+			<button class="button" id="legend_switch" style="border: 1px solid #C8C8C8; margin: 1rem;">
+				<span id="t_showHide_legend">Show legend</span>
+			</button>
+		</div>
+		<div id="legend" style="border-top: 1px solid #bfbfbf">
+			<div id="legend_box_a" class="legend_box">
+				<p>Search</p>
+				<div id="legend_a"></div>
+			</div>
+			<div id="legend_box_b" class="legend_box">
+				<p>Pages</p>
+				<div id="legend_b"></div>
+			</div>
+		</div>
 
 		<div id="stat_hints">
 			<div id="statistics" class="main_tab">

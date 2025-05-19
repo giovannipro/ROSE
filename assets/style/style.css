@@ -54,13 +54,6 @@ h2 {
 	width: calc(100% - 80px);
 }
 
-#infobox {
-	margin-left: 120px;
-	padding: 2rem 0 3rem;
-	overflow: scroll;
-	min-height: 4rem;
-}
-
 .strip_box, .website {
 	cursor: pointer;
 }

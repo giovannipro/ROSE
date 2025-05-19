@@ -43,7 +43,7 @@ h2 {
 
 #infobox {
 	margin-left: 120px;
-	padding: 2rem 0 2rem;
+	padding: 2rem 0 0;
 	overflow: scroll;
 	min-height: 4rem;
 }
@@ -207,6 +207,22 @@ td:first-child {
 
 .not_active {
 	opacity: 0.4;
+}
+
+#legend {
+	padding: 1rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+.legend_box {
+	width: 48%;
+}
+
+.legend_box p {
+	margin: 0 0 0.5rem 0;
+	font-size: 0.8rem;
+	font-weight: bold;
 }
 
 @media only screen and (max-width: 725px) {
