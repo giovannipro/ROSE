@@ -31,7 +31,7 @@ i18next.init({
                 "show_legend": "Show legend",
                 "hide_legend": "Hide legend",
                 "new_query": "New query",
-                "modified_query": "Modified query",
+                "modified_query_m": "Modified query",
                 "reused_query_m": "Reused query",
                 "new_domain_page": "New domain/new page",
                 "visited_domain": "Visited domain",
