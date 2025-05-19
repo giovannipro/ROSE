@@ -28,6 +28,15 @@ i18next.init({
 
                 "unknown_action": "Unknown action",
 
+                "show_legend": "Show legend",
+                "hide_legend": "Hide legend",
+                "new_query": "New query",
+                "modified_query": "Modified query",
+                "reused_query_m": "Reused query",
+                "new_domain_page": "New domain/new page",
+                "visited_domain": "Visited domain",
+                "chatbot": "Chatbot",
+
                 "statistics": "Statistics",
                 "time": "Time (mm:ss)",
                 "total": "total",
@@ -64,9 +73,18 @@ i18next.init({
                 "pages": "Seiten",
                 "system": "System",
                 "modified_query": "geänderte Abfrage",
-                "reused_query": "wiederverwendete Abfrage",
+                "reused_query": "wiederverwendet Abfrage",
 
                 "unknown_action": "Unbekannte Aktion",
+                
+                "show_legend": "Legende anzeigen",
+                "hide_legend": "Legende ausblenden",
+                "new_query": "Neue Abfrage",
+                "modified_query_m": "Geänderte Abfrage",
+                "reused_query_m": "Reuses Abfrage",
+                "new_domain_page": "New domain/Neue Seite",
+                "visited_domain": "Besuchte Domain",
+                "chatbot": "Chatbot",
                 
                 "statistics": "Statistiken",
                 "time": "Zeiten (mm:ss)",
@@ -107,6 +125,15 @@ i18next.init({
                 "reused_query": "query riusata",
 
                 "unknown_action": "Azione sconosciuta",
+
+                "show_legend": "Mostra legenda",
+                "hide_legend": "Nascondi legenda",
+                "new_query": "Nuova query",
+                "modified_query_m": "Query modificata",
+                "reused_query_m": "Query riusata",
+                "new_domain_page": "Nuovo dominio/nuova pagina",
+                "visited_domain": "Dominio visitato",
+                "chatbot": "Chatbot",
 
                 "statistics": "Statistiche",
                 "total": "totale",
@@ -152,6 +179,11 @@ function updateContent() {
 
     document.getElementById('t_observation').textContent = i18next.t('observation');
     document.getElementById('t_hint').textContent = i18next.t('hint');
+
+    document.getElementById('t_show_legend').textContent = i18next.t('show_legend');
+    // document.getElementById('t_search').textContent = i18next.t('search');
+    // document.getElementById('t_pages').textContent = i18next.t('pages');
+
 
 }
 

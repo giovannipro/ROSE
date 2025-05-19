@@ -40,17 +40,17 @@
 		</div>
 
 		<div style="display: flex; justify-content: flex-end;">
-			<button class="button" id="legend_switch" style="border: 1px solid #C8C8C8; margin: 1rem;">
-				<span id="t_showHide_legend">Show legend</span>
+			<button class="button" id="legend_switch" style="border: 1px solid #C8C8C8; margin: 0 1rem 1rem;">
+				<span id="t_show_legend">Show legend</span>
 			</button>
 		</div>
-		<div id="legend" style="border-top: 1px solid #bfbfbf">
+		<div id="legend">
 			<div id="legend_box_a" class="legend_box">
-				<p>Search</p>
+				<p id="t_search">Search</p>
 				<div id="legend_a"></div>
 			</div>
 			<div id="legend_box_b" class="legend_box">
-				<p>Pages</p>
+				<p id="t_pages">Pages</p>
 				<div id="legend_b"></div>
 			</div>
 		</div>
@@ -60,7 +60,6 @@
 				<div id="stat_txt" class="tab_label">
 					<span id="t_statistics">Statistics</span>
 					<span class="open_tab" id="open_stat">&darr;</span>
-					<!-- &darr; &uarr; -->
 				</div>
 				<div id="statistics_container">
 					<div class="tab_content">
@@ -80,7 +79,6 @@
 				</div>
 				<div id="suggestions_container">
 					<div class="tab_content">
-						<!-- <span style="color: #ababab"><em>Some suggestions here</em></span> -->
 						<div id="hints" class="hints_box"></div>
 					</div>
 				</div>

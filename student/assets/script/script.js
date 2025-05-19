@@ -445,16 +445,15 @@ function load_data() {
 			const legendRectSize = 20; // Size of the colored squares
 
 			data_legend_a = [
-				{ cat: "New query", color: color_newQuery},
-				{ cat: "Modified query", color: colorModifiedQuery },
-				{ cat: "Reused query", color: colorReuded_query }
+				{ cat: i18next.t('new_query'), color: color_newQuery},
+				{ cat: i18next.t('modified_query_m'), color: colorModifiedQuery },
+				{ cat: i18next.t('reused_query_m'), color: colorReuded_query }
 			]
 
 			data_legend_b = [
-				{ cat: "New domain", color: new_page_color },
-				{ cat: "New page", color: new_page_color },
-				{ cat: "Visited domain", color: color_visitedDomain },
-				{ cat: "Chatbot", color: chatbot_color }
+				{ cat: i18next.t('new_domain_page'), color: new_page_color },
+				{ cat: i18next.t('visited_domain'), color: color_visitedDomain },
+				{ cat: i18next.t('chatbot'), color: chatbot_color }
 			]
 
 			function make_lengend(box,data){
@@ -490,8 +489,40 @@ function load_data() {
 						.attr('font-size', '0.8rem')
 						.text(d => d.cat);
 			}
-			make_lengend('legend_a',data_legend_a)
-			make_lengend('legend_b',data_legend_b)
+			
+			const legend_switch= document.getElementById("legend_switch")
+			const legend_box = document.getElementById("legend")
+
+			legend_switch.innerHTML = i18next.t('show_legend')
+
+			let legend_open = false;
+			let legend_loaded = false
+			legend_switch.addEventListener("click", function () {
+
+				if (legend_open == false) {
+					legend_box.style.display = "flex";
+					legend_open = true;
+
+					legend_switch.innerHTML = i18next.t('hide_legend')
+
+					if (legend_loaded == false) {
+						make_lengend('legend_a',data_legend_a)
+						make_lengend('legend_b',data_legend_b)
+
+						document.getElementById('t_search').textContent = i18next.t('search');
+						document.getElementById('t_pages').textContent = i18next.t('pages');
+
+						legend_loaded = true; 
+					}
+				}
+				else {
+					legend_box.style.display = "none";
+					legend_open = false;
+
+					legend_switch.innerHTML = i18next.t('show_legend')
+				}
+			})
+
 
 			// handle Mouse Over
 			// ---------------

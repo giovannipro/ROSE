@@ -155,6 +155,7 @@ h2 {
 
 .like {
 	margin-top: 1.5rem;
+	opacity: 0.4;
 }
 
 .statistics_box table {
@@ -210,13 +211,17 @@ td:first-child {
 }
 
 #legend {
+	border: 1px solid #bfbfbf;
+	margin: 1rem;
 	padding: 1rem;
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
+	display: none;
 }
 
 .legend_box {
-	width: 48%;
+	width: 30%;
+	margin-right: 5%;
 }
 
 .legend_box p {
@@ -239,6 +244,15 @@ td:first-child {
 
 	.statistics_box:last-child {
 		border-bottom: none;
+	}
+
+	#legend {
+		flex-wrap: wrap;
+	}
+
+	.legend_box {
+		width: 100%;
+		margin: 0 0 1rem 0;
 	}
 }
 
