@@ -30,10 +30,18 @@ i18next.init({
 
                 "show_legend": "Show legend",
                 "hide_legend": "Hide legend",
+
+                "domains_pages": "Domains and pages",
+                "search_info": "Navigation actions that occur on a search engine website.",
+                "domains_pages_info": "Navigation actions that occur on a single domain (not a search engine).",
+                "pages_info": "Navigation actions that occur on a web page in within a domain.",
+                "system_info": "System actions like start, pause, stop, etc.",
+
+                "new_page": "New page",
                 "new_query": "New query",
                 "modified_query_m": "Modified query",
                 "reused_query_m": "Reused query",
-                "new_domain_page": "New domain/new page",
+                "new_domain": "New domain",
                 "visited_domain": "Visited domain",
                 "chatbot": "Chatbot",
 
@@ -79,10 +87,18 @@ i18next.init({
                 
                 "show_legend": "Legende anzeigen",
                 "hide_legend": "Legende ausblenden",
+
+                "domains_pages": "Domänen und Seiten",
+                "search_info": "Navigationsaktionen, die auf einer Suchmaschinen-Website stattfinden.",
+                "domains_pages_info": "Navigationsaktionen, die auf einer einzelnen Domain (nicht einer Suchmaschine) stattfinden.",
+                "pages_info": "Navigationsaktionen, die auf einer Webseite innerhalb einer Domäne stattfinden.",
+                "system_info": "Systemaktionen wie Starten, Anhalten, Stoppen, etc.",
+
+                "new_page": "Neue Seite",
                 "new_query": "Neue Abfrage",
                 "modified_query_m": "Geänderte Abfrage",
                 "reused_query_m": "Reuses Abfrage",
-                "new_domain_page": "New domain/Neue Seite",
+                "new_domain": "Neue Domain",
                 "visited_domain": "Besuchte Domain",
                 "chatbot": "Chatbot",
                 
@@ -128,10 +144,18 @@ i18next.init({
 
                 "show_legend": "Mostra legenda",
                 "hide_legend": "Nascondi legenda",
+
+                "domains_pages": "Domains and pages",
+                "search_info": "Azioni di navigazione che avvengono in un motore di ricerca.",
+                "domains_pages_info": "Azioni di navigazione che avvengono su un singolo dominio (non su un motore di ricerca).",
+                "pages_info": "Azioni di navigazione che si verificano su una pagina web all'interno di un dominio.",
+                "system_info": "Azioni di sistema come avvio, pausa, arresto, ecc.",
+
+                "new_page": "Nuova pagina",
                 "new_query": "Nuova query",
                 "modified_query_m": "Query modificata",
                 "reused_query_m": "Query riusata",
-                "new_domain_page": "Nuovo dominio/nuova pagina",
+                "new_domain": "Nuovo dominio",
                 "visited_domain": "Dominio visitato",
                 "chatbot": "Chatbot",
 
@@ -181,9 +205,6 @@ function updateContent() {
     document.getElementById('t_hint').textContent = i18next.t('hint');
 
     document.getElementById('t_show_legend').textContent = i18next.t('show_legend');
-    // document.getElementById('t_search').textContent = i18next.t('search');
-    // document.getElementById('t_pages').textContent = i18next.t('pages');
-
 
 }
 

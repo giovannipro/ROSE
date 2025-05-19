@@ -452,9 +452,17 @@ function load_data() {
 			]
 
 			data_legend_b = [
-				{ cat: i18next.t('new_domain_page'), color: new_page_color },
+				{ cat: i18next.t('new_domain'), color: new_page_color },
 				{ cat: i18next.t('visited_domain'), color: color_visitedDomain },
 				{ cat: i18next.t('chatbot'), color: chatbot_color }
+			]
+
+			data_legend_c = [
+				{ cat: i18next.t('new_page'), color: new_page_color }
+			]
+
+			data_legend_d = [
+				{ cat: i18next.t('system'), color: color_system }
 			]
 
 			function make_lengend(box,data){
@@ -464,7 +472,7 @@ function load_data() {
 				const legend_box = d3.select('body').select('#' + box)
 					.append('svg')
 					.attr("width", w)
-					.attr("height", legendSpacing * data.length)
+					.attr("height", (legendSpacing * data.length) - 10)
 
 					const group = legend_box.selectAll('.legend')
 						.data(data)
@@ -509,9 +517,16 @@ function load_data() {
 					if (legend_loaded == false) {
 						make_lengend('legend_a',data_legend_a)
 						make_lengend('legend_b',data_legend_b)
+						make_lengend('legend_c',data_legend_c)
+						make_lengend('legend_d',data_legend_d)
 
 						document.getElementById('t_search').textContent = i18next.t('search');
-						document.getElementById('t_pages').textContent = i18next.t('pages');
+						document.getElementById('t_domains_pages').textContent = i18next.t('domains_pages');
+
+						document.getElementById('t_search_info').textContent = i18next.t('search_info');
+						document.getElementById('t_domains_pages_info').textContent = i18next.t('domains_pages_info');
+						document.getElementById('t_pages_info').textContent = i18next.t('pages_info');
+						document.getElementById('t_system_info').textContent = i18next.t('system_info');
 
 						legend_loaded = true; 
 					}

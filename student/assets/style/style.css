@@ -216,19 +216,37 @@ td:first-child {
 	border-radius: 4px;
 	padding: 1rem;
 	display: flex;
-	justify-content: flex-start;
+	justify-content: space-between;
 	display: none;
 }
 
 .legend_box {
 	width: 30%;
-	margin-right: 5%;
+}
+
+.legend_box div {
+	margin-bottom: 2rem;
+}
+
+.legend_box div:last-child {
+	margin-bottom: 0;
+}
+
+.legend_box .info{
+	min-height: 1.5rem;
 }
 
 .legend_box p {
-	margin: 0 0 0.5rem 0;
 	font-size: 0.8rem;
+}
+
+.legend_box p:nth-child(1) {
+	margin: 0 0 0.2rem 0;
 	font-weight: bold;
+}
+
+.legend_box p:nth-child(2) {
+	margin: 0 0 0.75rem 0;
 }
 
 @media only screen and (max-width: 725px) {
