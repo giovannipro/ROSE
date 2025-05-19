@@ -26,6 +26,8 @@ i18next.init({
                 "modified_query": "modified query",
                 "reused_query": "reused query",
 
+                "unknown_action": "Unknown action",
+
                 "statistics": "Statistics",
                 "time": "Time (mm:ss)",
                 "total": "total",
@@ -63,6 +65,8 @@ i18next.init({
                 "system": "System",
                 "modified_query": "geänderte Abfrage",
                 "reused_query": "wiederverwendete Abfrage",
+
+                "unknown_action": "Unbekannte Aktion",
                 
                 "statistics": "Statistiken",
                 "time": "Zeiten (mm:ss)",
@@ -101,6 +105,8 @@ i18next.init({
                 "system": "Sistema",
                 "modified_query": "query modificata",
                 "reused_query": "query riusata",
+
+                "unknown_action": "Azione sconosciuta",
 
                 "statistics": "Statistiche",
                 "total": "totale",

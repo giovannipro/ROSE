@@ -573,7 +573,8 @@ function load_data() {
 				const duration = domain.getAttribute("data-duration")
 				const action = domain.getAttribute("data-action")
 				const domainStatus = domain.getAttribute("data-domainStatus")
-					
+				// console.log(action, class_)
+
 				let output;
 
 				if (class_ == 'strip'){
@@ -607,6 +608,11 @@ function load_data() {
 						output = `<span><a href="${url}" target="_blank">${the_domain}</a> <span style="color: gray">${seen}</span><br/>`;
 						output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
 					}
+
+					else    { // if (action == "UNkNOWN")
+						console.log('unknown', action)
+						output = `<span>${i18next.t('unknown_action')}</span><br/>`;
+					}
 				}
 				else if (class_ == 'website'){
 					// const domain_ = domain.getAttribute("data-domain")
@@ -622,11 +628,11 @@ function load_data() {
 					output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
 				}
 				else {
-					// console.log(domain)
 					const domain_ = domain.getAttribute("data-domain")
 					const the_domain = domain_.toLowerCase().replace(/\_/g, " ");
 					output = `<span>System (${the_domain})</span><br/>`;
 					output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>';
+					
 				}
 
 				infobox.innerHTML = output;
