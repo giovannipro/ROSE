@@ -9,6 +9,7 @@ const color_newQuery = '#619ED4';
 const colorModifiedQuery = '#C8DFF4';
 const colorReuded_query ='#90b8df';
 const color_visitedDomain = '#f8b55c';
+const color_system = '#dbdbdb';
 
 const stroke_color = 'white'; // '#aeaeae'
 
@@ -344,10 +345,10 @@ function load_data() {
 				})
 				.attr("stroke", stroke_color)
 				.attr("fill", (d) => {
-					let color = '#dbdbdb';
+					let color = color_system; //'#dbdbdb';
 
 					if (d.action == "TASK_STARTED" || d.action == "PRE_SURVEY_STARTED" || d.action == "PRE_SURVEY_ENDED" || d.action == 'POST_SURVEY_STARTED' || d.action == "NEW_TAB" || d.action == "SEARCH_STARTED" || d.action == "SEARCH_ENDED" || d.action == "SEARCH_RESUMED" || d.action == "POST_SURVEY_ENDED") {
-						color = '#dbdbdb'; // #afafaf #9aa4ac
+						color = color_system; //'#dbdbdb'; // #afafaf #9aa4ac
 					}
 
 					// search
