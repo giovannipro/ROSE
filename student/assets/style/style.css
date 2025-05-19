@@ -212,7 +212,8 @@ td:first-child {
 
 #legend {
 	border: 1px solid #bfbfbf;
-	margin: 1rem;
+	margin: 0 1rem 1rem 1rem;
+	border-radius: 4px;
 	padding: 1rem;
 	display: flex;
 	justify-content: flex-start;
