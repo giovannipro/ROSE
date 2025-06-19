@@ -28,12 +28,14 @@ function load_data() {
 	// console.log(lang)
 
 	// const apiEndpoint_student = `assets/data/_stats_${user_id}_${task_id}.csv` 
-	const apiEndpoint_student = `https://search.rose.education/api/analytics/stories-extraction?user_id=${user_id}&task_id=${task_id}`;
+	const apiEndpoint_student =  `https://search.rose.education/api/analytics/stories-extraction?user_id=${user_id}&task_id=${task_id}`;
 	const apiEndpoint_studentInfo = `https://search.rose.education/api/dashboard/students/${user_id}`
 	const apiEndpoint_taskInfo = `https://search.rose.education/api/dashboard/tasks/${task_id}`
+	// const apiEndpoint_student =  `../stats_525_40.csv`;
 
 	// http://127.0.0.1:5501/student/index.html?user_id=7&task_id=2&lang=EN
 	// console.log(user_id,task_id)
+
 
 	Promise.all([
         d3.csv(apiEndpoint_student),
@@ -41,7 +43,7 @@ function load_data() {
 		d3.json(apiEndpoint_taskInfo)
     ])
 	.then(([studentData, studentInfo, taskInfo]) => {
-		// console.log(studentData)
+		console.log(studentData)
 		// console.log(studentInfo)
 		// console.log(taskInfo)
 
@@ -62,7 +64,7 @@ function load_data() {
     });
 
 	function loaded(data) {
-		// console.log(data)
+		console.log(data)
 
 		data.forEach(function (d, i) {
 			d.duration = parseFloat(d.duration);
@@ -466,7 +468,7 @@ function load_data() {
 			]
 
 			function make_lengend(box,data){
-				console.log(data)
+				// console.log(data)
 
 				const w = document.getElementById(box).offsetWidth;
 				const legend_box = d3.select('body').select('#' + box)
@@ -641,7 +643,7 @@ function load_data() {
 					}
 
 					else    { // if (action == "UNkNOWN")
-						console.log('unknown', action)
+						console.log('unknown', action)	
 						output = `<span>${i18next.t('unknown_action')}</span><br/>`;
 					}
 				}
@@ -663,7 +665,6 @@ function load_data() {
 					const the_domain = domain_.toLowerCase().replace(/\_/g, " ");
 					output = `<span>System (${the_domain})</span><br/>`;
 					output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>';
-					
 				}
 
 				infobox.innerHTML = output;
