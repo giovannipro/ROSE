@@ -27,10 +27,6 @@ h2 {
 #controllers {
 	padding: 1rem;
 	border-bottom: 1px solid #bfbfbf;
-	position: fixed;
-	top: 0;
-	background-color: white;
-	width: calc(100% - 2rem);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
