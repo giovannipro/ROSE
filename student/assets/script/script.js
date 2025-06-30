@@ -43,10 +43,7 @@ function load_data() {
 		d3.json(apiEndpoint_taskInfo)
     ])
 	.then(([studentData, studentInfo, taskInfo]) => {
-		console.log(studentData)
-		// console.log(studentInfo)
-		// console.log(taskInfo)
-
+		// console.log(studentData)
 		loaded(studentData)
 
 		const username = studentInfo.username.split("#")[0];
@@ -64,7 +61,7 @@ function load_data() {
     });
 
 	function loaded(data) {
-		console.log(data)
+		// console.log(data)
 
 		data.forEach(function (d, i) {
 			d.duration = parseFloat(d.duration);
@@ -95,7 +92,7 @@ function load_data() {
 			item[0].the_id = i;
 			item[0].the_duration = totalDuration;
 		});
-		console.log(website_strip_data)
+		// console.log(website_strip_data)
 
 		function display_labels() {
 			// console.log(data);
@@ -115,7 +112,6 @@ function load_data() {
 			// const delta = Math.abs(date2 - date1) / 1000 / 60; // in minutes
 			// const pixel_per_minute = 100
 			// new_width = delta * pixel_per_minute
-			// console.log(data, new_width)
 
 			let svg = d3.select(container)
 				.append("svg")
@@ -600,16 +596,16 @@ function load_data() {
 					.attr("vector-effect", "non-scaling-stroke");
 					
 				const domain = document.querySelector('[data-index="' + id + '"]');
-				const class_ = (domain.getAttribute("data-class")).toString();
-
+				
 				const url = domain.getAttribute("data-url")
 				const duration = domain.getAttribute("data-duration")
 				const action = domain.getAttribute("data-action")
 				const domainStatus = domain.getAttribute("data-domainStatus")
 				// console.log(action, class_)
-
+				
 				let output;
-
+				
+				const class_ = (domain.getAttribute("data-class")).toString();
 				if (class_ == 'strip'){
 
 					// page
@@ -643,7 +639,7 @@ function load_data() {
 					}
 
 					else    { // if (action == "UNkNOWN")
-						console.log('unknown', action)	
+						// console.log('unknown', action)	
 						output = `<span>${i18next.t('unknown_action')}</span><br/>`;
 					}
 				}

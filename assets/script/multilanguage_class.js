@@ -1,7 +1,7 @@
 function getLanguageFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
     const langParam = urlParams.get('lang').toLocaleLowerCase();
-    console.log(langParam)
+    // console.log(langParam)
 
     return langParam;
 }
@@ -16,7 +16,7 @@ i18next.init({
 
                 "user": "User",
                 "class": "Class",
-                "stories": "stories",
+                "stories": "timelines",
                 "sortBy": "sort by",
                 "totalTime": "total time",
                 "searchTime": "search time",
@@ -34,19 +34,19 @@ i18next.init({
         de: {
             translation: {
                 
-                "user": "Benutzer",
+                "user": "Benutzer:in",
                 "class": "Klasse",
-                "stories": "Geschichten",
+                "stories": "Timelines",
                 "sortBy": "sortieren nach",
                 "totalTime": "Gesamtzeit",
                 "searchTime": "Suchzeit",
                 "pagesTime": "Seitenzeit",
                 "name": "Name",
                 
-                "queries": "Abfragen",
+                "queries": "Queries",
                 "pages": "Seiten",
 
-                "uniqueQueries": "einzigartige Abfragen",
+                "uniqueQueries": "einzigartige Query",
                 "uniquePages": "einzigartige Seiten"
         
             }
@@ -56,7 +56,7 @@ i18next.init({
 
                 "class": "Classe",
                 "user": "Utente",
-                "stories": "storie",
+                "stories": "timeline",
                 "sortBy": "ordina per",
                 "totalTime": "tempo totale",
                 "searchTime": "tempo di ricerca",

@@ -49,7 +49,7 @@ function load_data() {
             item.pages_duration = item.S_Duration_ResAvg * item.S_Actions_Res;
             item.Que_Pag = item.queries_duration + item.pages_duration;
         });
-        console.log(classData)
+        // console.log(classData)
 
         // Store both datasets
         the_data = classData;
