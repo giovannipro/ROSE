@@ -440,7 +440,7 @@ function load_list(data, sort){
                                     ${total_duration}
                                 </div>
                                 <div>
-                                    <a href="${student_page}" target="blank" class="arrow_link">&rarr;</a>
+                                    <a href="${student_page}" target="_blank" class="arrow_link">&rarr;</a>
                                 </div>
                             </div>
                         </div>
