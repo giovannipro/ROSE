@@ -28,7 +28,7 @@ function load_hints(){
     const container = document.getElementById('hints');
 
     function loaded(predefined,feedback){
-        console.log(feedback)
+        // console.log(feedback)
 
         let the_language = (i18next.language).toLowerCase()
         // console.log(the_language)
@@ -81,9 +81,6 @@ function load_hints(){
                         </div>
                         <div class="content">
                             ${hint}
-                            <div class="like">
-                                👍  👎
-                            </div>
                         </div>
                         <div class="content"></div>
                     </div>
