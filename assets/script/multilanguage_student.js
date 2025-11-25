@@ -32,7 +32,7 @@ i18next.init({
                 "hide_legend": "Hide legend",
 
                 "domains_pages": "Domains and pages",
-                
+
                 "search_info": "Navigation actions that occur on a search engine website.",
                 "domains_pages_info": "Navigation actions that occur on a single domain (not a search engine).",
                 "pages_info": "Navigation actions that occur on a web page in within a domain.",
@@ -204,8 +204,12 @@ function updateContent() {
     document.getElementById('t_statistics').textContent = i18next.t('statistics');
     document.getElementById('t_suggestions').textContent = i18next.t('suggestions');
 
-    document.getElementById('t_observation').textContent = i18next.t('observation');
-    document.getElementById('t_hint').textContent = i18next.t('hint');
+    const suggestions_container = document.getElementById('suggestions_container');
+    if (suggestions_container.offsetWidth != 0 && suggestions_container.offsetHeight != 0){
+        console.log(suggestions_container.offsetWidth)
+        document.getElementById('t_observation').textContent = i18next.t('observation');
+        document.getElementById('t_hint').textContent = i18next.t('hint');
+    }
 
     document.getElementById('t_show_legend').textContent = i18next.t('show_legend');
 
