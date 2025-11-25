@@ -19,13 +19,26 @@ function load_hints(){
         d3.json(apiEndpoint_hint)
     ])
     .then(function([predefined, student_hints]) {
-        loaded(predefined,student_hints)
+        console.log(student_hints)
+
+        if (student_hints.error){
+            console.log(student_hints)
+            show_error()
+        }
+        else {
+            loaded(predefined,student_hints)
+        }
+        
     })
     .catch(function(error) {
         console.error("Error loading JSON files:", error);
     });
     
     const container = document.getElementById('hints');
+
+    function show_error(){
+        console.log('error')
+    }
 
     function loaded(predefined,feedback){
         // console.log(feedback)

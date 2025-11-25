@@ -54,11 +54,27 @@ function load_data() {
 	})
 	.catch(function (error) {
         if (error.message.includes("404")) {
-            console.log("Something went wrong with the data loading");
+			show_error('data loading', error)
         } else {
-            console.error("Data loading error:", error);
+			show_error('a generic error', error)
         }
     });
+
+	function show_error(type, error){
+		console.log(`We got some error with the ${type}`)
+		console.log(error);
+
+		const container = document.getElementById('container')
+		const error_box = document.createElement('div')
+		error_box.classList.add('error_box');
+		error_box.textContent = i18next.t('error_message');
+		container.prepend(error_box)
+
+		const chart = document.getElementById('chart');
+		const infobox = document.getElementById('infobox');
+		chart.style.display = 'none';
+		infobox.style.display = 'none';
+	}
 
 	function loaded(data) {
 		// console.log(data)
@@ -72,16 +88,14 @@ function load_data() {
 			load_statistics(data);
 		}
 		catch (error) {
-			console.log('We got some error with the statistics')
-			console.log(error);
+			show_error('statistics', error)
 		}
 
 		try {
 			load_hints();
 		}
 		catch (error) {
-			console.log('We got some error with the hints')
-			console.log(error);
+			show_error('hints', error)
 		}
 
 		const website_strip_data = groupConsecutiveDomains(data);
