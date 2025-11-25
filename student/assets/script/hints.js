@@ -19,29 +19,19 @@ function load_hints(){
         d3.json(apiEndpoint_hint)
     ])
     .then(function([predefined, student_hints]) {
-        console.log(student_hints)
+        // console.log(student_hints)
 
-        if (student_hints.error){
-            console.log(student_hints)
-            show_error()
-        }
-        else {
-            loaded(predefined,student_hints)
-        }
-        
+       loaded(predefined,student_hints)
+       
     })
     .catch(function(error) {
-        console.error("Error loading JSON files:", error);
+        show_hint_error()
     });
     
-    const container = document.getElementById('hints');
-
-    function show_error(){
-        console.log('error')
-    }
-
     function loaded(predefined,feedback){
         // console.log(feedback)
+
+        const hint_container = document.getElementById('hints')
 
         let the_language = (i18next.language).toLowerCase()
         // console.log(the_language)
@@ -104,6 +94,16 @@ function load_hints(){
             }
         }
 
-        container.innerHTML = output;
+        hint_container.innerHTML = output;
     }
+}
+
+function show_hint_error(){
+    console.log('Error loading the adaptive hints');
+
+    const hint_container = document.getElementById('hints_message');
+    const error_box = document.createElement('div')
+    error_box.classList.add('error_box_small');
+    error_box.textContent = i18next.t('hints_error_message');
+    hint_container.prepend(error_box)
 }

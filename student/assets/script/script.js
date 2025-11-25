@@ -53,6 +53,9 @@ function load_data() {
 		document.getElementById("the_task").innerHTML = `${taskInfo.title} (id: ${task_id})`;
 	})
 	.catch(function (error) {
+		
+		show_hint_error()
+		
         if (error.message.includes("404")) {
 			show_error('data loading', error)
         } else {
@@ -64,11 +67,11 @@ function load_data() {
 		console.log(`We got some error with the ${type}`)
 		console.log(error);
 
-		const container = document.getElementById('container')
+		const data_container = document.getElementById('container')
 		const error_box = document.createElement('div')
 		error_box.classList.add('error_box');
 		error_box.textContent = i18next.t('error_message');
-		container.prepend(error_box)
+		data_container.prepend(error_box)
 
 		const chart = document.getElementById('chart');
 		const infobox = document.getElementById('infobox');

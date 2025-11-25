@@ -67,7 +67,8 @@ i18next.init({
                 "observation": "Observation",
                 "hint": "Hint",
 
-                "error_message" : "Uhm. Unfortunately we got an error with the data loading. Please try again in a moment."
+                "error_message" : "Uhm. Unfortunately we got an error with the data loading. Please try again in a moment.",
+                "hints_error_message" : "Uhm. Unfortunately we got an error with the hints loading. Please try again in a moment."
 
             }
         },
@@ -127,7 +128,8 @@ i18next.init({
                 "observation": "Beobachtung",
                 "hint": "Tipp",
 
-                "error_message" : "Ähm… Leider ist beim Laden der Daten ein Fehler aufgetreten. Bitte versuche es in einem Moment erneut."
+                "error_message" : "Ähm… Leider ist beim Laden der Daten ein Fehler aufgetreten. Bitte versuche es in einem Moment erneut.",
+                "hints_error_message" : "Uhm. Leider ist beim Laden der Hinweise ein Fehler aufgetreten. Bitte versuchen Sie es in einem Moment noch einmal."
             }
         },
         it: {
@@ -186,7 +188,8 @@ i18next.init({
                 "observation": "Osservazione",
                 "hint": "Suggerimento",
 
-                "error_message" : "Ops. Purtroppo si è verificato un errore nel caricamento dei dati. Per favore riprova tra un momento."
+                "error_message" : "Ops. Purtroppo si è verificato un errore nel caricamento dei dati. Per favore riprova tra un momento.",
+                "hints_error_message" : "Ops. Purtroppo si è verificato un errore nel caricamento dei suggerimenti. Per favore riprova tra un momento."
             }
         }
     }
