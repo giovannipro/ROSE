@@ -32,6 +32,7 @@ i18next.init({
                 "hide_legend": "Hide legend",
 
                 "domains_pages": "Domains and pages",
+                
                 "search_info": "Navigation actions that occur on a search engine website.",
                 "domains_pages_info": "Navigation actions that occur on a single domain (not a search engine).",
                 "pages_info": "Navigation actions that occur on a web page in within a domain.",
@@ -89,6 +90,7 @@ i18next.init({
                 "hide_legend": "Legende ausblenden",
 
                 "domains_pages": "Domänen und Seiten",
+
                 "search_info": "Navigationsaktionen, die auf einer Suchmaschinen-Website stattfinden.",
                 "domains_pages_info": "Navigationsaktionen, die auf einer einzelnen Domain (nicht einer Suchmaschine) stattfinden.",
                 "pages_info": "Navigationsaktionen, die auf einer Webseite innerhalb einer Domäne stattfinden.",
@@ -145,7 +147,8 @@ i18next.init({
                 "show_legend": "Mostra legenda",
                 "hide_legend": "Nascondi legenda",
 
-                "domains_pages": "Domains and pages",
+                "domains_pages": "Domini e pagine",
+                
                 "search_info": "Azioni di navigazione che avvengono su un motore di ricerca.",
                 "domains_pages_info": "Azioni di navigazione che avvengono su un singolo dominio (non su un motore di ricerca).",
                 "pages_info": "Azioni di navigazione che si verificano su una pagina web all'interno di un dominio.",

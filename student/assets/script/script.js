@@ -520,6 +520,8 @@ function load_data() {
 
 						document.getElementById('t_search').textContent = i18next.t('search');
 						document.getElementById('t_domains_pages').textContent = i18next.t('domains_pages');
+						document.getElementById('t_pages').textContent = i18next.t('pages');
+						document.getElementById('t_system').textContent = i18next.t('system');
 
 						document.getElementById('t_search_info').textContent = i18next.t('search_info');
 						document.getElementById('t_domains_pages_info').textContent = i18next.t('domains_pages_info');
