@@ -22,6 +22,7 @@ function load_data() {
     const apiEndpoint_class = `https://search.rose.education/api/analytics/aggregated-stories-extraction?clazz_id=${clazz_id}&task_id=${task_id}`
     const apiEndpoint_classInfo = `https://search.rose.education/api/dashboard/clazzes/${clazz_id}`
     const apiEndpoint_taskInfo = `https://search.rose.education/api/dashboard/tasks/${task_id}`
+    const apiEndpoint_recapInfo = `https://search.rose.education/api/analytics/url-stats/summary?clazz_id=${clazz_id}&task_id=${task_id}`
 
     // url = http://127.0.0.1:5501/class/index.html?clazz_id=LME-1C&task_id=1 
     // console.log(clazz_id,task_id)
@@ -29,12 +30,12 @@ function load_data() {
     Promise.all([
         d3.csv(apiEndpoint_class),
         d3.json(apiEndpoint_classInfo),
-        d3.json(apiEndpoint_taskInfo)
+        d3.json(apiEndpoint_taskInfo),
+        d3.json(apiEndpoint_recapInfo)
     ])
-    .then(([classData, classInfo, taskInfo]) => {
-        // console.log(classData)
-        // console.log(classInfo)
-        // console.log(taskInfo)
+    .then(([classData, classInfo, taskInfo, recapInfo]) => {
+        console.log(recapInfo)
+        console.log(classData)
         
         classData.forEach(item => {
             // console.log(item)
@@ -54,9 +55,11 @@ function load_data() {
         // Store both datasets
         the_data = classData;
         the_classInfo = classInfo;
+        the_date = formatDate(classData[0].S_Start_Time);
 
-        document.getElementById("the_class").innerHTML = `${classInfo.name}`; //clazz_id;
+        document.getElementById("the_class").innerHTML = classInfo.name; //clazz_id;
         document.getElementById("the_task").innerHTML = `${taskInfo.title} (id: ${task_id})`;
+        document.getElementById("the_date").innerHTML = the_date;
         document.getElementById("n_stories").innerHTML = classData.length;
 
         // Initialize visualizations with both datasets

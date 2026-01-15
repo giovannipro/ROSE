@@ -263,10 +263,15 @@ function open_tabs() {
 }
 
 function get_query(url){
-
 	const urlObj = new URL(url);
 	const url_0 = urlObj.searchParams;
 	const url_1 = url_0.get('q');
 	
 	return url_1
+}
+
+function formatDate(input) { //2025-04-03 12:48:32.983000+00:00
+	const datePart = input.split(' ')[0];
+	const [year, month, day] = datePart.split('-');
+	return `${day}-${month}-${year}`;
 }
