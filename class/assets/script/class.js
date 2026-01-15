@@ -594,8 +594,14 @@ function load_statistics(data){
             .filter(item => !item.query || item.query.trim() === "")
             .map(item => item.domain)
         )]
-        .sort((a, b) => a.localeCompare(b));
-    // console.log(uniqueDomains);
+    
+    const uniqueDomainsSort = uniqueDomains.sort((a, b) => {
+        const cleanA = a.replace(/^www\./, "");
+        const cleanB = b.replace(/^www\./, "");
+
+        return cleanA.localeCompare(cleanB);
+    });
+    // console.log(uniqueDomainsSort);
 
     // column A
     // --------------------------------------------
@@ -607,11 +613,13 @@ function load_statistics(data){
     output_a += '<table>'
     output_a += `<tr><td>${i18next.t('queries_m')}</td></tr>`;
 
+    output_a += '<tr><td><ul class="list">'
     uniqueQueries.forEach(item => {
         if (item != ''){
-            output_a += `<tr><td>- ${item}</td></tr>`;
+            output_a += `<li>${item}</lir>`;
         }
 	});
+    output_a += '</ul></td></tr>'
 
     output_a += '</table>'
 
@@ -624,13 +632,15 @@ function load_statistics(data){
 
     output_b += '<table>'
     output_b += `<tr><td>${i18next.t('domains')}</td></tr>`;
-
-    uniqueDomains.forEach(item => {
+    
+    output_b += '<tr><td><ul class="list">'
+    uniqueDomainsSort.forEach(item => {
         if (item != ''){
             domain = item.replace(/^www\./, "")
-            output_b += `<tr><td>- <a href="https://${item}" target="blank">${domain}</a></td></tr>`;
+            output_b += `<li><a href="https://${item}" target="blank">${domain}</a></li>`;
         }
 	});
+    output_a += '</ul></td></tr>'
 
     output_b += '</table>'
 

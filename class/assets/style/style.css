@@ -133,3 +133,8 @@ aside {
 .blabel {
     cursor: pointer;
 }
+
+.list {
+    padding-left: 1rem;
+    margin: 0
+}
