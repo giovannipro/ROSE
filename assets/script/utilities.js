@@ -202,11 +202,6 @@ function getUniqueValues(values) {
 	return Array.from(uniqueValuesSet);
 }
 
-const url = window.location.href
-if (!url.includes('class')){
-	open_tabs();
-}
-
 // to get the feedback text
 function getObjectById(data,id) {
     return data.find(item => item.id.toLowerCase() === id) || null;
@@ -221,45 +216,52 @@ function short_text(text,characters){
 	return output
 }
 
-function open_tabs() {
+function open_tabs(tabA, tabB) {
+	console.log(12)
 	let open_stat = false;
 	let open_sugg = false;
 
-	const STAT_BUTTON = document.getElementById("stat_txt");
-	const STAT_TAB = document.querySelector("#statistics_container");
-	const STAT_ARROW = document.getElementById("open_stat");
+	if (tabA == 'statistics_container'){
+		const STAT_BUTTON = document.getElementById("stat_txt");
+		const STAT_TAB = document.querySelector("#statistics_container");
+		const STAT_ARROW = document.getElementById("open_stat");
 
-	const SUGG_BUTTON = document.getElementById("sugg_txt");
-	const SUGG_TAB = document.querySelector("#suggestions_container");
-	const SUGG_ARROW = document.getElementById("open_sugg");
+		STAT_BUTTON.addEventListener("click", () => {
+	
+			if (open_stat == false) {
+				STAT_TAB.style.display = 'block';
+				open_stat = true;
+				STAT_ARROW.innerHTML = '&uarr;';
+			}
+			else {
+				STAT_TAB.style.display = 'none';
+				open_stat = false;
+				STAT_ARROW.innerHTML = '&darr;';
+			}
+		});
+	}
 
-	STAT_BUTTON.addEventListener("click", () => {
+	if (tabB == 'suggestions_container'){
+		const SUGG_BUTTON = document.getElementById("sugg_txt");
+		const SUGG_TAB = document.querySelector("#suggestions_container");
+		const SUGG_ARROW = document.getElementById("open_sugg");
+	
+	
+		SUGG_BUTTON.addEventListener("click", () => {
+	
+			if (open_sugg == false) {
+				SUGG_TAB.style.display = 'block';
+				open_sugg = true;
+				SUGG_ARROW.innerHTML = '&uarr;';
+			}
+			else {
+				SUGG_TAB.style.display = 'none';
+				open_sugg = false;
+				SUGG_ARROW.innerHTML = '&darr;';
+			}
+		});
+	}
 
-		if (open_stat == false) {
-			STAT_TAB.style.display = 'block';
-			open_stat = true;
-			STAT_ARROW.innerHTML = '&uarr;';
-		}
-		else {
-			STAT_TAB.style.display = 'none';
-			open_stat = false;
-			STAT_ARROW.innerHTML = '&darr;';
-		}
-	});
-
-	SUGG_BUTTON.addEventListener("click", () => {
-
-		if (open_sugg == false) {
-			SUGG_TAB.style.display = 'block';
-			open_sugg = true;
-			SUGG_ARROW.innerHTML = '&uarr;';
-		}
-		else {
-			SUGG_TAB.style.display = 'none';
-			open_sugg = false;
-			SUGG_ARROW.innerHTML = '&darr;';
-		}
-	});
 }
 
 function get_query(url){

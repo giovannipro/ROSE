@@ -15,7 +15,7 @@ aside {
     width: 65%;
     height: 45rem;
     /* min-height: 50vh; */
-    position: fixed;
+    /* position: fixed; */
     top: 5rem;
     right: 0;
     overflow: hidden;

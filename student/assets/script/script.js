@@ -17,6 +17,7 @@ const over_opacity = 0.4;
 
 let scale_mode = 'normalize';
 
+
 function load_data() {
 
 	const queryString = window.location.search;
@@ -199,6 +200,8 @@ function load_data() {
 				.text(`${i18next.t('system')}`)
 		}
 		display_labels();
+
+		open_tabs('statistics_container','suggestions_container');
 
 		function display_data(data) {
 			// console.log(data)

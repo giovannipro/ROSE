@@ -77,6 +77,8 @@ function load_data() {
         no_data()
     });
 
+    open_tabs('statistics_container','');
+
     function loaded(data) {
 
         function createChart() {
