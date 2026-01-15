@@ -34,8 +34,8 @@ function load_data() {
         d3.json(apiEndpoint_recapInfo)
     ])
     .then(([classData, classInfo, taskInfo, recapInfo]) => {
-        console.log(recapInfo)
-        console.log(classData)
+        // console.log(recapInfo)
+        // console.log(classData)
         
         classData.forEach(item => {
             // console.log(item)
@@ -66,6 +66,10 @@ function load_data() {
         loaded(classData)
         load_list(classData, 'total');
         highlight();
+
+        // statistics
+        load_statistics(recapInfo)
+        open_tabs('statistics_container','');
     })
     .catch(function (error) {
         if (error.message.includes("404")) {
@@ -76,8 +80,6 @@ function load_data() {
         }
         no_data()
     });
-
-    open_tabs('statistics_container','');
 
     function loaded(data) {
 
@@ -571,4 +573,81 @@ function no_data() {
             Prova a cercare un’altra classe.
         </div>
     `
+}
+
+function load_statistics(data){
+    const container_a = document.getElementById("statistics_a");
+    const container_b = document.getElementById("statistics_b");
+    // const container_c = document.getElementById("statistics_c");
+
+    // filter data
+    // --------------------------------------------
+    
+    const uniqueQueries = [...new Set(data.map(o => o.query))].sort((a, b) => a.localeCompare(b));
+    // console.log(uniqueQueries);
+
+    // const uniqueDomains = [...new Set(data.map(o => o.domain))];
+    // console.log(uniqueDomains);
+
+    const uniqueDomains = [...new Set(
+        data
+            .filter(item => !item.query || item.query.trim() === "")
+            .map(item => item.domain)
+        )]
+        .sort((a, b) => a.localeCompare(b));
+    // console.log(uniqueDomains);
+
+    // column A
+    // --------------------------------------------
+    let output_a = ''
+    
+    output_a += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('searches')}</strong></span>`;
+    output_a += '<hr/ style="border: 0.1px solid #ccc">'
+
+    output_a += '<table>'
+    output_a += `<tr><td>${i18next.t('queries_m')}</td></tr>`;
+
+    uniqueQueries.forEach(item => {
+        if (item != ''){
+            output_a += `<tr><td>- ${item}</td></tr>`;
+        }
+	});
+
+    output_a += '</table>'
+
+    // column B
+    // --------------------------------------------
+    let output_b = ''
+    
+    output_b += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('pages_m')}</strong></span>`;
+    output_b += '<hr/ style="border: 0.1px solid #ccc">'
+
+    output_b += '<table>'
+    output_b += `<tr><td>${i18next.t('domains')}</td></tr>`;
+
+    uniqueDomains.forEach(item => {
+        if (item != ''){
+            domain = item.replace(/^www\./, "")
+            output_b += `<tr><td>- <a href="https://${item}" target="blank">${domain}</a></td></tr>`;
+        }
+	});
+
+    output_b += '</table>'
+
+    // append content
+    // --------------------------------------------
+    container_a.innerHTML = output_a;
+    container_b.innerHTML = output_b;
+
+    // output_a += '<table>';
+	// output_a += `<tr>`;
+	// output_a += `<tr><td>- ${i18next.t('shortest')}</td>`;
+	// output_a += '<td>' + convertSecondsToMinutes(minSearchDuration) + '</td></tr>';
+	// output_a += `<tr><td>- ${i18next.t('average')}</td>`;
+	// output_a += '<td>' + convertSecondsToMinutes(avgSearchDuration) + '</td></tr>';
+	// output_a += `<tr><td>- ${i18next.t('longest')}</td>`;
+	// output_a += '<td>' + convertSecondsToMinutes(maxSearchDuration) + '</td></tr>';
+	// output_a += '<tr><td>&nbsp;</td></tr>';
+
+
 }

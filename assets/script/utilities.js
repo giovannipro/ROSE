@@ -217,7 +217,7 @@ function short_text(text,characters){
 }
 
 function open_tabs(tabA, tabB) {
-	console.log(12)
+
 	let open_stat = false;
 	let open_sugg = false;
 

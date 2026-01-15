@@ -28,7 +28,13 @@ i18next.init({
                 "pages": "pages",
 
                 "uniqueQueries": "unique queries",
-                "uniquePages": "unique pages"
+                "uniquePages": "unique pages",
+
+                "searches": "Searches",
+                "pages_m": "Pages",
+                "queries_m": "Queries",
+                "domains": "Domains",
+                "statistics": "Statistics"
             }
         },
         de: {
@@ -48,7 +54,12 @@ i18next.init({
                 "pages": "Seiten",
 
                 "uniqueQueries": "einzigartige Query",
-                "uniquePages": "einzigartige Seiten"
+                "uniquePages": "einzigartige Seiten",
+
+                "searches": "Suchen",
+                "queries_m": "Queries",
+                "domains": "Domänen",
+                "statistics": "Statistiken"
             }
         },
         it: {
@@ -68,7 +79,13 @@ i18next.init({
                 "pages": "pagine",
 
                 "uniqueQueries": "query uniche",
-                "uniquePages": "pagine uniche"
+                "uniquePages": "pagine uniche",
+
+                "searches": "Ricerche",
+                "queries_m": "Query",
+                "pages_m": "Pagine",
+                "domains": "Domini",
+                "statistics": "Statistiche"
             }
         }
     }
@@ -91,5 +108,7 @@ function updateContent() {
     document.getElementById('t_searchTime').textContent = i18next.t('searchTime');
     document.getElementById('t_pagesTime').textContent = i18next.t('pagesTime');
     document.getElementById('t_name').textContent = i18next.t('name');
+
+    document.getElementById('t_statistics').textContent = i18next.t('statistics');
     
 }
