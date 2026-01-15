@@ -15,10 +15,17 @@ aside {
     width: 65%;
     height: 45rem;
     /* min-height: 50vh; */
-    /* position: fixed; */
+    position: fixed;
     top: 5rem;
     right: 0;
     overflow: hidden;
+    z-index: -1;
+}
+
+.tab_content {
+    background-color: white;
+    margin: 0;
+    padding: 1rem;
 }
 
 @media print {
