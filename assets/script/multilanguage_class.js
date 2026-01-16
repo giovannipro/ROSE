@@ -53,6 +53,7 @@ i18next.init({
                 
                 "queries": "Queries",
                 "pages": "Seiten",
+                "pages_m": "Seiten",
 
                 "uniqueQueries": "einzigartige Query",
                 "uniquePages": "einzigartige Seiten",
