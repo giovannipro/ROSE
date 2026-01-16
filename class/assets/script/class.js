@@ -747,7 +747,7 @@ function load_statistics(data){
                 })
             }
             
-            let newOutput = '<tr><td><ul class="list">'
+            let newOutput = ''
             newSort.forEach(item => {
 
                 if (sortValue == 'query' || sortValue == 'count'){
@@ -777,7 +777,7 @@ function load_statistics(data){
 
         sortDomain.addEventListener('change', () => {
             sortValue = sortDomain.value;
-            console.log(sortValue)
+            // console.log(sortValue)
 
             if (sortValue == 'domain'){
                 newSort = domainsCount.sort((a, b) => {
@@ -811,7 +811,7 @@ function load_statistics(data){
                 })
             }
             
-            let newOutput = '<tr>'
+            let newOutput = ''
             newSort.forEach(item => {
                 // console.log(item)
 
