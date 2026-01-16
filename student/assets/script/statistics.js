@@ -27,15 +27,23 @@ function load_statistics(data) {
 	const newDomains = data.filter(item => item.action === 'NEW_RESULT').length;
 	const revisitedDomains = data.filter(item => item.action === 'SEEN_DOMAIN_RESULT').length;
 	const pages = data.filter(item => item.action === 'NEW_RESULT' || item.action === 'SAME_DOMAIN_RESULT' || item.action === 'SEEN_DOMAIN_RESULT').length;
-	// console.log()
+	
+	console.log(data)
+	const searchQueries = data.filter(item => item.page_type === 'SEARCH_ENGINE').map(item => ({ url: item.url, query: item.query, action: item.action, pageType: item.page_type }));
+	console.log(searchQueries)
 
-	const searchQueries = data.filter(item => item.page_type === 'SEARCH_ENGINE').map(item => ({ url: item.url, query: item.query }));
 	for (item of searchQueries){
-		the_url = decodeURIComponent(item.url);
-		item.query = clean_query(the_url)
+		// the_url = decodeURIComponent(item.url);
+		item.query = clean_query(item.url)
+		console.log(item.query)
 	}
+	
+	const searchQueries_a = searchQueries.filter(item => {
+		return item.query != null
+	})
+
 	const uniqueObjects = new Set();
-	const unique_queries = searchQueries.filter(item => {
+	const unique_queries = searchQueries_a.filter(item => {
 		if (!uniqueObjects.has(item.query)) {
 			uniqueObjects.add(item.query);
 			return true;
@@ -53,7 +61,7 @@ function load_statistics(data) {
 	const unique_websitesSort = unique_websites.sort((a, b) => {
         const cleanA = a.domain.replace(/^www\./, "");
         const cleanB = b.domain.replace(/^www\./, "");
-		
+
         return cleanA.localeCompare(cleanB);
     });
 

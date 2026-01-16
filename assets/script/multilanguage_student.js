@@ -68,7 +68,7 @@ i18next.init({
                 "hint": "Hint",
 
                 "error_message" : "Uhm. Unfortunately we got an error with the data loading. Please try again in a moment.",
-                "hints_error_message" : "Einen Moment bitte. Die Vorschläge für Sie werden gerade verarbeitet. Vielen Dank für Ihre Geduld!",
+                "hints_error_message" : "One moment please. Your suggestions are being processed. Thank you for your patience!",
 
                 "date" : "Date"
             }

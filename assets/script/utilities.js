@@ -147,25 +147,27 @@ function convertSecondsToMinutes(seconds) {
 
 function clean_query(url){
 	// console.log(url)
+	const params = new URL(url).searchParams;
+	const query = params.has("q") ? params.get("q") : null;
 
-	let url_c = ''
-	if (url.includes('q=')){
-		url_a = url.split('q=')[1];
+	// let url_c = ''
+	// if (url.includes('q=')){
+	// 	url_a = url.split('q=')[1];
 
-		if (url_a.includes('&')){
-			url_b = url_a.split('&')[0]
-		}
-		else {
-			url_b = url_a 
-		}
+	// 	if (url_a.includes('&')){
+	// 		url_b = url_a.split('&')[0]
+	// 	}
+	// 	else {
+	// 		url_b = url_a 
+	// 	}
 
-		url_c = url_b.replace(/\+/g,' ')
-	}
-	else {
-		url_c = url
-	}
+	// 	url_c = url_b.replace(/\+/g,' ')
+	// }
+	// else {
+	// 	url_c = url
+	// }
 
-	return url_c
+	return query
 }
 
 
