@@ -34,7 +34,8 @@ i18next.init({
                 "pages_m": "Pages",
                 "queries_m": "Queries",
                 "domains": "Domains",
-                "statistics": "Statistics"
+                "statistics": "Statistics",
+                "t_searchPages": "Searches and pages"
             }
         },
         de: {
@@ -59,7 +60,8 @@ i18next.init({
                 "searches": "Suchen",
                 "queries_m": "Queries",
                 "domains": "Domänen",
-                "statistics": "Statistiken"
+                "statistics": "Statistiken",
+                "t_searchPages" : "Suchen und Seiten"
             }
         },
         it: {
@@ -85,7 +87,8 @@ i18next.init({
                 "queries_m": "Query",
                 "pages_m": "Pagine",
                 "domains": "Domini",
-                "statistics": "Statistiche"
+                "statistics": "Statistiche",
+                "t_searchPages" : "Ricerche e pagine"
             }
         }
     }
@@ -109,6 +112,6 @@ function updateContent() {
     document.getElementById('t_pagesTime').textContent = i18next.t('pagesTime');
     document.getElementById('t_name').textContent = i18next.t('name');
 
-    document.getElementById('t_statistics').textContent = i18next.t('statistics');
+    document.getElementById('t_searchPages').textContent = i18next.t('t_searchPages');
     
 }
