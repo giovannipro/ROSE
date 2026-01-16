@@ -35,7 +35,7 @@ i18next.init({
                 "queries_m": "Queries",
                 "domains": "Domains",
                 "statistics": "Statistics",
-                "t_searchPages": "Searches and pages"
+                "t_searchPages": "Searches and domains"
             }
         },
         de: {
@@ -62,7 +62,7 @@ i18next.init({
                 "queries_m": "Queries",
                 "domains": "Domänen",
                 "statistics": "Statistiken",
-                "t_searchPages" : "Suchen und Seiten"
+                "t_searchPages" : "Suchen und Domänen"
             }
         },
         it: {
@@ -89,7 +89,7 @@ i18next.init({
                 "pages_m": "Pagine",
                 "domains": "Domini",
                 "statistics": "Statistiche",
-                "t_searchPages" : "Ricerche e pagine"
+                "t_searchPages" : "Ricerche e domini"
             }
         }
     }

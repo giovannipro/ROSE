@@ -580,11 +580,63 @@ function load_statistics(data){
     const container_b = document.getElementById("statistics_b");
     // const container_c = document.getElementById("statistics_c");
 
-    // filter data
+    // queries
     // --------------------------------------------
+
+    const onlyQueries = data.filter((item) => item.query != "")
+
+    const queriesCount = Object.values(
+        onlyQueries.reduce((acc, { query }) => {
+            acc[query] = acc[query] || { query, count: 0 };
+            acc[query].count += 1;
+            return acc;
+        }, {})
+    );
     
+    const queriesCount_sorted = queriesCount.sort((a, b) => {
+        if (b.count !== a.count) {
+            return b.count - a.count;
+        }
+
+        return a.query.localeCompare(b.query);
+    });
+    console.log(queriesCount_sorted)
+
+    // domains
+    // --------------------------------------------
+
+    const onlyDomains = data.filter((item) => item.domain != "")
+
+    // for (domain of onlyDomains){
+    //     console.log(domain.domain)
+    // }
+
+    const domainsCount = Object.values(
+        onlyDomains.reduce((acc, { domain }) => {
+            acc[domain] = acc[domain] || { domain, count: 0 };
+            acc[domain].count += 1;
+            return acc;
+        }, {})
+    );
+
+    const domainsCount_sorted = domainsCount.sort((a, b) => {
+        if (b.count !== a.count) {
+            return b.count - a.count;
+        }
+
+        const cleanA = a.domain.replace(/^www\./, "");
+        const cleanB = b.domain.replace(/^www\./, "");
+        
+        return cleanA.localeCompare(cleanB);
+    });
+    console.log(domainsCount_sorted)
+
+
+    // to be deleted
+    // --------------------------------------------
+
     const uniqueQueries = [...new Set(data.map(o => o.query))].sort((a, b) => a.localeCompare(b));
-    // console.log(uniqueQueries);
+    // console.log(data);
 
     // const uniqueDomains = [...new Set(data.map(o => o.domain))];
     // console.log(uniqueDomains);
@@ -610,28 +662,25 @@ function load_statistics(data){
     output_a += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('searches')}</strong></span>`;
     output_a += '<hr/ style="border: 0.1px solid #ccc">'
 
-    output_a += '<table>'
-    output_a += `<tr><td>${i18next.t('queries_m')}</td></tr>`;
+    output_a += '<table class="table_counters">'
 
-    output_a += '<tr><td><ul class="list">'
-    uniqueQueries.forEach(item => {
-        if (item != ''){
-            output_a += `<li>${item}</lir>`;
-        }
+    // output_a += '<tr><td><ul class="list">'
+    queriesCount_sorted.forEach(item => {
+        output_a += `<tr>
+            <td>${item.query}</td>
+            <td>${item.count}</td>
+        </tr>`;
 	});
-    output_a += '</ul></td></tr>'
-
     output_a += '</table>'
 
     // column B
     // --------------------------------------------
     let output_b = ''
     
-    output_b += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('pages_m')}</strong></span>`;
+    output_b += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('domains')}</strong></span>`;
     output_b += '<hr/ style="border: 0.1px solid #ccc">'
 
     output_b += '<table>'
-    output_b += `<tr><td>${i18next.t('domains')}</td></tr>`;
     
     output_b += '<tr><td><ul class="list">'
     uniqueDomainsSort.forEach(item => {

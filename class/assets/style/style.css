@@ -138,3 +138,20 @@ aside {
     z-index: 2;
     position: relative;
 }
+
+.table_counters {
+     border-collapse: collapse;
+}
+
+.table_counters td:nth-child(1) {
+    width: 80%;
+}
+
+.table_counters td {
+    vertical-align: top;
+    padding: 0.3rem 0;
+}
+
+.table_counters tr {
+    border-bottom: 0.1px solid #ccc;
+}

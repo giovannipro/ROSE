@@ -28,16 +28,15 @@ function load_statistics(data) {
 	const revisitedDomains = data.filter(item => item.action === 'SEEN_DOMAIN_RESULT').length;
 	const pages = data.filter(item => item.action === 'NEW_RESULT' || item.action === 'SAME_DOMAIN_RESULT' || item.action === 'SEEN_DOMAIN_RESULT').length;
 	
-	console.log(data)
 	const searchQueries = data.filter(item => item.page_type === 'SEARCH_ENGINE').map(item => ({ url: item.url, query: item.query, action: item.action, pageType: item.page_type }));
-	console.log(searchQueries)
+	// console.log(searchQueries)
 
 	for (item of searchQueries){
 		// the_url = decodeURIComponent(item.url);
 		item.query = clean_query(item.url)
-		console.log(item.query)
+		// console.log(item.query)
 	}
-	
+
 	const searchQueries_a = searchQueries.filter(item => {
 		return item.query != null
 	})
