@@ -636,25 +636,33 @@ function load_statistics(data){
     output_a += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('searches')}</strong></span>`;
     output_a += '<hr/ style="border: 0.1px solid #ccc">'
 
-    output_a += '<table class="table_counters">'
-
     output_a += `
         <div class="sort_tables">
-            <span style="font-size: 0.8rem; margin-right: 0.5rem;" id="t_sortBy">sort by</span>
-            <select id="get_sort" style="width: 80%;">
-                <option value="total" id="t_totalTime">count</option>
+            <span style="font-size: 0.8rem; margin-right: 0.5rem;" id="t_sortBy">
+                sort by
+            </span>
+            <select id="get_querySort" style="width: 80%;">
+                <option value="count" id="t_totalTime">count</option>
+                <option value="query" id="t_totalTime">query</option>
             </select>
         </div>
     `
+    // output_a += '<div id="queryTable">'
+    output_a += '<table id="queryTable" class="table_counters">'
 
-    // output_a += '<tr><td><ul class="list">'
+    // output_a += buildTable(queriesCountSort, 'query')
+    // console.log(queriesCountSort, buildTable(queriesCountSort, 'query'))
+
+    output_a += '<tr><td><ul class="list">'
     queriesCountSort.forEach(item => {
         output_a += `<tr>
             <td>${item.query}</td>
             <td>${item.total_count}</td>
         </tr>`;
 	});
+
     output_a += '</table>'
+    // output_a += '</div>'
 
     // column B
     // --------------------------------------------
@@ -689,4 +697,41 @@ function load_statistics(data){
     container_a.innerHTML = output_a;
     container_b.innerHTML = output_b;
 
+    function sortTables(){
+        const sortSelect = document.getElementById('get_querySort');
+        const container = document.getElementById('queryTable');
+
+        get_querySort.addEventListener('change', () => {
+            sortValue = sortSelect.value;
+            console.log(sortValue)
+
+
+            if (sortValue == 'query'){
+                newSort = queriesCount.sort((a, b) => {
+                    return a.query.localeCompare(b.query);
+                });
+            }
+            else if (sortValue == 'count'){
+                newSort = queriesCount.sort((a, b) => {
+                    if (b.total_count !== a.total_count) {
+                        return b.total_count - a.total_count;
+                    }
+
+                    return a.query.localeCompare(b.query);
+                });
+            }
+            
+            let newOutput = '<tr><td><ul class="list">'
+            newSort.forEach(item => {
+                newOutput += `<tr>
+                <td>${item.query}</td>
+                <td>${item.total_count}</td>
+                </tr>`;
+            });
+            
+            container.innerHTML = newOutput
+
+        });
+    }
+    sortTables()
 }

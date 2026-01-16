@@ -111,7 +111,7 @@ aside {
     margin-right: 0.5rem;
 }
 
-#get_sort {
+#get_sort, #get_querySort {
     height: 2rem;
     width: 10rem;
     border-radius: 4px;
@@ -157,8 +157,7 @@ aside {
 }
 
 .sort_tables {
-    border-bottom: 0.1px solid #ccc; 
-    padding: 0.3rem 0 0.7rem;
+    padding: 0.3rem 0 0.25rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
