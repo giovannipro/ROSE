@@ -576,6 +576,8 @@ function no_data() {
 }
 
 function load_statistics(data){
+    // console.log(data)
+
     const container_a = document.getElementById("statistics_a");
     const container_b = document.getElementById("statistics_b");
     // const container_c = document.getElementById("statistics_c");
@@ -586,42 +588,38 @@ function load_statistics(data){
     const onlyQueries = data.filter((item) => item.query != "")
 
     const queriesCount = Object.values(
-        onlyQueries.reduce((acc, { query }) => {
-            acc[query] = acc[query] || { query, count: 0 };
-            acc[query].count += 1;
+        onlyQueries.reduce((acc, { query, count }) => {
+            acc[query] ??= { query, total_count: 0 };
+            acc[query].total_count += count;
             return acc;
         }, {})
     );
-    
-    const queriesCount_sorted = queriesCount.sort((a, b) => {
-        if (b.count !== a.count) {
-            return b.count - a.count;
+
+    const queriesCountSort = queriesCount.sort((a, b) => {
+        if (b.total_count !== a.total_count) {
+            return b.total_count - a.total_count;
         }
 
         return a.query.localeCompare(b.query);
     });
-    console.log(queriesCount_sorted)
+    console.log(queriesCountSort)
 
     // domains
     // --------------------------------------------
 
-    const onlyDomains = data.filter((item) => item.domain != "")
-
-    // for (domain of onlyDomains){
-    //     console.log(domain.domain)
-    // }
+    const onlyDomains = data.filter((item) => item.domain != "" && item.query == "")
 
     const domainsCount = Object.values(
-        onlyDomains.reduce((acc, { domain }) => {
-            acc[domain] = acc[domain] || { domain, count: 0 };
-            acc[domain].count += 1;
+        onlyDomains.reduce((acc, { domain, count }) => {
+            acc[domain] ??= { domain, total_count: 0 };
+            acc[domain].total_count += count;
             return acc;
         }, {})
     );
 
-    const domainsCount_sorted = domainsCount.sort((a, b) => {
-        if (b.count !== a.count) {
-            return b.count - a.count;
+    const domainsCountSort = domainsCount.sort((a, b) => {
+        if (b.total_count !== a.total_count) {
+            return b.total_count - a.total_count;
         }
 
         const cleanA = a.domain.replace(/^www\./, "");
@@ -629,31 +627,7 @@ function load_statistics(data){
         
         return cleanA.localeCompare(cleanB);
     });
-    console.log(domainsCount_sorted)
-
-
-    // to be deleted
-    // --------------------------------------------
-
-    const uniqueQueries = [...new Set(data.map(o => o.query))].sort((a, b) => a.localeCompare(b));
-    // console.log(data);
-
-    // const uniqueDomains = [...new Set(data.map(o => o.domain))];
-    // console.log(uniqueDomains);
-
-    const uniqueDomains = [...new Set(
-        data
-            .filter(item => !item.query || item.query.trim() === "")
-            .map(item => item.domain)
-        )]
-    
-    const uniqueDomainsSort = uniqueDomains.sort((a, b) => {
-        const cleanA = a.replace(/^www\./, "");
-        const cleanB = b.replace(/^www\./, "");
-
-        return cleanA.localeCompare(cleanB);
-    });
-    // console.log(uniqueDomainsSort);
+    console.log(onlyDomains)
 
     // column A
     // --------------------------------------------
@@ -664,11 +638,20 @@ function load_statistics(data){
 
     output_a += '<table class="table_counters">'
 
+    output_a += `
+        <div class="sort_tables">
+            <span style="font-size: 0.8rem; margin-right: 0.5rem;" id="t_sortBy">sort by</span>
+            <select id="get_sort" style="width: 80%;">
+                <option value="total" id="t_totalTime">count</option>
+            </select>
+        </div>
+    `
+
     // output_a += '<tr><td><ul class="list">'
-    queriesCount_sorted.forEach(item => {
+    queriesCountSort.forEach(item => {
         output_a += `<tr>
             <td>${item.query}</td>
-            <td>${item.count}</td>
+            <td>${item.total_count}</td>
         </tr>`;
 	});
     output_a += '</table>'
@@ -680,17 +663,25 @@ function load_statistics(data){
     output_b += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('domains')}</strong></span>`;
     output_b += '<hr/ style="border: 0.1px solid #ccc">'
 
-    output_b += '<table>'
-    
-    output_b += '<tr><td><ul class="list">'
-    uniqueDomainsSort.forEach(item => {
-        if (item != ''){
-            domain = item.replace(/^www\./, "")
-            output_b += `<li><a href="https://${item}" target="blank">${domain}</a></li>`;
-        }
-	});
-    output_a += '</ul></td></tr>'
+    output_b += '<table class="table_counters">'
 
+    output_b += `
+        <div class="sort_tables">
+            <span style="font-size: 0.8rem; margin-right: 0.5rem;" id="t_sortBy">sort by</span>
+            <select id="get_sort" style="width: 80%;">
+                <option value="total" id="t_totalTime">count</option>
+            </select>
+        </div>
+    `
+    
+    domainsCountSort.forEach(item => {
+        domain = item.domain.replace(/^www\./, "")
+
+        output_b += `<tr>
+            <td><a href="https://${item.domain}" target="blank">${domain}</a></td>
+            <td>${item.total_count}</td>
+        </tr>`;
+	});
     output_b += '</table>'
 
     // append content

@@ -155,3 +155,11 @@ aside {
 .table_counters tr {
     border-bottom: 0.1px solid #ccc;
 }
+
+.sort_tables {
+    border-bottom: 0.1px solid #ccc; 
+    padding: 0.3rem 0 0.7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
