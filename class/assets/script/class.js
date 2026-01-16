@@ -641,14 +641,14 @@ function load_statistics(data){
 
     output_a += `
         <div class="sort_tables">
-            <span style="font-size: 0.8rem; margin-right: 0.5rem;" id="t_sortBy">
-                sort by
+            <span id="t_sortBy" style="font-size: 0.8rem; margin-right: 0.5rem;">
+                ${i18next.t('sortBy')}
             </span>
-            <select id="get_querySort" style="width: 80%;">
-                <option value="count" id="">count</option>
-                <option value="query" id="">query (alphabetical order)</option>
-                <option value="totTime" id="">total time (mm:ss)</option>
-                <option value="avgTime" id="">average time (mm:ss)</option>
+            <select id="get_querySort" class="table_sort">
+                <option value="count">${i18next.t('count')}</option>
+                <option value="query">${i18next.t('query')} (${i18next.t('alphabeticalOrder')})</option>
+                <option value="totTime">${i18next.t('totalTime')} (mm:ss)</option>
+                <option value="avgTime">${i18next.t('averageTime')} (mm:ss)</option>
             </select>
         </div>
     `
@@ -679,14 +679,14 @@ function load_statistics(data){
 
     output_b += `
         <div class="sort_tables">
-            <span style="font-size: 0.8rem; margin-right: 0.5rem;" id="t_sortBy">
-                sort by
+            <span id="t_sortBy" style="font-size: 0.8rem; margin-right: 0.5rem;">
+                ${i18next.t('sortBy')}
             </span>
-            <select id="get_domainSort" style="width: 80%;">
-                <option value="count" id="">count</option>
-                <option value="domain" id="">domain (alphabetical order)</option>
-                <option value="totTime" id="">total time (mm:ss)</option>
-                <option value="avgTime" id="">average time (mm:ss)</option>
+            <select id="get_domainSort" class="table_sort">
+                <option value="count">${i18next.t('count')}</option>
+                <option value="domain">${i18next.t('domain')} (${i18next.t('alphabeticalOrder')})</option>
+                <option value="totTime">${i18next.t('totalTime')} (mm:ss)</option>
+                <option value="avgTime">${i18next.t('averageTime')} (mm:ss)</option>
             </select>
         </div>
     `

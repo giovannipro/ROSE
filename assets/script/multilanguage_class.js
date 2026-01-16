@@ -35,7 +35,14 @@ i18next.init({
                 "queries_m": "Queries",
                 "domains": "Domains",
                 "statistics": "Statistics",
-                "t_searchPages": "Searches and domains"
+                "t_searchPages": "Searches and domains",
+
+                "count": "count",
+                "domain" : "domain",
+                "query" : "query",
+                "alphabeticalOrder" : "alphabetical order",
+                "totalTime" : "total time",
+                "averageTime" : "average time"
             }
         },
         de: {
@@ -62,7 +69,14 @@ i18next.init({
                 "queries_m": "Queries",
                 "domains": "Domänen",
                 "statistics": "Statistiken",
-                "t_searchPages" : "Suchen und Domänen"
+                "t_searchPages" : "Suchen und Domänen",
+
+                "count": "Zählung",
+                "domain" : "Domäne",
+                "query" : "Query",
+                "alphabeticalOrder" : "alphabetische Reihenfolge",
+                "totalTime" : "Gesamtzeit",
+                "averageTime" : "Durchschnittszeit"
             }
         },
         it: {
@@ -89,7 +103,14 @@ i18next.init({
                 "pages_m": "Pagine",
                 "domains": "Domini",
                 "statistics": "Statistiche",
-                "t_searchPages" : "Ricerche e domini"
+                "t_searchPages" : "Ricerche e domini",
+
+                "count": "conteggio",
+                "domain" : "dominio",
+                "query" : "query",
+                "alphabeticalOrder" : "ordine alfabetico",
+                "totalTime" : "tempo totale",
+                "averageTime" : "tempo medio"
             }
         }
     }
@@ -114,5 +135,6 @@ function updateContent() {
     document.getElementById('t_name').textContent = i18next.t('name');
 
     document.getElementById('t_searchPages').textContent = i18next.t('t_searchPages');
+
     
 }

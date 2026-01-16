@@ -59,7 +59,6 @@ i18next.init({
                 "queries": "Queries",
                 "search_engines": "Search engines",
                 "websites": "Websites",
-                "domains": "Domains",
                 "revisited": "revisited",
                 "new_m": "new",
 
@@ -121,7 +120,6 @@ i18next.init({
                 "queries": "Abfragen",
                 "search_engines": "Suchmaschinen",
                 "websites": "Webseiten",
-                "domains": "Domänen",
                 "revisited": "Bereits ergriffen",
                 "new_m": "Neue",
                 
@@ -183,7 +181,6 @@ i18next.init({
                 "queries": "Query",
                 "search_engines": "Motori di ricerca",
                 "websites": "Siti web",
-                "domains": "Domini",
                 "revisited": "già visitati",
                 "new_m": "nuovi",
                 

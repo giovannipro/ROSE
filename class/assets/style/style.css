@@ -113,7 +113,6 @@ aside {
 
 #get_sort, #get_querySort, #get_domainSort {
     height: 2rem;
-    width: 10rem;
     border-radius: 4px;
 }
 
@@ -168,4 +167,10 @@ aside {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.table_sort {
+    width: 70%;
+    font-size: 0.8rem; 
+    margin-right: 0.5rem;
 }
