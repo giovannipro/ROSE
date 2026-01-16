@@ -50,6 +50,13 @@ function load_statistics(data) {
 
 	const unique_websites = unique_web.filter((item, index, self) => index === self.findIndex((t) => t.domain === item.domain));
 
+	const unique_websitesSort = unique_websites.sort((a, b) => {
+        const cleanA = a.domain.replace(/^www\./, "");
+        const cleanB = b.domain.replace(/^www\./, "");
+		
+        return cleanA.localeCompare(cleanB);
+    });
+
 	uniq_engine = searchItems.map(item => {
 		const match = item.url.match(/https?:\/\/(?:www\.)?([^\/.]+)\./);
 		return match ? match[1] : null; // Return null if no match
@@ -159,7 +166,7 @@ function load_statistics(data) {
 	output_c += `<tr><td>${i18next.t('domains')}</td></tr>`;
 
 	output_c += '<tr><td><ul class="list">'
-	unique_websites.forEach(item => {
+	unique_websitesSort.forEach(item => {
 		output_c += '<li><a href="' + item.url + '" target="_blank">' + item.domain + '</a></li>'; //
 	});
 	output_c += '</ul></td></tr>'

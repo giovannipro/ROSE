@@ -649,15 +649,4 @@ function load_statistics(data){
     container_a.innerHTML = output_a;
     container_b.innerHTML = output_b;
 
-    // output_a += '<table>';
-	// output_a += `<tr>`;
-	// output_a += `<tr><td>- ${i18next.t('shortest')}</td>`;
-	// output_a += '<td>' + convertSecondsToMinutes(minSearchDuration) + '</td></tr>';
-	// output_a += `<tr><td>- ${i18next.t('average')}</td>`;
-	// output_a += '<td>' + convertSecondsToMinutes(avgSearchDuration) + '</td></tr>';
-	// output_a += `<tr><td>- ${i18next.t('longest')}</td>`;
-	// output_a += '<td>' + convertSecondsToMinutes(maxSearchDuration) + '</td></tr>';
-	// output_a += '<tr><td>&nbsp;</td></tr>';
-
-
 }
