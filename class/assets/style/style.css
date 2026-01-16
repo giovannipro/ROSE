@@ -14,12 +14,12 @@ aside {
 #container {
     width: 65%;
     height: 45rem;
-    /* min-height: 50vh; */
     position: fixed;
     top: 5rem;
     right: 0;
     overflow: hidden;
-    z-index: -1;
+    /* min-height: 50vh; */
+    /* z-index: -1; */
 }
 
 .tab_content {
@@ -132,4 +132,9 @@ aside {
 
 .blabel {
     cursor: pointer;
+}
+
+#statistics, #suggestions {
+    z-index: 2;
+    position: relative;
 }
