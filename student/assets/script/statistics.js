@@ -42,19 +42,14 @@ function load_statistics(data) {
 		}
 		return false;
 	});
-	// console.log(searchQueries)
-	// console.log(searchQueries)
-	// console.log(unique_queries)
 
-	// const websites = pageItems.map(item => item.url)
 	unique_web = pageItems.map(item => {
 		const url = new URL(item.url);
 		return { url: url.origin, domain: url.hostname.replace(/^www\./, '') };
 	});
-	// console.log(unique_web)
+
 	const unique_websites = unique_web.filter((item, index, self) => index === self.findIndex((t) => t.domain === item.domain));
 
-	// console.log(searchItems)
 	uniq_engine = searchItems.map(item => {
 		const match = item.url.match(/https?:\/\/(?:www\.)?([^\/.]+)\./);
 		return match ? match[1] : null; // Return null if no match
@@ -65,13 +60,15 @@ function load_statistics(data) {
 	let output_b = '';
 	let output_c = '';
 
+	// Time
+	// -----------------------------------------------
+
 	output_a += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('time')}</strong> (mm:ss)</span>`;
 	output_a += '<hr/ style="border: 0.1px solid #ccc">'
 	
 	output_a += '<table>';
 	output_a += `<tr><td>${i18next.t('total_cap')}</td>`;
 	output_a += '<td>' + convertSecondsToMinutes(pageDuration + searchDuration) + '</td></tr>'; // '<td>' + parseInt(pageDuration + searchDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration + searchDuration) + ' minutes</td></tr>'
-	// console.log(pageDuration, searchDuration)
 
 	output_a += "<tr><td colspan='2'>" + duration_chart(searchDuration, pageDuration, 100, 'student') + "</td></tr>";
 	output_a += '<tr><td>&nbsp;</td></tr>';
@@ -102,6 +99,9 @@ function load_statistics(data) {
 	output_a += '<tr><td>&nbsp;</td></tr>';
 	output_a += '</table>';
 
+	// Searches
+	// -----------------------------------------------
+
 	output_b += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('searches')}</strong></span>`;
 	output_b += '<hr/ style="border: 0.1px solid #ccc">'
 
@@ -126,37 +126,43 @@ function load_statistics(data) {
 
 	output_c += '<table>';
 	output_c += `<tr><td>${i18next.t('websites')}</td></tr>`;
-	// output_c += '<td>' + (newDomains + revisitedDomains) + '</td></tr>';
 	output_c += `<tr><td>- ${i18next.t('new_m')}</td>`;
 	output_c += '<td>' + newDomains + '</td></tr>';
 	output_c += `<tr><td>- ${i18next.t('revisited')}`;
 	output_c += '<td>' + revisitedDomains + '</td></tr>';
 	output_c += '</table>';
 
-
 	output_b += '<table style="margin-top: 1rem;">';
 	output_b += `<tr><td>${i18next.t('queries')}</td></tr>`;
-	// console.log(unique_queries)
+
+	output_b += '<tr><td><ul class="list">'
 	unique_queries.forEach(item => {
-		output_b += '<tr><td>- <a href="' + item.url + '" target="_blank">' + item.query + '</a></td></tr>';
+		output_b += '<li><a href="' + item.url + '" target="_blank">' + item.query + '</a></li>';
 	});
+	output_b += '</ul></td></tr>'
 	output_b += '</table>';
 
 	output_b += '<table style="margin-top: 1.5rem;">';
 	output_b += `<tr><td>${i18next.t('search_engines')}</td></tr>`;
+
+	output_b += '<tr><td><ul class="list">'
 	unique_searchEngines.forEach(item => {
-		output_b += '<tr><td>- ' + search_engine(item) + '</td></tr>';
+		output_b += '<li>' + search_engine(item) + '</li>';
 	});
-	output_b += '<tr><td>&nbsp;</td></tr>';
+	output_b += '</ul></td></tr>'
 	output_b += '</table>';
+
+	// Pages
+	// -----------------------------------------------
 
 	output_c += '<table style="margin-top: 1.5rem;">';
 	output_c += `<tr><td>${i18next.t('domains')}</td></tr>`;
+
+	output_c += '<tr><td><ul class="list">'
 	unique_websites.forEach(item => {
-		output_c += '<tr><td>- <a href="' + item.url + '" target="_blank">' + item.domain + '</a></td><tr>'; //
+		output_c += '<li><a href="' + item.url + '" target="_blank">' + item.domain + '</a></li>'; //
 	});
-	output_c += '<tr><td>&nbsp;</td></tr>';
-	output_c += '</tr>';
+	output_c += '</ul></td></tr>'
 	output_c += '</table>';
 
 	container_a.innerHTML = output_a;

@@ -169,10 +169,14 @@ td {
 	white-space: wrap;
 }
 
+.list {
+    padding-left: 1rem;
+    margin: 0
+}
+
 @media only screen and (max-width: 725px) {
 	#statistics_container .tab_content, #suggestions_container .tab_content {
 		display: block;
-		/* width: 100%; */
 	}
 
 	.statistics_box {
