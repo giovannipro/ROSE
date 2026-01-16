@@ -285,3 +285,12 @@ function parseDate(str) {
   const fixedStr = str.replace(' ', 'T').replace(/(\.\d{3})\d+/, '$1');
   return new Date(fixedStr);
 }
+
+function secondsToMMSS(seconds){
+	const totalSeconds = Math.floor(seconds);
+	const minutes = Math.floor(totalSeconds / 60);
+	const remainingSeconds = totalSeconds % 60;
+
+	return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
+
+}

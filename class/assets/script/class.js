@@ -588,9 +588,11 @@ function load_statistics(data){
     const onlyQueries = data.filter((item) => item.query != "")
 
     const queriesCount = Object.values(
-        onlyQueries.reduce((acc, { query, count }) => {
-            acc[query] ??= { query, total_count: 0 };
+        onlyQueries.reduce((acc, { query, count, sum_time_diff_seconds, avg_time_diff_seconds }) => {
+            acc[query] ??= { query, total_count: 0, totTime: 0, avgTime: 0 };
             acc[query].total_count += count;
+            acc[query].totTime += sum_time_diff_seconds;
+            acc[query].avgTime += avg_time_diff_seconds;
             return acc;
         }, {})
     );
@@ -602,7 +604,7 @@ function load_statistics(data){
 
         return a.query.localeCompare(b.query);
     });
-    console.log(queriesCountSort)
+    // console.log(queriesCountSort)
 
     // domains
     // --------------------------------------------
@@ -627,7 +629,7 @@ function load_statistics(data){
         
         return cleanA.localeCompare(cleanB);
     });
-    console.log(onlyDomains)
+    // console.log(onlyDomains)
 
     // column A
     // --------------------------------------------
@@ -642,8 +644,10 @@ function load_statistics(data){
                 sort by
             </span>
             <select id="get_querySort" style="width: 80%;">
-                <option value="count" id="t_totalTime">count</option>
-                <option value="query" id="t_totalTime">query</option>
+                <option value="count" id="">count</option>
+                <option value="query" id="">query (alphabetical order)</option>
+                <option value="totTime" id="">total time (mm:ss)</option>
+                <option value="avgTime" id="">average time (mm:ss)</option>
             </select>
         </div>
     `
@@ -673,14 +677,14 @@ function load_statistics(data){
 
     output_b += '<table class="table_counters">'
 
-    output_b += `
-        <div class="sort_tables">
-            <span style="font-size: 0.8rem; margin-right: 0.5rem;" id="t_sortBy">sort by</span>
-            <select id="get_sort" style="width: 80%;">
-                <option value="total" id="t_totalTime">count</option>
-            </select>
-        </div>
-    `
+    // output_b += `
+    //     <div class="sort_tables">
+    //         <span style="font-size: 0.8rem; margin-right: 0.5rem;" id="t_sortBy">sort by</span>
+    //         <select id="get_sort" style="width: 80%;">
+    //             <option value="total" id="t_totalTime">count</option>
+    //         </select>
+    //     </div>
+    // `
     
     domainsCountSort.forEach(item => {
         domain = item.domain.replace(/^www\./, "")
@@ -703,8 +707,7 @@ function load_statistics(data){
 
         get_querySort.addEventListener('change', () => {
             sortValue = sortSelect.value;
-            console.log(sortValue)
-
+            // console.log(sortValue)
 
             if (sortValue == 'query'){
                 newSort = queriesCount.sort((a, b) => {
@@ -720,12 +723,37 @@ function load_statistics(data){
                     return a.query.localeCompare(b.query);
                 });
             }
+            else if (sortValue == 'totTime'){
+                newSort = queriesCount.sort((a, b) => {
+                    if (b.totTime !== a.totTime) {
+                        return b.totTime - a.totTime;
+                    }
+                })
+            }
+            else if (sortValue == 'avgTime'){
+                newSort = queriesCount.sort((a, b) => {
+                    if (b.avgTime !== a.avgTime) {
+                        return b.avgTime - a.avgTime;
+                    }
+                })
+            }
             
             let newOutput = '<tr><td><ul class="list">'
             newSort.forEach(item => {
+
+                if (sortValue == 'query' || sortValue == 'count'){
+                    value = item.total_count
+                }
+                else if (sortValue == 'totTime') {
+                    value = secondsToMMSS(item.totTime)
+                }
+                else if (sortValue == 'avgTime') {
+                    value = secondsToMMSS(item.avgTime)
+                }
+
                 newOutput += `<tr>
-                <td>${item.query}</td>
-                <td>${item.total_count}</td>
+                    <td>${item.query}</td>
+                    <td>${value}</td>
                 </tr>`;
             });
             
