@@ -277,3 +277,9 @@ function formatDate(input) { //2025-04-03 12:48:32.983000+00:00
 	const [year, month, day] = datePart.split('-');
 	return `${day}-${month}-${year}`;
 }
+
+function parseDate(str) {
+  // Keep milliseconds (first 3 digits of microseconds)
+  const fixedStr = str.replace(' ', 'T').replace(/(\.\d{3})\d+/, '$1');
+  return new Date(fixedStr);
+}

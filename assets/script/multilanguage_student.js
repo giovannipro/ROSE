@@ -68,8 +68,9 @@ i18next.init({
                 "hint": "Hint",
 
                 "error_message" : "Uhm. Unfortunately we got an error with the data loading. Please try again in a moment.",
-                "hints_error_message" : "Einen Moment bitte. Die Vorschläge für Sie werden gerade verarbeitet. Vielen Dank für Ihre Geduld!"
+                "hints_error_message" : "Einen Moment bitte. Die Vorschläge für Sie werden gerade verarbeitet. Vielen Dank für Ihre Geduld!",
 
+                "date" : "Date"
             }
         },
         de: {
@@ -129,7 +130,9 @@ i18next.init({
                 "hint": "Tipp",
 
                 "error_message" : "Ähm… Leider ist beim Laden der Daten ein Fehler aufgetreten. Bitte versuche es in einem Moment erneut.",
-                "hints_error_message" : "Uhm. Leider ist beim Laden der Hinweise ein Fehler aufgetreten. Bitte versuchen Sie es in einem Moment noch einmal."
+                "hints_error_message" : "Uhm. Leider ist beim Laden der Hinweise ein Fehler aufgetreten. Bitte versuchen Sie es in einem Moment noch einmal.",
+                
+                "date" : "Daten"
             }
         },
         it: {
@@ -189,7 +192,9 @@ i18next.init({
                 "hint": "Suggerimento",
 
                 "error_message" : "Ops. Purtroppo si è verificato un errore nel caricamento dei dati. Per favore riprova tra un momento.",
-                "hints_error_message" : "Un momento per favore. I suggerimenti per te sono attualmente in fase di elaborazione. Grazie per la tua pazienza!"
+                "hints_error_message" : "Un momento per favore. I suggerimenti per te sono attualmente in fase di elaborazione. Grazie per la tua pazienza!",
+                
+                "date" : "Data"
             }
         }
     }

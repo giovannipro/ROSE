@@ -44,14 +44,34 @@ function load_data() {
 		d3.json(apiEndpoint_taskInfo)
     ])
 	.then(([studentData, studentInfo, taskInfo]) => {
-		// console.log(studentData)
+		console.log(studentData)
+
 		loaded(studentData)
 
 		const username = studentInfo.username.split("#")[0];
-		document.getElementById("the_user").innerHTML = username;
-		// document.getElementById("the_task").innerHTML = studentData[0].task_id;
 
+		start_date = parseDate(studentData[0].time)
+		end_date = parseDate(studentData[studentData.length-1].time)
+
+		function isDifferentDay(d, referenceDate) {
+
+			return d.getUTCFullYear() !== referenceDate.getUTCFullYear() ||
+				d.getUTCMonth() !== referenceDate.getUTCMonth() ||
+				d.getUTCDate() !== referenceDate.getUTCDate();
+		}
+
+		the_date = formatDate(studentData[0].time)
+		d1 = formatDate(studentData[0].time)
+		d2 = formatDate(studentData[studentData.length-1].time)
+		if (isDifferentDay(start_date, end_date)) {
+			the_date = `${d1} — ${d2}`
+			console.log("The day is different", d1, d2);
+		}
+		// console.log(start_date, end_date)
+
+		document.getElementById("the_user").innerHTML = username;
 		document.getElementById("the_task").innerHTML = `${taskInfo.title} (id: ${task_id})`;
+		document.getElementById("the_date").innerHTML = `${the_date}`;
 	})
 	.catch(function (error) {
 		
