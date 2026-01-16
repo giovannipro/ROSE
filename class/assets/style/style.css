@@ -111,7 +111,7 @@ aside {
     margin-right: 0.5rem;
 }
 
-#get_sort, #get_querySort {
+#get_sort, #get_querySort, #get_domainSort {
     height: 2rem;
     width: 10rem;
     border-radius: 4px;
@@ -139,11 +139,18 @@ aside {
     position: relative;
 }
 
-.table_counters {
-     border-collapse: collapse;
+#statistics {
+    margin-bottom: 2rem;
 }
 
-.table_counters td:nth-child(1) {
+.table_counters {
+    border-collapse: collapse;
+    margin: 0.75rem 0 0;
+    border-top: 0.1px solid #ccc;
+    margin-bottom: 2rem;
+}
+
+#domainTable td:nth-child(1), #queryTable td:nth-child(1) {
     width: 80%;
 }
 
