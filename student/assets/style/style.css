@@ -185,9 +185,9 @@ table {
 }
 
 td {
-	white-space: nowrap;
+	/* white-space: nowrap; 
+	text-overflow: ellipsis;*/
 	overflow: hidden;
-	text-overflow: ellipsis;
 }
 
 td:first-child {
