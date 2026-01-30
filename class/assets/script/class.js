@@ -68,7 +68,7 @@ function load_data() {
         highlight();
 
         // statistics
-        load_statistics(recapInfo)
+        load_statistics(recapInfo, classData)
         open_tabs('statistics_container','');
     })
     .catch(function (error) {
@@ -575,8 +575,8 @@ function no_data() {
     `
 }
 
-function load_statistics(data){
-    // console.log(data)
+function load_statistics(data, classData){
+    // console.log(classData)
 
     const container_a = document.getElementById("statistics_a");
     const container_b = document.getElementById("statistics_b");
@@ -631,6 +631,45 @@ function load_statistics(data){
         return cleanA.localeCompare(cleanB);
     });
     // console.log(onlyDomains)
+
+    // unique users
+    // --------------------------------------------
+
+    // console.log(classData)
+
+    const domains = classData.map(({ user_id, S_ResultDomain_List }) => ({
+        user_id,
+        domains: JSON.parse(S_ResultDomain_List.replace(/'/g, '"')),
+    }));
+    // console.log(domains);
+
+    const domainUsersMap = domains.reduce((acc, { user_id, domains }) => {
+        domains.forEach(domain => {
+            if (!acc[domain]) {
+            acc[domain] = new Set();
+            }
+            acc[domain].add(user_id);
+        });
+        return acc;
+    }, {});
+    // console.log(domainUsersMap)
+
+    // get unique users per domain
+    const result = Object.entries(domainUsersMap).map(
+        ([domain, usersSet]) => ({
+            domain,
+            users: usersSet.size,
+        })
+    );
+    
+    result.sort((a, b) => {
+        if (b.users !== a.users) {
+            return b.users - a.users; // users DESC
+        }
+        return a.domain.localeCompare(b.domain); // domain ASC
+    });
+
+    console.log(result);
 
     // column A
     // --------------------------------------------
