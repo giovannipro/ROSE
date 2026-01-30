@@ -609,6 +609,7 @@ function load_statistics(data, classData){
     // --------------------------------------------
 
     const onlyDomains = data.filter((item) => item.domain != "" && item.query == "")
+    // console.log(onlyDomains)
 
     const domainsCount = Object.values(
         onlyDomains.reduce((acc, { domain, count, sum_time_diff_seconds, avg_time_diff_seconds }) => {
@@ -630,7 +631,7 @@ function load_statistics(data, classData){
         
         return cleanA.localeCompare(cleanB);
     });
-    // console.log(onlyDomains)
+    console.log(domainsCountSort)
 
     // unique users
     // --------------------------------------------
