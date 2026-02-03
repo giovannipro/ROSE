@@ -294,3 +294,48 @@ function secondsToMMSS(seconds){
 	return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
 
 }
+
+function checkAction(action){
+	// console.log(action)
+
+	category = 'unknown'
+	subcategory = ''
+
+	if (
+		action == 'SAME_DOMAIN_RESULT' || 
+		action == 'SEEN_DOMAIN_RESULT' || 
+		action == 'NEW_RESULT')
+		{
+			category = 'page'
+	}
+	else {
+
+		category = 'search'
+
+		if (
+			action == 'NEW_SEARCH' ||  // new
+			action == 'NEW_SEARCH_SAME_ENGINE' || 
+			action == 'NEW_SEARCH_SEEN_ENGINE'
+			)
+			{
+				subcategory = 'new'
+		}
+		else if (
+			action == 'SAME_SEARCH_SEEN_ENGINE' ||  // reused
+			action == 'SAME_SEARCH_NEW_ENGINE' || 
+			action == 'SAME_SEARCH' || 
+			action == 'SEEN_SEARCH' ||
+			action == 'SEEN_SEARCH_SEEN_ENGINE' ||
+			action == 'SEEN_SEARCH_NEW_ENGINE'
+			)
+			{
+				subcategory = 'reused'
+		}
+		else if (action == 'REFINE_SEARCH') {
+			subcategory = 'refine'
+		}
+			
+	}
+
+	return [category, subcategory]
+}

@@ -386,7 +386,11 @@ function load_data() {
 				.attr("fill", (d) => {
 					let color = color_system; //'#dbdbdb';
 
-					if (d.action == "TASK_STARTED" || d.action == "PRE_SURVEY_STARTED" || d.action == "PRE_SURVEY_ENDED" || d.action == 'POST_SURVEY_STARTED' || d.action == "NEW_TAB" || d.action == "SEARCH_STARTED" || d.action == "SEARCH_ENDED" || d.action == "SEARCH_RESUMED" || d.action == "POST_SURVEY_ENDED") {
+					const category = checkAction(d.action)
+					// console.log(category)
+					
+					// page
+					if (category == 'page') {
 						color = color_system;
 					}
 
@@ -651,8 +655,12 @@ function load_data() {
 				const class_ = (domain.getAttribute("data-class")).toString();
 				if (class_ == 'strip'){
 
+					const category = checkAction(action)[0]
+					const subcategory = checkAction(action)[1]
+					// console.log(category,subcategory)
+					
 					// page
-					if (action == 'SAME_DOMAIN_RESULT' || action == 'SEEN_DOMAIN_RESULT' || action == 'NEW_RESULT') {
+					if (category == 'page') {
 						the_url = short_text(url,120)
 						
 						if (domainStatus == "SEEN") {
@@ -666,14 +674,14 @@ function load_data() {
 					}
 
 					// search
-					else if (action == 'NEW_SEARCH' || action == 'NEW_SEARCH_SAME_ENGINE' || action == 'SAME_SEARCH' || action == 'REFINE_SEARCH' || action == 'SEEN_SEARCH') { // NEW_SEARCH_SAME_ENGINE
-						let the_domain = get_query(url) //decodeURIComponent(url);
+					else if (category == 'search') {
+						const the_domain = get_query(url) //decodeURIComponent(url);
 
 						let seen = '';
-						if (action == "SAME_SEARCH" || action == "SEEN_SEARCH") { // reused
+						if (subcategory == 'reused'){
 							seen = `(${i18next.t('reused_query')})`;
 						}
-						if (action == "REFINE_SEARCH") {
+						else if (subcategory == 'refine') {
 							seen = `(${i18next.t('modified_query')})`;
 						}
 						
@@ -681,8 +689,7 @@ function load_data() {
 						output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
 					}
 
-					else    { // if (action == "UNkNOWN")
-						// console.log('unknown', action)	
+					else    { //unknown action
 						output = `<span>${i18next.t('unknown_action')}</span><br/>`;
 					}
 				}
