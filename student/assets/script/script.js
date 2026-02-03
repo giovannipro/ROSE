@@ -365,6 +365,7 @@ function load_data() {
 				})
 				.attr("height", (d) => {
 					let height = (strip_height / 4) - (interline);
+
 					if (d.page_type == 'SEARCH_ENGINE') {
 						if(d.action == 'UNKNOWN'){
 							height = other_height - interline
@@ -386,18 +387,18 @@ function load_data() {
 					let color = color_system; //'#dbdbdb';
 
 					if (d.action == "TASK_STARTED" || d.action == "PRE_SURVEY_STARTED" || d.action == "PRE_SURVEY_ENDED" || d.action == 'POST_SURVEY_STARTED' || d.action == "NEW_TAB" || d.action == "SEARCH_STARTED" || d.action == "SEARCH_ENDED" || d.action == "SEARCH_RESUMED" || d.action == "POST_SURVEY_ENDED") {
-						color = color_system; //'#dbdbdb'; // #afafaf #9aa4ac
+						color = color_system;
 					}
 
 					// search
-					else if (d.action == "NEW_SEARCH" || d.action == "NEW_SEARCH_SAME_ENGINE") { // new
+					else if (d.action == "NEW_SEARCH" || d.action == "NEW_SEARCH_SAME_ENGINE"  || d.action == "NEW_SEARCH_SEEN_ENGINE") { // new
 						color = color_newQuery;
 					}
-					else if (d.action == "SAME_SEARCH" || d.action == "SEEN_SEARCH") { // reused
-						color = colorReuded_query // '#90b8df'; // '#85DAE9'
+					else if (d.action == "SAME_SEARCH" || d.action == "SAME_SEARCH_SEEN_ENGINE" || d.action == "SAME_SEARCH_NEW_ENGINE" || d.action == "SEEN_SEARCH_NEW_ENGINE" || d.action == "SEEN_SEARCH_SEEN_ENGINE") { // reused 
+						color = colorReuded_query;
 					}
 					else if (d.action == "REFINE_SEARCH") { // revised
-						color = colorModifiedQuery // '#C8DFF4';
+						color = colorModifiedQuery;
 					}
 
 					// pages
@@ -665,7 +666,7 @@ function load_data() {
 					}
 
 					// search
-					else if (action == 'NEW_SEARCH' || action == 'NEW_SEARCH_SAME_ENGINE' || action == 'SAME_SEARCH' || action == 'REFINE_SEARCH' || action == 'SEEN_SEARCH') {
+					else if (action == 'NEW_SEARCH' || action == 'NEW_SEARCH_SAME_ENGINE' || action == 'SAME_SEARCH' || action == 'REFINE_SEARCH' || action == 'SEEN_SEARCH') { // NEW_SEARCH_SAME_ENGINE
 						let the_domain = get_query(url) //decodeURIComponent(url);
 
 						let seen = '';
