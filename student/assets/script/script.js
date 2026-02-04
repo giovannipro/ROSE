@@ -398,7 +398,7 @@ function load_data() {
 					else if (d.action == "NEW_SEARCH" || d.action == "NEW_SEARCH_SAME_ENGINE"  || d.action == "NEW_SEARCH_SEEN_ENGINE") { // new
 						color = color_newQuery;
 					}
-					else if (d.action == "SAME_SEARCH" || d.action == "SAME_SEARCH_SEEN_ENGINE" || d.action == "SAME_SEARCH_NEW_ENGINE" || d.action == "SEEN_SEARCH_NEW_ENGINE" || d.action == "SEEN_SEARCH_SEEN_ENGINE") { // reused 
+					else if (d.action == "SAME_SEARCH"  || d.action == "SEEN_SEARCH" || d.action == "SAME_SEARCH_SEEN_ENGINE" || d.action == "SAME_SEARCH_NEW_ENGINE" || d.action == "SEEN_SEARCH_NEW_ENGINE" || d.action == "SEEN_SEARCH_SEEN_ENGINE") { // reused 
 						color = colorReuded_query;
 					}
 					else if (d.action == "REFINE_SEARCH") { // revised
@@ -409,7 +409,6 @@ function load_data() {
 					else if (d.action == "NEW_RESULT" || d.action == "SAME_DOMAIN_RESULT" || d.action == "SEEN_DOMAIN_RESULT") {
 						
 						const domain = d.domain.replace('www.','')
-						console.log(domain)
 
 						if (
 							domain == 'chatgpt.com' || 
@@ -680,13 +679,13 @@ function load_data() {
 						the_url = short_text(url,120)
 						
 						if (domainStatus == "SEEN") {
-							output = `<span><a href="${url}" target="_blank">${the_url}</a><span style="color: gray"> (already seen)</span></span><br/>`;
+							output = `<div><a href="${url}" target="_blank">${the_url}</a><span style="color: gray; margin-top: 0.25rem;"> (already seen)</span></div>`;
 						}
 						else {
-							output = `<span><a href="${url}" target="_blank">${the_url}</a></span><br/>`;
+							output = `<div><a href="${url}" target="_blank">${the_url}</a></div>`;
 						}
 
-						output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
+						output += `<div style="color: gray; margin-top: 0.25rem;">${convertSecondsToMinutes(duration)}<div>`;
 					}
 
 					// search
