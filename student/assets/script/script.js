@@ -407,8 +407,24 @@ function load_data() {
 
 					// pages
 					else if (d.action == "NEW_RESULT" || d.action == "SAME_DOMAIN_RESULT" || d.action == "SEEN_DOMAIN_RESULT") {
+						
+						const domain = d.domain.replace('www.','')
+						console.log(domain)
 
-						if (d.domain == 'chatgpt.com' || d.domain == 'deepseek.com' || d.domain == 'claude.ai' || d.domain == 'gemini.google.com' || d.domain == 'copilot.microsoft.com' || d.domain == 'meta.ai') {
+						if (
+							domain == 'chatgpt.com' || 
+							domain == 'deepseek.com' || 
+							domain == 'claude.ai' || 
+							domain == 'gemini.google.com' || 
+							domain == 'copilot.microsoft.com' ||
+							domain == 'meta.ai' || 
+							domain == 'perplexity.ai' ||
+							domain == 'duck.ai' ||
+							domain == 'chaton.ai' ||
+							domain == 'chat.chaton.ai' ||
+							domain == 'grok.com'
+							) 
+							{
 							color = chatbot_color 
 						}
 						else {
