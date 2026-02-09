@@ -16,7 +16,6 @@ function load_data() {
 
 	const clazz_id = urlParams.get('clazz_id');
     const task_id = urlParams.get('task_id');
-    // const lang = urlParams.get('lang');
 
 	// const apiEndpoint_class = `assets/data/${clazz_id}_task_${task_id}_aggregated_stats.csv`
     const apiEndpoint_class = `https://search.rose.education/api/analytics/aggregated-stories-extraction?clazz_id=${clazz_id}&task_id=${task_id}`
@@ -431,7 +430,7 @@ function load_list(data, sort){
             // console.log(student, student_name)
 
             // link to the student page ---------------- 
-            const student_page = `https://search.rose.education/dashboard?userId=${user_id}&taskId=${task_id}` // clazzId=${clazz_id}
+            const student_page = `https://search.rose.education/dashboard?userId=${user_id}&taskId=${task_id}&username=${student_name}` // clazzId=${clazz_id}
             
             // ------------------------------------------ 
 
@@ -631,7 +630,7 @@ function load_statistics(data, classData){
         
         return cleanA.localeCompare(cleanB);
     });
-    console.log(domainsCountSort)
+    // console.log(domainsCountSort)
 
     // unique users
     // --------------------------------------------
@@ -669,8 +668,7 @@ function load_statistics(data, classData){
         }
         return a.domain.localeCompare(b.domain); // domain ASC
     });
-
-    console.log(result);
+    // console.log(result);
 
     // column A
     // --------------------------------------------

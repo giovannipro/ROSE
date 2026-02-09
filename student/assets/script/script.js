@@ -26,7 +26,7 @@ function load_data() {
 	const user_id = urlParams.get('user_id');
     const task_id = urlParams.get('task_id');
 	// const lang = urlParams.get('lang');
-	// console.log(lang)
+	
 
 	// const apiEndpoint_student = `assets/data/_stats_${user_id}_${task_id}.csv` 
 	const apiEndpoint_student =  `https://search.rose.education/api/analytics/stories-extraction?user_id=${user_id}&task_id=${task_id}`;
@@ -49,6 +49,7 @@ function load_data() {
 		loaded(studentData)
 
 		const username = studentInfo.username.split("#")[0];
+		// console.log(username_id, username)
 
 		start_date = parseDate(studentData[0].time)
 		end_date = parseDate(studentData[studentData.length-1].time)
