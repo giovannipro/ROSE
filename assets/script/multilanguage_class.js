@@ -37,12 +37,13 @@ i18next.init({
                 "statistics": "Statistics",
                 "t_searchPages": "Searches and domains",
 
-                "count": "count",
-                "domain" : "domain",
-                "query" : "query",
-                "alphabeticalOrder" : "alphabetical order",
-                "totalTime" : "total time",
-                "averageTime" : "average time"
+                "count": "hit",
+                "domain": "domain",
+                "query": "query",
+                "alphabeticalOrder":  "alphabetical order",
+                "totalTime": "total time",
+                "averageTime": "average time",
+                "uniqueUsers": "unique users"
             }
         },
         de: {
@@ -76,7 +77,8 @@ i18next.init({
                 "query" : "Query",
                 "alphabeticalOrder" : "alphabetische Reihenfolge",
                 "totalTime" : "Gesamtzeit",
-                "averageTime" : "Durchschnittszeit"
+                "averageTime" : "Durchschnittszeit",
+                "uniqueUsers": "unique users"
             }
         },
         it: {
@@ -110,7 +112,8 @@ i18next.init({
                 "query" : "query",
                 "alphabeticalOrder" : "ordine alfabetico",
                 "totalTime" : "tempo totale",
-                "averageTime" : "tempo medio"
+                "averageTime" : "tempo medio",
+                "uniqueUsers": "unique users"
             }
         }
     }

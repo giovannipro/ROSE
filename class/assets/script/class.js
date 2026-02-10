@@ -33,7 +33,7 @@ function load_data() {
         d3.json(apiEndpoint_recapInfo)
     ])
     .then(([classData, classInfo, taskInfo, recapInfo]) => {
-        console.log(recapInfo)
+        // console.log(recapInfo)
         // console.log(classData)
         
         classData.forEach(item => {
@@ -575,7 +575,8 @@ function no_data() {
 }
 
 function load_statistics(data, classData){
-    console.log(classData)
+    // console.log(data)
+    // console.log(classData)
 
     const container_a = document.getElementById("statistics_a");
     const container_b = document.getElementById("statistics_b");
@@ -585,24 +586,27 @@ function load_statistics(data, classData){
     // --------------------------------------------
 
     const onlyQueries = data.filter((item) => item.query != "")
+    // console.log(onlyQueries)
 
     const queriesCount = Object.values(
-        onlyQueries.reduce((acc, { query, count, sum_time_diff_seconds, avg_time_diff_seconds }) => {
-            acc[query] ??= { query, total_count: 0, totTime: 0, avgTime: 0 };
-            acc[query].total_count += count;
+        onlyQueries.reduce((acc, { query, count, sum_time_diff_seconds, avg_time_diff_seconds, user_count_for_domain_query }) => {
+            acc[query] ??= { query, hits: 0, totTime: 0, avgTime: 0, unique_users: 0 };
+            acc[query].hits += count;
             acc[query].totTime += sum_time_diff_seconds;
             acc[query].avgTime += avg_time_diff_seconds;
+            acc[query].unique_users += user_count_for_domain_query;
             return acc;
         }, {})
     );
 
     const queriesCountSort = queriesCount.sort((a, b) => {
-        if (b.total_count !== a.total_count) {
-            return b.total_count - a.total_count;
+        if (b.hits !== a.hits) {
+            return b.hits - a.hits;
         }
 
         return a.query.localeCompare(b.query);
     });
+    // console.log(queriesCountSort)
 
     // domains
     // --------------------------------------------
@@ -611,18 +615,20 @@ function load_statistics(data, classData){
     // console.log(onlyDomains)
 
     const domainsCount = Object.values(
-        onlyDomains.reduce((acc, { domain, count, sum_time_diff_seconds, avg_time_diff_seconds }) => {
-            acc[domain] ??= { domain, total_count: 0, totTime: 0, avgTime: 0 };
-            acc[domain].total_count += count;
+        onlyDomains.reduce((acc, { domain, count, sum_time_diff_seconds, avg_time_diff_seconds, user_count_for_domain_query }) => {
+            acc[domain] ??= { domain, hit: 0, totTime: 0, avgTime: 0, unique_users: 0 };
+            acc[domain].hit += count;
             acc[domain].totTime += sum_time_diff_seconds;
             acc[domain].avgTime += avg_time_diff_seconds;
+            acc[domain].unique_users += user_count_for_domain_query;
             return acc;
         }, {})
     );
+    console.log(domainsCount)
 
     const domainsCountSort = domainsCount.sort((a, b) => {
-        if (b.total_count !== a.total_count) {
-            return b.total_count - a.total_count;
+        if (b.hit !== a.hit) {
+            return b.hit - a.hit;
         }
 
         const cleanA = a.domain.replace(/^www\./, "");
@@ -635,40 +641,38 @@ function load_statistics(data, classData){
     // unique users
     // --------------------------------------------
 
-    // console.log(classData)
-
-    const domains = classData.map(({ user_id, S_ResultDomain_List }) => ({
-        user_id,
-        domains: JSON.parse(S_ResultDomain_List.replace(/'/g, '"')),
-    }));
+    // const domains = classData.map(({ user_id, S_ResultDomain_List }) => ({
+    //     user_id,
+    //     domains: JSON.parse(S_ResultDomain_List.replace(/'/g, '"')),
+    // }));
     // console.log(domains);
 
-    const domainUsersMap = domains.reduce((acc, { user_id, domains }) => {
-        domains.forEach(domain => {
-            if (!acc[domain]) {
-            acc[domain] = new Set();
-            }
-            acc[domain].add(user_id);
-        });
-        return acc;
-    }, {});
-    // console.log(domainUsersMap)
+    // const domainUsersMap = domains.reduce((acc, { user_id, domains }) => {
+    //     domains.forEach(domain => {
+    //         if (!acc[domain]) {
+    //             acc[domain] = new Set();
+    //         }
+    //         acc[domain].add(user_id);
+    //     });
+    //     return acc;
+    // }, {});
+    // // console.log(domainUsersMap)
 
-    // get unique users per domain
-    const result = Object.entries(domainUsersMap).map(
-        ([domain, usersSet]) => ({
-            domain,
-            users: usersSet.size,
-        })
-    );
+    // // get unique users per domain
+    // const result = Object.entries(domainUsersMap).map(
+    //     ([domain, usersSet]) => ({
+    //         domain,
+    //         users: usersSet.size,
+    //     })
+    // );
     
-    result.sort((a, b) => {
-        if (b.users !== a.users) {
-            return b.users - a.users; // users DESC
-        }
-        return a.domain.localeCompare(b.domain); // domain ASC
-    });
-    // console.log(result);
+    // result.sort((a, b) => {
+    //     if (b.users !== a.users) {
+    //         return b.users - a.users; // users DESC
+    //     }
+    //     return a.domain.localeCompare(b.domain); // domain ASC
+    // });
+    // // console.log(result);
 
     // column A
     // --------------------------------------------
@@ -687,6 +691,7 @@ function load_statistics(data, classData){
                 <option value="query">${i18next.t('query')} (${i18next.t('alphabeticalOrder')})</option>
                 <option value="totTime">${i18next.t('totalTime')} (mm:ss)</option>
                 <option value="avgTime">${i18next.t('averageTime')} (mm:ss)</option>
+                <option value="uniqueUsers">${i18next.t('uniqueUsers')}</option>
             </select>
         </div>
     `
@@ -699,7 +704,7 @@ function load_statistics(data, classData){
     queriesCountSort.forEach(item => {
         output_a += `<tr>
             <td>${item.query}</td>
-            <td>${item.total_count}</td>
+            <td>${item.hits}</td>
         </tr>`;
 	});
 
@@ -725,6 +730,7 @@ function load_statistics(data, classData){
                 <option value="domain">${i18next.t('domain')} (${i18next.t('alphabeticalOrder')})</option>
                 <option value="totTime">${i18next.t('totalTime')} (mm:ss)</option>
                 <option value="avgTime">${i18next.t('averageTime')} (mm:ss)</option>
+                <option value="uniqueUsers">${i18next.t('uniqueUsers')}</option>
             </select>
         </div>
     `
@@ -734,7 +740,7 @@ function load_statistics(data, classData){
 
         output_b += `<tr>
             <td><a href="https://${item.domain}" target="blank">${domain}</a></td>
-            <td>${item.total_count}</td>
+            <td>${item.hit}</td>
         </tr>`;
 	});
     output_b += '</table>'
@@ -763,8 +769,8 @@ function load_statistics(data, classData){
             }
             else if (sortValue == 'count'){
                 newSort = queriesCount.sort((a, b) => {
-                    if (b.total_count !== a.total_count) {
-                        return b.total_count - a.total_count;
+                    if (b.hits !== a.hits) {
+                        return b.hits - a.hits;
                     }
 
                     return a.query.localeCompare(b.query);
@@ -784,18 +790,29 @@ function load_statistics(data, classData){
                     }
                 })
             }
+            else if (sortValue == 'uniqueUsers'){
+                newSort = queriesCount.sort((a, b) => {
+                    if (b.unique_users !== a.unique_users) {
+                        return b.unique_users - a.unique_users;
+                    }
+                })
+            }
+            // console.log(newSort)
             
             let newOutput = ''
             newSort.forEach(item => {
 
                 if (sortValue == 'query' || sortValue == 'count'){
-                    value = item.total_count
+                    value = item.hits
                 }
                 else if (sortValue == 'totTime') {
                     value = secondsToMMSS(item.totTime)
                 }
                 else if (sortValue == 'avgTime') {
                     value = secondsToMMSS(item.avgTime)
+                }
+                else if (sortValue == 'uniqueUsers') {
+                    value = item.unique_users
                 }
 
                 newOutput += `<tr>
@@ -827,8 +844,8 @@ function load_statistics(data, classData){
             }
             else if (sortValue == 'count'){
                 newSort = domainsCount.sort((a, b) => {
-                    if (b.total_count !== a.total_count) {
-                        return b.total_count - a.total_count;
+                    if (b.hit !== a.hit) {
+                        return b.hit - a.hit;
                     }
 
                     return a.domain.localeCompare(b.domain);
@@ -848,19 +865,29 @@ function load_statistics(data, classData){
                     }
                 })
             }
+            else if (sortValue == 'uniqueUsers'){
+                newSort = domainsCount.sort((a, b) => {
+                    if (b.unique_users !== a.unique_users) {
+                        return b.unique_users - a.unique_users;
+                    }
+                })
+            }
             
             let newOutput = ''
             newSort.forEach(item => {
                 // console.log(item)
 
                 if (sortValue == 'domain' || sortValue == 'count'){
-                    value = item.total_count
+                    value = item.hit
                 }
                 else if (sortValue == 'totTime') {
                     value = secondsToMMSS(item.totTime)
                 }
                 else if (sortValue == 'avgTime') {
                     value = secondsToMMSS(item.avgTime)
+                }
+                else if (sortValue == 'uniqueUsers') {
+                    value = item.unique_users
                 }
 
                 domain = item.domain.replace(/^www\./, "")
