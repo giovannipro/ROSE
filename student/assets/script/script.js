@@ -520,12 +520,12 @@ function load_data() {
 
 			data_legend_b = [
 				{ cat: i18next.t('new_domain'), color: new_page_color },
-				{ cat: i18next.t('visited_domain'), color: color_visitedDomain },
-				{ cat: i18next.t('chatbot'), color: chatbot_color }
+				{ cat: i18next.t('visited_domain'), color: color_visitedDomain }
 			]
-
+			
 			data_legend_c = [
-				{ cat: i18next.t('new_page'), color: new_page_color }
+				{ cat: i18next.t('page_m'), color: new_page_color },
+				{ cat: i18next.t('chatbot'), color: chatbot_color }
 			]
 
 			data_legend_d = [

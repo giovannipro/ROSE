@@ -22,6 +22,7 @@ i18next.init({
                 "searches": "Searches",
                 "domains": "Domains",
                 "pages": "Pages",
+                "page_m": "Page",
                 "system": "System",
                 "modified_query": "modified query",
                 "reused_query": "reused query",
@@ -31,7 +32,7 @@ i18next.init({
                 "show_legend": "Show legend",
                 "hide_legend": "Hide legend",
 
-                "domains_pages": "Domains and pages",
+                "domains_pages": "Domains", // and pages
 
                 "search_info": "Navigation actions that occur on a search engine website.",
                 "domains_pages_info": "Navigation actions that occur on a single domain (not a search engine).",
@@ -83,6 +84,7 @@ i18next.init({
                 "searches": "Suchen",
                 "domains": "Domänen",
                 "pages": "Seiten",
+                "page_m" : "Seiten",
                 "system": "System",
                 "modified_query": "geänderte Query",
                 "reused_query": "wiederverwendet Query",
@@ -92,7 +94,7 @@ i18next.init({
                 "show_legend": "Legende anzeigen",
                 "hide_legend": "Legende ausblenden",
 
-                "domains_pages": "Domänen und Seiten",
+                "domains_pages": "Domänen", //  und Seiten
 
                 "search_info": "Navigationsaktionen, die auf einer Suchmaschinen-Website stattfinden.",
                 "domains_pages_info": "Navigationsaktionen, die auf einer einzelnen Domain (nicht einer Suchmaschine) stattfinden.",
@@ -144,6 +146,7 @@ i18next.init({
                 "searches": "Ricerche",
                 "domains": "Domini",
                 "pages": "Pagine",
+                "page_m" : "Pagina",
                 "system": "Sistema",
                 "modified_query": "query modificata",
                 "reused_query": "query riusata",
@@ -153,7 +156,7 @@ i18next.init({
                 "show_legend": "Mostra legenda",
                 "hide_legend": "Nascondi legenda",
 
-                "domains_pages": "Domini e pagine",
+                "domains_pages": "Domini", //  e pagine
                 
                 "search_info": "Azioni di navigazione che avvengono su un motore di ricerca.",
                 "domains_pages_info": "Azioni di navigazione che avvengono su un singolo dominio (non su un motore di ricerca).",
