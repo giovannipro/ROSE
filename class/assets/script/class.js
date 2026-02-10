@@ -33,7 +33,7 @@ function load_data() {
         d3.json(apiEndpoint_recapInfo)
     ])
     .then(([classData, classInfo, taskInfo, recapInfo]) => {
-        // console.log(recapInfo)
+        console.log(recapInfo)
         // console.log(classData)
         
         classData.forEach(item => {
@@ -575,7 +575,7 @@ function no_data() {
 }
 
 function load_statistics(data, classData){
-    // console.log(classData)
+    console.log(classData)
 
     const container_a = document.getElementById("statistics_a");
     const container_b = document.getElementById("statistics_b");

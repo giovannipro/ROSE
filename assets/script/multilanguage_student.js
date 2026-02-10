@@ -35,7 +35,7 @@ i18next.init({
 
                 "search_info": "Navigation actions that occur on a search engine website.",
                 "domains_pages_info": "Navigation actions that occur on a single domain (not a search engine).",
-                "pages_info": "Navigation actions that occur on a web page in within a domain.",
+                "pages_info": "Navigation actions that occur on a web page within a domain.",
                 "system_info": "System actions like start, pause, stop, etc.",
 
                 "new_page": "New page",

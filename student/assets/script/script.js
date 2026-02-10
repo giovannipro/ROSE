@@ -343,6 +343,8 @@ function load_data() {
 				})
 				.attr("y", (d, i) => {
 					let y_pos = 0;
+					
+
 					if (d.page_type == 'SEARCH_ENGINE') {
 						if(d.action == 'UNKNOWN'){
 							y_pos = strip_height * 2.2;
@@ -350,6 +352,9 @@ function load_data() {
 						else {
 							y_pos = strip_height * 0;
 						}
+					}
+					else if (d.page_type == 'CHATBOT') {
+						y_pos = strip_height * 1.2;
 					}
 					else if (d.page_type == 'RESULT') {
 						y_pos = strip_height * 1.2;
@@ -374,6 +379,9 @@ function load_data() {
 						else {
 							height = search_height - interline;
 						}
+					}
+					else if (d.page_type == 'CHATBOT') {
+						height = page_height - interline
 					}
 					else if (d.page_type == 'RESULT') {
 						height = page_height - interline;
@@ -409,22 +417,22 @@ function load_data() {
 					// pages
 					else if (d.action == "NEW_RESULT" || d.action == "SAME_DOMAIN_RESULT" || d.action == "SEEN_DOMAIN_RESULT") {
 						
-						const domain = d.domain.replace('www.','')
+						// const domain = d.domain.replace('www.','')
+						// (
+							// 	domain == 'chatgpt.com' || 
+							// 	domain == 'deepseek.com' || 
+							// 	domain == 'claude.ai' || 
+							// 	domain == 'gemini.google.com' || 
+							// 	domain == 'copilot.microsoft.com' ||
+							// 	domain == 'meta.ai' || 
+							// 	domain == 'perplexity.ai' ||
+							// 	domain == 'duck.ai' ||
+							// 	domain == 'chaton.ai' ||
+							// 	domain == 'chat.chaton.ai' ||
+							// 	domain == 'grok.com'
+							// 	) 
 
-						if (
-							domain == 'chatgpt.com' || 
-							domain == 'deepseek.com' || 
-							domain == 'claude.ai' || 
-							domain == 'gemini.google.com' || 
-							domain == 'copilot.microsoft.com' ||
-							domain == 'meta.ai' || 
-							domain == 'perplexity.ai' ||
-							domain == 'duck.ai' ||
-							domain == 'chaton.ai' ||
-							domain == 'chat.chaton.ai' ||
-							domain == 'grok.com'
-							) 
-							{
+						if (d.page_type == 'CHATBOT'){
 							color = chatbot_color 
 						}
 						else {
@@ -664,7 +672,6 @@ function load_data() {
 				const duration = domain.getAttribute("data-duration")
 				const action = domain.getAttribute("data-action")
 				const domainStatus = domain.getAttribute("data-domainStatus")
-				// console.log(action, class_)
 				
 				let output;
 				

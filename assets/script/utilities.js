@@ -17,7 +17,7 @@ function groupConsecutiveDomains(data) {
 			currentGroup = [];
 		}
 
-		if (currentItem.page_type == 'RESULT') {
+		if (currentItem.page_type == 'RESULT' || currentItem.page_type == 'CHATBOT') {
 			currentGroup.push(currentItem);
 		}
 	}
