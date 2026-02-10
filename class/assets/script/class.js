@@ -624,7 +624,7 @@ function load_statistics(data, classData){
             return acc;
         }, {})
     );
-    console.log(domainsCount)
+    // console.log(domainsCount)
 
     const domainsCountSort = domainsCount.sort((a, b) => {
         if (b.hit !== a.hit) {

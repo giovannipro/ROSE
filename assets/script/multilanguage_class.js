@@ -78,7 +78,7 @@ i18next.init({
                 "alphabeticalOrder" : "alphabetische Reihenfolge",
                 "totalTime" : "Gesamtzeit",
                 "averageTime" : "Durchschnittszeit",
-                "uniqueUsers": "unique users"
+                "uniqueUsers": "einzigartige Benutzer"
             }
         },
         it: {
@@ -113,7 +113,7 @@ i18next.init({
                 "alphabeticalOrder" : "ordine alfabetico",
                 "totalTime" : "tempo totale",
                 "averageTime" : "tempo medio",
-                "uniqueUsers": "unique users"
+                "uniqueUsers": "utenti unici"
             }
         }
     }
