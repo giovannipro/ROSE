@@ -22,6 +22,9 @@ function load_data() {
     const apiEndpoint_classInfo = `https://search.rose.education/api/dashboard/clazzes/${clazz_id}`
     const apiEndpoint_taskInfo = `https://search.rose.education/api/dashboard/tasks/${task_id}`
     const apiEndpoint_recapInfo = `https://search.rose.education/api/analytics/url-stats/summary?clazz_id=${clazz_id}&task_id=${task_id}`
+    const apiEndpoint_hints =  `https://search.rose.education/api/analytics/adaptive-hints/clazz?clazz_id=${clazz_id}&task_id=${task_id}` // `assets/data/class_hints.json`// 
+
+    const predefined_hints = '../student/assets/content/hints.json'
 
     // url = http://127.0.0.1:5501/class/index.html?clazz_id=LME-1C&task_id=1 
     // console.log(clazz_id,task_id)
@@ -30,11 +33,14 @@ function load_data() {
         d3.csv(apiEndpoint_class),
         d3.json(apiEndpoint_classInfo),
         d3.json(apiEndpoint_taskInfo),
-        d3.json(apiEndpoint_recapInfo)
+        d3.json(apiEndpoint_recapInfo),
+        d3.json(apiEndpoint_hints),
+
+        d3.json(predefined_hints)
     ])
-    .then(([classData, classInfo, taskInfo, recapInfo]) => {
+    .then(([classData, classInfo, taskInfo, recapInfo, class_hints, predefinedHints]) => {
         // console.log(recapInfo)
-        // console.log(classData)
+        // console.log(predefinedHints)
         
         classData.forEach(item => {
             // console.log(item)
@@ -67,7 +73,7 @@ function load_data() {
         highlight();
 
         // statistics
-        load_statistics(recapInfo, classData)
+        load_statistics(recapInfo, class_hints, predefinedHints)
         open_tabs('statistics_container','');
     })
     .catch(function (error) {
@@ -297,6 +303,7 @@ function load_data() {
             document.querySelectorAll('.student_more').forEach(more => {
                 more.style.display = "none";
             });
+
             // document.querySelectorAll('.bubble').forEach(bubble => {
             //     bubble.style.stroke = "transparent";
             //     bubble.style.opacity = bubble_default_opacity;
@@ -574,13 +581,13 @@ function no_data() {
     `
 }
 
-function load_statistics(data, classData){
+function load_statistics(data, class_hints, predefinedHints){
     // console.log(data)
     // console.log(classData)
 
     const container_a = document.getElementById("statistics_a");
     const container_b = document.getElementById("statistics_b");
-    // const container_c = document.getElementById("statistics_c");
+    const container_c = document.getElementById("statistics_c");
 
     // queries
     // --------------------------------------------
@@ -715,7 +722,7 @@ function load_statistics(data, classData){
     // --------------------------------------------
     let output_b = ''
     
-    output_b += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('domains')}</strong></span>`;
+    output_b += `<span class="column_header ">${i18next.t('domains')}</span>`;
     output_b += '<hr/ style="border: 0.1px solid #ccc">'
 
     output_b += '<table id="domainTable" class="table_counters">'
@@ -745,10 +752,17 @@ function load_statistics(data, classData){
 	});
     output_b += '</table>'
 
+    // column B
+    // --------------------------------------------
+    let output_c = ''
+    output_c = display_hints(class_hints, predefinedHints)
+    
+
     // append content
     // --------------------------------------------
     container_a.innerHTML = output_a;
     container_b.innerHTML = output_b;
+    container_c.innerHTML = output_c;
 
     function sortTables(){
 

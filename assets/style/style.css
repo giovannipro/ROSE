@@ -173,6 +173,18 @@ td {
     margin: 0
 }
 
+.column_header {
+	font-weight: bold;
+	margin-bottom: 1rem; 
+	display: block;
+}
+
+#hintTable {
+	top: -0.5rem;
+	position: relative;
+	border-top: none;
+}
+
 @media only screen and (max-width: 725px) {
 	#statistics_container .tab_content, #suggestions_container .tab_content {
 		display: block;

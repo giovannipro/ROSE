@@ -1,7 +1,10 @@
 function getLanguageFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
-    const langParam = urlParams.get('lang').toLocaleLowerCase();
-    // console.log(langParam)
+
+    let langParam = 'en'
+    if (urlParams.get('lang') !== null){
+        langParam = urlParams.get('lang').toLocaleLowerCase();
+    }
 
     return langParam;
 }
@@ -43,7 +46,8 @@ i18next.init({
                 "alphabeticalOrder":  "alphabetical order",
                 "totalTime": "total time",
                 "averageTime": "average time",
-                "uniqueUsers": "unique users"
+                "uniqueUsers": "unique users",
+                "observations" : "Observations"
             }
         },
         de: {
@@ -78,7 +82,8 @@ i18next.init({
                 "alphabeticalOrder" : "alphabetische Reihenfolge",
                 "totalTime" : "Gesamtzeit",
                 "averageTime" : "Durchschnittszeit",
-                "uniqueUsers": "einzigartige Benutzer"
+                "uniqueUsers": "einzigartige Benutzer",
+                "observations" : "Beobachtungen"
             }
         },
         it: {
@@ -113,7 +118,8 @@ i18next.init({
                 "alphabeticalOrder" : "ordine alfabetico",
                 "totalTime" : "tempo totale",
                 "averageTime" : "tempo medio",
-                "uniqueUsers": "utenti unici"
+                "uniqueUsers": "utenti unici",
+                "observations" : "Osservazioni"
             }
         }
     }
