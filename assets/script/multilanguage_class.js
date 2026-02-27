@@ -37,7 +37,7 @@ i18next.init({
                 "pages_m": "Pages",
                 "queries_m": "Queries",
                 "domains": "Domains",
-                "statistics": "Statistics",
+                "statistics": "Class statistics",
                 "t_searchPages": "Searches and domains",
 
                 "count": "hit",
@@ -73,7 +73,7 @@ i18next.init({
                 "searches": "Suchen",
                 "queries_m": "Queries",
                 "domains": "Domänen",
-                "statistics": "Statistiken",
+                "statistics": "Klassenstatistiken",
                 "t_searchPages" : "Suchen und Domänen",
 
                 "count": "Zählung",
@@ -109,7 +109,7 @@ i18next.init({
                 "queries_m": "Query",
                 "pages_m": "Pagine",
                 "domains": "Domini",
-                "statistics": "Statistiche",
+                "statistics": "Statistiche della classe",
                 "t_searchPages" : "Ricerche e domini",
 
                 "count": "conteggio",
@@ -143,7 +143,7 @@ function updateContent() {
     document.getElementById('t_pagesTime').textContent = i18next.t('pagesTime');
     document.getElementById('t_name').textContent = i18next.t('name');
 
-    document.getElementById('t_searchPages').textContent = i18next.t('t_searchPages');
+    document.getElementById('t_statistics').textContent = i18next.t('statistics');
 
     
 }
