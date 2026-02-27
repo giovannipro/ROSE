@@ -43,12 +43,23 @@ function display_hints(class_hints, predefined){
         }
 
         output += `<tr>
-            <td style="width: 80%">${hint_text}</td>
-            <td>${item.num_users_visible}</td>
-        </tr>`;
-
-    }
-
+                <td style="width: 10%;">
+                    <span class="tooltip">
+                        <span style="padding: 0.25rem">&#9432</span>
+                        <span class="tooltip-text">${hint.hint.en}</span>
+                    </span>
+                </td>
+                <td style="width: 80%; text-align: left;">
+                    ${hint_text}
+                </td>
+                <td style="text-align: right;">
+                    ${item.num_users_visible}
+                </td>
+            </tr>`;
+                
+            }
+            
+            // <span class="tooltip">x</button>${hint_text}</td>
     output += `</table></div>`
     // {hint.hint.en}
 
