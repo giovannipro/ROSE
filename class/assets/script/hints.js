@@ -45,7 +45,7 @@ function display_hints(class_hints, predefined){
         output += `<tr>
                 <td style="width: 10%;">
                     <span class="tooltip">
-                        <span style="padding: 0.25rem">&#9432</span>
+                        <span style="padding: 0.25rem 1rem 1.25rem 0.25rem;">&#9432</span>
                         <span class="tooltip-text">${hint.hint.en}</span>
                     </span>
                 </td>
