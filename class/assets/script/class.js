@@ -26,7 +26,7 @@ function load_data() {
 
     const predefined_hints = '../student/assets/content/hints.json'
 
-    // url = http://127.0.0.1:5501/class/index.html?clazz_id=LME-1C&task_id=1 
+    // url = http://127.0.0.1:5501/class/index.html?clazz_id=2&task_id=2&lang=it
     // console.log(clazz_id,task_id)
 
     Promise.all([

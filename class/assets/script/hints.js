@@ -31,22 +31,26 @@ function display_hints(class_hints, predefined){
         let the_language = (i18next.language).toLowerCase()
 
         let hint_text = ""
+        let hint_tooltip = ""
         
         if (the_language == 'it'){
-            hint_text = hint.observation.it
+            hint_text = hint.observation.it;
+            hint_tooltip = hint.hint.it;
         }
         else if (the_language == 'de'){
-            hint_text = hint.observation.de
+            hint_text = hint.observation.de;
+            hint_tooltip = hint.hint.de;
         }
         else {
-            hint_text = hint.observation.en
+            hint_text = hint.observation.en;
+            hint_tooltip = hint.hint.en;
         }
 
         output += `<tr>
                 <td style="width: 10%;">
                     <span class="tooltip">
                         <span style="padding: 0.25rem 1rem 1.25rem 0.25rem;">&#9432</span>
-                        <span class="tooltip-text">${hint.hint.en}</span>
+                        <span class="tooltip-text">${hint_tooltip}</span>
                     </span>
                 </td>
                 <td style="width: 80%; text-align: left;">
@@ -57,12 +61,9 @@ function display_hints(class_hints, predefined){
                 </td>
             </tr>`;
                 
-            }
+    }
             
-            // <span class="tooltip">x</button>${hint_text}</td>
     output += `</table></div>`
-    // {hint.hint.en}
-
 
     return output
 }
