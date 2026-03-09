@@ -694,8 +694,8 @@ function load_data() {
 							seen = `(${i18next.t('modified_query')})`;
 						}
 						
-						output = `<span><a href="${url}" target="_blank">${the_domain}</a> <span style="color: gray">${seen}</span><br/>`;
-						output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
+						output = `<div><a href="${url}" target="_blank">${the_domain}</a> <span style="color: gray">${seen}</div>`;
+						output += `<div style="color: gray; margin-top: 0.25rem;">${convertSecondsToMinutes(duration)}<div>`;
 					}
 
 					else    { //unknown action
