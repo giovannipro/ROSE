@@ -662,7 +662,7 @@ function load_data() {
 				const action = domain.getAttribute("data-action")
 				const domainStatus = domain.getAttribute("data-domainStatus")
 				
-				let output;
+				let output = '';
 				
 				const class_ = (domain.getAttribute("data-class")).toString();
 				if (class_ == 'strip'){
@@ -674,20 +674,25 @@ function load_data() {
 					// page
 					if (category == 'page') {
 						the_url = short_text(url,120)
+
+						output += `<div style="margin-bottom: 0.5rem; font-size: 0.75rem;">${i18next.t('page')}</div>`
 						
 						if (domainStatus == "SEEN") {
-							output = `<div><a href="${url}" target="_blank">${the_url}</a><span style="color: gray; margin-top: 0.25rem;"> (already seen)</span></div>`;
+							seen_noSeen = `<div><a href="${url}" target="_blank">${the_url}</a><span style="color: gray; margin-top: 0.25rem;"> (already seen)</span></div>`;
 						}
 						else {
-							output = `<div><a href="${url}" target="_blank">${the_url}</a></div>`;
+							seen_noSeen = `<div><a href="${url}" target="_blank">${the_url}</a></div>`;
 						}
-
+						
+						output += seen_noSeen
 						output += `<div style="color: gray; margin-top: 0.25rem;">${convertSecondsToMinutes(duration)}<div>`;
 					}
 
 					// search
 					else if (category == 'search') {
 						const the_domain = (domain.getAttribute("data-query")).toString();
+
+						output += `<div style="margin-bottom: 0.5rem; font-size: 0.75rem;">${i18next.t('query')}</div>`
 
 						let seen = '';
 						if (subcategory == 'reused'){
@@ -697,32 +702,38 @@ function load_data() {
 							seen = `(${i18next.t('modified_query')})`;
 						}
 						
-						output = `<div><a href="${url}" target="_blank">${the_domain}</a> <span style="color: gray">${seen}</div>`;
+						output += `<div><a href="${url}" target="_blank">${the_domain}</a> <span style="color: gray">${seen}</div>`;
 						output += `<div style="color: gray; margin-top: 0.25rem;">${convertSecondsToMinutes(duration)}<div>`;
 					}
 
 					else    { //unknown action
-						output = `<span>${i18next.t('unknown_action')}</span><br/>`;
+						output += `<div style="margin-bottom: 0.5rem; font-size: 0.75rem;">o_O</div>`
+						output += `<div>${i18next.t('unknown_action')}</div>`;
 					}
 				}
 				else if (class_ == 'website'){
-					// const domain_ = domain.getAttribute("data-domain")
 					const action = domain.getAttribute("data-action")
 					const url = domain.getAttribute("data-url")
 					const the_url = clean_domain(url)
+
+					output += `<div style="margin-bottom: 0.5rem; font-size: 0.75rem;">${i18next.t('domain')}</div>`
 
 					let seen = '';
 					if (action == "SEEN_DOMAIN_RESULT") { // reused
 						seen = '(already seen)';
 					}
-					output = `<span><a href="${url}" target="_blank">${the_url}</a> </span><span style="color: gray">${seen}</span><br/>`;
-					output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
+
+					output += `<div><a href="${url}" target="_blank">${the_url}</a> </span><span style="color: gray">${seen}</div>`;
+					output += `<div style="color: gray; margin-bottom: 0.25rem;">${convertSecondsToMinutes(duration)}<div>`;
 				}
 				else {
 					const domain_ = domain.getAttribute("data-domain")
 					const the_domain = domain_.toLowerCase().replace(/\_/g, " ");
-					output = `<span>System (${the_domain})</span><br/>`;
-					output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>';
+
+					output += `<div style="margin-bottom: 0.5rem; font-size: 0.75rem;">${i18next.t('system')}</div>`
+
+					output += `<div>System (${the_domain})</div>`;
+					output += '<div style="color: gray; margin-top: 0.25rem;">' + convertSecondsToMinutes(duration) + '<div>';
 				}
 
 				infobox.innerHTML = output;
