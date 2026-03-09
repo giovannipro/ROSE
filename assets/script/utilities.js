@@ -188,18 +188,17 @@ function clean_domain(url){
 	return domain_2
 }
 
-function search_engine(item) {
+// function search_engine(item) {
 
-	searchEngine = item
-	if (item.includes('//')){
-		searchEngine = item.split('//')[1]
-	}
+// 	searchEngine = item
+// 	if (item.includes('//')){
+// 		searchEngine = item.split('//')[1]
+// 	}
 
-	return searchEngine
-}
+// 	return searchEngine
+// }
 
 function getUniqueValues(values) {
-	// console.log(values)
 	const uniqueValuesSet = new Set(values);
 	return Array.from(uniqueValuesSet);
 }
@@ -348,4 +347,33 @@ function checkAction(action){
 	}
 
 	return [category, subcategory]
+}
+
+function detectSearchEngine(url) {
+
+	const SEARCH_ENGINES = [
+		{ name: "Google", domains: ["google."], queryParam: "q" },
+		{ name: "Yahoo", domains: ["yahoo."], queryParam: "p" },
+		{ name: "Bing", domains: ["bing.com"], queryParam: "q" },
+		{ name: "DuckDuckGo", domains: ["duckduckgo.com"], queryParam: "q" },
+		{ name: "Ecosia", domains: ["ecosia.org"], queryParam: "q" },
+		{ name: "Brave", domains: ["search.brave.com"], queryParam: "q" },
+		{ name: "Yandex", domains: ["yandex."], queryParam: "text" },
+		{ name: "Baidu", domains: ["baidu.com"], queryParam: "wd" },
+		{ name: "Startpage", domains: ["startpage.com"], queryParam: "query" }
+	];
+
+	const u = new URL(url);
+	const hostname = u.hostname.toLowerCase();
+
+	for (const engine of SEARCH_ENGINES) {
+    	if (engine.domains.some(d => hostname.includes(d))) {
+      		return {
+        		engine: engine.name,
+        		query: u.searchParams.get(engine.queryParam)
+      		};
+    	}
+  	}
+
+	return null;
 }

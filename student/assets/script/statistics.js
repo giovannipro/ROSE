@@ -32,9 +32,7 @@ function load_statistics(data) {
 	// console.log(searchQueries)
 
 	for (item of searchQueries){
-		// the_url = decodeURIComponent(item.url);
 		item.query = clean_query(item.url)
-		// console.log(item.query)
 	}
 
 	const searchQueries_a = searchQueries.filter(item => {
@@ -42,13 +40,40 @@ function load_statistics(data) {
 	})
 
 	const uniqueObjects = new Set();
-	const unique_queries = searchQueries_a.filter(item => {
+	let unique_queries = searchQueries_a.filter(item => {
 		if (!uniqueObjects.has(item.query)) {
 			uniqueObjects.add(item.query);
 			return true;
 		}
 		return false;
 	});
+
+	// if the system does not recognize queries
+	// -------------------------------------
+
+	searchQueries.forEach(item => {
+		item.query = get_query(item.url)
+	})	
+
+	const uniqueObjects_a = new Set();
+
+	const unique_queries_fix = searchQueries.filter(item => {
+		if (!uniqueObjects_a.has(item.query)) {
+			uniqueObjects_a.add(item.query);
+			return true;
+		}
+		return false;
+	});
+
+	if (unique_queries.length != 0){
+		console.log(unique_queries)
+		unique_queries_final = unique_queries
+	}
+	else {
+		unique_queries_final = unique_queries_fix
+	}
+
+	// -------------------------------------
 
 	unique_web = pageItems.map(item => {
 		const url = new URL(item.url);
@@ -64,11 +89,19 @@ function load_statistics(data) {
         return cleanA.localeCompare(cleanB);
     });
 
-	uniq_engine = searchItems.map(item => {
-		const match = item.url.match(/https?:\/\/(?:www\.)?([^\/.]+)\./);
-		return match ? match[1] : null; // Return null if no match
+	let searchEngines = [];
+	searchItems.map(item => {
+		searchEngines.push(detectSearchEngine(item.url))
+	})
+	
+	const unique_searchEngines = searchEngines.filter(item => {
+		if (!uniqueObjects_a.has(item.engine)) {
+			uniqueObjects_a.add(item.engine);
+			return true;
+		}
+		return false;
 	});
-	const unique_searchEngines = getUniqueValues(uniq_engine);
+	// console.log(unique_searchEngines)
 
 	let output_a = '';
 	let output_b = '';
@@ -130,6 +163,29 @@ function load_statistics(data) {
 	output_b += '<td>' + revisedQueries + '</td></tr>';
 	output_b += '</table>';
 
+	output_b += '<table style="margin-top: 1rem;">';
+	output_b += `<tr><td>${i18next.t('queries')}</td></tr>`;
+
+	output_b += '<tr><td><ul class="list">'
+	unique_queries_final.forEach(item => {
+		output_b += '<li><a href="' + item.url + '" target="_blank">' + item.query + '</a></li>';
+	});
+	output_b += '</ul></td></tr>'
+	output_b += '</table>';
+
+	output_b += '<table style="margin-top: 1.5rem;">';
+	output_b += `<tr><td>${i18next.t('search_engines')}</td></tr>`;
+
+	output_b += '<tr><td><ul class="list">'
+	unique_searchEngines.forEach(item => {
+		output_b += '<li>' + (item.engine) + '</li>';
+	});
+	output_b += '</ul></td></tr>'
+	output_b += '</table>';
+
+	// Pages
+	// -----------------------------------------------
+
 	output_c += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('pages')}</strong></span>`;
 	output_c += '<hr/ style="border: 0.1px solid #ccc">'
 
@@ -145,29 +201,6 @@ function load_statistics(data) {
 	output_c += `<tr><td>- ${i18next.t('revisited')}`;
 	output_c += '<td>' + revisitedDomains + '</td></tr>';
 	output_c += '</table>';
-
-	output_b += '<table style="margin-top: 1rem;">';
-	output_b += `<tr><td>${i18next.t('queries')}</td></tr>`;
-
-	output_b += '<tr><td><ul class="list">'
-	unique_queries.forEach(item => {
-		output_b += '<li><a href="' + item.url + '" target="_blank">' + item.query + '</a></li>';
-	});
-	output_b += '</ul></td></tr>'
-	output_b += '</table>';
-
-	output_b += '<table style="margin-top: 1.5rem;">';
-	output_b += `<tr><td>${i18next.t('search_engines')}</td></tr>`;
-
-	output_b += '<tr><td><ul class="list">'
-	unique_searchEngines.forEach(item => {
-		output_b += '<li>' + search_engine(item) + '</li>';
-	});
-	output_b += '</ul></td></tr>'
-	output_b += '</table>';
-
-	// Pages
-	// -----------------------------------------------
 
 	output_c += '<table style="margin-top: 1.5rem;">';
 	output_c += `<tr><td>${i18next.t('domains')}</td></tr>`;
