@@ -269,9 +269,19 @@ function open_tabs(tabA, tabB) {
 function get_query(url){
 	const urlObj = new URL(url);
 	const url_0 = urlObj.searchParams;
-	const url_1 = url_0.get('q');
+
+	let the_url = ''
+	if (url_0.get('q') != null){
+		the_url = url_0.get('q')
+	}
+	else if (url_0.get('p') != null){
+		the_url = url_0.get('p')
+	}
+	else {
+		the_url = url
+	}
 	
-	return url_1
+	return the_url
 }
 
 function formatDate(input) { //2025-04-03 12:48:32.983000+00:00

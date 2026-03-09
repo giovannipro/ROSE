@@ -417,21 +417,6 @@ function load_data() {
 					// pages
 					else if (d.action == "NEW_RESULT" || d.action == "SAME_DOMAIN_RESULT" || d.action == "SEEN_DOMAIN_RESULT") {
 						
-						// const domain = d.domain.replace('www.','')
-						// (
-							// 	domain == 'chatgpt.com' || 
-							// 	domain == 'deepseek.com' || 
-							// 	domain == 'claude.ai' || 
-							// 	domain == 'gemini.google.com' || 
-							// 	domain == 'copilot.microsoft.com' ||
-							// 	domain == 'meta.ai' || 
-							// 	domain == 'perplexity.ai' ||
-							// 	domain == 'duck.ai' ||
-							// 	domain == 'chaton.ai' ||
-							// 	domain == 'chat.chaton.ai' ||
-							// 	domain == 'grok.com'
-							// 	) 
-
 						if (d.page_type == 'CHATBOT'){
 							color = chatbot_color 
 						}
@@ -699,6 +684,7 @@ function load_data() {
 					// search
 					else if (category == 'search') {
 						const the_domain = get_query(url) //decodeURIComponent(url);
+						// console.log(url)
 
 						let seen = '';
 						if (subcategory == 'reused'){
