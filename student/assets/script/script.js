@@ -102,7 +102,7 @@ function load_data() {
 	}
 
 	function loaded(data) {
-		// console.log(data)
+		console.log(data)
 
 		data.forEach(function (d, i) {
 			d.duration = parseFloat(d.duration);
@@ -316,6 +316,12 @@ function load_data() {
 				.attr("data-action", (d) => d.action)
 				.attr("data-type", (d) => d.page_type)
 				.attr("data-domainStatus", (d) => d.domain_status)
+				.attr("data-query", (d) => {
+					if (checkAction(d.action)[0] == 'search') query = d.query
+					else query = '-'
+					
+					return query
+				})
 				.attr("data-index", (d, i) => i)
 				.attr("data-class", (d,i) => {
 					let the_class = ""
@@ -450,7 +456,6 @@ function load_data() {
 				.attr("class", "strip_website_rect")
 				.attr("x", (d, i) => {
 					let x_pos = timeScale(new Date(d[0].time));
-					// console.log(d[0].time)
 					return x_pos;
 				})
 				.attr("y", (d, i) => {
@@ -593,7 +598,6 @@ function load_data() {
 				}
 			})
 
-
 			// handle Mouse Over
 			// ---------------
 			function handleMouseOver() {
@@ -683,8 +687,7 @@ function load_data() {
 
 					// search
 					else if (category == 'search') {
-						const the_domain = get_query(url) //decodeURIComponent(url);
-						// console.log(url)
+						const the_domain = (domain.getAttribute("data-query")).toString();
 
 						let seen = '';
 						if (subcategory == 'reused'){

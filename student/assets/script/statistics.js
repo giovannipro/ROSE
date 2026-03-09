@@ -29,11 +29,7 @@ function load_statistics(data) {
 	const pages = data.filter(item => item.action === 'NEW_RESULT' || item.action === 'SAME_DOMAIN_RESULT' || item.action === 'SEEN_DOMAIN_RESULT').length;
 	
 	const searchQueries = data.filter(item => item.page_type === 'SEARCH_ENGINE').map(item => ({ url: item.url, query: item.query, action: item.action, pageType: item.page_type }));
-	// console.log(searchQueries)
-
-	for (item of searchQueries){
-		item.query = clean_query(item.url)
-	}
+	console.log(searchQueries)
 
 	const searchQueries_a = searchQueries.filter(item => {
 		return item.query != null
@@ -47,33 +43,9 @@ function load_statistics(data) {
 		}
 		return false;
 	});
+	console.log(unique_queries)
 
-	// if the system does not recognize queries
-	// -------------------------------------
-
-	searchQueries.forEach(item => {
-		item.query = get_query(item.url)
-	})	
-
-	const uniqueObjects_a = new Set();
-
-	const unique_queries_fix = searchQueries.filter(item => {
-		if (!uniqueObjects_a.has(item.query)) {
-			uniqueObjects_a.add(item.query);
-			return true;
-		}
-		return false;
-	});
-
-	if (unique_queries.length != 0){
-		console.log(unique_queries)
-		unique_queries_final = unique_queries
-	}
-	else {
-		unique_queries_final = unique_queries_fix
-	}
-
-	// -------------------------------------
+	unique_queries_final = unique_queries;
 
 	unique_web = pageItems.map(item => {
 		const url = new URL(item.url);
@@ -95,8 +67,8 @@ function load_statistics(data) {
 	})
 	
 	const unique_searchEngines = searchEngines.filter(item => {
-		if (!uniqueObjects_a.has(item.engine)) {
-			uniqueObjects_a.add(item.engine);
+		if (!uniqueObjects.has(item.engine)) {
+			uniqueObjects.add(item.engine);
 			return true;
 		}
 		return false;
