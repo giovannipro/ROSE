@@ -675,7 +675,7 @@ function load_data() {
 					if (category == 'page') {
 						the_url = short_text(url,120)
 
-						output += `<div style="margin-bottom: 0.5rem; font-size: 0.75rem;">${i18next.t('page')}</div>`
+						output += `<div id="infoboxType">${i18next.t('page')}</div>`
 						
 						if (domainStatus == "SEEN") {
 							seen_noSeen = `<div><a href="${url}" target="_blank">${the_url}</a><span style="color: gray; margin-top: 0.25rem;"> (already seen)</span></div>`;
@@ -692,7 +692,7 @@ function load_data() {
 					else if (category == 'search') {
 						const the_domain = (domain.getAttribute("data-query")).toString();
 
-						output += `<div style="margin-bottom: 0.5rem; font-size: 0.75rem;">${i18next.t('query')}</div>`
+						output += `<div id="infoboxType">${i18next.t('query')}</div>`
 
 						let seen = '';
 						if (subcategory == 'reused'){
@@ -702,13 +702,13 @@ function load_data() {
 							seen = `(${i18next.t('modified_query')})`;
 						}
 						
-						output += `<div><a href="${url}" target="_blank">${the_domain}</a> <span style="color: gray">${seen}</div>`;
-						output += `<div style="color: gray; margin-top: 0.25rem;">${convertSecondsToMinutes(duration)}<div>`;
+						output += `<div id="infoboxInfo"><a href="${url}" target="_blank">${the_domain}</a> <span style="color: gray">${seen}</div>`;
+						output += `<div id="infoboxTime">${convertSecondsToMinutes(duration)}<div>`;
 					}
 
 					else    { //unknown action
-						output += `<div style="margin-bottom: 0.5rem; font-size: 0.75rem;">o_O</div>`
-						output += `<div>${i18next.t('unknown_action')}</div>`;
+						output += `<div id="infoboxType">o_O</div>`
+						output += `<div id="infoboxInfo">${i18next.t('unknown_action')}</div>`;
 					}
 				}
 				else if (class_ == 'website'){
@@ -716,24 +716,24 @@ function load_data() {
 					const url = domain.getAttribute("data-url")
 					const the_url = clean_domain(url)
 
-					output += `<div style="margin-bottom: 0.5rem; font-size: 0.75rem;">${i18next.t('domain')}</div>`
+					output += `<div id="infoboxType">${i18next.t('domain')}</div>`
 
 					let seen = '';
 					if (action == "SEEN_DOMAIN_RESULT") { // reused
 						seen = '(already seen)';
 					}
 
-					output += `<div><a href="${url}" target="_blank">${the_url}</a> </span><span style="color: gray">${seen}</div>`;
-					output += `<div style="color: gray; margin-bottom: 0.25rem;">${convertSecondsToMinutes(duration)}<div>`;
+					output += `<div id="infoboxInfo"><a href="${url}" target="_blank">${the_url}</a> </span><span style="color: gray">${seen}</div>`;
+					output += `<div id="infoboxTime">${convertSecondsToMinutes(duration)}<div>`;
 				}
-				else {
+				else { // system
 					const domain_ = domain.getAttribute("data-domain")
 					const the_domain = domain_.toLowerCase().replace(/\_/g, " ");
 
-					output += `<div style="margin-bottom: 0.5rem; font-size: 0.75rem;">${i18next.t('system')}</div>`
+					output += `<div id="infoboxType">${i18next.t('system')}</div>`
 
-					output += `<div>System (${the_domain})</div>`;
-					output += '<div style="color: gray; margin-top: 0.25rem;">' + convertSecondsToMinutes(duration) + '<div>';
+					output += `<div id="infoboxInfo">System (${the_domain})</div>`;
+					output += '<div id="infoboxTime">' + convertSecondsToMinutes(duration) + '<div>';
 				}
 
 				infobox.innerHTML = output;
