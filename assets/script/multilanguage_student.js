@@ -50,7 +50,7 @@ i18next.init({
                 "statistics": "Statistics",
                 "time": "Time",
                 "total": "total",
-                "total_cap": "Totale",
+                "total_cap": "Total",
                 "shortest": "shortest",
                 "average": "average",
                 "longest": "longest",
