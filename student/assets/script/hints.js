@@ -28,16 +28,19 @@ function load_hints(){
         show_hint_error()
     });
     
+    const hint_container_a = document.getElementById('hints_a');
+    const hint_container_b = document.getElementById('hints_b');
+    const hint_container_c = document.getElementById('hints_c');
+
     function loaded(predefined,feedback){
         // console.log(feedback)
+
 
         const hint_container = document.getElementById('hints')
 
         let the_language = (i18next.language).toLowerCase()
-        // console.log(the_language)
 
         const priority_order = feedback.sort((a, b) => a.hint.priority - b.hint.priority);
-        // console.log(priority_order)
 
         let feedback_ids = []
         if (priority_order.length > 0){
@@ -49,13 +52,19 @@ function load_hints(){
         }
 
         let output = ''
-        output += `
-            <div>
-                <div class="hint_label" id="t_observation">${i18next.t('observation')}</div>
-                <div class="hint_label" id="t_hint">${i18next.t('hint')}</div>
-                <div class="hint_label"></div>
-            </div>
-        `
+
+        let output_a = '';
+        let output_b = '';
+        let output_c = '';
+
+        // Observation
+        // -----------------------------------------------
+
+        output_a += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('observation')}</strong></span>`;
+	    output_a += '<hr/ style="border: 0.1px solid #ccc">'
+
+        output_b += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('hint')}</strong></span>`;
+	    output_b += '<hr/ style="border: 0.1px solid #ccc">'
 
         // get the feedback text
         for (let x = 0; x < feedback_ids.length; x++){
@@ -76,25 +85,20 @@ function load_hints(){
                     observation = item_obj.observation.en
                     hint = item_obj.hint.en
                 }
+
+                output_a += `<div class="content ${item_obj.id}">${observation}</div>`
+                output_b += `<div class="content">${hint}</div>`
                 
-                output += `
-                    <div class="${item_obj.id}">
-                        <div class="content">
-                            ${observation}   
-                        </div>
-                        <div class="content">
-                            ${hint}
-                        </div>
-                        <div class="content"></div>
-                    </div>
-                `
             }
             catch (error) {
                 console.log(error)
             }
         }
 
-        hint_container.innerHTML = output;
+        hint_container_a.innerHTML = output_a;
+	    hint_container_b.innerHTML = output_b;
+	    // hint_container_c.innerHTML = output_c;
+
     }
 }
 
@@ -105,5 +109,8 @@ function show_hint_error(){
     const error_box = document.createElement('div')
     error_box.classList.add('error_box_small');
     error_box.textContent = i18next.t('hints_error_message');
-    hint_container.prepend(error_box)
+    hint_container.append(error_box)
+
+    const sugg = document.getElementById('sugg');
+    sugg.remove();
 }
