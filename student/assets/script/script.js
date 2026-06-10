@@ -102,7 +102,7 @@ function load_data() {
 	}
 
 	function loaded(data) {
-		console.log(data)
+		// console.log(data)
 
 		data.forEach(function (d, i) {
 			d.duration = parseFloat(d.duration);

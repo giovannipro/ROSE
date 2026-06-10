@@ -14,10 +14,12 @@ h2 {
 
 #header {
 	display: flex;
+	width: 81%;
 }
 
 #header h2 {
-	width: 330px;
+	width: 33%;
+	padding-right: 1rem;
 }
 
 #header span {
@@ -26,7 +28,7 @@ h2 {
 
 #controllers {
 	padding: 1rem;
-	border-bottom: 1px solid #bfbfbf;
+	/* border-bottom: 1px solid #bfbfbf; */
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -214,6 +216,16 @@ td {
 }
 
 @media only screen and (max-width: 725px) {
+
+	#controllers {
+		display: block;
+		height: auto;
+	}
+
+	#header {
+		width: 100%;
+	}
+
 	#statistics_container .tab_content, #suggestions_container .tab_content {
 		display: block;
 	}

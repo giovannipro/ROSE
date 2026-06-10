@@ -29,7 +29,7 @@ function load_statistics(data) {
 	const pages = data.filter(item => item.action === 'NEW_RESULT' || item.action === 'SAME_DOMAIN_RESULT' || item.action === 'SEEN_DOMAIN_RESULT').length;
 	
 	const searchQueries = data.filter(item => item.page_type === 'SEARCH_ENGINE').map(item => ({ url: item.url, query: item.query, action: item.action, pageType: item.page_type }));
-	console.log(searchQueries)
+	// console.log(searchQueries)
 
 	const searchQueries_a = searchQueries.filter(item => {
 		return item.query != null
@@ -43,7 +43,7 @@ function load_statistics(data) {
 		}
 		return false;
 	});
-	console.log(unique_queries)
+	// console.log(unique_queries)
 
 	unique_queries_final = unique_queries;
 

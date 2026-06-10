@@ -1,3 +1,7 @@
+#controllers {
+	border-bottom: 1px solid #bfbfbf;	
+}
+
 #class_box {
     display: flex;
     justify-content: space-between;

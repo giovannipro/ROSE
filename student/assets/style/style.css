@@ -12,12 +12,9 @@ h2 {
 	font-size: 1rem;
 }
 
-#header {
-	display: flex;
-}
-
-#header span {
-	font-weight: normal;
+#scale_timeline {
+	width: 19%;
+	text-align: right;
 }
 
 #chart {
@@ -280,6 +277,20 @@ td:first-child {
 }
 
 @media only screen and (max-width: 725px) {
+
+	/* body {
+		background-color: antiquewhite;
+	} */
+
+	#header {
+		border-bottom: 1px solid #bfbfbf;	
+	}
+
+	#scale_timeline {
+		width: 100%;
+		padding-top: 1rem;
+	}
+
 	#statistics_container .tab_content, #suggestions_container .tab_content {
 		display: block;
 		/* width: 100%; */
@@ -288,7 +299,7 @@ td:first-child {
 	.statistics_box {
 		width: calc(100% - 0.25rem);
 		border-bottom: 1px solid #ccc;
-		margin-bottom: 1rem;
+		margin-bottom: 2rem;
 	}
 
 	.statistics_box:last-child {
