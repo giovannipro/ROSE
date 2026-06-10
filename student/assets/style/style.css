@@ -272,11 +272,7 @@ td:first-child {
   	align-items: center;   
 }
 
-@media only screen and (max-width: 725px) {
-
-	body {
-		background-color: antiquewhite;
-	}
+@media only screen and (max-width: 768px) {
 
 	#header {
 		border-bottom: 1px solid #bfbfbf;	
@@ -287,19 +283,22 @@ td:first-child {
 		padding-top: 1rem;
 	}
 
-	#statistics_container .tab_content, #suggestions_container .tab_content {
+	#statistics_container .tab_content, #suggestions_container .tab_content, #sugg {
 		display: block;
-		/* width: 100%; */
 	}
 
-	.statistics_box {
+	.statistics_box, .hints_box {
 		width: calc(100% - 0.25rem);
 		border-bottom: 1px solid #ccc;
 		margin-bottom: 2rem;
 	}
-
+	
 	.statistics_box:last-child {
 		border-bottom: none;
+	}
+
+	#hints_c {
+		border: none;
 	}
 
 	#legend {

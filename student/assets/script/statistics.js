@@ -145,7 +145,7 @@ function load_statistics(data) {
 	output_b += '</ul></td></tr>'
 	output_b += '</table>';
 
-	output_b += '<table style="margin-top: 1.5rem;">';
+	output_b += '<table style="margin-top: 1.5rem; margin-bottom: 1rem;">';
 	output_b += `<tr><td>${i18next.t('search_engines')}</td></tr>`;
 
 	output_b += '<tr><td><ul class="list">'
