@@ -17,7 +17,7 @@ function groupConsecutiveDomains(data) {
 			currentGroup = [];
 		}
 
-		if (currentItem.page_type == 'RESULT') {
+		if (currentItem.page_type == 'RESULT' || currentItem.page_type == 'CHATBOT') {
 			currentGroup.push(currentItem);
 		}
 	}
@@ -147,53 +147,66 @@ function convertSecondsToMinutes(seconds) {
 
 function clean_query(url){
 	// console.log(url)
+	const params = new URL(url).searchParams;
+	const query = params.has("q") ? params.get("q") : null;
 
-	let url_c = ''
-	if (url.includes('q=')){
-		url_a = url.split('q=')[1];
+	// let url_c = ''
+	// if (url.includes('q=')){
+	// 	url_a = url.split('q=')[1];
 
-		if (url_a.includes('&')){
-			url_b = url_a.split('&')[0]
-		}
-		else {
-			url_b = url_a 
-		}
+	// 	if (url_a.includes('&')){
+	// 		url_b = url_a.split('&')[0]
+	// 	}
+	// 	else {
+	// 		url_b = url_a 
+	// 	}
 
-		url_c = url_b.replace(/\+/g,' ')
+	// 	url_c = url_b.replace(/\+/g,' ')
+	// }
+	// else {
+	// 	url_c = url
+	// }
+
+	return query
+}
+
+
+function clean_domain(url){
+	
+	const domain_0 = url.split('://')[1]
+	const domain_1 = domain_0.split('/')[0];
+	let domain_2 = '';
+
+	if (domain_1.includes('www.')){
+		domain_2 = domain_1.substring(4);
 	}
 	else {
-		url_c = url
+		domain_2 = domain_1
 	}
-
-	return url_c
+	
+	// console.log(domain_2)
+	return domain_2
 }
 
-function search_engine(item) {
+// function search_engine(item) {
 
-	searchEngine = item
-	if (item.includes('//')){
-		searchEngine = item.split('//')[1]
-	}
+// 	searchEngine = item
+// 	if (item.includes('//')){
+// 		searchEngine = item.split('//')[1]
+// 	}
 
-	return searchEngine
-}
+// 	return searchEngine
+// }
 
 function getUniqueValues(values) {
-	// console.log(values)
 	const uniqueValuesSet = new Set(values);
 	return Array.from(uniqueValuesSet);
 }
 
-const url = window.location.href
-if (!url.includes('class')){
-	open_tabs();
-}
-
 // to get the feedback text
 function getObjectById(data,id) {
-    return data.find(item => item.id === id) || null;
+    return data.find(item => item.id.toLowerCase() === id) || null;
 }
-
 
 // make url shorter
 function short_text(text,characters){
@@ -204,43 +217,163 @@ function short_text(text,characters){
 	return output
 }
 
-function open_tabs() {
+function open_tabs(tabA, tabB) {
+
 	let open_stat = false;
 	let open_sugg = false;
 
-	const STAT_BUTTON = document.getElementById("stat_txt");
-	const STAT_TAB = document.querySelector("#statistics_container");
-	const STAT_ARROW = document.getElementById("open_stat");
+	if (tabA == 'statistics_container'){
+		const STAT_BUTTON = document.getElementById("stat_txt");
+		const STAT_TAB = document.querySelector("#statistics_container");
+		const STAT_ARROW = document.getElementById("open_stat");
 
-	const SUGG_BUTTON = document.getElementById("sugg_txt");
-	const SUGG_TAB = document.querySelector("#suggestions_container");
-	const SUGG_ARROW = document.getElementById("open_sugg");
+		STAT_BUTTON.addEventListener("click", () => {
+	
+			if (open_stat == false) {
+				STAT_TAB.style.display = 'block';
+				open_stat = true;
+				STAT_ARROW.innerHTML = '&uarr;';
+			}
+			else {
+				STAT_TAB.style.display = 'none';
+				open_stat = false;
+				STAT_ARROW.innerHTML = '&darr;';
+			}
+		});
+	}
 
-	STAT_BUTTON.addEventListener("click", () => {
+	if (tabB == 'suggestions_container'){
+		const SUGG_BUTTON = document.getElementById("sugg_txt");
+		const SUGG_TAB = document.querySelector("#suggestions_container");
+		const SUGG_ARROW = document.getElementById("open_sugg");
+	
+	
+		SUGG_BUTTON.addEventListener("click", () => {
+	
+			if (open_sugg == false) {
+				SUGG_TAB.style.display = 'block';
+				open_sugg = true;
+				SUGG_ARROW.innerHTML = '&uarr;';
+			}
+			else {
+				SUGG_TAB.style.display = 'none';
+				open_sugg = false;
+				SUGG_ARROW.innerHTML = '&darr;';
+			}
+		});
+	}
 
-		if (open_stat == false) {
-			STAT_TAB.style.display = 'block';
-			open_stat = true;
-			STAT_ARROW.innerHTML = '&uarr;';
+}
+
+function get_query(url){
+	const urlObj = new URL(url);
+	const url_0 = urlObj.searchParams;
+
+	let the_url = ''
+	if (url_0.get('q') != null){
+		the_url = url_0.get('q')
+	}
+	else if (url_0.get('p') != null){
+		the_url = url_0.get('p')
+	}
+	else {
+		the_url = url
+	}
+	
+	return the_url
+}
+
+function formatDate(input) { //2025-04-03 12:48:32.983000+00:00
+	const datePart = input.split(' ')[0];
+	const [year, month, day] = datePart.split('-');
+	return `${day}-${month}-${year}`;
+}
+
+function parseDate(str) {
+  // Keep milliseconds (first 3 digits of microseconds)
+  const fixedStr = str.replace(' ', 'T').replace(/(\.\d{3})\d+/, '$1');
+  return new Date(fixedStr);
+}
+
+function secondsToMMSS(seconds){
+	const totalSeconds = Math.floor(seconds);
+	const minutes = Math.floor(totalSeconds / 60);
+	const remainingSeconds = totalSeconds % 60;
+
+	return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
+
+}
+
+function checkAction(action){
+	// console.log(action)
+
+	category = 'unknown'
+	subcategory = ''
+
+	if (
+		action == 'SAME_DOMAIN_RESULT' || 
+		action == 'SEEN_DOMAIN_RESULT' || 
+		action == 'NEW_RESULT')
+		{
+			category = 'page'
+	}
+	else {
+
+		category = 'search'
+
+		if (
+			action == 'NEW_SEARCH' ||  // new
+			action == 'NEW_SEARCH_SAME_ENGINE' || 
+			action == 'NEW_SEARCH_SEEN_ENGINE'
+			)
+			{
+				subcategory = 'new'
 		}
-		else {
-			STAT_TAB.style.display = 'none';
-			open_stat = false;
-			STAT_ARROW.innerHTML = '&darr;';
+		else if (
+			action == 'SAME_SEARCH_SEEN_ENGINE' ||  // reused
+			action == 'SAME_SEARCH_NEW_ENGINE' || 
+			action == 'SAME_SEARCH' || 
+			action == 'SEEN_SEARCH' ||
+			action == 'SEEN_SEARCH_SEEN_ENGINE' ||
+			action == 'SEEN_SEARCH_NEW_ENGINE'
+			)
+			{
+				subcategory = 'reused'
 		}
-	});
+		else if (action == 'REFINE_SEARCH') {
+			subcategory = 'refine'
+		}
+			
+	}
 
-	SUGG_BUTTON.addEventListener("click", () => {
+	return [category, subcategory]
+}
 
-		if (open_sugg == false) {
-			SUGG_TAB.style.display = 'block';
-			open_sugg = true;
-			SUGG_ARROW.innerHTML = '&uarr;';
-		}
-		else {
-			SUGG_TAB.style.display = 'none';
-			open_sugg = false;
-			SUGG_ARROW.innerHTML = '&darr;';
-		}
-	});
+function detectSearchEngine(url) {
+
+	const SEARCH_ENGINES = [
+		{ name: "Google", domains: ["google."], queryParam: "q" },
+		{ name: "Yahoo", domains: ["yahoo."], queryParam: "p" },
+		{ name: "Bing", domains: ["bing.com"], queryParam: "q" },
+		{ name: "DuckDuckGo", domains: ["duckduckgo.com"], queryParam: "q" },
+		{ name: "Ecosia", domains: ["ecosia.org"], queryParam: "q" },
+		{ name: "Brave", domains: ["search.brave.com"], queryParam: "q" },
+		{ name: "Yandex", domains: ["yandex."], queryParam: "text" },
+		{ name: "Baidu", domains: ["baidu.com"], queryParam: "wd" },
+		{ name: "Startpage", domains: ["startpage.com"], queryParam: "query" }
+	];
+
+	const u = new URL(url);
+	const hostname = u.hostname.toLowerCase();
+
+	for (const engine of SEARCH_ENGINES) {
+    	if (engine.domains.some(d => hostname.includes(d))) {
+      		return {
+        		engine: engine.name,
+        		query: u.searchParams.get(engine.queryParam)
+      		};
+    	}
+  	}
+
+	return null;
 }

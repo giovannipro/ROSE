@@ -4,41 +4,98 @@ const interline = 2;
 
 const new_page_color = '#ff9100';
 const duration_color = '#a4a4a4';
+const chatbot_color = '#c879b8';
+const color_newQuery = '#619ED4';
+const colorModifiedQuery = '#C8DFF4';
+const colorReuded_query ='#90b8df';
+const color_visitedDomain = '#f8b55c';
+const color_system = '#dbdbdb';
+
 const stroke_color = 'white'; // '#aeaeae'
 
 const over_opacity = 0.4;
 
 let scale_mode = 'normalize';
 
+
 function load_data() {
 
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
 
-	const user_id = 3 // urlParams.get('user_id');
-    const task_id = 1 // urlParams.get('task_id');
-
-	// const apiEndpoint_student = `assets/data/_stats_${user_id}_${task_id}.csv` 
-	const apiEndpoint_student = 'https://raw.githubusercontent.com/giovannipro/ROSE/6e9b0b60deb89d5481a279867a326067b17bab80/assets/data/_stats_9_2.csv'
-	// const apiEndpoint_student = `/api/analytics/stories-extraction?user_id=${user_id}&task_id=${task_id}`;
+	const user_id = urlParams.get('user_id');
+    const task_id = urlParams.get('task_id');
 	
-	// http://127.0.0.1:5501/student/index.html?user_id=7&task_id=2
-	console.log(user_id,task_id)
+	const apiEndpoint_student = 'https://raw.githubusercontent.com/giovannipro/ROSE/6e9b0b60deb89d5481a279867a326067b17bab80/assets/data/_stats_9_2.csv'
+	const apiEndpoint_studentInfo = 'assets/data/studentInfo.json'
+	const apiEndpoint_taskInfo = 'assets/data/taskInfo.json'
 
-	// load story data
-	d3.csv(apiEndpoint_student)
-		.then(loaded)
-		.catch(function (error) {
-			if (error.message.includes("404")) {
-				console.log("Something went wrong with the data loading");
-			}
-			else {
-				console.error("Data loading error:", error);
-			}
-		});
+	// http://127.0.0.1:5501/student/?lang=en
+
+	Promise.all([
+        d3.csv(apiEndpoint_student),
+        d3.json(apiEndpoint_studentInfo),
+		d3.json(apiEndpoint_taskInfo)
+    ])
+	.then(([studentData, studentInfo, taskInfo]) => { // 
+		// console.log(studentData)
+
+		loaded(studentData)
+
+		const username = studentInfo.username.split("#")[0];
+
+		start_date = parseDate(studentData[0].time)
+		end_date = parseDate(studentData[studentData.length-1].time)
+
+		function isDifferentDay(d, referenceDate) {
+
+			return d.getUTCFullYear() !== referenceDate.getUTCFullYear() ||
+				d.getUTCMonth() !== referenceDate.getUTCMonth() ||
+				d.getUTCDate() !== referenceDate.getUTCDate();
+		}
+
+		the_date = formatDate(studentData[0].time)
+		d1 = formatDate(studentData[0].time)
+		d2 = formatDate(studentData[studentData.length-1].time)
+		if (isDifferentDay(start_date, end_date)) {
+			the_date = `${d1} — ${d2}`
+			console.log("The day is different", d1, d2);
+		}
+		// console.log(start_date, end_date)
+
+		document.getElementById("the_user").innerHTML = username;
+		document.getElementById("the_task").innerHTML = `${taskInfo.title} (id: ${task_id})`;
+		document.getElementById("the_date").innerHTML = `${the_date}`;
+	})
+	.catch(function (error) {
+		
+		show_hint_error()
+		
+        if (error.message.includes("404")) {
+			show_error('data loading', error)
+        } else {
+			show_error('a generic error', error)
+        }
+    });
+
+	function show_error(type, error){
+		console.log(`We got some error with the ${type}`)
+		console.log(error);
+
+		const data_container = document.getElementById('container')
+		const error_box = document.createElement('div')
+		error_box.classList.add('error_box');
+		error_box.textContent = i18next.t('error_message');
+		data_container.prepend(error_box)
+
+		const chart = document.getElementById('chart');
+		const infobox = document.getElementById('infobox');
+		chart.style.display = 'none';
+		infobox.style.display = 'none';
+	}
 
 	function loaded(data) {
-		console.log(data)
+		// console.log(data)
 
 		data.forEach(function (d, i) {
 			d.duration = parseFloat(d.duration);
@@ -49,32 +106,30 @@ function load_data() {
 			load_statistics(data);
 		}
 		catch (error) {
-			console.log('We got some error with the statistics')
-			console.log(error);
+			show_error('statistics', error)
 		}
 
 		try {
 			load_hints();
 		}
 		catch (error) {
-			console.log('We got some error with the hints')
-			console.log(error);
+			show_error('hints', error)
 		}
 
 		const website_strip_data = groupConsecutiveDomains(data);
-
 		website_strip_data.forEach((item, i) => {
+
+			const totalDuration = item.reduce((sum, item) => sum + item.duration, 0);
+
 			item[0].the_id = i;
+			item[0].the_duration = totalDuration;
 		});
-		// console.log(data);
+		// console.log(website_strip_data)
 
 		function display_labels() {
 			// console.log(data);
 
 			document.getElementById("label_box").innerHTML = '';
-
-			document.getElementById("the_user").innerHTML = data[0].user_id;
-			document.getElementById("the_task").innerHTML = data[0].task_id;
 
 			const container = "#label_box";
 			let window_w = document.getElementById("label_box").offsetWidth;
@@ -89,7 +144,6 @@ function load_data() {
 			// const delta = Math.abs(date2 - date1) / 1000 / 60; // in minutes
 			// const pixel_per_minute = 100
 			// new_width = delta * pixel_per_minute
-			// console.log(data, new_width)
 
 			let svg = d3.select(container)
 				.append("svg")
@@ -136,30 +190,32 @@ function load_data() {
 				.attr("y", linePositions[0])
 				.attr("dy", strip_height / 2)
 				.attr("alignment-baseline", "middle")
-				.text("Search");
+				.text(`${i18next.t('search')}`)
 
 			let label_b = labels.append("text")
 				.attr("x", 10)
 				.attr("y", (strip_height * 1.1))
 				.attr("dy", 0)
 				.attr("alignment-baseline", "middle")
-				.text("Domains");
+				.text(`${i18next.t('domains')}`)
 
 			let label_c = labels.append("text")
 				.attr("x", 10)
 				.attr("y", (strip_height * 2.2))
 				.attr("dy", -70)
 				.attr("alignment-baseline", "middle")
-				.text("Pages");
+				.text(`${i18next.t('pages')}`)
 
 			let label_d = labels.append("text")
 				.attr("x", 10)
 				.attr("y", (strip_height * 2.3))
 				.attr("dy", -2)
 				.attr("alignment-baseline", "middle")
-				.text("System");
+				.text(`${i18next.t('system')}`)
 		}
 		display_labels();
+
+		open_tabs('statistics_container','suggestions_container');
 
 		function display_data(data) {
 			// console.log(data)
@@ -253,6 +309,12 @@ function load_data() {
 				.attr("data-action", (d) => d.action)
 				.attr("data-type", (d) => d.page_type)
 				.attr("data-domainStatus", (d) => d.domain_status)
+				.attr("data-query", (d) => {
+					if (checkAction(d.action)[0] == 'search') query = d.query
+					else query = '-'
+					
+					return query
+				})
 				.attr("data-index", (d, i) => i)
 				.attr("data-class", (d,i) => {
 					let the_class = ""
@@ -280,6 +342,8 @@ function load_data() {
 				})
 				.attr("y", (d, i) => {
 					let y_pos = 0;
+					
+
 					if (d.page_type == 'SEARCH_ENGINE') {
 						if(d.action == 'UNKNOWN'){
 							y_pos = strip_height * 2.2;
@@ -287,6 +351,9 @@ function load_data() {
 						else {
 							y_pos = strip_height * 0;
 						}
+					}
+					else if (d.page_type == 'CHATBOT') {
+						y_pos = strip_height * 1.2;
 					}
 					else if (d.page_type == 'RESULT') {
 						y_pos = strip_height * 1.2;
@@ -303,6 +370,7 @@ function load_data() {
 				})
 				.attr("height", (d) => {
 					let height = (strip_height / 4) - (interline);
+
 					if (d.page_type == 'SEARCH_ENGINE') {
 						if(d.action == 'UNKNOWN'){
 							height = other_height - interline
@@ -310,6 +378,9 @@ function load_data() {
 						else {
 							height = search_height - interline;
 						}
+					}
+					else if (d.page_type == 'CHATBOT') {
+						height = page_height - interline
 					}
 					else if (d.page_type == 'RESULT') {
 						height = page_height - interline;
@@ -321,26 +392,36 @@ function load_data() {
 				})
 				.attr("stroke", stroke_color)
 				.attr("fill", (d) => {
-					let color = '#dbdbdb';
+					let color = color_system; //'#dbdbdb';
 
-					if (d.action == "TASK_STARTED" || d.action == "PRE_SURVEY_STARTED" || d.action == "PRE_SURVEY_ENDED" || d.action == 'POST_SURVEY_STARTED' || d.action == "NEW_TAB" || d.action == "SEARCH_STARTED" || d.action == "SEARCH_ENDED" || d.action == "SEARCH_RESUMED" || d.action == "POST_SURVEY_ENDED") {
-						color = '#dbdbdb'; // #afafaf #9aa4ac
+					const category = checkAction(d.action)
+					// console.log(category)
+					
+					// page
+					if (category == 'page') {
+						color = color_system;
 					}
 
 					// search
-					else if (d.action == "NEW_SEARCH" || d.action == "NEW_SEARCH_SAME_ENGINE") { // new
-						color = '#619ED4';
+					else if (d.action == "NEW_SEARCH" || d.action == "NEW_SEARCH_SAME_ENGINE"  || d.action == "NEW_SEARCH_SEEN_ENGINE") { // new
+						color = color_newQuery;
 					}
-					else if (d.action == "SAME_SEARCH" || d.action == "SEEN_SEARCH") { // reused
-						color = '#90b8df'; // '#85DAE9'
+					else if (d.action == "SAME_SEARCH"  || d.action == "SEEN_SEARCH" || d.action == "SAME_SEARCH_SEEN_ENGINE" || d.action == "SAME_SEARCH_NEW_ENGINE" || d.action == "SEEN_SEARCH_NEW_ENGINE" || d.action == "SEEN_SEARCH_SEEN_ENGINE") { // reused 
+						color = colorReuded_query;
 					}
 					else if (d.action == "REFINE_SEARCH") { // revised
-						color = '#C8DFF4';
+						color = colorModifiedQuery;
 					}
 
 					// pages
 					else if (d.action == "NEW_RESULT" || d.action == "SAME_DOMAIN_RESULT" || d.action == "SEEN_DOMAIN_RESULT") {
-						color = new_page_color;
+						
+						if (d.page_type == 'CHATBOT'){
+							color = chatbot_color 
+						}
+						else {
+							color = new_page_color;
+						}
 					}
 					return color;
 				});
@@ -353,7 +434,7 @@ function load_data() {
 				.attr("class", "website")
 				.attr("data-url", (d) => d[0].url)
 				.attr("data-domain", (d) => d[0].domain)
-				.attr("data-duration", (d) => d[0].duration)
+				.attr("data-duration", (d) => d[0].the_duration)
 				.attr("data-action", (d) => d[0].action)
 				.attr("data-class", "website")
 				.attr("data-index", (d, i) => "w_" + i)
@@ -368,7 +449,6 @@ function load_data() {
 				.attr("class", "strip_website_rect")
 				.attr("x", (d, i) => {
 					let x_pos = timeScale(new Date(d[0].time));
-					// console.log(d[0].time)
 					return x_pos;
 				})
 				.attr("y", (d, i) => {
@@ -387,7 +467,7 @@ function load_data() {
 				.attr("fill", (d) => {
 					let fill = new_page_color;
 					if (d[0].domain_status == "SEEN") {
-						fill = '#f8b55c';
+						fill = color_visitedDomain // '#f8b55c';
 					}
 					return fill;
 				});
@@ -410,7 +490,109 @@ function load_data() {
 				.attr("transform", "translate(0, " + (strip_height * 2.35 + interline) + ")")
 				.call(xAxis);
 
+			// legend
+			// ---------------
+			const legendSpacing = 30;  // Vertical space between legend items
+			const legendRectSize = 20; // Size of the colored squares
+
+			data_legend_a = [
+				{ cat: i18next.t('new_query'), color: color_newQuery},
+				{ cat: i18next.t('modified_query_m'), color: colorModifiedQuery },
+				{ cat: i18next.t('reused_query_m'), color: colorReuded_query }
+			]
+
+			data_legend_b = [
+				{ cat: i18next.t('new_domain'), color: new_page_color },
+				{ cat: i18next.t('visited_domain'), color: color_visitedDomain }
+			]
+			
+			data_legend_c = [
+				{ cat: i18next.t('page_m'), color: new_page_color },
+				{ cat: i18next.t('chatbot'), color: chatbot_color }
+			]
+
+			data_legend_d = [
+				{ cat: i18next.t('system'), color: color_system }
+			]
+
+			function make_lengend(box,data){
+				// console.log(data)
+
+				const w = document.getElementById(box).offsetWidth;
+				const legend_box = d3.select('body').select('#' + box)
+					.append('svg')
+					.attr("width", w)
+					.attr("height", (legendSpacing * data.length) - 10)
+
+					const group = legend_box.selectAll('.legend')
+						.data(data)
+						.enter()
+						.append('g')
+						.attr('class', 'legend')
+						.attr('transform', (d, i) => {
+							let horz = 0;
+							let vert = i * legendSpacing; 
+							
+							return `translate(${horz},${vert})`;
+						});
+
+					group.append('rect')
+						.attr('width', legendRectSize)
+						.attr('height', legendRectSize)
+						.style('fill', d => d.color)
+						.style('stroke', d => d.color);
+		
+					group.append('text')
+						.attr('x', legendRectSize + 5)
+						.attr('y', legendRectSize - 5)
+						.attr('font-size', '0.8rem')
+						.text(d => d.cat);
+			}
+			
+			const legend_switch= document.getElementById("legend_switch")
+			const legend_box = document.getElementById("legend")
+
+			legend_switch.innerHTML = i18next.t('show_legend')
+
+			let legend_open = false;
+			let legend_loaded = false
+			legend_switch.addEventListener("click", function () {
+
+				if (legend_open == false) {
+					legend_box.style.display = "flex";
+					legend_open = true;
+
+					legend_switch.innerHTML = i18next.t('hide_legend')
+
+					if (legend_loaded == false) {
+						make_lengend('legend_a',data_legend_a)
+						make_lengend('legend_b',data_legend_b)
+						make_lengend('legend_c',data_legend_c)
+						make_lengend('legend_d',data_legend_d)
+
+						document.getElementById('t_search').textContent = i18next.t('search');
+						document.getElementById('t_domains_pages').textContent = i18next.t('domains_pages');
+						document.getElementById('t_pages').textContent = i18next.t('pages');
+						document.getElementById('t_system').textContent = i18next.t('system');
+
+						document.getElementById('t_search_info').textContent = i18next.t('search_info');
+						document.getElementById('t_domains_pages_info').textContent = i18next.t('domains_pages_info');
+						document.getElementById('t_pages_info').textContent = i18next.t('pages_info');
+						document.getElementById('t_system_info').textContent = i18next.t('system_info');
+
+						legend_loaded = true; 
+					}
+				}
+				else {
+					legend_box.style.display = "none";
+					legend_open = false;
+
+					legend_switch.innerHTML = i18next.t('show_legend')
+				}
+			})
+
 			// handle Mouse Over
+			// ---------------
 			function handleMouseOver() {
 
 				d3.selectAll(".strip_box")
@@ -467,65 +649,84 @@ function load_data() {
 					.attr("vector-effect", "non-scaling-stroke");
 					
 				const domain = document.querySelector('[data-index="' + id + '"]');
-				const class_ = (domain.getAttribute("data-class")).toString();
-
+				
 				const url = domain.getAttribute("data-url")
 				const duration = domain.getAttribute("data-duration")
 				const action = domain.getAttribute("data-action")
 				const domainStatus = domain.getAttribute("data-domainStatus")
-					
-				let output;
-
+				
+				let output = '';
+				
+				const class_ = (domain.getAttribute("data-class")).toString();
 				if (class_ == 'strip'){
 
-					if (action == 'SAME_DOMAIN_RESULT' || action == 'SEEN_DOMAIN_RESULT' || action == 'NEW_RESULT') {
-						the_url = short_text(url,140)
-						// console.log(the_url)
+					const category = checkAction(action)[0]
+					const subcategory = checkAction(action)[1]
+					// console.log(category,subcategory)
+					
+					// page
+					if (category == 'page') {
+						the_url = short_text(url,120)
 
+						output += `<div id="infoboxType">${i18next.t('page')}</div>`
+						
 						if (domainStatus == "SEEN") {
-							output = `<span><a href="${url}" target="_blank">${the_url}</a><span style="color: gray"> (already seen)</span></span><br/>`;
+							seen_noSeen = `<div><a href="${url}" target="_blank">${the_url}</a><span style="color: gray; margin-top: 0.25rem;"> (already seen)</span></div>`;
 						}
 						else {
-							output = `<span><a href="${url}" target="_blank">${the_url}</a></span><br/>`;
-						}
-
-						output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
-					}
-					else if (action == 'NEW_SEARCH' || action == 'NEW_SEARCH_SAME_ENGINE' || action == 'SAME_SEARCH' || action == 'REFINE_SEARCH' || action == 'SEEN_SEARCH') {
-						let the_domain = decodeURIComponent(url);
-						the_domain = clean_query(the_domain)
-
-						let seen = '';
-						if (action == "SAME_SEARCH" || action == "SEEN_SEARCH") { // reused
-							seen = '(reused query)';
-						}
-						if (action == "REFINE_SEARCH") {
-							seen = '(modified query)';
+							seen_noSeen = `<div><a href="${url}" target="_blank">${the_url}</a></div>`;
 						}
 						
-						output = `<span><a href="${url}" target="_blank">${the_domain}</a> <span style="color: gray">${seen}</span><br/>`;
-						output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
+						output += seen_noSeen
+						output += `<div style="color: gray; margin-top: 0.25rem;">${convertSecondsToMinutes(duration)}<div>`;
+					}
+
+					// search
+					else if (category == 'search') {
+						const the_domain = (domain.getAttribute("data-query")).toString();
+
+						output += `<div id="infoboxType">${i18next.t('query')}</div>`
+
+						let seen = '';
+						if (subcategory == 'reused'){
+							seen = `(${i18next.t('reused_query')})`;
+						}
+						else if (subcategory == 'refine') {
+							seen = `(${i18next.t('modified_query')})`;
+						}
+						
+						output += `<div id="infoboxInfo"><a href="${url}" target="_blank">${the_domain}</a> <span style="color: gray">${seen}</div>`;
+						output += `<div id="infoboxTime">${convertSecondsToMinutes(duration)}<div>`;
+					}
+
+					else    { //unknown action
+						output += `<div id="infoboxType">o_O</div>`
+						output += `<div id="infoboxInfo">${i18next.t('unknown_action')}</div>`;
 					}
 				}
 				else if (class_ == 'website'){
-					const domain_ = domain.getAttribute("data-domain")
 					const action = domain.getAttribute("data-action")
 					const url = domain.getAttribute("data-url")
 					const the_url = clean_domain(url)
+
+					output += `<div id="infoboxType">${i18next.t('domain')}</div>`
 
 					let seen = '';
 					if (action == "SEEN_DOMAIN_RESULT") { // reused
 						seen = '(already seen)';
 					}
-					output = `<span><a href="${the_url}" target="_blank">${domain_}</a> </span><span style="color: gray">${seen}</span><br/>`;
-					output += `<span style="color: gray;">${convertSecondsToMinutes(duration)}<span>`;
+
+					output += `<div id="infoboxInfo"><a href="${url}" target="_blank">${the_url}</a> </span><span style="color: gray">${seen}</div>`;
+					output += `<div id="infoboxTime">${convertSecondsToMinutes(duration)}<div>`;
 				}
-				else {
-					// console.log(domain)
+				else { // system
 					const domain_ = domain.getAttribute("data-domain")
 					const the_domain = domain_.toLowerCase().replace(/\_/g, " ");
-					output = `<span>System (${the_domain})</span><br/>`;
-					output += '<span style="color: gray;">' + convertSecondsToMinutes(duration) + '<span>';
+
+					output += `<div id="infoboxType">${i18next.t('system')}</div>`
+
+					output += `<div id="infoboxInfo">System (${the_domain})</div>`;
+					output += '<div id="infoboxTime">' + convertSecondsToMinutes(duration) + '<div>';
 				}
 
 				infobox.innerHTML = output;

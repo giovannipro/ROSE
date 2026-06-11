@@ -14,10 +14,12 @@ h2 {
 
 #header {
 	display: flex;
+	width: 81%;
 }
 
 #header h2 {
-	width: 160px;
+	width: 33%;
+	padding-right: 1rem;
 }
 
 #header span {
@@ -26,11 +28,7 @@ h2 {
 
 #controllers {
 	padding: 1rem;
-	border-bottom: 1px solid #bfbfbf;
-	position: fixed;
-	top: 0;
 	background-color: white;
-	width: calc(100% - 2rem);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -52,13 +50,6 @@ h2 {
 	overflow-y: hidden;
 	overflow-x: scroll;
 	width: calc(100% - 80px);
-}
-
-#infobox {
-	margin-left: 120px;
-	padding: 2rem 0 3rem;
-	overflow: scroll;
-	min-height: 4rem;
 }
 
 .strip_box, .website {
@@ -138,24 +129,10 @@ h2 {
 	display: flex;
 	justify-content: space-between;
 	min-height: 4rem;
-	margin: 1.5rem 1rem;
+	margin: 1rem 1rem;
 }
 
 .statistics_box {
-	width: 30%;
-}
-
-#hints div {
-	width: 100%;
-	border-bottom: 1px solid #ccc;
-}
-
-#hints div {	
-	display: flex;
-	justify-content: space-between;
-}
-
-#hints div p {
 	width: 30%;
 }
 
@@ -190,15 +167,67 @@ table {
 }
 
 td {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	white-space: wrap;
 }
 
-@media only screen and (max-width: 725px) {
+.list {
+    padding-left: 1rem;
+    margin: 0
+}
+
+.column_header {
+	font-weight: bold;
+	margin-bottom: 1rem; 
+	display: block;
+}
+
+#hintTable {
+	top: -0.5rem;
+	position: relative;
+	border-top: none;
+}
+
+.tooltip {
+	position: relative;
+	display: inline-block;
+	cursor: pointer
+}
+
+.tooltip .tooltip-text {
+	visibility: hidden;
+	background-color: white;
+	box-shadow: 0px 3px 3px #ccc;
+	color: black;
+	border: 1px solid #ccc;
+	text-align: center;
+	padding: 1.25rem 1.5rem;
+	border-radius: 4px;
+	position: absolute;
+	bottom: 125%;
+	left: 50%;
+	transform: translateX(-15%);
+	white-space: wrap;
+	width: calc(100vw / 3 - 5rem);
+	text-align: left;
+}
+
+.tooltip:hover .tooltip-text {
+	visibility: visible;
+}
+
+@media only screen and (max-width: 768px) {
+
+	#controllers {
+		display: block;
+		height: auto;
+	}
+
+	#header {
+		width: 100%;
+	}
+
 	#statistics_container .tab_content, #suggestions_container .tab_content {
 		display: block;
-		/* width: 100%; */
 	}
 
 	.statistics_box {
@@ -210,4 +239,16 @@ td {
 	.statistics_box:last-child {
 		border-bottom: none;
 	}
+}
+
+@media only screen and (max-width: 425px) {
+
+	#header {
+		display: block;
+	}
+
+	#header h2 {
+		width: 100%;
+	}
+
 }

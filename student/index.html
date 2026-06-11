@@ -13,15 +13,29 @@
 	<main>
 		<div id="controllers">
 			<div id="header">
-				<h2>User: <span id="the_user"></span></h2>
-				<h2>Task: <span id="the_task"></span></h2>
+				<h2> 
+					<span id="t_user" style="font-weight: bold;">User</span>:
+					<span id="the_user"></span>
+				</h2>
+				<h2> 
+					<span id="t_task" style="font-weight: bold;">Task</span>:
+					<span id="the_task"></span>
+				</h2>
+				<h2> 
+					<span id="t_date" style="font-weight: bold;">Date</span>:
+					<span id="the_date"></span>
+				</h2>
 			</div>
-			<div>
-				<button class="button not_active" id="normalize_size">Normalize scale</button>
-				<button class="button" id="fit_size">Fit scale</button>
+			<div id="scale_timeline">
+				<button class="button not_active" id="normalize_size">
+					<span id="t_normalize_scale">Normalize scale</span>
+				</button>
+				<button class="button" id="fit_size">
+					<span id="t_fit_scale">Fit scale</span>
+				</button>
 			</div>
 		</div>
-
+		
 		<div id="container">
 			<div id="chart">
 				<div id="label_box"></div>
@@ -29,13 +43,47 @@
 			</div>
 			<div id="infobox"></div>
 		</div>
+		
+		<div style="display: flex; justify-content: flex-end;">
+			<button class="button" id="legend_switch" style="border: 1px solid #bfbfbf; margin: 0 1rem 1rem;">
+				<span id="t_show_legend">Show legend</span>
+			</button>
+		</div>
+		<div id="legend">
+			<div id="legend_box_a" class="legend_box">
+				<div>
+					<p id="t_search">Search</p>
+					<p id="t_search_info" class="info">Navigation actions that occur on a search engine website.</p>
+					<div id="legend_a"></div>
+				</div>
+			</div>
+			<div id="legend_box_b" class="legend_box">
+				<div>
+					<p id="t_domains_pages">Domains</p>
+					<p id="t_domains_pages_info" class="info">Navigation actions that occur on a single domain (not a search engine).</p>
+					<div id="legend_b"></div>
+				</div>
+			</div>
+			<div id="legend_box_c" class="legend_box">
+				<div>
+					<p id="t_pages">Pages</p>
+					<p id="t_pages_info" class="info">Navigation actions that occur on a web page within a domain wwww.</p>
+					<div id="legend_c"></div>
+				</div>
+				<div>
+					<p id="t_system">System</p>
+					<p id="t_system_info" class="info">System actions like start, pause, stop, etc.</p>
+					<div id="legend_d"></div>
+				</div>
+
+			</div>
+		</div>
 
 		<div id="stat_hints">
 			<div id="statistics" class="main_tab">
 				<div id="stat_txt" class="tab_label">
-					<span>Statistics</span>
+					<span id="t_statistics">Statistics</span>
 					<span class="open_tab" id="open_stat">&darr;</span>
-					<!-- &darr; &uarr; -->
 				</div>
 				<div id="statistics_container">
 					<div class="tab_content">
@@ -48,16 +96,18 @@
 	
 			<div id="suggestions" class="main_tab">
 				<div id="sugg_txt" class="tab_label">
-					<span>
+					<span id="t_suggestions">
 						Suggestions
 					</span>
 					<span class="open_tab" id="open_sugg">&darr;</span>
 				</div>
 				<div id="suggestions_container">
-					<div class="tab_content">
-						<!-- <span style="color: #ababab"><em>Some suggestions here</em></span> -->
-						<div id="hints" class="hints_box"></div>
+					<div id="sugg" class="tab_content">
+						<div id="hints_a" class="hints_box"></div>
+						<div id="hints_b" class="hints_box"></div>
+						<div id="hints_c" class="hints_box"></div>
 					</div>
+					<div id="hints_message"></div>
 				</div>
 			</div>
 		</div>
@@ -66,19 +116,21 @@
 	<footer>
 		<ul style="list-style: none; margin: 0; padding: 0">
 			<li style="margin-bottom: 1rem;">
-				<a href="../student">Student view</a>
+				<a href="../student/?lang=en">Student view</a>
 			</li>
 			<li>
-				<a href="../class">Class view</a>
+				<a href="../class/?lang=en">Class view</a>
 			</li>
 		</ul>
 	</footer>
 
 	<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+	<script src="https://unpkg.com/i18next@25.0.0/dist/umd/i18next.min.js"></script>
 	<script src="../assets/script/utilities.js" defer></script>
 	<script src="assets/script/hints.js" defer></script>
 	<script src="assets/script/statistics.js" defer></script>
 	<script src="assets/script/script.js" defer></script>
+	<script src="../assets/script/multilanguage_student.js" defer></script>
 </body>
 
 </html>

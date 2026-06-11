@@ -5,10 +5,16 @@
         "source": "Limit case / Literature on click restraint",
         "description": "Student spends very short time on search results",
         "condition": "Average SEARCH Duration < 3",
-        "feedback": {
-            "en": "It looks like you are very fast in selecting the search engine results to click upon. However, the results page provides a lot of information that can be useful. You could take more time when searching and look at the URLs or short texts (snippets) on the page. Also keep in mind that the first results don't always have to be \"the best\"."
+        "hint": {
+            "en": "You could take your time to carefully decide which links to click on. \nYou could scroll down the  page to see results beyond the first few ones.  First results are not always the \"best\" ones.",
+            "de": "Nimm dir Zeit, um sorgfältig zu entscheiden, auf welche Links du klickst. Scrolle auf der Suchmaschinenergebnisseite nach unten, um nicht nur die ersten Ergebnisse zu sehen. Die ersten Ergebnisse sind nicht immer die \"besten\".",
+            "it": "Potresti prenderti più tempo per decidere con attenzione su quali link cliccare. Potresti scorrere la pagina per vedere anche gli altri risultati.  I primi risultati non sono sempre \"i migliori\"."
         },
-        "advice": "Take your time to carefully decide which links to click on. Scroll down the search engine results page to see results beyond the first few ones. Get an overview of the whole page."
+        "observation": {
+            "en": "You are very fast in selecting the search engine results to click upon. You save time in this way, but the results page provides a lot of useful  information: page title, address, short texts (snippets).",
+            "de": "Du bist sehr schnell bei der Auswahl der Suchmaschinenergebnisse, auf die du klickst. So sparst du Zeit, allerdings bietet die Ergebnisseite viele nützliche Informationen: Seitentitel, Addresse, kurze Texte (Snippets).",
+            "it": "Hai deciso rapidamente su quale risultato cliccare. Così  risparmi tempo, ma  la pagina dei risultati ha molte informazioni utili: titolo della pagina, indirizzo, estratto del testo, ecc."
+        }
     },
     {
         "id": "s2",
@@ -16,32 +22,50 @@
         "source": "LOIS/Variation",
         "description": "Student almost always changes query",
         "condition": "SEARCH action with same query < 20% && SEARCH actions > 3",
-        "feedback": {
-            "en": "It looks like you are changing your search string at every search. Another way of searching would be to explore more than one result for a search query, you may find more relevant documents this way."
+        "hint": {
+            "en": "You could explore multiple websites starting from a single search query. You could read carefully the results page.",
+            "de": "Erkunde mehrere Webseiten anhand einer Suchanfrage. Lese die Ergebnisseite sorgfätig lesen.",
+            "it": "Potresti esplorare più siti web partendo da una singola ricerca o parola chiave. Potresti leggere con attenzione la pagina dei risultati."
         },
-        "advice": "Take time to explore multiple websites from a single search keyword. Open and explore at least 3 results for each search query that you make."
+        "observation": {
+            "en": "You often changed your keywords while doing different searches. It is a good strategy - but not the only one.",
+            "de": "Du hast deine Suchanfragen bei verschiedenen Suchen oft geändert. Das ist eine gute Strategie - aber nicht die einzige.",
+            "it": "Hai fatto più ricerche, cambiando spesso le parole chiave. È una buona strategia, ma non è l'unica."
+        }
     },
     {
         "id": "s3",
         "priority": 3,
         "source": "LOIS/Variation",
-        "description": "Student makes most searches with the same query.",
+        "description": "Student makes most searches with the same query",
         "condition": "SEARCH actions with same query in a row > 70% of all SEARCH actions && SEARCH actions > 3",
-        "feedback": {
-            "en": "It looks like you are exploring one search string only. If you have chosen a very precise and appropriate term, this is just fine. Another way of searching would be to try different search queries, maybe with keywords from the documents you have already read. This may lead to different results."
+        "hint": {
+            "en": "You could take time to think of possible search queries. For example: read over  the assignment and see what keywords are used there; think about synonyms and similar words; identify new keywords in the documents you have already found. You could compare the results you get with different search queries (you can do different searches in different tabs).",
+            "de": "Nimm dir Zeit, um über mögliche Suchbegriffe nachzudenken. Zum Beispiel: Lies dir die Aufgabe durch und schau, welche Schlüsselwörter dort verwendet werden; Überlege dir Synonyme und ähnliche Wörter; Identifiziere neue Schlüsselwörter in den Dokumenten, die du bereits gefunden hast. Vergleiche die Ergebnisse, die du mit verschiedenen Suchanfragen erhältst (du kannst verschiedene Suchen in verschiedenen Tabs durchführen).",
+            "it": "Potresti prenderti più tempo per pensare a possibili parole chiave. Ad esempio: rileggi il compito e identifica le parole chiave nel testo; pensa ai sinonimi e parole simili; identifica nuove parole chiave nei documenti che hai già trovato. Puoi confrontare i risultati ottenuti con parole chiave diverse (puoi eseguire più ricerche utilizzando diverse schede del browser)."
         },
-        "advice": "Take time to think of possible keywords. For example, check if your first query returned suitable results; re-read the task and see what keywords are used there; think about synonyms; identify new keywords in the documents you have already found. When you face a difficult search task, try at least 4 different search queries. Compare the results you get when you use different keywords (you can perform different searches in different tabs)."
+        "observation": {
+            "en": "You often used the same search query multiple times. If you  pick a very precise and appropriate term, it works well - but sometimes we do not know the best keywords in advance.",
+            "de": "Du nutzt oft den gleichen Suchbegriff mehrmals. Wenn du einen sehr genauen und passenden Begriff gewählt hast, funktioniert das gut - manchmal kennt man die besten Suchbegriffe allerdings nicht im Voraus. ",
+            "it": "Hai utilizzato spesso la stessa parola chiave per più ricerche. Se scegli un termine molto preciso e appropriato, funziona bene - ma a volte non sappiamo in anticipo quali siano le parole chiave migliori."
+        }
     },
     {
         "id": "s4",
         "priority": 4,
         "source": "Teachers, literature",
-        "description": "Students tends to use sentences.",
+        "description": "Students tends to use sentences",
         "condition": "Average number of words in query string > 6 && Queries include filler-words",
-        "feedback": {
-            "en": "It looks like you are using complex search terms, such as long sentences or complete questions, in your search. This is not always the best strategy. Instead, you could use only (a few) important, well-chosen search terms. This could make the search more focused and effective. For example: Instead of 'What did Hansel and Gretel use to find their way home when they were abandoned in the forest’, you could just type 'Hansel Gretel way home’."
+        "hint": {
+            "en": "You could use only (a few) important, well-chosen search queries. This will make the search more focused and effective. For example: instead of ‘What did Hansel and Gretel use to find their way home when they were abandoned in the forest?’, you could just type ‘Hansel Gretel way home’.",
+            "de": "Nutze nur (wenige) wichtige, gut gewählte Suchbegriffe. Dadruch wird die Suche gezielter und effektiver. Zum Beispiel: Statt \"Womit haben Hänsel und Gretel den Weg nach Hause gefunden, als sie im Wald ausgesetzt wurden?\", kannst du \"Hänsel Gretel Heimweg\" eingeben.",
+            "it": "Potresti utilizzare (pochi) termini di ricerca importanti e ben selezionati. Questo renderà la ricerca più mirata ed efficace. Ad esempio: Invece di “Cosa usarono Hansel e Gretel per ritrovare la strada di casa quando furono abbandonati nella foresta?”, potresti digitare semplicemente “Hansel Gretel strada di casa”."
         },
-        "advice": "Take time to find the most important keywords for your search (you can also write them down) and use them in your search. See if your first search brought good results. Re-read the task and think about which keywords are used there. Also think of similar words. Find new keywords in the documents you have already found. Try performing different searches (with keywords and with sentences) in different tabs to compare them Directly."
+        "observation": {
+            "en": "You use long sentences or full questions in your search. This works, but it is not always the best strategy.",
+            "de": "Du verwendest lange Sätze oder vollständige Fragen bei deiner Suche. Das funktioniert, ist aber nicht immer die beste Strategie.",
+            "it": "Fai ricerche usando frasi lunghe o domande complete. Questa non è sempre la strategia migliore."
+        }
     },
     {
         "id": "c1",
@@ -49,10 +73,16 @@
         "source": "Limit case",
         "description": "Student never opens a web page",
         "condition": "RES actions == 0",
-        "feedback": {
-            "en": "It looks like you are only reading the short previews on the search page without clicking on the links to open the full web pages. However, there is much more information on the web pages than just what is in the preview. When you visit the websites, you can also check whether the information is trustworthy. Take a little time to choose the right links, then you won't have to read too much."
+        "hint": {
+            "en": "You could take time to open and read the most important and interesting links. You could use multiple tabs to keep good documents at hand and read them later. When you visit websites, you could also check whether the information is trustworthy.",
+            "de": "Nimm dir Zeit, um die wichtigsten und interessantesten Links zu öffnen und zu lesen.Verwende mehrere Registerkarten, um gute Dokumente zu speichern und sie später zu lesen. Wenn du Webseiten besuchst, prüfe, ob die Informationen vertrauenswürdig sind.",
+            "it": "Potresti prenderti il tempo di aprire e leggere i link più importanti e interessanti. Potresti utilizzare diverse schede per tenere aperti i documenti migliori e leggerli in seguito. Quando visiti un sito web, potresti verificare se le informazioni sono affidabili."
         },
-        "advice": "When you get search results, take a moment to select and open the most important and interesting links. You can also use several tabs to save good documents and read them later."
+        "observation": {
+            "en": "You only read the short previews on the search results page without clicking on the links to open the web pages. This saves time, but there is much more information on the web pages than just what is in the preview.",
+            "de": "Du liest nur die kurzen Vorschauen auf der Suchergebnisseite, ohne auf die Links zu klicken, um die Webseiten zu öffnen. Dies spart Zeit, allerdings enthalten die Webseiten mehr Informationen, als nur die, die in der Vorschau stehen.",
+            "it": "Leggi solo le brevi anteprime sulla pagina dei risultati della ricerca, senza aprire le pagine web. Questo ti fa risparmiare tempo, ma le pagine web contengono molte più informazioni di quelle contenute nell'anteprima."
+        }
     },
     {
         "id": "c2",
@@ -60,10 +90,16 @@
         "source": "LOIS/Variation",
         "description": "Student reads document very briefly",
         "condition": "Average RES Duration < 15",
-        "feedback": {
-            "en": "It looks like you are just skimming the selected documents without really reading them. If you find a good document, take your time to read it - sometimes the most important information is not immediately visible."
+        "hint": {
+            "en": "When you think a document is important and trustworthy, you could take the time to read and understand it thoroughly.",
+            "de": "Wenn du dir sicher bist, dass ein Dokument wichtig und vertrauenswürdig ist, nimm dir die Zeit, es gründlich zu lesen und zu verstehen.",
+            "it": "Quando pensi che un documento sia importante e affidabile,potresti  prenderti il tempo di leggerlo e comprenderlo a fondo."
         },
-        "advice": "When you are sure a document is important and trustworthy, take the time to read and understand it thoroughly. After all, we search online to find and learn new information."
+        "observation": {
+            "en": "You just skimmed (or read very fast) the web pages you open. This is a good strategy to get an overview, but sometimes the most important information is not immediately visible.",
+            "de": "Du hast die von dir geöffneten Webseiten nur überflogen (oder sehr schnell gelesen). Das ist eine gute Strategie, um sich einen Überblick zu verschaffen, aber manchmal sind die wichtigsten Informationen nicht sofort sichtbar.",
+            "it": "Hai solo  sfogliato (o letto molto velocemente) le pagine web. Questa è una buona strategia per fare una panoramica. A volte però le informazioni più importanti non sono immediatamente visibili."
+        }
     },
     {
         "id": "c3",
@@ -71,10 +107,16 @@
         "source": "Limit case",
         "description": "Student reads for a long time at the beginning of the story",
         "condition": "Average RES Duration of the first 3 RES actions > 40 sec",
-        "feedback": {
-            "en": "It looks like you spend a lot of time reading. This shows that you're dedicated and accurate, but it's not always the best approach. Instead, you could read more documents quickly before deciding which ones you want to read in depth. You can also search for specific words on a website (using Ctrl+F). This will give you a quick overview and help you decide how to use your time. Also, check the trustworthiness of a website before you spend a lot of time reading."
+        "hint": {
+            "en": "You could skim (read rapidly) mutiple documents  to get an overview, and then select the ones that are really important and read them in more detail. You could also search for specific words on a web page (using Ctrl+F). You could open documents in new tabs, so that you can easily find them again. You could check the trustworthiness of a website before you spend a lot of time reading.",
+            "de": "Überflieg mehrere Dokumente (oder lies mehrere Dokumente schnell), um dir einen Überblick zu verschaffen und anschließend die wirklich wichtigen Dokumente auszuwählen und ausführlicher zu lesen. Suche nach bestimmten Wörtern auf einer Webseite (mit Strg+F). Öffne die Dokumente in neuen Tabs, sodass du sie leichter wiederfinden kannst. Prüfe die Vertrauenswürdigkeit einer Webseite, bevor du viel Zeit mit dem Lesen verbringst.",
+            "it": "Potresti sfogliare (o leggere rapidamente) un certo numero di documenti per avere una visione d'insieme, e poi selezionare quelli veramente importanti e leggerli in modo più approfondito. Potresti cercare una parola specifica all'interno di una pagina web (usando Ctrl+F). Potresti aprire i documenti in nuove schede per poterli ritrovare facilmente. Potresti verificare l'affidabilità di un sito web prima di investire tanto tempo a leggerlo."
         },
-        "advice": "Try and read rapidly a number of documents quickly to get an overview. Then select the ones that are really important and read them in more detail. It can be helpful to open documents in new tabs so that you can easily find them again."
+        "observation": {
+            "en": "You spent a long time reading. This shows that you're dedicated and accurate, but there are other ways to proceed.",
+            "de": "Du hast viel Zeit mit dem Lesen verbracht. Das zeigt, dass du engagiert und genau bist, allerdings ist dies nicht immer der beste Ansatz.",
+            "it": "Hai usato molto tempo per leggere. Questo dimostra impegno e precisione, ma ci sono altri modi di procedere."
+        }
     },
     {
         "id": "c4",
@@ -82,21 +124,33 @@
         "source": "Limit case",
         "description": "Student always opens a single page per website",
         "condition": "Number of pages == Number of websites",
-        "feedback": {
-            "en": "It looks as if you only ever visit a single page on a website. However, it can be really useful to explore a website. You might find more information on your search topic or find out who runs the website and how trustworthy it is."
+        "hint": {
+            "en": "When you find a good website, you could look at more pages, and see if there is more relevant information for you. You could find out who runs the website, or who wrote a specific page. This will help you assess whether the website is trustworthy.",
+            "de": "Wenn du eine gute Webseite findest, sieh dir weitere Seiten an und finde heraus, ob du weitere relevante Informationen findest. Finde heraus, wer die Webseite betreibt oder wer eine bestimmte Seite geschrieben hat. So kannst du besser beurteilen, ob die Webseite vertrauenswürdig ist.",
+            "it": "Quando trovi un buon sito web, potresti esaminare varie pagine, per vedere se ci sono altre informazioni utili. Potresti cercare chi gestisce il sito, o chi ha scritto una pagina specifica. Questo ti aiuterà a valutare se il sito è affidabile."
         },
-        "advice": "When you find a good website, take some time to look at more pages, such as the “About Us” section. Find out who runs the website. This will give you more information and help you assess whether the website is trustworthy."
+        "observation": {
+            "en": "You always visited a single page on a website. The information you needed might be just there; however, it can be really useful to explore a website more in depth.",
+            "de": "Du besuchst immer nur eine einzelne Seite auf einer Webseite. Die Informationen, die du gebraucht hast, waren vielleicht genau dort, allerdings kann es nützlich sein, eine Webseite zu erkunden.",
+            "it": "Hai visitato sempre solo una singola pagina per ogni sito web. Magari l'informazione che cercavi era lì, tuttavia, può essere molto utile navigare su più pagine dentro un sito web."
+        }
     },
     {
         "id": "o1",
         "priority": 1,
         "source": "Limit case",
         "description": "Minimal search",
-        "condition": "SEARCH actions < 2 && RESULT actions < 2",
-        "feedback": {
-            "en": "It looks like you only did one or two searches and opened very few documents. You might have been lucky, but if you want to make sure you find good information, you often need multiple searches. Using a search engine does not mean that you ask a question and get a complete answer immediately. It's more like looking for the right books in a library or being a detective looking for solid evidence."
+        "condition": "SEARCH actions < 2 && RESULT actions < 2 && total time < 1 min",
+        "hint": {
+            "en": "When you search for difficult tasks, do not assume that the first information you find is always correct and complete. Even if you have a first answer, you could  keep searching and open more documents. Remember that, on some topics, there might be different opinions and more information to discover.",
+            "de": "Gehe bei der Suche für schwierige Aufgaben nicht davon aus, dass die ersten Informationen, die du findest, immer richtig und vollständig sind. Auch wenn du eine erste Antwort gefunden hast, kannst du weitersuchen und weitere Dokumente öffnen. Denke daran, dass es zu manchen Themen unterschiedliche Meinungen und weitere Informationen geben kann, die es zu entdecken gilt.",
+            "it": "Quando svolgi una ricerca complessa, non dare per scontato che le prime informazioni che trovi siano  corrette e complete. Anche se hai trovato una prima risposta, potresti continuare a cercare e aprire altri documenti. Ricorda che, per molti argomenti, ci sono opinioni diverse e più informazioni da scoprire."
         },
-        "advice": "When you search for difficult tasks, do not assume that the first information you find is always correct and complete. Even if you have a first answer, keep searching and open more documents. On most topics, there are different opinions and more information to discover."
+        "observation": {
+            "en": "You only did one or two searches and opened only a few documents. You might be very fast, but if you want to make sure you find good information, you often need multiple searches. It is like looking for the right books in a library or being a detective looking for solid evidence.",
+            "de": "Du hast nur eine oder zwei Suchen durchgeführt und nur sehr wenige Dokumente geöffnet.Du bist so vielleicht sehr schnell, aber wenn du sichergehen möchtest, dass du gute Informationen findest, musst du oft mehrere Suchen durchführen. Es ist wie bei der Suche nach den richtigen Büchern in einer Bibliothek oder wie bei einem Detektiv, der nach handfesten Beweisen sucht.",
+            "it": "Hai effettuato solo una o due ricerche e aperto pochi documenti. Forse sei molto veloce, ma se vuoi trovare informazioni valide, spesso è necessario effettuare più ricerche. È un po' come cercare buoni libri in una grande biblioteca o essere un detective che cerca prove inconfutabili."
+        }
     },
     {
         "id": "o2",
@@ -104,10 +158,16 @@
         "source": "Advice",
         "description": "Student works in a single window",
         "condition": "Global number of actions > 10 && Number of tabs open <= 2",
-        "feedback": {
-            "en": "It looks like you are visiting many pages, but you close all of them. In some situations, it is useful to keep track of the pages you visit and compare them."
+        "hint": {
+            "en": "You could open pages in new tabs, so you can keep important pages at hand and you will not “lose” the results page. It will save time when you have to use, compare or reprise the information you have found!",
+            "de": "Du kannst die Seiten in neuen Tabs öffnen, sodass du die wichtigen Seiten immer zur Hand hast und die Ergebnisseite nicht \"verlierst\". Das spart Zeit, wenn du die gefundenen Informationen verwenden, vergleichen oder wiederholen musst.",
+            "it": "Potresti aprire le pagine in nuove schede, così puoi tenere a portata di mano quelle importanti senza “perdere” la pagina dei risultati. In questo modo risparmierai tempo quando dovrai usare, confrontare o riprendere le informazioni che hai trovato!"
         },
-        "advice": "Open pages in new tabs, so you can keep important pages at hand and you will not “lose” the results page. It will save time when you have to use, compare or reprise the information you have found!"
+        "observation": {
+            "en": "You visited many pages, but closed all of them. In some situations, it is useful to keep track of the pages you visit and compare them.",
+            "de": "Du kannst die Seiten in neuen Tabs öffnen, sodass du die wichtigen Seiten immer zur Hand hast und die Ergebnisseite nicht \"verlierst\". Das spart Zeit, wenn du die gefundenen Informationen verwenden, vergleichen oder wiederholen musst.",
+            "it": "Hai visitato molte pagine, ma le hai chiuse tutte. In alcune situazioni, è utile tenere traccia delle pagine visitate e confrontarle."
+        }
     },
     {
         "id": "o3",
@@ -115,21 +175,16 @@
         "source": "LOIS/Variation",
         "description": "Student uses only Google",
         "condition": "Number of search engines == 1 && Search engine is Google",
-        "feedback": {
-            "en": "It looks like you only used Google. It's the most used search engine in the world, but there are many others. Why don't you try another one? Even if you use the same search terms, you often get different results."
+        "hint": {
+            "en": "You could use search engines other than Google (even with the same query!). Here you can find a list: <ul><li><a href='https://en.wikipedia.org/wiki/Brave_Search' target='_blank'>Brave Search</a></li><li><a href='https://en.wikipedia.org/wiki/DuckDuckGo' target='_blank'>DuckDuckGo</a></li><li><a href='https://en.wikipedia.org/wiki/Ecosia' target='_blank'>Ecosia</a></li><li><a href='https://en.wikipedia.org/wiki/Google_Search' target='_blank'>Google</a></li><li><a href='https://en.wikipedia.org/wiki/Lycos' target='_blank'>Lycos</a></li><li><a href='https://en.wikipedia.org/wiki/MetaCrawler' target='_blank'>MetaCrawler</a></li><li><a href='https://en.wikipedia.org/wiki/Microsoft_Bing' target='_blank'>Microsoft Bing</a></li><li><a href='https://en.wikipedia.org/wiki/Mojeek' target='_blank'>Mojeek</a></li><li><a href='https://en.wikipedia.org/wiki/OpenSearch_(software)' target='_blank'>OpenSearch</a></li><li><a href='https://en.wikipedia.org/wiki/Qwant' target='_blank'>Qwant</a></li><li><a href='https://en.wikipedia.org/wiki/Swisscows' target='_blank'>Swisscows</a></li></ul>",
+            "de": "Du kannst andere Suchmaschinen als Google verwenden. Hier findest du eine Liste: : <ul><li><a href='https://en.wikipedia.org/wiki/Brave_Search' target='_blank'>Brave Search</a></li><li><a href='https://en.wikipedia.org/wiki/DuckDuckGo' target='_blank'>DuckDuckGo</a></li><li><a href='https://en.wikipedia.org/wiki/Ecosia' target='_blank'>Ecosia</a></li><li><a href='https://en.wikipedia.org/wiki/Google_Search' target='_blank'>Google</a></li><li><a href='https://en.wikipedia.org/wiki/Lycos' target='_blank'>Lycos</a></li><li><a href='https://en.wikipedia.org/wiki/MetaCrawler' target='_blank'>MetaCrawler</a></li><li><a href='https://en.wikipedia.org/wiki/Microsoft_Bing' target='_blank'>Microsoft Bing</a></li><li><a href='https://en.wikipedia.org/wiki/Mojeek' target='_blank'>Mojeek</a></li><li><a href='https://en.wikipedia.org/wiki/OpenSearch_(software)' target='_blank'>OpenSearch</a></li><li><a href='https://en.wikipedia.org/wiki/Qwant' target='_blank'>Qwant</a></li><li><a href='https://en.wikipedia.org/wiki/Swisscows' target='_blank'>Swisscows</a></li></ul>",
+            "it": "Potresti usare motori di ricerca diversi da Google. Qui puoi trovare un elenco: <ul><li><a href='https://it.wikipedia.org/wiki/Brave_Search' target='_blank'>Brave Search</a></li><li><a href='https://en.wikipedia.org/wiki/DuckDuckGo' target='_blank'>DuckDuckGo</a></li><li><a href='https://i.wikipedia.org/wiki/Ecosia' target='_blank'>Ecosia</a></li><li><a href='https://it.wikipedia.org/wiki/Google' target='_blank'>Google</a></li><li><a href='https://it.wikipedia.org/wiki/Lycos' target='_blank'>Lycos</a></li><li><a href='https://en.wikipedia.org/wiki/MetaCrawler' target='_blank'>MetaCrawler</a></li><li><a href='https://it.wikipedia.org/wiki/Microsoft_Bing' target='_blank'>Microsoft Bing</a></li><li><a href='https://en.wikipedia.org/wiki/Mojeek' target='_blank'>Mojeek</a></li><li><a href='https://en.wikipedia.org/wiki/OpenSearch_(software)' target='_blank'>OpenSearch</a></li><li><a href='https://it.wikipedia.org/wiki/Qwant' target='_blank'>Qwant</a></li><li><a href='https://it.wikipedia.org/wiki/Swisscows' target='_blank'>Swisscows</a></li></ul>"
         },
-        "advice": "Try and use search engines other than Google. Here you can find a list."
-    },
-    {
-        "id": "o4",
-        "priority": 4,
-        "source": "LOIS/Variation",
-        "description": "Student uses a single search engine",
-        "condition": "Number of search engines == 1",
-        "feedback": {
-            "en": "It looks like you only used one search engine. But there are many different ones! Why don't you try a different one? Even if you use the same search terms, you often get different results."
-        },
-        "advice": "Try and use other search engines. Here you can find a list."
+        "observation": {
+            "en": "You only used Google. It's the most used search engine in the world, but there are many others. Even if you use the same keywords, you often get different results.",
+            "de": "Du hast nur Google benutzt. Das ist die meistgenutzte Suchmaschine der Welt, aber es gibt noch viele andere. Selbst wenn du die gleichen Suchbegriffe verwendest, erhältst du oft unterschiedliche Ergebnisse.",
+            "it": "Hai usato solo Google. È il motore di ricerca più usato al mondo, ma ce ne sono molti altri. Anche con le stesse parole chiave, spesso si ottengono risultati diversi."
+        }
     },
     {
         "id": "w1",
@@ -137,10 +192,16 @@
         "source": "Warning",
         "description": "Student only uses chatbots",
         "condition": "Only Chatbots appears",
-        "feedback": {
-            "en": "It looks like you relied completely on AI to find information. AI is powerful, but not always reliable - double check the information you have found!"
+        "hint": {
+            "en": "You should check on other websites the information you get from chatbots.You could ask the chatbot for links and sources for the information it provides - and don't forget to check them anyway!",
+            "de": "Du solltest die Informationen, die du von Chatbots erhältst, auf anderen Webseiten überprüfen. Du kannst den Chatbot nach Links und Quellen für die Informationen fragen, die er liefert - und vergiss nicht, sie trotzdem zu überprüfen!",
+            "it": "Dovresti verificare su altri siti web le informazioni ottenute dai chatbot. Potresti chiedere al chatbot i link e le fonti delle informazioni che fornisce - e non dimenticare di controllarle comunque!"
         },
-        "advice": "Check the information you get from chatbots on other websites. Also ask the chatbot for links and sources for the information it gives (and don't forget to check them anyway!)."
+        "observation": {
+            "en": "You relied on AI to find information. AI is powerful, but not always reliable.",
+            "de": "Du hast dich bei der Suche nach Informationen auf KI verlassen. KI ist mächtig, aber nicht immer zuverlässig.",
+            "it": "Hai fatto affidamento all'IA per trovare informazioni. L'intelligenza artificiale è potente, ma non sempre affidabile."
+        }
     },
     {
         "id": "w2",
@@ -148,10 +209,16 @@
         "source": "Warning",
         "description": "Student also uses chatbot",
         "condition": "At least 1 Chatbot appears AND At least one Search engine appears",
-        "feedback": {
-            "en": "It looks like you used AI to find information. AI is powerful, but not always reliable – double check the information you have found!"
+        "hint": {
+            "en": "You should check on other websites the information you get from chatbots. You could ask the chatbot for links and sources for the information it provides - and don't forget to check them anyway!",
+            "de": "Du solltest die Informationen, die du von Chatbots erhältst, auf anderen Webseiten überprüfen. Du kannst den Chatbot nach Links und Quellen für die Informationen fragen, die er liefert - und vergiss nicht, sie trotzdem zu überprüfen!",
+            "it": "Dovresti verificare su altri siti web le informazioni ottenute dai chatbot. Potresti chiedere al chatbot i link e le fonti delle informazioni che fornisce - e non dimenticare di controllarle comunque!"
         },
-        "advice": "Check the information you get from chatbots on other websites. Also ask the chatbot for links and sources for the information it gives (and don't forget to check them anyway!)."
+        "observation": {
+            "en": "You also used AI to find information. AI is powerful, but not always reliable.",
+            "de": "Du hast auch KI eingesetzt, um Informationen zu finden. KI ist mächtig, aber nicht immer zuverlässig.",
+            "it": "Hai usato anche l'IA per trovare informazioni. L'intelligenza artificiale è potente, ma non sempre affidabile."
+        }
     },
     {
         "id": "w3",
@@ -159,20 +226,32 @@
         "source": "Warning",
         "description": "Student uses Wikipedia",
         "condition": "Wikipedia appears at least once",
-        "feedback": {
-            "en": "It looks like you have visited Wikipedia. Wikipedia is an open encyclopedia created by many people working together. This makes it very powerful, but you should be careful. Anyone can publish information there, even if it is checked by “Wikipedians”. Wikipedia is a great secondary source: it's a good starting point to get an overview of a topic. But you should always double-check the information. For example, follow the links to the sources provided in each Wikipedia article to make sure the information is correct."
+        "hint": {
+            "en": "Wikipedia is a great secondary source: it's a good starting point to get an overview of a topic. But you should always double-check the information on other sources. You could follow the links to the sources provided in each Wikipedia article (or page) to make sure the information is correct. You could identify online encyclopedias other than Wikipedia. Here is a list: <ul><li><a href='https://www.treccani.it/' target='_blank'>Treccani</a></li></ul>",
+            "de": "Wikipedia ist eine hervorragende Sekundärquelle: Sie ist ein guter Ausgangspunkt, um sich einen Überblick über ein Thema zu verschaffen. Aber du solltest die Informationen aus anderen Quellen immer überprüfen. Du kannst den Links zu den Quellen folgen, die in jedem Wikipedia-Artikel (oder jeder Seite) angegeben sind, um sicherzustellen, dass die Informationen korrekt sind. Du kannst andere Online-Enzyklopädien als Wikipedia ermitteln. Hier ist eine Liste: <ul><li><a href='https://www.treccani.it/' target='_blank'>Treccani</a></li></ul>",
+            "it": "Wikipedia è un'ottima fonte secondaria: un buon punto di partenza per avere una panoramica di un argomento. Ma è sempre bene ricontrollare le informazioni su altre fonti. Potresti seguire i link alle fonti forniti in ogni articolo (o pagina) di Wikipedia per assicurarti che le informazioni siano corrette. Potresti identificare altre enciclopedie online oltre a Wikipedia. Ecco un elenco: <ul><li><a href='https://www.treccani.it/' target='_blank'>Treccani</a></li></ul>"
         },
-        "advice": "Identify other encyclopedias other than Wikipedia. Here is a list."
+        "observation": {
+            "en": "You have used Wikipedia. Wikipedia is an open encyclopedia created by many people working together. This makes it very powerful, but you should be careful. Anyone can publish information there, even if it is checked by “Wikipedians”.",
+            "de": "You have used Wikipedia. Wikipedia is an open encyclopedia created by many people working together. This makes it very powerful, but you should be careful. Anyone can publish information there, even if it is checked by “Wikipedians”.",
+            "it": "Hai utilizzato Wikipedia. Wikipedia è un'enciclopedia aperta creata da molte persone che lavorano insieme. Questo la rende molto potente, ma bisogna fare attenzione. Chiunque può pubblicare informazioni, anche se vengono controllate dai “wikipediani”."
+        }
     },
     {
-        "id": "d",
+        "id": "d1",
         "priority": 1,
         "source": "Default prompt",
         "description": "Default prompt",
         "condition": "No prompt from any category is selected",
-        "feedback": {
-            "en": "It looks like you search in a balanced and varied manner: you used several different keywords and explored them, and you seem able to manage time and attention between searching and reading."
+        "hint": {
+            "en": "To enhance your search skills, you can reflect on your search. Here are some prompt questions: Are you satisfied with your search? Do you think you have been effective? Can you think of ways to improve your search? Can you find ways to be more efficient (same or better results in a shorter time)?",
+            "de": "Um deine Fähigkeiten zu verbessern, kannst du über deine Suche nachdenken. Hier sind einige Leitfragen: Bist du mit deiner Suche zufrieden? Denkst du, dass du effektiv warst? Fallen Dir Möglichkeiten ein, mit der du deine Suche verbessern kannst? Kannst du Wege finden, effizienter zu sein (gleiche oder bessere Ergebnisse in kürzerer Zeit)?",
+            "it": "Per migliorare le tue competenze di ricerca, puoi riflettere su come hai cercato. Ecco alcune domande: Sei soddisfatto/a della tua ricerca? Pensi di essere stato/a efficace? Riesci a immaginare modi di migliorare il tuo modo di cercare? Riesci a immaginare modi di essere più efficiente (trovare risultati simili o migliori in meno tempo)?"
         },
-        "advice": "To enhance your skills, you can reflect on your search. Here are some prompt questions: Are you satisfied with your search? Do you think you have been effective? Can you think of ways to improve your search? Can you find ways to be more efficient (same or better results in a shorter time)?"
+        "observation": {
+            "en": "It looks like you search in a balanced and varied manner: you used several different keywords and explored them, and you seem able to manage time and attention between searching and reading.",
+            "de": "Es sieht so aus, als würdest du auf ausgewogene und abwechslungsreiche Weise suchen: Du hast mehrere Suchanfragen verwendet und diese erkundet, und du scheinst in der Lage zu sein, Zeit und Aufmerksamkeit zwischen Suchen und Lesen zu einzuteilen.",
+            "it": "Sembra che cerchi in modo equilibrato e vario: hai utilizzato più parole chiave, le hai esplorate e sembri in grado di gestire il tempo e l'attenzione tra ricerca e lettura."
+        }
     }
 ]

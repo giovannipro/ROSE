@@ -13,8 +13,18 @@
 	<main>
 		<div id="controllers">
 			<div id="header">
-				<h2>Class: <span id="the_class"></span></h2>
-				<h2>Task: <span id="the_task"></span></h2>
+				<h2> 
+					<span id="t_class" style="font-weight: bold;">Class</span>:
+					<span id="the_class"></span>
+				</h2>
+				<h2> 
+					<span id="t_task" style="font-weight: bold;">Task</span>:
+					<span id="the_task"></span>
+				</h2>
+				<h2> 
+					<span id="t_date" style="font-weight: bold;">Date</span>:
+					<span id="the_date"></span>
+				</h2>
 			</div>
 		</div>
 
@@ -22,36 +32,59 @@
 			<aside>
 				<div id="sort_box">
 					<span>
-						sort by
+						<span id="n_stories">0</span>
+						<span id="t_stories">stories</span>
 					</span>
-					<select id="get_sort">
-						<option value="total">total time</option>
-						<option value="queries">search time</option>
-						<option value="pages">pages time</option>
-						<option value="name">name</option>
-					</select>
+					<div>
+						<span style="font-size: 0.8rem; margin-right: 0.5rem;" id="t_sortBy">sort by</span>
+						<select id="get_sort">
+							<option value="total" id="t_totalTime">total time</option>
+							<option value="queries" id="t_searchTime">search time</option>
+							<option value="pages" id="t_pagesTime">pages time</option>
+							<option value="name" id="t_name">name</option>
+						</select>
+					</div>
 				</div>
 				<ul id="student_list"></ul>
 			</aside>
 			<div id="container"></div>
 		</section>
 
-	</main>
+		<section id="stat_hints">
+			<div id="statistics" class="main_tab">
+				<div id="stat_txt" class="tab_label">
+					<span id="t_statistics">Statistics</span>
+					<span class="open_tab" id="open_stat">&darr;</span>
+				</div>
+				<div id="statistics_container">
+					<div class="tab_content">
+						<div id="statistics_a" class="statistics_box"></div>
+						<div id="statistics_b" class="statistics_box"></div>
+						<div id="statistics_c" class="statistics_box"></div>
+					</div>
+				</div>
+			</div>
+		</section>
 
 	<footer>
 		<ul style="list-style: none; margin: 0; padding: 0">
 			<li style="margin-bottom: 1rem;">
-				<a href="../student">Student view</a>
+				<a href="../student/?lang=en">Student view</a>
 			</li>
 			<li>
-				<a href="../class">Class view</a>
+				<a href="../class/?lang=en">Class view</a>
 			</li>
 		</ul>
 	</footer>
 
+	</main>
+
 	<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+	<script src="https://unpkg.com/i18next@25.0.0/dist/umd/i18next.min.js"></script>
 	<script src="../assets/script/utilities.js" defer></script>
 	<script src="assets/script/class.js" defer></script>
+	<script src="assets/script/hints.js" defer></script>
+	<script src="../assets/script/multilanguage_class.js" defer></script>
 </body>
 
 </html>
