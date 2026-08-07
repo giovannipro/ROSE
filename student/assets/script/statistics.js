@@ -1,10 +1,16 @@
-function load_statistics(data) {
+function load_statistics(data) { 
+
+	// on Time use and statitics tab
 
 	const max_link_char = 50;
 
-	const container_a = document.getElementById('statistics_a');
-	const container_b = document.getElementById('statistics_b');
-	const container_c = document.getElementById('statistics_c');
+	const container_sa = document.getElementById('statistics_a');
+	const container_sb = document.getElementById('statistics_b');
+	const container_sc = document.getElementById('statistics_c');
+
+	const container_ta = document.getElementById('time_a');
+	const container_tb = document.getElementById('time_b');
+	const container_tc = document.getElementById('time_c');
 
 	const searchItems = data.filter(item => item.action === 'NEW_SEARCH' || item.action === 'NEW_SEARCH_SAME_ENGINE' || item.action === 'SAME_SEARCH' || item.action === 'SEEN_SEARCH'  || item.action === 'REFINE_SEARCH');
 	const searchDuration = searchItems.reduce((sum, item) => sum + item.duration, 0);
@@ -75,117 +81,130 @@ function load_statistics(data) {
 	});
 	// console.log(unique_searchEngines)
 
-	let output_a = '';
-	let output_b = '';
-	let output_c = '';
+	let output_sa = '';
+	let output_sb = '';
+	let output_sc = '';
 
-	// Time
+	let output_ta = '';
+	let output_tb = '';
+	let output_tc = '';
+
+	// Time use 
+	// -----------------------------------------------
 	// -----------------------------------------------
 
-	output_a += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('time')}</strong> (mm:ss)</span>`;
-	output_a += '<hr/ style="border: 0.1px solid #ccc">'
+	output_ta += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('time')}</strong> (mm:ss)</span>`;
+	output_ta += '<hr/ style="border: 0.1px solid #ccc">'
 	
-	output_a += '<table>';
-	output_a += `<tr><td>${i18next.t('total_cap')}</td>`;
-	output_a += '<td>' + convertSecondsToMinutes(pageDuration + searchDuration) + '</td></tr>'; // '<td>' + parseInt(pageDuration + searchDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration + searchDuration) + ' minutes</td></tr>'
+	output_ta += '<table>';
+	output_ta += `<tr><td>${i18next.t('total_cap')}</td>`;
+	output_ta += '<td>' + convertSecondsToMinutes(pageDuration + searchDuration) + '</td></tr>'; // '<td>' + parseInt(pageDuration + searchDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration + searchDuration) + ' minutes</td></tr>'
 
-	output_a += "<tr><td colspan='2'>" + duration_chart(searchDuration, pageDuration, 100, 'student') + "</td></tr>";
-	output_a += '<tr><td>&nbsp;</td></tr>';
+	output_ta += "<tr><td colspan='2'>" + duration_chart(searchDuration, pageDuration, 100, 'student') + "</td></tr>";
+	output_ta += '<tr><td>&nbsp;</td></tr>';
 
-	output_a += `<tr><td>${i18next.t('searches')}</td>`;
-	output_a += '<td>' + convertSecondsToMinutes(searchDuration) + '</td></tr>'; // '<td>' + parseInt(searchDuration) + ' seconds / ' + convertSecondsToMinutes(searchDuration) + ' minutes</td></tr>'
-	output_a += `<tr><td>${i18next.t('pages')}</td>`;
-	output_a += '<td>' + convertSecondsToMinutes(pageDuration) + '</td></tr>'; // '<td>' + parseInt(pageDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration) + ' minutes</td></tr>'
-	output_a += '<tr><td>&nbsp;</td></tr>';
+	output_ta += `<tr><td>${i18next.t('searches')}</td>`;
+	output_ta += '<td>' + convertSecondsToMinutes(searchDuration) + '</td></tr>'; // '<td>' + parseInt(searchDuration) + ' seconds / ' + convertSecondsToMinutes(searchDuration) + ' minutes</td></tr>'
+	output_ta += `<tr><td>${i18next.t('pages')}</td>`;
+	output_ta += '<td>' + convertSecondsToMinutes(pageDuration) + '</td></tr>'; // '<td>' + parseInt(pageDuration) + ' seconds / ' + convertSecondsToMinutes(pageDuration) + ' minutes</td></tr>'
+	output_ta += '<tr><td>&nbsp;</td></tr>';
 
-	output_a += '<table>';
-	output_a += `<tr><td>${i18next.t('searches')}</td>`;
-	output_a += `<tr><td>- ${i18next.t('shortest')}</td>`;
-	output_a += '<td>' + convertSecondsToMinutes(minSearchDuration) + '</td></tr>';
-	output_a += `<tr><td>- ${i18next.t('average')}</td>`;
-	output_a += '<td>' + convertSecondsToMinutes(avgSearchDuration) + '</td></tr>';
-	output_a += `<tr><td>- ${i18next.t('longest')}</td>`;
-	output_a += '<td>' + convertSecondsToMinutes(maxSearchDuration) + '</td></tr>';
-	output_a += '<tr><td>&nbsp;</td></tr>';
+	output_ta += '<table>';
+	output_ta += `<tr><td>${i18next.t('searches')}</td>`;
+	output_ta += `<tr><td>- ${i18next.t('shortest')}</td>`;
+	output_ta += '<td>' + convertSecondsToMinutes(minSearchDuration) + '</td></tr>';
+	output_ta += `<tr><td>- ${i18next.t('average')}</td>`;
+	output_ta += '<td>' + convertSecondsToMinutes(avgSearchDuration) + '</td></tr>';
+	output_ta += `<tr><td>- ${i18next.t('longest')}</td>`;
+	output_ta += '<td>' + convertSecondsToMinutes(maxSearchDuration) + '</td></tr>';
+	output_ta += '<tr><td>&nbsp;</td></tr>';
 
-	output_a += `<tr><td>${i18next.t('pages')}</td>`;
-	output_a += `<tr><td>- ${i18next.t('shortest')}</td>`;
-	output_a += '<td>' + convertSecondsToMinutes(minPageDuration) + '</td></tr>';
-	output_a += `<tr><td>- ${i18next.t('average')}</td>`;
-	output_a += '<td>' + convertSecondsToMinutes(avgPageDuration) + '</td></tr>';
-	output_a += `<tr><td>- ${i18next.t('longest')}</td>`;
-	output_a += '<td>' + convertSecondsToMinutes(maxPageDuration) + '</td></tr>';
-	output_a += '<tr><td>&nbsp;</td></tr>';
-	output_a += '</table>';
+	output_ta += `<tr><td>${i18next.t('pages')}</td>`;
+	output_ta += `<tr><td>- ${i18next.t('shortest')}</td>`;
+	output_ta += '<td>' + convertSecondsToMinutes(minPageDuration) + '</td></tr>';
+	output_ta += `<tr><td>- ${i18next.t('average')}</td>`;
+	output_ta += '<td>' + convertSecondsToMinutes(avgPageDuration) + '</td></tr>';
+	output_ta += `<tr><td>- ${i18next.t('longest')}</td>`;
+	output_ta += '<td>' + convertSecondsToMinutes(maxPageDuration) + '</td></tr>';
+	output_ta += '<tr><td>&nbsp;</td></tr>';
+	output_ta += '</table>';
+
+	// Statistics
+	// -----------------------------------------------
+	// -----------------------------------------------
 
 	// Searches
 	// -----------------------------------------------
 
-	output_b += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('searches')}</strong></span>`;
-	output_b += '<hr/ style="border: 0.1px solid #ccc">'
+	output_sa += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('searches')}</strong></span>`;
+	output_sa += '<hr/ style="border: 0.1px solid #ccc">'
 
-	output_b += '<table>';
-	output_b += `<tr><td>- ${i18next.t('total')}</td>`;
-	output_b += '<td>' + (newQueries + reusedQueries + revisedQueries) + '</td></tr>';
-	output_b += `<tr><td>- ${i18next.t('new')}</td>`;
-	output_b += '<td>' + newQueries + '</td></tr>';
-	output_b += `<tr><td>- ${i18next.t('reused')}</td>`;
-	output_b += '<td>' + reusedQueries + '</td></tr>';
-	output_b += `<tr><td>- ${i18next.t('modified')}</td>`;
-	output_b += '<td>' + revisedQueries + '</td></tr>';
-	output_b += '</table>';
+	output_sa += '<table>';
+	output_sa += `<tr><td>- ${i18next.t('total')}</td>`;
+	output_sa += '<td>' + (newQueries + reusedQueries + revisedQueries) + '</td></tr>';
+	output_sa += `<tr><td>- ${i18next.t('new')}</td>`;
+	output_sa += '<td>' + newQueries + '</td></tr>';
+	output_sa += `<tr><td>- ${i18next.t('reused')}</td>`;
+	output_sa += '<td>' + reusedQueries + '</td></tr>';
+	output_sa += `<tr><td>- ${i18next.t('modified')}</td>`;
+	output_sa += '<td>' + revisedQueries + '</td></tr>';
+	output_sa += '</table>';
 
-	output_b += '<table style="margin-top: 1rem;">';
-	output_b += `<tr><td>${i18next.t('queries')}</td></tr>`;
+	output_sa += '<table style="margin-top: 1rem;">';
+	output_sa += `<tr><td>${i18next.t('queries')}</td></tr>`;
 
-	output_b += '<tr><td><ul class="list">'
+	output_sa += '<tr><td><ul class="list">'
 	unique_queries_final.forEach(item => {
-		output_b += '<li><a href="' + item.url + '" target="_blank">' + item.query + '</a></li>';
+		output_sa += '<li><a href="' + item.url + '" target="_blank">' + item.query + '</a></li>';
 	});
-	output_b += '</ul></td></tr>'
-	output_b += '</table>';
+	output_sa += '</ul></td></tr>'
+	output_sa += '</table>';
 
-	output_b += '<table style="margin-top: 1.5rem; margin-bottom: 1rem;">';
-	output_b += `<tr><td>${i18next.t('search_engines')}</td></tr>`;
+	output_sa += '<table style="margin-top: 1.5rem; margin-bottom: 1rem;">';
+	output_sa += `<tr><td>${i18next.t('search_engines')}</td></tr>`;
 
-	output_b += '<tr><td><ul class="list">'
+	output_sa += '<tr><td><ul class="list">'
 	unique_searchEngines.forEach(item => {
-		output_b += '<li>' + (item.engine) + '</li>';
+		output_sa += '<li>' + (item.engine) + '</li>';
 	});
-	output_b += '</ul></td></tr>'
-	output_b += '</table>';
+	output_sa += '</ul></td></tr>'
+	output_sa += '</table>';
 
 	// Pages
 	// -----------------------------------------------
 
-	output_c += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('pages')}</strong></span>`;
-	output_c += '<hr/ style="border: 0.1px solid #ccc">'
+	output_sb += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('pages')}</strong></span>`;
+	output_sb += '<hr/ style="border: 0.1px solid #ccc">'
 
-	output_c += '<table style="margin-bottom: 1.5rem;">';
-	output_c += `<tr><td>- ${i18next.t('total')}</td>`;
-	output_c += '<td>' + pages + '</td></tr>';
-	output_c += '</table>';
+	output_sb += '<table style="margin-bottom: 1.5rem;">';
+	output_sb += `<tr><td>- ${i18next.t('total')}</td>`;
+	output_sb += '<td>' + pages + '</td></tr>';
+	output_sb += '</table>';
 
-	output_c += '<table>';
-	output_c += `<tr><td>${i18next.t('websites')}</td></tr>`;
-	output_c += `<tr><td>- ${i18next.t('new_m')}</td>`;
-	output_c += '<td>' + newDomains + '</td></tr>';
-	output_c += `<tr><td>- ${i18next.t('revisited')}`;
-	output_c += '<td>' + revisitedDomains + '</td></tr>';
-	output_c += '</table>';
+	output_sb += '<table>';
+	output_sb += `<tr><td>${i18next.t('websites')}</td></tr>`;
+	output_sb += `<tr><td>- ${i18next.t('new_m')}</td>`;
+	output_sb += '<td>' + newDomains + '</td></tr>';
+	output_sb += `<tr><td>- ${i18next.t('revisited')}`;
+	output_sb += '<td>' + revisitedDomains + '</td></tr>';
+	output_sb += '</table>';
 
-	output_c += '<table style="margin-top: 1.5rem;">';
-	output_c += `<tr><td>${i18next.t('domains')}</td></tr>`;
+	output_sb += '<table style="margin-top: 1.5rem;">';
+	output_sb += `<tr><td>${i18next.t('domains')}</td></tr>`;
 
-	output_c += '<tr><td><ul class="list">'
+	output_sb += '<tr><td><ul class="list">'
 	unique_websitesSort.forEach(item => {
-		output_c += '<li><a href="' + item.url + '" target="_blank">' + item.domain + '</a></li>'; //
+		output_sb += '<li><a href="' + item.url + '" target="_blank">' + item.domain + '</a></li>'; //
 	});
-	output_c += '</ul></td></tr>'
-	output_c += '</table>';
+	output_sb += '</ul></td></tr>'
+	output_sb += '</table>';
 
-	container_a.innerHTML = output_a;
-	container_b.innerHTML = output_b;
-	container_c.innerHTML = output_c;
+	container_sa.innerHTML = output_sa;
+	container_sb.innerHTML = output_sb;
+	container_sc.innerHTML = output_sc;
+
+	container_ta.innerHTML = output_ta;
+	container_tb.innerHTML = output_tb;
+	container_tc.innerHTML = output_tc;
 
 }

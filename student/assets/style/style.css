@@ -108,12 +108,12 @@ h2 {
 	float: right;
 }
 
-#statistics, #suggestions {
-	border-top: 1px solid #bfbfbf;
+#statistics_container, #suggestions_container, #time_container {
+	display: none;
 }
 
-#statistics_container, #suggestions_container {
-	display: none;
+#time_use {
+	border-top: 1px solid #bfbfbf;
 }
 
 #suggestions {
@@ -129,7 +129,7 @@ h2 {
 	cursor: pointer;
 }
 
-.statistics_box {
+.statistics_box, .time_box {
 	width: 30%;
 }
 

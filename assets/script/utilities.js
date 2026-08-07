@@ -214,12 +214,33 @@ function short_text(text,characters){
 	return output
 }
 
-function open_tabs(tabA, tabB) {
+function open_tabs(tabA, tabB, tabC) {
 
+	let open_time = false;
 	let open_stat = false;
 	let open_sugg = false;
 
-	if (tabA == 'statistics_container'){
+	if (tabA == 'time_container'){
+		const TIME_BUTTON = document.getElementById("time_txt");
+		const TIME_TAB = document.querySelector("#time_container");
+		const TIME_ARROW = document.getElementById("open_time");
+
+		TIME_BUTTON.addEventListener("click", () => {
+	
+			if (open_time == false) {
+				TIME_TAB.style.display = 'block';
+				open_time = true;
+				TIME_ARROW.innerHTML = '&uarr;';
+			}
+			else {
+				TIME_TAB.style.display = 'none';
+				open_time = false;
+				TIME_ARROW.innerHTML = '&darr;';
+			}
+		});
+	}
+
+	if (tabB == 'statistics_container'){
 		const STAT_BUTTON = document.getElementById("stat_txt");
 		const STAT_TAB = document.querySelector("#statistics_container");
 		const STAT_ARROW = document.getElementById("open_stat");
@@ -239,11 +260,10 @@ function open_tabs(tabA, tabB) {
 		});
 	}
 
-	if (tabB == 'suggestions_container'){
+	if (tabC == 'suggestions_container'){
 		const SUGG_BUTTON = document.getElementById("sugg_txt");
 		const SUGG_TAB = document.querySelector("#suggestions_container");
 		const SUGG_ARROW = document.getElementById("open_sugg");
-	
 	
 		SUGG_BUTTON.addEventListener("click", () => {
 	

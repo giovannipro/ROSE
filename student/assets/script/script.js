@@ -227,7 +227,7 @@ function load_data() {
 		}
 		display_labels();
 
-		open_tabs('statistics_container','suggestions_container');
+		open_tabs('time_container', 'statistics_container','suggestions_container');
 
 		function display_data(data) {
 			// console.log(data)
