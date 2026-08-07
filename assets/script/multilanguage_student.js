@@ -74,7 +74,9 @@ i18next.init({
                 "page" : "Page",
                 "query" : "Search",
                 "domain" : "Domain",
-                "system" : "System"
+                "system" : "System",
+
+                "already_seen": "already seen"
             }
         },
         de: {
@@ -140,7 +142,9 @@ i18next.init({
                 "page" : "Seite",
                 "query" : "Suche",
                 "domain" : "Domäne",
-                "system" : "System"
+                "system" : "System",
+
+                "already_seen": "schon gesehen"
             }
         },
         it: {
@@ -206,7 +210,9 @@ i18next.init({
                 "page" : "Pagina",
                 "query" : "Ricerca",
                 "domain" : "Dominio",
-                "system" : "Sistema"
+                "system" : "Sistema",
+
+                "already_seen": "già visto"
             }
         }
     }

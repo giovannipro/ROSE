@@ -39,6 +39,7 @@ h2 {
 	padding: 2rem 0 0;
 	overflow: scroll;
 	min-height: 4rem;
+	height: 5rem;
 }
 
 #infoboxType {

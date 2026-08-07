@@ -5,6 +5,7 @@ const interline = 2;
 const new_page_color = '#ff9100';
 const duration_color = '#a4a4a4';
 const chatbot_color = '#c879b8';
+const chatbotRevised_color = '#F0BDE4';
 const color_newQuery = '#619ED4';
 const colorModifiedQuery = '#C8DFF4';
 const colorReuded_query ='#90b8df';
@@ -16,7 +17,6 @@ const stroke_color = 'white'; // '#aeaeae'
 const over_opacity = 0.4;
 
 let scale_mode = 'normalize';
-
 
 function load_data() {
 
@@ -124,14 +124,33 @@ function load_data() {
 		}
 
 		const website_strip_data = groupConsecutiveDomains(data);
-		website_strip_data.forEach((item, i) => {
+		// console.log(website_strip_data)
 
+		website_strip_data.forEach((item, i) => {
 			const totalDuration = item.reduce((sum, item) => sum + item.duration, 0);
 
 			item[0].the_id = i;
 			item[0].the_duration = totalDuration;
 		});
-		// console.log(website_strip_data)
+
+		// setup container
+		let window_w = document.getElementById("label_box").offsetWidth;
+			window_h = document.getElementById("label_box").offsetHeight;
+
+		let margin = { top: 10, left: 0, bottom: 20, right: 0 },
+			width = window_w - (margin.right + margin.right),
+			height = window_h - (margin.top + margin.bottom);
+
+		const strip_height = height / 2.5;
+
+		const linePositions = [
+			strip_height * 0,
+			strip_height * 0.60,
+			strip_height * 1.20,
+			strip_height * 1.80,
+			strip_height * 2.20,
+			strip_height * 2.35
+		];
 
 		function display_labels() {
 			// console.log(data);
@@ -139,34 +158,12 @@ function load_data() {
 			document.getElementById("label_box").innerHTML = '';
 
 			const container = "#label_box";
-			let window_w = document.getElementById("label_box").offsetWidth;
-			window_h = document.getElementById("label_box").offsetHeight;
-
-			let margin = { top: 10, left: 0, bottom: 20, right: 0 },
-				width = window_w - (margin.right + margin.right),
-				height = window_h - (margin.top + margin.bottom);
-
-			// const date1 = new Date(data[0].time);
-			// const date2 = new Date(data[data.length-1].time)
-			// const delta = Math.abs(date2 - date1) / 1000 / 60; // in minutes
-			// const pixel_per_minute = 100
-			// new_width = delta * pixel_per_minute
 
 			let svg = d3.select(container)
 				.append("svg")
 				.attr("width", width)
 				.attr("height", height + (margin.top + margin.bottom))
 				.attr("id", "svg_labels");
-
-			const strip_height = height / 2.5;
-
-			const linePositions = [
-				strip_height * 0,
-				strip_height * 1,
-				strip_height * 1.2,
-				strip_height * 2.2,
-				strip_height * 2.35
-			];
 
 			let plot = svg.append('g')
 				.attr("id", "plot")
@@ -193,32 +190,40 @@ function load_data() {
 				.attr("class", "labels");
 
 			let label_a = labels.append("text")
+				.text(`${i18next.t('searches')}`)
 				.attr("x", 10)
 				.attr("y", linePositions[0])
-				.attr("dy", strip_height / 2)
+				.attr("dy", linePositions[1] / 2 )
 				.attr("alignment-baseline", "middle")
-				.text(`${i18next.t('search')}`)
 
 			let label_b = labels.append("text")
+				.text(`${i18next.t('Chatbots')}`)
 				.attr("x", 10)
-				.attr("y", (strip_height * 1.1))
-				.attr("dy", 0)
+				.attr("y", linePositions[1])
+				.attr("dy", linePositions[1] / 2 )
 				.attr("alignment-baseline", "middle")
-				.text(`${i18next.t('domains')}`)
 
 			let label_c = labels.append("text")
-				.attr("x", 10)
-				.attr("y", (strip_height * 2.2))
-				.attr("dy", -70)
-				.attr("alignment-baseline", "middle")
 				.text(`${i18next.t('pages')}`)
+				.attr("x", 10)
+				.attr("y", linePositions[2])
+				.attr("dy", linePositions[1] / 2 )
+				.attr("alignment-baseline", "middle")
 
 			let label_d = labels.append("text")
+				.text(`${i18next.t('domains')}`)
 				.attr("x", 10)
-				.attr("y", (strip_height * 2.3))
-				.attr("dy", -2)
+				.attr("y", linePositions[3])
+				.attr("dy", linePositions[1] / 2 )
 				.attr("alignment-baseline", "middle")
+
+
+			let label_e = labels.append("text")
 				.text(`${i18next.t('system')}`)
+				.attr("x", 10)
+				.attr("y", linePositions[4])
+				.attr("dy", linePositions[1] / 8 )
+				.attr("alignment-baseline", "middle")
 		}
 		display_labels();
 
@@ -270,18 +275,12 @@ function load_data() {
 			// .nice()
 
 			const strip_height = height / 2.5;
-			const search_height = strip_height * 1;
-			const website_height = strip_height * 0.2;
-			const page_height = strip_height * 1;
-			const other_height = strip_height * 0.15;
+			const search_height = linePositions[1];
+			const chatbots_height = linePositions[1];
+			const page_height = linePositions[1];
 
-			const linePositions = [
-				strip_height * 0,
-				strip_height * 1,
-				strip_height * 1.2,
-				strip_height * 2.2,
-				strip_height * 2.35
-			];
+			const domain_height = linePositions[1] / 4;
+			const other_height = linePositions[1] / 4;
 
 			let lines = plot.append("g")
 				.attr("class", "lines");
@@ -339,8 +338,22 @@ function load_data() {
 					handleClick(d.id);
 				});
 
+			// tooltip for debug
+			const tooltip = d3.select("body")
+				.append("div")
+				.attr("class", "tooltip")
+				.style("position", "absolute")
+				.style("visibility", "hidden")
+				.style("background", "rgba(0, 0, 0, 0.8)")
+				.style("color", "#fff")
+				.style("padding", "8px 12px")
+				.style("border-radius", "4px")
+				.style("font-size", "12px")
+				.style("pointer-events", "none");
+
 			let strip_rect = strip_box.append("rect")
 				.attr("class", "strip_rect")
+				.attr("data-page", (d) => d.page_type)
 				.attr("data-action", (d) => d.action)
 				.attr("data-domain", (d) => d.domain)
 				.attr("x", (d, i) => {
@@ -350,7 +363,6 @@ function load_data() {
 				.attr("y", (d, i) => {
 					let y_pos = 0;
 					
-
 					if (d.page_type == 'SEARCH_ENGINE') {
 						if(d.action == 'UNKNOWN'){
 							y_pos = strip_height * 2.2;
@@ -360,7 +372,7 @@ function load_data() {
 						}
 					}
 					else if (d.page_type == 'CHATBOT') {
-						y_pos = strip_height * 1.2;
+						y_pos = linePositions[1]; // strip_height * 1.2;
 					}
 					else if (d.page_type == 'RESULT') {
 						y_pos = strip_height * 1.2;
@@ -387,7 +399,7 @@ function load_data() {
 						}
 					}
 					else if (d.page_type == 'CHATBOT') {
-						height = page_height - interline
+						height = chatbots_height - interline
 					}
 					else if (d.page_type == 'RESULT') {
 						height = page_height - interline;
@@ -399,39 +411,58 @@ function load_data() {
 				})
 				.attr("stroke", stroke_color)
 				.attr("fill", (d) => {
-					let color = color_system; //'#dbdbdb';
+					let color = color_system;
+					// console.log(d)
 
 					const category = checkAction(d.action)
-					// console.log(category)
-					
-					// page
-					if (category == 'page') {
-						color = color_system;
-					}
 
-					// search
-					else if (d.action == "NEW_SEARCH" || d.action == "NEW_SEARCH_SAME_ENGINE"  || d.action == "NEW_SEARCH_SEEN_ENGINE") { // new
-						color = color_newQuery;
-					}
-					else if (d.action == "SAME_SEARCH"  || d.action == "SEEN_SEARCH" || d.action == "SAME_SEARCH_SEEN_ENGINE" || d.action == "SAME_SEARCH_NEW_ENGINE" || d.action == "SEEN_SEARCH_NEW_ENGINE" || d.action == "SEEN_SEARCH_SEEN_ENGINE") { // reused 
-						color = colorReuded_query;
-					}
-					else if (d.action == "REFINE_SEARCH") { // revised
-						color = colorModifiedQuery;
-					}
-
-					// pages
-					else if (d.action == "NEW_RESULT" || d.action == "SAME_DOMAIN_RESULT" || d.action == "SEEN_DOMAIN_RESULT") {
-						
-						if (d.page_type == 'CHATBOT'){
-							color = chatbot_color 
+					if (d.page_type == 'CHATBOT'){
+						if (d.action == "NEW_RESULT")  {
+							color = chatbot_color
 						}
 						else {
+							color = chatbotRevised_color;
+						}
+					}
+					else {
+
+						// search
+						if (d.action == "NEW_SEARCH" || d.action == "NEW_SEARCH_SAME_ENGINE"  || d.action == "NEW_SEARCH_SEEN_ENGINE") { // new
+							color = color_newQuery;
+						}
+						else if (d.action == "SAME_SEARCH"  || d.action == "SEEN_SEARCH" || d.action == "SAME_SEARCH_SEEN_ENGINE" || d.action == "SAME_SEARCH_NEW_ENGINE" || d.action == "SEEN_SEARCH_NEW_ENGINE" || d.action == "SEEN_SEARCH_SEEN_ENGINE") { // reused 
+							color = colorReuded_query;
+						}
+						else if (d.action == "REFINE_SEARCH") {
+							color = colorModifiedQuery;
+						}
+	
+						// pages
+						else if (d.action == "NEW_RESULT" || d.action == "SAME_DOMAIN_RESULT" || d.action == "SEEN_DOMAIN_RESULT") {
 							color = new_page_color;
+						}
+
+						else {
+							color = color_system
 						}
 					}
 					return color;
-				});
+				})
+				// .on("mouseover", function(event, d) {
+				// 	const info = `<strong>Page type: ${d.page_type}</strong><br/>Action: ${d.action}<br/>${d.url}<br/>${d.query} ...`;
+				// 	tooltip
+				// 		.style("visibility", "visible")
+				// 		.html(info);
+				// })
+				// .on("mousemove", function(event) {
+				// 	tooltip
+				// 		.style("top", height + "px") // (event.pageY - 10) 
+				// 		.style("left", 100 + "px"); // (event.pageX + 10)
+				// })
+				// .on("mouseout", function() {
+				// 	tooltip.style("visibility", "hidden");
+				// 	d3.select(this).attr("opacity", 1);
+				// });
 
 			// website strips
 			let strip_website = strip_website_box.selectAll("g")
@@ -459,7 +490,7 @@ function load_data() {
 					return x_pos;
 				})
 				.attr("y", (d, i) => {
-					let y_pos = strip_height * 1;
+					let y_pos = linePositions[4] - domain_height - interline;
 					return y_pos + interline;
 				})
 				.attr("width", (d) => {
@@ -468,14 +499,30 @@ function load_data() {
 					return width;
 				})
 				.attr("height", (d) => {
-					return website_height - (interline * 2);
+					return domain_height - (interline * 2);
 				})
 				.attr("stroke", stroke_color)
 				.attr("fill", (d) => {
-					let fill = new_page_color;
-					if (d[0].domain_status == "SEEN") {
-						fill = color_visitedDomain // '#f8b55c';
+					let fill = '#ccc'; // new_page_color;
+
+					if (d[0].page_type == "SEARCH_ENGINE") {
+						fill =  color_newQuery
 					}
+					else if (d[0].page_type == "CHATBOT") {
+						fill = chatbot_color
+					}
+					else if (d[0].page_type == "RESULT") {
+						if (d[0].action == "NEW_RESULT")  {
+							fill = new_page_color
+						}
+						else{
+							fill = color_visitedDomain;
+						}
+					}
+					else {
+						fill =  red;
+					}
+
 					return fill;
 				});
 
@@ -523,7 +570,6 @@ function load_data() {
 			]
 
 			function make_lengend(box,data){
-				// console.log(data)
 
 				const w = document.getElementById(box).offsetWidth;
 				const legend_box = d3.select('body').select('#' + box)
@@ -661,6 +707,7 @@ function load_data() {
 				const duration = domain.getAttribute("data-duration")
 				const action = domain.getAttribute("data-action")
 				const domainStatus = domain.getAttribute("data-domainStatus")
+				const pageType = domain.getAttribute("data-type")
 				
 				let output = '';
 				
@@ -670,45 +717,65 @@ function load_data() {
 					const category = checkAction(action)[0]
 					const subcategory = checkAction(action)[1]
 					// console.log(category,subcategory)
-					
-					// page
-					if (category == 'page') {
-						the_url = short_text(url,120)
 
-						output += `<div id="infoboxType">${i18next.t('page')}</div>`
+					if (pageType == 'CHATBOT'){
+						// console.log('bot', url)
 						
-						if (domainStatus == "SEEN") {
-							seen_noSeen = `<div><a href="${url}" target="_blank">${the_url}</a><span style="color: gray; margin-top: 0.25rem;"> (already seen)</span></div>`;
-						}
-						else {
-							seen_noSeen = `<div><a href="${url}" target="_blank">${the_url}</a></div>`;
-						}
-						
-						output += seen_noSeen
-						output += `<div style="color: gray; margin-top: 0.25rem;">${convertSecondsToMinutes(duration)}<div>`;
-					}
-
-					// search
-					else if (category == 'search') {
-						const the_domain = (domain.getAttribute("data-query")).toString();
-
-						output += `<div id="infoboxType">${i18next.t('query')}</div>`
-
+						const the_domain = (domain.getAttribute("data-domain")).toString();
 						let seen = '';
-						if (subcategory == 'reused'){
-							seen = `(${i18next.t('reused_query')})`;
+
+						if (action != 'NEW_RESULT'){
+							seen = `(${i18next.t('already_seen')})`;
 						}
-						else if (subcategory == 'refine') {
-							seen = `(${i18next.t('modified_query')})`;
+
+						output += `<div id="infoboxType">${i18next.t('chatbot')}</div>`
+						output += `<div id="infoboxInfo">${the_domain} <span style="color: gray">${seen}</div>`;
+						output += `<div id="infoboxTime">${convertSecondsToMinutes(duration)}<div>`;
+						
+					}
+					else {
+						// console.log(url)
+
+						// search
+						if (category == 'search') {
+							const the_domain = (domain.getAttribute("data-query")).toString();
+		
+							output += `<div id="infoboxType">${i18next.t('query')}</div>`
+		
+							let seen = '';
+							if (subcategory == 'reused'){
+								seen = `(${i18next.t('reused_query')})`;
+							}
+							else if (subcategory == 'refine') {
+								seen = `(${i18next.t('modified_query')})`;
+							}
+							
+							output += `<div id="infoboxInfo"><a href="${url}" target="_blank">${the_domain}</a> <span style="color: gray">${seen}</div>`;
+							output += `<div id="infoboxTime">${convertSecondsToMinutes(duration)}<div>`;
+						}
+		
+						// page
+						else if (category == 'page') {
+							the_url = short_text(url,120)
+		
+							output += `<div id="infoboxType">${i18next.t('page')}</div>`
+							
+							if (domainStatus == "SEEN") {
+								seen_noSeen = `<div><a href="${url}" target="_blank">${the_url}</a><span style="color: gray; margin-top: 0.25rem;"> (${i18next.t('already_seen')})</span></div>`;
+							}
+							else {
+								seen_noSeen = `<div><a href="${url}" target="_blank">${the_url}</a></div>`;
+							}
+							
+							output += seen_noSeen
+							output += `<div style="color: gray; margin-top: 0.25rem;">${convertSecondsToMinutes(duration)}<div>`;
 						}
 						
-						output += `<div id="infoboxInfo"><a href="${url}" target="_blank">${the_domain}</a> <span style="color: gray">${seen}</div>`;
-						output += `<div id="infoboxTime">${convertSecondsToMinutes(duration)}<div>`;
-					}
-
-					else    { //unknown action
-						output += `<div id="infoboxType">o_O</div>`
-						output += `<div id="infoboxInfo">${i18next.t('unknown_action')}</div>`;
+						//unknown action
+						else { 
+							output += `<div id="infoboxType">o_O</div>`
+							output += `<div id="infoboxInfo">${i18next.t('unknown_action')}</div>`;
+						}
 					}
 				}
 				else if (class_ == 'website'){

@@ -1,6 +1,4 @@
 function groupConsecutiveDomains(data) {
-	// data = data.filter(d => d.page_type == 'RESULT')
-	// console.log(data);
 
 	const groupedData = [];
 	let currentGroup = [];
@@ -10,14 +8,13 @@ function groupConsecutiveDomains(data) {
 		const previousItem = data[i - 1];
 
 		if (previousItem && currentItem.domain !== previousItem.domain) {
-			// New domain encountered, start a new group
 			if (currentGroup.length > 0) {
 				groupedData.push(currentGroup);
 			}
 			currentGroup = [];
 		}
 
-		if (currentItem.page_type == 'RESULT' || currentItem.page_type == 'CHATBOT') {
+		if (currentItem.page_type == 'SEARCH_ENGINE' || currentItem.page_type == 'RESULT' || currentItem.page_type == 'CHATBOT') {
 			currentGroup.push(currentItem);
 		}
 	}
