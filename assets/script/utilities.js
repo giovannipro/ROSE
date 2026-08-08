@@ -147,6 +147,18 @@ function timeChart(searchDuration, chatbotDuration, pageDuration, width, view) {
 function makeDurationChart(data){
 	console.log(data)
 
+	// Create container div
+    const container = document.createElement('div');
+
+	// const overall_container = document.getElementById(time_container);
+	// overall_container.style.display = 'block';
+	
+	const width =  (window.innerWidth / 3) * 0.855;
+	console.log(window.innerWidth, width)
+
+	container.style.width = '100%';
+    container.style.height = 80 + 'px';
+
 	function parseTime(str) {
 		const [m, s] = str.split(":").map(Number);
 		return new Date(2000, 0, 1, 0, m, s);
@@ -155,25 +167,26 @@ function makeDurationChart(data){
 	/* ---------------------------------------------------------
 	2. LAYOUT
 	--------------------------------------------------------- */
-	const container = document.getElementById('duration_chart')
+	// const container = document.getElementById('duration_chart')
 
 	const margin = { top: 0, right: 0, bottom: 20, left: 0 };
-	const width = container.offsetWidth;
 	const rowHeight = 23;
 	const height = (data.length * rowHeight) + 30;
 
-	const svg = d3.select('#duration_chart')
+	const svg = d3.select(container)
 		.append("svg")
-		.attr("width", width)
+		.attr("width", '100%')
 		.attr("height", height)
 		.append("g")
 		.attr("transform", `translate(${margin.left},${margin.top})`);
+
+
 
 	const maxEnd = d3.max(data, d => d.end);
 
 	const xScale = d3.scaleTime()
 		.domain([parseTime("00:00"), maxEnd])
-		.range([0, width - (margin.left + margin.right) - 10 ]);
+		.range([0, width]); //  - (margin.left + margin.right) - 10
 
 	/* ---------------------------------------------------------
 	4. TOOLTIP
@@ -265,6 +278,8 @@ function makeDurationChart(data){
 		.attr("fill", "#ccc")
 		// .text((maxEnd));
 		.text(fmt(maxEnd));
+
+	return container.outerHTML;
 }
 
 function convertSecondsToMinutes(seconds) {

@@ -108,9 +108,9 @@ h2 {
 	border-top: 1px solid #bfbfbf;
 }
 
-/* #statistics_container, #suggestions_container, #time_container {
+#statistics_container, #suggestions_container, #time_container {
 	display: none;
-} */
+}
 
 #suggestions {
 	margin-bottom: 3rem;
@@ -151,6 +151,23 @@ h2 {
 
 table td:nth-child(2){
 	text-align: right;
+}
+
+#duration_matrix {
+	display: block;
+	width: 100%;
+}
+
+#duration_matrix td:first-child {
+	width: 1%;
+}
+
+#duration_matrix td:not(:first-child){
+	text-align: left;
+}
+
+#duration_matrix td:nth-child(2), #duration_matrix td:nth-child(3), #duration_matrix td:nth-child(4) {
+	width: 10%; 
 }
 
 footer {

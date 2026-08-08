@@ -329,17 +329,17 @@ function load_data() {
 				});
 
 			// tooltip for debug
-			const tooltip = d3.select("body")
-				.append("div")
-				.attr("class", "tooltip")
-				.style("position", "absolute")
-				.style("visibility", "hidden")
-				.style("background", "rgba(0, 0, 0, 0.8)")
-				.style("color", "#fff")
-				.style("padding", "8px 12px")
-				.style("border-radius", "4px")
-				.style("font-size", "12px")
-				.style("pointer-events", "none");
+			// const tooltip = d3.select("body")
+			// 	.append("div")
+			// 	.attr("class", "tooltip")
+			// 	.style("position", "absolute")
+			// 	.style("visibility", "hidden")
+			// 	.style("background", "rgba(0, 0, 0, 0.8)")
+			// 	.style("color", "#fff")
+			// 	.style("padding", "8px 12px")
+			// 	.style("border-radius", "4px")
+			// 	.style("font-size", "12px")
+			// 	.style("pointer-events", "none");
 
 			let strip_rect = strip_box.append("rect")
 				.attr("class", "strip_rect")

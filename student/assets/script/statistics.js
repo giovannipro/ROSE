@@ -112,7 +112,7 @@ function load_statistics(data) {
 	
 	output_ta +=  timeChart(searchDuration, chatbotDuration, pageDuration, 100, 'student');
 	
-	output_ta += '<table style="margin-top: 25px;">';
+	output_ta += '<table style="margin-top: 45px;">';
 	output_ta += `<tr><td><span class="legend_item" style="background-color: ${color_newQuery};"></span>${i18next.t('searches')}</td>`;
 	output_ta += '<td>' + convertSecondsToMinutes(searchDuration) + '</td></tr>'; // '<td>' + parseInt(searchDuration) + ' seconds / ' + convertSecondsToMinutes(searchDuration) + ' minutes</td></tr>'
 	output_ta += `<tr><td><span class="legend_item" style="background-color: ${chatbot_color};"></span>${i18next.t('chatbots')}</td>`;
@@ -168,39 +168,41 @@ function load_statistics(data) {
 		}
 	];
 
-	output_tb += '<table>';
-
+	
 	output_tb += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('duration')}</strong> (mm:ss)</span>`;
 	output_tb += '<hr/ style="border: 0.1px solid #ccc">'
+	
+	output_tb += makeDurationChart(duration_data);
 
-	output_tb += '<div id="duration_chart"></div>';
+	output_tb += '<table style="margin-top: 23px" id="duration_matrix">';
+	output_tb += `<tr>`;
+	output_tb += `<td></td>`;
+	output_tb += `<td>${i18next.t('shortest')}</td>`;
+	output_tb += `<td>${i18next.t('average')}</td>`;
+	output_tb += `<td>${i18next.t('longest')}</td>`;
+	output_tb += `</tr>`;
 
-	output_tb += `<tr><td>${i18next.t('searches')}</td>`;
-	output_tb += `<tr><td>- ${i18next.t('shortest')}</td>`;
-	output_tb += '<td>' + convertSecondsToMinutes(minSearchDuration) + '</td></tr>';
-	output_tb += `<tr><td>- ${i18next.t('average')}</td>`;
-	output_tb += '<td>' + convertSecondsToMinutes(avgSearchDuration) + '</td></tr>';
-	output_tb += `<tr><td>- ${i18next.t('longest')}</td>`;
-	output_tb += '<td>' + convertSecondsToMinutes(maxSearchDuration) + '</td></tr>';
-	output_tb += '<tr><td>&nbsp;</td></tr>';
+	output_tb += `<tr>`;
+	output_tb += `<td><span class="legend_item" style="background-color: ${color_newQuery};"></span></td>`;
+	output_tb += `<td>${convertSecondsToMinutes(minSearchDuration)}</td>`;
+	output_tb += `<td>${convertSecondsToMinutes(avgSearchDuration)}</td>`;
+	output_tb += `<td>${convertSecondsToMinutes(maxSearchDuration)}</td>`;
+	output_tb += `</tr>`;
 
-	output_tb += `<tr><td>${i18next.t('chatbots')}</td>`;
-	output_tb += `<tr><td>- ${i18next.t('shortest')}</td>`;
-	output_tb += '<td>' + convertSecondsToMinutes(minchatbotDuration) + '</td></tr>';
-	output_tb += `<tr><td>- ${i18next.t('average')}</td>`;
-	output_tb += '<td>' + convertSecondsToMinutes(avgchatbotDuration) + '</td></tr>';
-	output_tb += `<tr><td>- ${i18next.t('longest')}</td>`;
-	output_tb += '<td>' + convertSecondsToMinutes(maxchatbotDuration) + '</td></tr>';
-	output_tb += '<tr><td>&nbsp;</td></tr>';
+	output_tb += `<tr>`;
+	output_tb += `<td><span class="legend_item" style="background-color: ${chatbot_color};"></span></td>`;
+	output_tb += `<td>${convertSecondsToMinutes(minchatbotDuration)}</td>`;
+	output_tb += `<td>${convertSecondsToMinutes(avgchatbotDuration)}</td>`;
+	output_tb += `<td>${convertSecondsToMinutes(maxchatbotDuration)}</td>`;
+	output_tb += `</tr>`;
 
-	output_tb += `<tr><td>${i18next.t('pages')}</td>`;
-	output_tb += `<tr><td>- ${i18next.t('shortest')}</td>`;
-	output_tb += '<td>' + convertSecondsToMinutes(minPageDuration) + '</td></tr>';
-	output_tb += `<tr><td>- ${i18next.t('average')}</td>`;
-	output_tb += '<td>' + convertSecondsToMinutes(avgPageDuration) + '</td></tr>';
-	output_tb += `<tr><td>- ${i18next.t('longest')}</td>`;
-	output_tb += '<td>' + convertSecondsToMinutes(maxPageDuration) + '</td></tr>';
-	output_tb += '<tr><td>&nbsp;</td></tr>';
+	output_tb += `<tr>`;
+	output_tb += `<td><span class="legend_item" style="background-color: ${new_page_color};"></span></td>`;
+	output_tb += `<td>${convertSecondsToMinutes(minPageDuration)}</td>`;
+	output_tb += `<td>${convertSecondsToMinutes(avgPageDuration)}</td>`;
+	output_tb += `<td>${convertSecondsToMinutes(maxPageDuration)}</td>`;
+	output_tb += `</tr>`;
+
 	output_tb += '</table>';
 
 	// Statistics
@@ -281,5 +283,4 @@ function load_statistics(data) {
 	container_tb.innerHTML = output_tb;
 	container_tc.innerHTML = output_tc;
 
-	makeDurationChart(duration_data);
 }
