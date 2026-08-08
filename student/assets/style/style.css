@@ -108,9 +108,9 @@ h2 {
 	float: right;
 }
 
-#statistics_container, #suggestions_container, #time_container {
+/* #statistics_container, #suggestions_container, #time_container {
 	display: none;
-}
+} */
 
 #time_use {
 	border-top: 1px solid #bfbfbf;

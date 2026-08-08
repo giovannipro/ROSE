@@ -74,7 +74,7 @@ function load_data() {
 
         // statistics
         load_statistics(recapInfo, class_hints, predefinedHints)
-        open_tabs('statistics_container','');
+        open_tabs('','statistics_container','');
     })
     .catch(function (error) {
         if (error.message.includes("404")) {
@@ -426,7 +426,7 @@ function load_list(data, sort){
             const pages_duration = convertSecondsToMinutes(item.pages_duration)
             const bar_width = (( (item.queries_duration + item.pages_duration) / max_duration) * 100);
 
-            const the_duration_chart = duration_chart(item.queries_duration, item.pages_duration, bar_width, 'class')
+            const the_duration_chart = timeChart(item.queries_duration, 0, item.pages_duration, bar_width, 'class')
             const user_id = item.user_id
             const task_id = item.task_id
             // const clazz_id = item.clazz_id

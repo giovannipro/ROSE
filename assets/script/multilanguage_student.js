@@ -46,6 +46,7 @@ i18next.init({
                 "new_domain": "New domain",
                 "visited_domain": "Visited domain",
                 "chatbot": "Chatbot",
+                "chatbots": "Chatbots",
 
                 "statistics": "Statistics",
                 "time": "Time",
@@ -114,6 +115,7 @@ i18next.init({
                 "new_domain": "Neue Domain",
                 "visited_domain": "Besuchte Domain",
                 "chatbot": "Chatbot",
+                "chatbots": "Chatbots",
                 
                 "statistics": "Statistiken",
                 "time": "Zeiten",
@@ -182,6 +184,7 @@ i18next.init({
                 "new_domain": "Nuovo dominio",
                 "visited_domain": "Dominio visitato",
                 "chatbot": "Chatbot",
+                "chatbots": "Chatbots",
 
                 "statistics": "Statistiche",
                 "total": "totale",

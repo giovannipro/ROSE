@@ -1,3 +1,13 @@
+const new_page_color = '#ff9100';
+const duration_color = '#a4a4a4';
+const chatbot_color = '#E2A5D4';
+const chatbotRevised_color = '#F0BDE4'; 
+const color_newQuery = '#619ED4';
+const colorModifiedQuery = '#C8DFF4';
+const colorReuded_query ='#90b8df';
+const color_visitedDomain = '#fac074';
+const color_system = '#dbdbdb';
+
 function groupConsecutiveDomains(data) {
 
 	const groupedData = [];
@@ -27,32 +37,48 @@ function groupConsecutiveDomains(data) {
 	return groupedData;
 }
 
-function duration_chart(searchDuration, pageDuration, width, view) {
+function timeChart(searchDuration, chatbotDuration, pageDuration, width, view) {
+	// console.log(searchDuration, chatbotDuration, pageDuration)
+
     const visualization_treshold = 15;
 	const duration_treshold = 120;
 
-    const total = searchDuration + pageDuration;
+    const total = searchDuration + chatbotDuration + pageDuration;
     const search_width = searchDuration * 100 / total;
+	const chatbot_width = chatbotDuration * 100 / total;
     const page_width = pageDuration * 100 / total;
+	console.log(search_width, chatbot_width, page_width)
 
     let min_search = convertSecondsToMinutes(searchDuration);
+	let min_chatbot = convertSecondsToMinutes(chatbotDuration);
     let min_pages = convertSecondsToMinutes(pageDuration);
+	// console.log(min_search, min_chatbot, min_pages)
 
     let min_ration = 0.1;
-    if ((searchDuration / pageDuration) < min_ration) {
-        min_search = '';
-    }
-    if ((pageDuration / searchDuration) < min_ration) {
-        min_pages = '';
-    }
+    // if ((searchDuration / (pageDuration + chatbotDuration)) < min_ration) {
+    //     min_search = '';
+    // }
+	// if ((chatbotDuration / (searchDuration + pageDuration)) < min_ration) {
+    //     min_chatbot = '';
+    // }
+    // if ((pageDuration / (searchDuration + chatbotDuration)) < min_ration) {
+    //     min_pages = '';
+    // }
+	console.log(searchDuration / (pageDuration + chatbotDuration))
 
     let val_queries = '';
+	let val_chatbots = '';
     let val_pages = '';
+
 	if (view == 'class'){
 		if (width >= visualization_treshold) {
 			
 			if (search_width >= (visualization_treshold) && searchDuration > duration_treshold){
 				val_queries = min_search;
+			}
+
+			if (chatbot_width >= (visualization_treshold) && chatbotDuration > duration_treshold){
+				val_chatbots = min_chatbot;
 			}
 	
 			if (page_width >= (visualization_treshold) && pageDuration > duration_treshold){
@@ -62,6 +88,7 @@ function duration_chart(searchDuration, pageDuration, width, view) {
 	}
 	else {
 		val_queries = min_search;
+		val_chatbot = min_chatbot;
 		val_pages = min_pages;
 	}
 
@@ -85,41 +112,224 @@ function duration_chart(searchDuration, pageDuration, width, view) {
         .attr('y', 0)
         .attr('width', search_width + '%')
         .attr('height', bar_height)
-        .attr('fill', '#619ED4')
+        .attr('fill', color_newQuery)
         .attr('data-queDur', searchDuration);
 
-    // Add pages rect
+	// Add chatbot rect
     svg.append('rect')
         .attr('x', search_width + '%') 
         .attr('y', 0)
+        .attr('width', chatbot_width + '%')
+        .attr('height', bar_height)
+        .attr('fill', chatbot_color)
+        .attr('data-chatDur', chatbotDuration);
+
+    // Add pages rect
+    svg.append('rect')
+        .attr('x', (search_width + chatbot_width) + '%') 
+        .attr('y', 0)
         .attr('width', page_width + '%')
         .attr('height', bar_height)
-        .attr('fill', '#ff9100')
+        .attr('fill', new_page_color)
         .attr('data-pagDur', pageDuration);
 
-    // Add queries text
-    if (val_queries) {
-        svg.append('text')
-            .attr('x', (search_width - 3) + '%')
-            .attr('y', 14)
-            .attr('text-anchor', 'end')
-            .attr('fill', 'white')
-            .attr('font-size', font_size)
-            .text(val_queries);
-    }
+    // // Add queries text
+    // if (val_queries) {
+    //     svg.append('text')
+    //         .attr('x', (search_width - 3) + '%')
+    //         .attr('y', 14)
+    //         .attr('text-anchor', 'end')
+    //         .attr('fill', 'white')
+    //         .attr('font-size', font_size)
+    //         .text(val_queries);
+    // }
 
-    // Add pages text
-    if (val_pages) {
-        svg.append('text')
-            .attr('x', (search_width + page_width - 3) + '%')
-            .attr('y', 14)
-            .attr('text-anchor', 'end')
-            .attr('fill', 'white')
-            .attr('font-size', font_size)
-            .text(val_pages);
-    }
+    // // Add pages text
+    // if (val_pages) {
+    //     svg.append('text')
+    //         .attr('x', (search_width + page_width - 3) + '%')
+    //         .attr('y', 14)
+    //         .attr('text-anchor', 'end')
+    //         .attr('fill', 'white')
+    //         .attr('font-size', font_size)
+    //         .text(val_pages);
+    // }
 
     return container.outerHTML;
+}
+
+
+function makeDurationChart(){
+	
+	const data = [
+		{
+			label: "Row A",
+			start: parseTime("00:00"),
+			marker: parseTime("00:12"),
+			end: parseTime("00:48"),
+			color: "#5B8DC0" // blue
+		},
+		{
+			label: "Row B",
+			start: parseTime("00:14"),
+			marker: parseTime("00:28"),
+			end: parseTime("01:22"),
+			color: "#C48BC7" // pink/purple
+		},
+		{
+			label: "Row C",
+			start: parseTime("00:32"),
+			marker: parseTime("00:52"),
+			end: parseTime("01:58"),
+			color: "#E8923B" // orange
+		}
+	];
+
+	function parseTime(str) {
+		// helper: turns "HH:MM" into a Date on an arbitrary reference day
+		const [h, m] = str.split(":").map(Number);
+		return new Date(2000, 0, 1, h, m, 0);
+	}
+
+	/* ---------------------------------------------------------
+	2. LAYOUT
+	--------------------------------------------------------- */
+	const margin = { top: 30, right: 20, bottom: 50, left: 20 };
+	const width = 1200 - margin.left - margin.right;
+	const rowHeight = 60;
+	const height = data.length * rowHeight;
+
+	const container = 'duration_chart'
+
+	const svg = d3.select('#' + container)
+		.append("svg")
+		.attr("width", 200)
+		.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+		.attr("transform", `translate(${margin.left},${margin.top})`);
+
+	/* ---------------------------------------------------------
+	3. SCALES
+	Domain is set to the axis range you want to display.
+	Swap parseTime("00:00")/("02:00") for your own bounds,
+	or replace d3.scaleTime with d3.scaleLinear for plain numbers.
+	--------------------------------------------------------- */
+	const xScale = d3.scaleTime()
+		.domain([parseTime("00:00"), parseTime("02:00")])
+		.range([0, 200]);
+
+	/* ---------------------------------------------------------
+	4. TOOLTIP
+	--------------------------------------------------------- */
+	const tooltip = d3.select("body")
+		.append("div")
+		.attr("class", "tooltip");
+
+	const fmt = d3.timeFormat("%H:%M");
+
+	/* ---------------------------------------------------------
+	5. DRAW ROWS
+	--------------------------------------------------------- */
+	const barThickness = 6;   // thin connecting bar
+	const capWidth = 8;       // width of the start/end cap rects
+	const capHeight = 26;     // height of the start/end cap rects
+	const circleRadius = 10;
+
+	const rows = svg.selectAll(".row")
+		.data(data)
+		.join("g")
+		.attr("class", "row")
+		.attr("transform", (d, i) => `translate(0, ${i * rowHeight + rowHeight / 2})`);
+
+	// light connecting bar (tinted version of the row color)
+	rows.append("rect")
+		.attr("x", d => xScale(d.start))
+		.attr("y", -barThickness / 2)
+		.attr("width", d => xScale(d.end) - xScale(d.start))
+		.attr("height", barThickness)
+		.attr("fill", d => d.color)
+		.attr("opacity", 0.25);
+
+	// start cap
+	rows.append("rect")
+		.attr("x", d => xScale(d.start) - capWidth / 2)
+		.attr("y", -capHeight / 2)
+		.attr("width", capWidth)
+		.attr("height", capHeight)
+		.attr("rx", 2)
+		.attr("fill", d => d.color);
+
+	// end cap
+	rows.append("rect")
+		.attr("x", d => xScale(d.end) - capWidth / 2)
+		.attr("y", -capHeight / 2)
+		.attr("width", capWidth)
+		.attr("height", capHeight)
+		.attr("rx", 2)
+		.attr("fill", d => d.color);
+
+	// marker circle
+	rows.append("circle")
+	.attr("cx", d => xScale(d.marker))
+	.attr("cy", 0)
+	.attr("r", circleRadius)
+	.attr("fill", d => d.color);
+
+	/* ---------------------------------------------------------
+	6. HOVER / TOOLTIP INTERACTION
+	Attach to a wide invisible hit-rect per row so the tooltip
+	triggers anywhere along the bar, not just on the shapes.
+	--------------------------------------------------------- */
+	rows.append("rect")
+	.attr("x", d => xScale(d.start) - capWidth)
+	.attr("y", -rowHeight / 2)
+	.attr("width", d => (xScale(d.end) - xScale(d.start)) + capWidth * 2)
+	.attr("height", rowHeight)
+	.attr("fill", "transparent")
+	.on("mouseover", function (event, d) {
+		tooltip
+		.style("visibility", "visible")
+		.html(`<strong>${d.label}</strong><br>${fmt(d.start)} – ${fmt(d.end)}<br>marker: ${fmt(d.marker)}`);
+	})
+	.on("mousemove", function (event) {
+		tooltip
+		.style("top", (event.pageY - 10) + "px")
+		.style("left", (event.pageX + 12) + "px");
+	})
+	.on("mouseout", function () {
+		tooltip.style("visibility", "hidden");
+	});
+
+	/* ---------------------------------------------------------
+	7. AXIS
+	--------------------------------------------------------- */
+	const axisG = svg.append("g")
+	.attr("transform", `translate(0, ${height + 10})`);
+
+	axisG.append("line")
+	.attr("class", "axis-line")
+	.attr("x1", 0)
+	.attr("x2", width)
+	.attr("y1", 0)
+	.attr("y2", 0);
+
+	// Only label the domain start/end, matching the screenshot (00:00 ... 02:00)
+	// Switch to xScale.ticks(n) if you want intermediate tick labels.
+	const [domainStart, domainEnd] = xScale.domain();
+
+	axisG.append("text")
+	.attr("class", "axis-label")
+	.attr("x", 0)
+	.attr("y", 40)
+	.attr("text-anchor", "start")
+	.text(fmt(domainStart));
+
+	axisG.append("text")
+	.attr("class", "axis-label")
+	.attr("x", width)
+	.attr("y", 40)
+	.attr("text-anchor", "end")
+	.text(fmt(domainEnd));
 }
 
 function convertSecondsToMinutes(seconds) {

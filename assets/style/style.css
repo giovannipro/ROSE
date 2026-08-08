@@ -108,12 +108,21 @@ h2 {
 	border-top: 1px solid #bfbfbf;
 }
 
-#statistics_container, #suggestions_container {
+#statistics_container, #suggestions_container, #time_container {
 	display: none;
 }
 
 #suggestions {
 	margin-bottom: 3rem;
+}
+
+.legend_item {
+	width: 15px;
+	height: 15px;
+	background-color: #ccc;
+	display: inline-block;
+	vertical-align: text-top;
+	margin-right: 10px;
 }
 
 .tab_label {

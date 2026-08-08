@@ -2,16 +2,6 @@ const duration = 100;
 const start_shift = 10;
 const interline = 2;
 
-const new_page_color = '#ff9100';
-const duration_color = '#a4a4a4';
-const chatbot_color = '#c879b8';
-const chatbotRevised_color = '#F0BDE4';
-const color_newQuery = '#619ED4';
-const colorModifiedQuery = '#C8DFF4';
-const colorReuded_query ='#90b8df';
-const color_visitedDomain = '#f8b55c';
-const color_system = '#dbdbdb';
-
 const stroke_color = 'white'; // '#aeaeae'
 
 const over_opacity = 0.4;
@@ -448,21 +438,21 @@ function load_data() {
 					}
 					return color;
 				})
-				// .on("mouseover", function(event, d) {
-				// 	const info = `<strong>Page type: ${d.page_type}</strong><br/>Action: ${d.action}<br/>${d.url}<br/>${d.query} ...`;
-				// 	tooltip
-				// 		.style("visibility", "visible")
-				// 		.html(info);
-				// })
-				// .on("mousemove", function(event) {
-				// 	tooltip
-				// 		.style("top", height + "px") // (event.pageY - 10) 
-				// 		.style("left", 100 + "px"); // (event.pageX + 10)
-				// })
-				// .on("mouseout", function() {
-				// 	tooltip.style("visibility", "hidden");
-				// 	d3.select(this).attr("opacity", 1);
-				// });
+				.on("mouseover", function(event, d) {
+					const info = `<strong>Page type: ${d.page_type}</strong><br/>Action: ${d.action}<br/>${d.url}<br/>${d.query} ...`;
+					tooltip
+						.style("visibility", "visible")
+						.html(info);
+				})
+				.on("mousemove", function(event) {
+					tooltip
+						.style("top", height + "px") // (event.pageY - 10) 
+						.style("left", 100 + "px"); // (event.pageX + 10)
+				})
+				.on("mouseout", function() {
+					tooltip.style("visibility", "hidden");
+					d3.select(this).attr("opacity", 1);
+				});
 
 			// website strips
 			let strip_website = strip_website_box.selectAll("g")
