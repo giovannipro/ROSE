@@ -108,9 +108,9 @@ h2 {
 	border-top: 1px solid #bfbfbf;
 }
 
-#statistics_container, #suggestions_container, #time_container {
+/* #statistics_container, #suggestions_container, #time_container {
 	display: none;
-}
+} */
 
 #suggestions {
 	margin-bottom: 3rem;
