@@ -104,7 +104,7 @@ function load_statistics(data) {
 	// -----------------------
 
 	const unique_chatbot = chatbotItems.map(item => {
-		console.log(item.domain)
+		// console.log(item.domain)
 		return {chatbot: item.domain}
 	});
 

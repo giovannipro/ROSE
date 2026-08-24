@@ -89,7 +89,7 @@ i18next.init({
         de: {
             translation: {
                 
-                "user": "Benutzer:in",
+                "user": "Benutzer",
                 "task": "Aufgabe",
                 "normalize_scale": "Normaliziert",
                 "fit_scale": "Fit",
@@ -130,6 +130,7 @@ i18next.init({
                 "time": "Zeiten",
                 "total": "Total",
                 "total_cap": "Total",
+                "total_pages": "Gesamtseitenzahl",
                 "duration": "Dauer",
                 "shortest": "Kürzest",
                 "average": "Durchschnitt",
@@ -203,6 +204,7 @@ i18next.init({
                 "timeUse" : "Uso del tempo",
                 "total": "totale",
                 "total_cap": "Totale",
+                "total_pages": "Pagine totali",
                 "duration": "Durata",
                 "time": "Tempi",
                 "shortest": "più breve",
