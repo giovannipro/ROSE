@@ -153,7 +153,7 @@ function makeDurationChart(containerId, data){
 	
 	const windowWidth = window.innerWidth
 
-	let width = (window.innerWidth / 3) * 0.855
+	let width = (window.innerWidth / 3) * 0.86 // 0.855
 	if (windowWidth < 768) {
 		width = window.innerWidth - (18*2);
 	}
@@ -183,11 +183,16 @@ function makeDurationChart(containerId, data){
 		.append("g")
 		.attr("transform", `translate(${margin.left},${margin.top})`);
 
+	const barThickness = 4;   // thin connecting bar
+	const capWidth = 6;       // width of the start/end cap rects
+	const capHeight = 12;     // height of the start/end cap rects
+	const circleRadius = 6;
+
 	const maxEnd = d3.max(data, d => d.end);
 
 	const xScale = d3.scaleTime()
 		.domain([parseTime("00:00"), maxEnd])
-		.range([0, width]); //  - (margin.left + margin.right) - 10
+		.range([0, width - (barThickness / 2)]); 
 
 	/* ---------------------------------------------------------
 	4. TOOLTIP
@@ -202,10 +207,6 @@ function makeDurationChart(containerId, data){
 	/* ---------------------------------------------------------
 	5. DRAW ROWS
 	--------------------------------------------------------- */
-	const barThickness = 4;   // thin connecting bar
-	const capWidth = 6;       // width of the start/end cap rects
-	const capHeight = 12;     // height of the start/end cap rects
-	const circleRadius = 6;
 
 	const rows = svg.selectAll(".row")
 		.data(data)
@@ -277,7 +278,6 @@ function makeDurationChart(containerId, data){
 		.attr("text-anchor", "end")
 		.attr("font-size", 12)
 		.attr("fill", "#ccc")
-		// .text((maxEnd));
 		.text(fmt(maxEnd));
 
 	return container.outerHTML;
