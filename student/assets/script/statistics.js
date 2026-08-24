@@ -41,12 +41,15 @@ function load_statistics(data) {
 	const reusedQueries = data.filter(item => item.action === 'SAME_SEARCH' || item.action === 'SEEN_SEARCH').length;
 	const revisedQueries = data.filter(item => item.action === 'REFINE_SEARCH').length;
 
-	const newDomains = data.filter(item => item.action === 'NEW_RESULT').length;
-	const revisitedDomains = data.filter(item => item.action === 'SEEN_DOMAIN_RESULT').length;
-	const pages = data.filter(item => item.action === 'NEW_RESULT' || item.action === 'SAME_DOMAIN_RESULT' || item.action === 'SEEN_DOMAIN_RESULT').length;
+	const pages = data.filter(item => 
+			item.page_type === 'RESULT' && (
+				item.action === 'NEW_RESULT' || 
+				item.action === 'SAME_DOMAIN_RESULT' || 
+				item.action === 'SEEN_DOMAIN_RESULT'
+			)
+		).length;
 	
 	const searchQueries = data.filter(item => item.page_type === 'SEARCH_ENGINE').map(item => ({ url: item.url, query: item.query, action: item.action, pageType: item.page_type }));
-	// console.log(searchQueries)
 
 	const searchQueries_a = searchQueries.filter(item => {
 		return item.query != null
@@ -60,8 +63,9 @@ function load_statistics(data) {
 		}
 		return false;
 	});
-	// console.log(unique_queries)
 
+	// domains
+	// -----------------------
 	unique_queries_final = unique_queries;
 
 	unique_web = pageItems.map(item => {
@@ -78,6 +82,11 @@ function load_statistics(data) {
         return cleanA.localeCompare(cleanB);
     });
 
+	const newDomains = unique_websitesSort.length;
+	const revisitedDomains = data.filter(item => item.action === 'SEEN_DOMAIN_RESULT').length;
+
+	// searches
+	// -----------------------
 	let searchEngines = [];
 	searchItems.map(item => {
 		searchEngines.push(detectSearchEngine(item.url))
@@ -90,7 +99,23 @@ function load_statistics(data) {
 		}
 		return false;
 	});
-	// console.log(unique_searchEngines)
+	
+	// chatbots
+	// -----------------------
+
+	const unique_chatbot = chatbotItems.map(item => {
+		console.log(item.domain)
+		return {chatbot: item.domain}
+	});
+
+	const unique_chats = unique_chatbot.filter((item, index, self) => index === self.findIndex((t) => t.domain === item.domain));
+
+	const unique_chatbotSort = unique_chats.sort((a, b) => {
+        return a.chatbot.localeCompare(b.chatbot);
+    });
+	// console.log(unique_chatbotSort)
+
+	// -----------------------
 
 	let output_sa = '';
 	let output_sb = '';
@@ -258,6 +283,29 @@ function load_statistics(data) {
 	output_sa += '</ul></td></tr>'
 	output_sa += '</table>';
 
+	// Chatbots
+	// -----------------------------------------------
+
+	output_sc += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('chatbots')}</strong></span>`;
+	output_sc += '<hr/ style="border: 0.1px solid #ccc">'
+
+	output_sc += '<table style="margin-bottom: 1.5rem;">';
+
+	if (unique_chatbotSort.length > 0) {
+		output_sc += '<tr><td><ul class="list">'
+		unique_chatbotSort.forEach(item => {
+			output_sc += '<li><a href="https://' + item.chatbot + '" target="_blank">' + item.chatbot + '</a></li>'; //
+		});
+		output_sc += '</td></tr>'
+	}
+	else {
+		output_sc += '<tr><td>'
+		output_sc += `${i18next.t('no_chatbots')}`
+		output_sc += '</td></tr>'
+	}
+
+	output_sc += '</table>';
+
 	// Pages
 	// -----------------------------------------------
 
@@ -265,16 +313,15 @@ function load_statistics(data) {
 	output_sb += '<hr/ style="border: 0.1px solid #ccc">'
 
 	output_sb += '<table style="margin-bottom: 1.5rem;">';
-	output_sb += `<tr><td>- ${i18next.t('total')}</td>`;
-	output_sb += '<td>' + pages + '</td></tr>';
-	output_sb += '</table>';
-
-	output_sb += '<table>';
-	output_sb += `<tr><td>${i18next.t('websites')}</td></tr>`;
 	output_sb += `<tr><td>- ${i18next.t('new_m')}</td>`;
 	output_sb += '<td>' + newDomains + '</td></tr>';
+
 	output_sb += `<tr><td>- ${i18next.t('revisited')}`;
 	output_sb += '<td>' + revisitedDomains + '</td></tr>';
+	
+	output_sb += `<tr><td>- ${i18next.t('total_pages')}`;
+	output_sb += '<td>' + pages + '</td></tr>';
+
 	output_sb += '</table>';
 
 	output_sb += '<table style="margin-top: 1.5rem;">';
@@ -288,8 +335,8 @@ function load_statistics(data) {
 	output_sb += '</table>';
 
 	container_sa.innerHTML = output_sa;
-	container_sb.innerHTML = output_sb;
-	container_sc.innerHTML = output_sc;
+	container_sb.innerHTML = output_sc;
+	container_sc.innerHTML = output_sb;
 
 	container_ta.innerHTML = output_ta;
 	container_tb.innerHTML = output_tb;

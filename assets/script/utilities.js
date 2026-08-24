@@ -281,7 +281,6 @@ function makeDurationChart(containerId, data){
 		.text(fmt(maxEnd));
 
 	return container.outerHTML;
-
 }
 
 // resizer for the makeDurationChart function
@@ -290,7 +289,6 @@ const resizeObserver = new ResizeObserver(entries => {
 	// Use requestAnimationFrame to debounce the redraw and prevent layout thrashing
 	window.requestAnimationFrame(() => {
 		makeDurationChart('#duration-chart-container', duration_data);
-		console.log(0)
 	});
 });
 

@@ -51,9 +51,11 @@ i18next.init({
                 "visited_chatbot": "Revised prompt",
 
                 "statistics": "Statistics",
+                "timeUse" : "Time use",
                 "time": "Time",
                 "total": "total",
                 "total_cap": "Total",
+                "total_pages": "total pages",
                 "duration": "Duration",
                 "shortest": "shortest",
                 "average": "average",
@@ -64,8 +66,9 @@ i18next.init({
                 "queries": "Queries",
                 "search_engines": "Search engines",
                 "websites": "Websites",
-                "revisited": "revisited",
-                "new_m": "new",
+                "revisited": "revisited domains",
+                "new_m": "new domains",
+                "no_chatbots": "No chatbots were used.",
 
                 "suggestions": "Suggestions",
                 "observation": "Observation",
@@ -123,6 +126,7 @@ i18next.init({
                 "visited_chatbot": "Überarbeiteter prompt",
                 
                 "statistics": "Statistiken",
+                "timeUse" : "Zeitnutzung",
                 "time": "Zeiten",
                 "total": "Total",
                 "total_cap": "Total",
@@ -138,6 +142,7 @@ i18next.init({
                 "websites": "Webseiten",
                 "revisited": "Bereits ergriffen",
                 "new_m": "Neue",
+                "no_chatbots": "Es wurden keine Chatbots verwendet.",
                 
                 "suggestions": "Vorschläge",
                 "observation": "Beobachtung",
@@ -195,6 +200,7 @@ i18next.init({
                 "visited_chatbot": "Prompt modificato",
 
                 "statistics": "Statistiche",
+                "timeUse" : "Uso del tempo",
                 "total": "totale",
                 "total_cap": "Totale",
                 "duration": "Durata",
@@ -210,6 +216,7 @@ i18next.init({
                 "websites": "Siti web",
                 "revisited": "già visitati",
                 "new_m": "nuovi",
+                "no_chatbots": "Non sono stati usati chatbot.",
                 
                 "suggestions": "Suggerimenti",
                 "observation": "Osservazione",
@@ -243,6 +250,7 @@ function updateContent() {
     document.getElementById('t_normalize_scale').textContent = i18next.t('normalize_scale');
     document.getElementById('t_fit_scale').textContent = i18next.t('fit_scale');
 
+    document.getElementById('t_timeUse').textContent = i18next.t('timeUse');
     document.getElementById('t_statistics').textContent = i18next.t('statistics');
     document.getElementById('t_suggestions').textContent = i18next.t('suggestions');
 
