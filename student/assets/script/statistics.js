@@ -189,11 +189,22 @@ function load_statistics(data) {
 	output_tb += `<td>${convertSecondsToMinutes(maxSearchDuration)}</td>`;
 	output_tb += `</tr>`;
 
+	chat_shortest = '-'
+	chat_average  = '-'
+	chat_longest  = '-'
+
+	if (chatbotDuration != 0){
+		chat_shortest = convertSecondsToMinutes(minchatbotDuration)
+		chat_average  = convertSecondsToMinutes(avgchatbotDuration)
+		chat_longest  = convertSecondsToMinutes(maxchatbotDuration)
+	}
+	// console.log(chatbotDuration)
+
 	output_tb += `<tr>`;
 	output_tb += `<td><span class="legend_item" style="background-color: ${chatbot_color};"></span></td>`;
-	output_tb += `<td>${convertSecondsToMinutes(minchatbotDuration)}</td>`;
-	output_tb += `<td>${convertSecondsToMinutes(avgchatbotDuration)}</td>`;
-	output_tb += `<td>${convertSecondsToMinutes(maxchatbotDuration)}</td>`;
+	output_tb += `<td>${chat_shortest}</td>`;
+	output_tb += `<td>${chat_average}</td>`;
+	output_tb += `<td>${chat_longest}</td>`;
 	output_tb += `</tr>`;
 
 	output_tb += `<tr>`;

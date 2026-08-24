@@ -47,7 +47,7 @@ function timeChart(searchDuration, chatbotDuration, pageDuration, width, view) {
     const search_width = searchDuration * 100 / total;
 	const chatbot_width = chatbotDuration * 100 / total;
     const page_width = pageDuration * 100 / total;
-	console.log(search_width, chatbot_width, page_width)
+	// console.log(search_width, chatbot_width, page_width)
 
     let min_search = convertSecondsToMinutes(searchDuration);
 	let min_chatbot = convertSecondsToMinutes(chatbotDuration);
@@ -64,7 +64,7 @@ function timeChart(searchDuration, chatbotDuration, pageDuration, width, view) {
     if ((pageDuration / (searchDuration + chatbotDuration)) < min_ration) {
         min_pages = '';
     }
-	console.log(searchDuration / (pageDuration + chatbotDuration))
+	// console.log(searchDuration / (pageDuration + chatbotDuration))
 
     let val_queries = '';
 	let val_chatbots = '';
@@ -145,16 +145,10 @@ function timeChart(searchDuration, chatbotDuration, pageDuration, width, view) {
 }
 
 function makeDurationChart(data){
-	console.log(data)
+	// console.log(data)
 
-	// Create container div
     const container = document.createElement('div');
-
-	// const overall_container = document.getElementById(time_container);
-	// overall_container.style.display = 'block';
-	
 	const width =  (window.innerWidth / 3) * 0.855;
-	console.log(window.innerWidth, width)
 
 	container.style.width = '100%';
     container.style.height = 80 + 'px';
@@ -179,8 +173,6 @@ function makeDurationChart(data){
 		.attr("height", height)
 		.append("g")
 		.attr("transform", `translate(${margin.left},${margin.top})`);
-
-
 
 	const maxEnd = d3.max(data, d => d.end);
 
@@ -381,7 +373,7 @@ function open_tabs(tabA, tabB, tabC) {
 
 	if (tabA == 'time_container'){
 		const TIME_BUTTON = document.getElementById("time_txt");
-		const TIME_TAB = document.querySelector("#time_container");
+		const TIME_TAB = document.getElementById("time_container");
 		const TIME_ARROW = document.getElementById("open_time");
 
 		TIME_BUTTON.addEventListener("click", () => {

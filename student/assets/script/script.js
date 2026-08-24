@@ -438,21 +438,21 @@ function load_data() {
 					}
 					return color;
 				})
-				.on("mouseover", function(event, d) {
-					const info = `<strong>Page type: ${d.page_type}</strong><br/>Action: ${d.action}<br/>${d.url}<br/>${d.query} ...`;
-					tooltip
-						.style("visibility", "visible")
-						.html(info);
-				})
-				.on("mousemove", function(event) {
-					tooltip
-						.style("top", height + "px") // (event.pageY - 10) 
-						.style("left", 100 + "px"); // (event.pageX + 10)
-				})
-				.on("mouseout", function() {
-					tooltip.style("visibility", "hidden");
-					d3.select(this).attr("opacity", 1);
-				});
+				// .on("mouseover", function(event, d) {
+				// 	const info = `<strong>Page type: ${d.page_type}</strong><br/>Action: ${d.action}<br/>${d.url}<br/>${d.query} ...`;
+				// 	tooltip
+				// 		.style("visibility", "visible")
+				// 		.html(info);
+				// })
+				// .on("mousemove", function(event) {
+				// 	tooltip
+				// 		.style("top", height + "px") // (event.pageY - 10) 
+				// 		.style("left", 100 + "px"); // (event.pageX + 10)
+				// })
+				// .on("mouseout", function() {
+				// 	tooltip.style("visibility", "hidden");
+				// 	d3.select(this).attr("opacity", 1);
+				// });
 
 			// website strips
 			let strip_website = strip_website_box.selectAll("g")
