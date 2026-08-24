@@ -34,7 +34,7 @@ function load_data() {
 		d3.json(apiEndpoint_taskInfo)
     ])
 	.then(([studentData, studentInfo, taskInfo]) => {
-		// console.log(studentData)
+		console.log(studentData)
 
 		loaded(studentData)
 
@@ -546,15 +546,15 @@ function load_data() {
 			]
 
 			data_legend_b = [
+				{ cat: i18next.t('new_chatbot'), color: chatbot_color },
+				{ cat: i18next.t('visited_chatbot'), color: chatbotRevised_color }
+			]
+
+			data_legend_c = [
 				{ cat: i18next.t('new_domain'), color: new_page_color },
 				{ cat: i18next.t('visited_domain'), color: color_visitedDomain }
 			]
 			
-			data_legend_c = [
-				{ cat: i18next.t('page_m'), color: new_page_color },
-				{ cat: i18next.t('chatbot'), color: chatbot_color }
-			]
-
 			data_legend_d = [
 				{ cat: i18next.t('system'), color: color_system }
 			]
@@ -614,12 +614,12 @@ function load_data() {
 						make_lengend('legend_d',data_legend_d)
 
 						document.getElementById('t_search').textContent = i18next.t('search');
-						document.getElementById('t_domains_pages').textContent = i18next.t('domains_pages');
+						document.getElementById('t_domains_pages').textContent = i18next.t('chatbots');
 						document.getElementById('t_pages').textContent = i18next.t('pages');
 						document.getElementById('t_system').textContent = i18next.t('system');
 
 						document.getElementById('t_search_info').textContent = i18next.t('search_info');
-						document.getElementById('t_domains_pages_info').textContent = i18next.t('domains_pages_info');
+						document.getElementById('t_domains_pages_info').textContent = i18next.t('chatbot_info');
 						document.getElementById('t_pages_info').textContent = i18next.t('pages_info');
 						document.getElementById('t_system_info').textContent = i18next.t('system_info');
 

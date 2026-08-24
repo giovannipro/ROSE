@@ -35,7 +35,7 @@ i18next.init({
                 "domains_pages": "Domains", // and pages
 
                 "search_info": "Navigation actions that occur on a search engine website.",
-                "domains_pages_info": "Navigation actions that occur on a single domain (not a search engine).",
+                "chatbot_info": "Navigation actions that occur on a chatbot.",
                 "pages_info": "Navigation actions that occur on a web page within a domain.",
                 "system_info": "System actions like start, pause, stop, etc.",
 
@@ -47,6 +47,8 @@ i18next.init({
                 "visited_domain": "Visited domain",
                 "chatbot": "Chatbot",
                 "chatbots": "Chatbots",
+                "new_chatbot": "New prompt",
+                "visited_chatbot": "Revised prompt",
 
                 "statistics": "Statistics",
                 "time": "Time",
@@ -104,19 +106,21 @@ i18next.init({
 
                 "domains_pages": "Domänen", //  und Seiten
 
-                "search_info": "Navigationsaktionen, die auf einer Suchmaschinen-Website stattfinden.",
+                "chatbot_info": "Navigationsaktionen, die auf einer Suchmaschinen-Website stattfinden.",
                 "domains_pages_info": "Navigationsaktionen, die auf einer einzelnen Domain (nicht einer Suchmaschine) stattfinden.",
                 "pages_info": "Navigationsaktionen, die auf einer Webseite innerhalb einer Domäne stattfinden.",
                 "system_info": "Systemaktionen wie Starten, Anhalten, Stoppen, etc.",
 
                 "new_page": "Neue Seite",
-                "new_query": "Neues Query",
+                "new_query": "Neue Query",
                 "modified_query_m": "Geändertes Query",
                 "reused_query_m": "Wiederverwendetes Query",
                 "new_domain": "Neue Domain",
                 "visited_domain": "Besuchte Domain",
                 "chatbot": "Chatbot",
                 "chatbots": "Chatbots",
+                "new_chatbot": "Neue prompt",
+                "visited_chatbot": "Überarbeiteter prompt",
                 
                 "statistics": "Statistiken",
                 "time": "Zeiten",
@@ -175,7 +179,7 @@ i18next.init({
                 "domains_pages": "Domini", //  e pagine
                 
                 "search_info": "Azioni di navigazione che avvengono su un motore di ricerca.",
-                "domains_pages_info": "Azioni di navigazione che avvengono su un singolo dominio (non su un motore di ricerca).",
+                "chatbot_info": "Azioni di navigazione che avvengono su un singolo dominio (non su un motore di ricerca).",
                 "pages_info": "Azioni di navigazione che si verificano su una pagina web all'interno di un dominio.",
                 "system_info": "Azioni di sistema come avvio, pausa, arresto, ecc.",
 
@@ -187,6 +191,8 @@ i18next.init({
                 "visited_domain": "Dominio visitato",
                 "chatbot": "Chatbot",
                 "chatbots": "Chatbots",
+                "new_chatbot": "Nuovo prompt",
+                "visited_chatbot": "Prompt modificato",
 
                 "statistics": "Statistiche",
                 "total": "totale",
