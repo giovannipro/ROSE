@@ -107,8 +107,8 @@ function timeChart(searchDuration, chatbotDuration, pageDuration, width, view) {
     container.style.height = bar_height + 'px';
 	container.style.marginBottom = 10 + 'px';
 	container.style.paddingTop = 5 + 'px';
-	container.style.paddingBottom = 13 + 'px';
-	container.style.borderBottom = '1px solid #ccc';
+	// container.style.paddingBottom = 13 + 'px';
+	// container.style.borderBottom = '1px solid #ccc';
 
     // Create SVG using D3
     const svg = d3.select(container)

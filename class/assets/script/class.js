@@ -26,7 +26,7 @@ function load_data() {
 
     const predefined_hints = '../student/assets/content/hints.json'
 
-    // url = http://127.0.0.1:5501/class/index.html?clazz_id=2&task_id=2&lang=it
+    // url = http://127.0.0.1:5500/class/index.html?clazz_id=2&task_id=2&lang=it
     // console.log(clazz_id,task_id)
 
     Promise.all([
@@ -387,8 +387,15 @@ function load_data() {
 load_data()
 
 function load_list(data, sort){
+    // console.log(data)
+
+    // for (item of data) {
+    //     console.log(item.S_Duration_CbtAvg)
+    // }
+
     const container = document.getElementById("student_list");
     // container.style.height = data.length * 3 + "rem";
+
     let items = ''
 
     const max_duration = d3.max(data, d => d.Que_Pag)
@@ -397,6 +404,7 @@ function load_list(data, sort){
     const duration_sort = data.slice().sort((a,b) => b.Que_Pag - a.Que_Pag)
     const queries_sort = data.slice().sort((a,b) => b.queries_duration - a.queries_duration)
     const page_sort = data.slice().sort((a,b) => b.pages_duration - a.pages_duration)
+
     const alphabetical_sort = data.slice().sort((a,b) => {
         const studentA = the_classInfo.students.find(s => s.id === a.user_id);
         const studentB = the_classInfo.students.find(s => s.id === b.user_id);

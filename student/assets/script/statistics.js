@@ -104,7 +104,6 @@ function load_statistics(data) {
 	// -----------------------
 
 	const unique_chatbot = chatbotItems.map(item => {
-		// console.log(item.domain)
 		return {chatbot: item.domain}
 	});
 
@@ -113,7 +112,6 @@ function load_statistics(data) {
 	const unique_chatbotSort = unique_chats.sort((a, b) => {
         return a.chatbot.localeCompare(b.chatbot);
     });
-	// console.log(unique_chatbotSort)
 
 	// -----------------------
 
@@ -136,7 +134,8 @@ function load_statistics(data) {
 	output_ta += '<hr/ style="border: 0.1px solid #ccc">'
 	
 	output_ta +=  timeChart(searchDuration, chatbotDuration, pageDuration, 100, 'student');
-	
+	output_ta += '<hr style="border: 0.1px solid #ccc; margin-top: 12px;" />'
+
 	output_ta += '<table style="margin-top: 45px;">';
 	output_ta += `<tr><td><span class="legend_item" style="background-color: ${color_newQuery};"></span>${i18next.t('searches')}</td>`;
 	output_ta += '<td>' + convertSecondsToMinutes(searchDuration) + '</td></tr>'; // '<td>' + parseInt(searchDuration) + ' seconds / ' + convertSecondsToMinutes(searchDuration) + ' minutes</td></tr>'
