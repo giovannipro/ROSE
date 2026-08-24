@@ -242,7 +242,7 @@ function updateContent() {
 
     const suggestions_container = document.getElementById('suggestions_container');
     if (suggestions_container.offsetWidth != 0 && suggestions_container.offsetHeight != 0){
-        console.log(suggestions_container.offsetWidth)
+        // console.log(suggestions_container.offsetWidth)
         document.getElementById('t_observation').textContent = i18next.t('observation');
         document.getElementById('t_hint').textContent = i18next.t('hint');
     }

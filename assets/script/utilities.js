@@ -8,6 +8,8 @@ const colorReuded_query ='#90b8df';
 const color_visitedDomain = '#fac074';
 const color_system = '#dbdbdb';
 
+let duration_data = []
+
 function groupConsecutiveDomains(data) {
 
 	const groupedData = [];
@@ -144,13 +146,20 @@ function timeChart(searchDuration, chatbotDuration, pageDuration, width, view) {
     return container.outerHTML;
 }
 
-function makeDurationChart(data){
-	// console.log(data)
+function makeDurationChart(containerId, data){
 
-    const container = document.createElement('div');
-	const width =  (window.innerWidth / 3) * 0.855;
+	const container = d3.select(containerId);
+	container.selectAll("*").remove();
+	
+	const windowWidth = window.innerWidth
 
-	container.style.width = '100%';
+	let width = (window.innerWidth / 3) * 0.855
+	if (windowWidth < 768) {
+		width = window.innerWidth - (18*2);
+	}
+	// console.log(windowWidth, width)
+
+	// container.style.width = '100%';
     container.style.height = 80 + 'px';
 
 	function parseTime(str) {
@@ -167,9 +176,9 @@ function makeDurationChart(data){
 	const rowHeight = 23;
 	const height = (data.length * rowHeight) + 30;
 
-	const svg = d3.select(container)
+	const svg = d3.select(containerId)
 		.append("svg")
-		.attr("width", '100%')
+		.attr("width", width)
 		.attr("height", height)
 		.append("g")
 		.attr("transform", `translate(${margin.left},${margin.top})`);
@@ -183,9 +192,10 @@ function makeDurationChart(data){
 	/* ---------------------------------------------------------
 	4. TOOLTIP
 	--------------------------------------------------------- */
-	const tooltip = d3.select("body")
-		.append("div")
-		.attr("class", "tooltip");
+
+	// const tooltip = d3.select("body")
+	// 	.append("div")
+	// 	.attr("class", "tooltip");
 
 	const fmt = d3.timeFormat("%M:%S");
 
@@ -235,7 +245,6 @@ function makeDurationChart(data){
 		.attr("r", circleRadius)
 		.attr("fill", d => d.color);
 
-
 	/* ---------------------------------------------------------
 	7. AXIS
 	--------------------------------------------------------- */
@@ -272,7 +281,18 @@ function makeDurationChart(data){
 		.text(fmt(maxEnd));
 
 	return container.outerHTML;
+
 }
+
+// resizer for the makeDurationChart function
+const resizeObserver = new ResizeObserver(entries => {
+	
+	// Use requestAnimationFrame to debounce the redraw and prevent layout thrashing
+	window.requestAnimationFrame(() => {
+		makeDurationChart('#duration-chart-container', duration_data);
+		console.log(0)
+	});
+});
 
 function convertSecondsToMinutes(seconds) {
 	// console.log(seconds);

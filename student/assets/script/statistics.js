@@ -144,7 +144,7 @@ function load_statistics(data) {
 	pages_average   = parseTime(convertSecondsToMinutes(avgPageDuration));
 	pages_longest   = parseTime(convertSecondsToMinutes(maxPageDuration));
 
-	const duration_data = [
+	duration_data = [
 		{
 			label: "Searches",
 			start: search_shortest,
@@ -172,7 +172,8 @@ function load_statistics(data) {
 	output_tb += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('duration')}</strong> (mm:ss)</span>`;
 	output_tb += '<hr/ style="border: 0.1px solid #ccc">'
 	
-	output_tb += makeDurationChart(duration_data);
+	// output_tb += makeDurationChart(duration_data);
+	output_tb += '<div id="duration-chart-container" style="width: 100%; height: 80px;"></div>'
 
 	output_tb += '<table style="margin-top: 23px" id="duration_matrix">';
 	output_tb += `<tr>`;
@@ -294,4 +295,6 @@ function load_statistics(data) {
 	container_tb.innerHTML = output_tb;
 	container_tc.innerHTML = output_tc;
 
-}
+	makeDurationChart('duration-chart-container', duration_data)
+	resizeObserver.observe(document.getElementById('duration-chart-container'));
+}	
