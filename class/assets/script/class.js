@@ -39,6 +39,8 @@ function load_data() {
         d3.json(predefined_hints)
     ])
     .then(([classData, classInfo, taskInfo, recapInfo, class_hints, predefinedHints]) => {
+        console.log(recapInfo)
+
         // console.log(recapInfo)
         // console.log(predefinedHints)
         
@@ -387,7 +389,7 @@ function load_data() {
 load_data()
 
 function load_list(data, sort){
-    // console.log(data)
+    console.log(data)
 
     // for (item of data) {
     //     console.log(item)

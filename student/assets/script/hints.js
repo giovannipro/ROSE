@@ -36,7 +36,6 @@ function load_hints(){
     function loaded(predefined,feedback){
         // console.log(feedback)
 
-
         const hint_container = document.getElementById('hints')
 
         let the_language = (i18next.language).toLowerCase()

@@ -45,7 +45,8 @@ function load_statistics(data) {
 			item.page_type === 'RESULT' && (
 				item.action === 'NEW_RESULT' || 
 				item.action === 'SAME_DOMAIN_RESULT' || 
-				item.action === 'SEEN_DOMAIN_RESULT'
+				item.action === 'SEEN_DOMAIN_RESULT' ||
+				item.action === 'UNKNOWN' 
 			)
 		).length;
 	
@@ -82,8 +83,14 @@ function load_statistics(data) {
         return cleanA.localeCompare(cleanB);
     });
 
-	const newDomains = unique_websitesSort.length;
-	const revisitedDomains = data.filter(item => item.action === 'SEEN_DOMAIN_RESULT').length;
+	// const newDomains = unique_websitesSort.length;
+	const newDomains = data.filter(item => item.page_type === 'RESULT' && item.action === 'NEW_RESULT').length;
+	const revisitedDomains = data.filter(item => 
+		item.page_type === 'RESULT' && 
+		(item.action === 'SAME_DOMAIN_RESULT' || item.action === 'SEEN_DOMAIN_RESULT' || item.action === 'UNKNOWN')
+	).length;
+
+	console.log(data.filter(item => item.page_type === 'RESULT'))
 
 	// searches
 	// -----------------------
@@ -112,6 +119,11 @@ function load_statistics(data) {
 	const unique_chatbotSort = unique_chats.sort((a, b) => {
         return a.chatbot.localeCompare(b.chatbot);
     });
+
+	const prompts = chatbotItems.map(item => {
+		return item.query
+	})
+	console.log(prompts)
 
 	// -----------------------
 
@@ -251,36 +263,53 @@ function load_statistics(data) {
 	output_sa += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('searches')}</strong></span>`;
 	output_sa += '<hr/ style="border: 0.1px solid #ccc">'
 
-	output_sa += '<table>';
-	output_sa += `<tr><td>- ${i18next.t('total')}</td>`;
-	output_sa += '<td>' + (newQueries + reusedQueries + revisedQueries) + '</td></tr>';
-	output_sa += `<tr><td>- ${i18next.t('new')}</td>`;
-	output_sa += '<td>' + newQueries + '</td></tr>';
-	output_sa += `<tr><td>- ${i18next.t('reused')}</td>`;
-	output_sa += '<td>' + reusedQueries + '</td></tr>';
-	output_sa += `<tr><td>- ${i18next.t('modified')}</td>`;
-	output_sa += '<td>' + revisedQueries + '</td></tr>';
-	output_sa += '</table>';
+	if ((newQueries + reusedQueries + revisedQueries) > 0 ){
+		output_sa += '<table>';
+		output_sa += `<tr><td>- ${i18next.t('total_searches')}</td>`;
+		output_sa += '<td>' + (newQueries + reusedQueries + revisedQueries) + '</td></tr>';
+		output_sa += `<tr><td>- ${i18next.t('new_searches')}</td>`;
+		output_sa += '<td>' + newQueries + '</td></tr>';
+		output_sa += `<tr><td>- ${i18next.t('reused_searches')}</td>`;
+		output_sa += '<td>' + reusedQueries + '</td></tr>';
+		output_sa += `<tr><td>- ${i18next.t('modified_searches')}</td>`;
+		output_sa += '<td>' + revisedQueries + '</td></tr>';
+		output_sa += '</table>';
+	}
+	else {
+		output_sa += '<table>'
+		output_sa += '<tr><td>'
+		output_sa += `${i18next.t('no_searches')}`
+		output_sa += '</td></tr>'
+		output_sa += '</table>'
+	}
 
-	output_sa += '<table style="margin-top: 1rem;">';
-	output_sa += `<tr><td>${i18next.t('queries')}</td></tr>`;
+	// -------------
 
-	output_sa += '<tr><td><ul class="list">'
-	unique_queries_final.forEach(item => {
-		output_sa += '<li><a href="' + item.url + '" target="_blank">' + item.query + '</a></li>';
-	});
-	output_sa += '</ul></td></tr>'
-	output_sa += '</table>';
+	if (unique_searchEngines.length > 0 ){
+		output_sa += '<table style="margin-top: 1.5rem; margin-bottom: 1rem;">';
+		output_sa += `<tr><td>${i18next.t('search_engines')}</td></tr>`;
 
-	output_sa += '<table style="margin-top: 1.5rem; margin-bottom: 1rem;">';
-	output_sa += `<tr><td>${i18next.t('search_engines')}</td></tr>`;
+		output_sa += '<tr><td><ul class="list">'
+		unique_searchEngines.forEach(item => {
+			output_sa += '<li>' + (item.engine) + '</li>';
+		});
+		output_sa += '</ul></td></tr>'
+		output_sa += '</table>';
+	}
 
-	output_sa += '<tr><td><ul class="list">'
-	unique_searchEngines.forEach(item => {
-		output_sa += '<li>' + (item.engine) + '</li>';
-	});
-	output_sa += '</ul></td></tr>'
-	output_sa += '</table>';
+	// -------------
+
+	if (unique_queries_final.length > 0 ){
+		output_sa += '<table style="margin-top: 1rem;">';
+		output_sa += `<tr><td>${i18next.t('queries')}</td></tr>`;
+	
+		output_sa += '<tr><td><ul class="list">'
+		unique_queries_final.forEach(item => {
+			output_sa += '<li><a href="' + item.url + '" target="_blank">' + item.query + '</a></li>';
+		});
+		output_sa += '</ul></td></tr>'
+		output_sa += '</table>';
+	}
 
 	// Chatbots
 	// -----------------------------------------------
@@ -288,23 +317,46 @@ function load_statistics(data) {
 	output_sc += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('chatbots')}</strong></span>`;
 	output_sc += '<hr/ style="border: 0.1px solid #ccc">'
 
-	output_sc += '<table style="margin-bottom: 1.5rem;">';
-
 	if (unique_chatbotSort.length > 0) {
+		
+		output_sc += '<table style="margin-bottom: 1.5rem;">';
+		output_sc += `<tr><td>- ${i18next.t('total_chatbots')}</td>`;
+		output_sc += '<td>' + unique_chatbotSort.length + '</td></tr>';
+		output_sc += '</table>';
+
+		output_sc += '<table style="margin-top: 1rem;">';
+		output_sc += `<tr><td>${i18next.t('chatbots')}</td></tr>`;
+
 		output_sc += '<tr><td><ul class="list">'
 		unique_chatbotSort.forEach(item => {
-			output_sc += '<li><a href="https://' + item.chatbot + '" target="_blank">' + item.chatbot + '</a></li>'; //
+			output_sc += `<li>${item.chatbot}</li>`;
 		});
-		output_sc += '</td></tr>'
+		output_sc += '</ul></td></tr>'
+		output_sc += '</table>';
+		
+		if (prompts.length > 0 && prompts[0] != '' ){
+
+			output_sc += '<table style="margin-top: 1.5rem; margin-bottom: 1rem;">';
+			output_sc += `<tr><td>${i18next.t('Prompts')}</td></tr>`;
+			output_sc += '</table>';
+			
+			output_sc += '<tr><td><ul class="list">'
+			prompts.forEach(item => {
+				console.log(item)
+				output_sc += '<li>' + item + '</li>';
+			});
+			output_sc += '</ul></td></tr>'
+			output_sc += '</table>';
+		}
 	}
 	else {
+		output_sc += '<table>'
 		output_sc += '<tr><td>'
 		output_sc += `${i18next.t('no_chatbots')}`
 		output_sc += '</td></tr>'
+		output_sc += '</table>'
 	}
-
-	output_sc += '</table>';
-
+	
 	// Pages
 	// -----------------------------------------------
 
@@ -312,15 +364,16 @@ function load_statistics(data) {
 	output_sb += '<hr/ style="border: 0.1px solid #ccc">'
 
 	output_sb += '<table style="margin-bottom: 1.5rem;">';
-	output_sb += `<tr><td>- ${i18next.t('new_m')}</td>`;
-	output_sb += '<td>' + newDomains + '</td></tr>';
 
-	output_sb += `<tr><td>- ${i18next.t('revisited')}`;
-	output_sb += '<td>' + revisitedDomains + '</td></tr>';
-	
-	output_sb += `<tr><td>- ${i18next.t('total_pages')}`;
+	output_sb += `<tr><td>- ${i18next.t('total_pages')}</td>`;
 	output_sb += '<td>' + pages + '</td></tr>';
 
+	output_sb += `<tr><td>- ${i18next.t('new_pages')}</td>`;
+	output_sb += '<td>' + newDomains + '</td></tr>';
+
+	output_sb += `<tr><td>- ${i18next.t('revisited_pages')}`;
+	output_sb += '<td>' + revisitedDomains + '</td></tr>';
+	
 	output_sb += '</table>';
 
 	output_sb += '<table style="margin-top: 1.5rem;">';

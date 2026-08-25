@@ -36,6 +36,10 @@ function load_data() {
 	.then(([studentData, studentInfo, taskInfo]) => {
 		console.log(studentData)
 
+		for (item of studentData){
+			console.log(item.page_type + ': ' + item.query)
+		}
+
 		loaded(studentData)
 
 		const username = studentInfo.username.split("#")[0];

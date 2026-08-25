@@ -39,6 +39,16 @@ i18next.init({
                 "pages_info": "Navigation actions that occur on a web page within a domain.",
                 "system_info": "System actions like start, pause, stop, etc.",
 
+                "total_searches" : "total searches",
+                "new_searches" : "new searches",
+                "reused_searches" : "reused searches",
+                "modified_searches": "modified searches",
+                "total_chatbots" : "total chatbots",
+
+                "total_pages" : "total pages",
+                "new_pages" : "new pages",
+                "revisited_pages" : "revisited pages",
+
                 "new_page": "New page",
                 "new_query": "New query",
                 "modified_query_m": "Modified query",
@@ -55,7 +65,6 @@ i18next.init({
                 "time": "Time",
                 "total": "total",
                 "total_cap": "Total",
-                "total_pages": "total pages",
                 "duration": "Duration",
                 "shortest": "shortest",
                 "average": "average",
@@ -66,9 +75,10 @@ i18next.init({
                 "queries": "Queries",
                 "search_engines": "Search engines",
                 "websites": "Websites",
-                "revisited": "revisited domains",
-                "new_m": "new domains",
+                "revisited": "revisited pages",
+                "new_m": "new pages",
                 "no_chatbots": "No chatbots were used.",
+                "no_searches": "No search engines were used.",
 
                 "suggestions": "Suggestions",
                 "observation": "Observation",
@@ -114,6 +124,16 @@ i18next.init({
                 "pages_info": "Navigationsaktionen, die auf einer Webseite innerhalb einer Domäne stattfinden.",
                 "system_info": "Systemaktionen wie Starten, Anhalten, Stoppen, etc.",
 
+                "total_searches" : "Gesamtzahl der Suchanfragen",
+                "new_searches" : "neue Suchanfragen",
+                "reused_searches" : "wiederverwendete Suchanfragen",
+                "modified_searches": "modifizierte Suchanfragen",
+                "total_chatbots" : "total chatbots",
+
+                "total_pages" : "Gesamtseitenzahl",
+                "new_pages" : "Neue Seiten",
+                "revisited_pages" : "Wiederbesuchte Seiten",
+                
                 "new_page": "Neue Seite",
                 "new_query": "Neue Query",
                 "modified_query_m": "Geändertes Query",
@@ -130,7 +150,6 @@ i18next.init({
                 "time": "Zeiten",
                 "total": "Total",
                 "total_cap": "Total",
-                "total_pages": "Gesamtseitenzahl",
                 "duration": "Dauer",
                 "shortest": "Kürzest",
                 "average": "Durchschnitt",
@@ -144,6 +163,7 @@ i18next.init({
                 "revisited": "Bereits ergriffen",
                 "new_m": "Neue",
                 "no_chatbots": "Es wurden keine Chatbots verwendet.",
+                "no_searches": "Es wurden keine Suchmaschinen verwendet.",
                 
                 "suggestions": "Vorschläge",
                 "observation": "Beobachtung",
@@ -191,6 +211,17 @@ i18next.init({
                 "pages_info": "Azioni di navigazione che si verificano su una pagina web all'interno di un dominio.",
                 "system_info": "Azioni di sistema come avvio, pausa, arresto, ecc.",
 
+                "total_searches" : "ricerche totali",
+                "new_searches" : "nuove ricerche",
+                "reused_searches" : "ricerche riusate",
+                "modified_searches": "ricerche modificate",
+                "total_chatbots" : "chatbot totali",
+
+                "total_pages" : "pagine totali",
+                "new_pages" : "nuove pagine",
+                "revisited_pages" : "pagine rivisitate",
+
+                "new_pages" : "nuove pagine",
                 "new_page": "Nuova pagina",
                 "new_query": "Nuova query",
                 "modified_query_m": "Query modificata",
@@ -206,7 +237,6 @@ i18next.init({
                 "timeUse" : "Uso del tempo",
                 "total": "totale",
                 "total_cap": "Totale",
-                "total_pages": "Pagine totali",
                 "duration": "Durata",
                 "time": "Tempi",
                 "shortest": "più breve",
@@ -221,6 +251,7 @@ i18next.init({
                 "revisited": "già visitati",
                 "new_m": "nuovi",
                 "no_chatbots": "Non sono stati usati chatbot.",
+                "no_searches": "Non sono stati usati motori di ricerca.",
                 
                 "suggestions": "Suggerimenti",
                 "observation": "Osservazione",
