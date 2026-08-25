@@ -22,7 +22,6 @@ function load_hints(){
         // console.log(student_hints)
 
        loaded(predefined,student_hints)
-       
     })
     .catch(function(error) {
         show_hint_error()
@@ -31,6 +30,8 @@ function load_hints(){
     const hint_container_a = document.getElementById('hints_a');
     const hint_container_b = document.getElementById('hints_b');
     const hint_container_c = document.getElementById('hints_c');
+
+    const hint_container_d = document.getElementById('hints_message');
 
     function loaded(predefined,feedback){
         // console.log(feedback)
@@ -57,14 +58,24 @@ function load_hints(){
         let output_b = '';
         let output_c = '';
 
+        let output_d = '';
+
         // Observation
         // -----------------------------------------------
 
-        output_a += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('observation')}</strong></span>`;
-	    output_a += '<hr/ style="border: 0.1px solid #ccc">'
+        // output_a += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('observation')}</strong></span>`;
+	    // output_a += '<hr/ style="border: 0.1px solid #ccc">'
 
-        output_b += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('hint')}</strong></span>`;
-	    output_b += '<hr/ style="border: 0.1px solid #ccc">'
+        // output_b += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('hint')}</strong></span>`;
+	    // output_b += '<hr/ style="border: 0.1px solid #ccc">'
+
+        output_d += '<div>'
+        output_d += `<div class="content hide style="display: flex; margin-bottom: 1rem;"><strong>${i18next.t('observation')}</strong></span></div>`
+        output_d += `<div class="content hide style="margin-bottom: 1rem;"><strong>${i18next.t('hint')}</strong></div>`
+        
+        output_d += `<div class="content invisible" style="margin-bottom: 1rem;"><strong>${i18next.t('observation')} ${i18next.t('and')} ${i18next.t('hint')}</strong></span></div>`
+        output_d += '</div>'
+	    output_d += '<hr/ style="border: 0.1px solid #ccc">'
 
         // get the feedback text
         for (let x = 0; x < feedback_ids.length; x++){
@@ -86,8 +97,12 @@ function load_hints(){
                     hint = item_obj.hint.en
                 }
 
-                output_a += `<div class="content ${item_obj.id}">${observation}</div>`
-                output_b += `<div class="content">${hint}</div>`
+                output_d += '<div>'
+
+                output_d += `<div class="content observation ${item_obj.id}">${observation}</div>`
+                output_d += `<div class="content hint">${hint}</div>`
+
+                output_d += '</div>'
                 
             }
             catch (error) {
@@ -95,9 +110,11 @@ function load_hints(){
             }
         }
 
-        hint_container_a.innerHTML = output_a;
-	    hint_container_b.innerHTML = output_b;
+        // hint_container_a.innerHTML = output_a;
+	    // hint_container_b.innerHTML = output_b;
 	    // hint_container_c.innerHTML = output_c;
+
+        hint_container_d.innerHTML = output_d;
 
     }
 }

@@ -116,6 +116,10 @@ h2 {
 	margin-bottom: 3rem;
 }
 
+#suggestions_container {
+	border-bottom: 1px solid #ccc; 
+}
+
 .tab_label {
 	font-weight: bold;
 	font-size: 1.2rem;
@@ -134,15 +138,6 @@ h2 {
 	justify-content: space-between;
 }
 
-.hints_box .content {
-	padding-top: 1rem;
-	padding-bottom: 1rem;
-}
-
-.content ul {
-	padding: 1.5rem;
-}
-
 .hint_label {
 	width: 30%;
 	padding: 0 0 1rem 0rem;
@@ -150,7 +145,31 @@ h2 {
 }
 
 #hints_message {
+	display: block; 
+	width: calc(((100% / 3) - (1% * 2)) * 2 )
+}
+
+#hints_message > div {
+	display: flex;
+	justify-content: flex-start;
+}
+
+#hints_message > div:not(:first-child):not(:last-child) {
 	border-bottom: 1px solid #ccc;
+}
+
+#hints_message > div div:first-child {
+	margin-right: 4rem;
+}
+
+.content {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	width: 50%;
+}
+
+.content ul {
+	padding: 1.5rem;
 }
 
 .like {
@@ -305,6 +324,20 @@ td:first-child {
 	.legend_box {
 		width: 100%;
 		margin: 0 0 1rem 0;
+	}
+
+	#hints_message {
+		width: 100%;
+	}
+
+	#hints_message > div:not(:first-child) {
+		display: block;
+		margin: 0;
+	}
+
+	.content {
+		width: 95%;
+
 	}
 }
 

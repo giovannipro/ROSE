@@ -158,7 +158,9 @@ i18next.init({
                 "domain" : "Domäne",
                 "system" : "System",
 
-                "already_seen": "schon gesehen"
+                "already_seen": "schon gesehen",
+
+                "and" : "und"
             }
         },
         it: {
@@ -233,7 +235,9 @@ i18next.init({
                 "domain" : "Dominio",
                 "system" : "Sistema",
 
-                "already_seen": "già visto"
+                "already_seen": "già visto",
+
+                "and" : "e"
             }
         }
     }
