@@ -2,6 +2,7 @@ const new_page_color = '#ff9100';
 const duration_color = '#a4a4a4';
 const chatbot_color = '#E2A5D4';
 const chatbotRevised_color = '#F0BDE4'; 
+const chatbotModified_color = '#f8def2'; 
 const color_newQuery = '#619ED4';
 const colorModifiedQuery = '#C8DFF4';
 const colorReuded_query ='#90b8df';

@@ -312,7 +312,6 @@ function load_data() {
 				.attr("data-query", (d) => {
 					if (checkAction(d.action)[0] == 'search') query = d.query
 					else query = '-'
-					
 					return query
 				})
 				.attr("data-index", (d, i) => i)
@@ -406,16 +405,21 @@ function load_data() {
 				.attr("stroke", stroke_color)
 				.attr("fill", (d) => {
 					let color = color_system;
-					// console.log(d)
 
 					const category = checkAction(d.action)
 
 					if (d.page_type == 'CHATBOT'){
-						if (d.action == "NEW_RESULT")  {
+						if (d.action == "NEW_PROMPT" || 
+							d.action == "NEW_PROMPT_SAME_ENGINE" || 
+							d.action == "NEW_PROMPT_SEEN_ENGINE")  
+							{
 							color = chatbot_color
 						}
+						else if (d.action == "REFINE_PROMPT" ) {
+							color = chatbotModified_color
+						}
 						else {
-							color = chatbotRevised_color;
+							color = chatbotModified_color;
 						}
 					}
 					else {
@@ -471,6 +475,7 @@ function load_data() {
 				.attr("data-class", "website")
 				.attr("data-index", (d, i) => "w_" + i)
 				.attr("data-domainStatus", (d) => d[0].domain_status)
+				.attr("data-query", (d) => d[0].query)
 				.on("mouseover", handleMouseOver_website)
 				.on("mouseout", handleMouseOut_website)
 				.on("click", (event, d) => {
@@ -550,8 +555,9 @@ function load_data() {
 			]
 
 			data_legend_b = [
-				{ cat: i18next.t('new_chatbot'), color: chatbot_color },
-				{ cat: i18next.t('visited_chatbot'), color: chatbotRevised_color }
+				{ cat: i18next.t('new_prompt'), color: chatbot_color },
+				{ cat: i18next.t('modified_prompt'), color: chatbotModified_color },
+				{ cat: i18next.t('revised_prompt'), color: chatbotRevised_color }
 			]
 
 			data_legend_c = [
@@ -702,6 +708,7 @@ function load_data() {
 				const action = domain.getAttribute("data-action")
 				const domainStatus = domain.getAttribute("data-domainStatus")
 				const pageType = domain.getAttribute("data-type")
+				const query = domain.getAttribute("data-query")
 				
 				let output = '';
 				
@@ -718,12 +725,21 @@ function load_data() {
 						const the_domain = (domain.getAttribute("data-domain")).toString();
 						let seen = '';
 
-						if (action != 'NEW_RESULT'){
-							seen = `(${i18next.t('already_seen')})`;
+						if (action == "NEW_PROMPT" || 
+							action == "NEW_PROMPT_SAME_ENGINE" || 
+							action == "NEW_PROMPT_SEEN_ENGINE")  
+							{
+							seen = `${i18next.t('new_prompt')}`;
+						}
+						else if (action == "REFINE_PROMPT" ) {
+							seen = `${i18next.t('modified_prompt')}`;
+						}
+						else {
+							seen = `${i18next.t('revised_prompt')}`;
 						}
 
 						output += `<div id="infoboxType">${i18next.t('chatbot')}</div>`
-						output += `<div id="infoboxInfo">${the_domain} <span style="color: gray">${seen}</div>`;
+						output += `<div id="infoboxInfo">${the_domain}: ${query} <span style="color: gray">(${seen})</div>`;
 						output += `<div id="infoboxTime">${convertSecondsToMinutes(duration)}<div>`;
 						
 					}
