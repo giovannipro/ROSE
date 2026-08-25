@@ -390,7 +390,7 @@ function load_list(data, sort){
     // console.log(data)
 
     // for (item of data) {
-    //     console.log(item.S_Duration_CbtAvg)
+    //     console.log(item)
     // }
 
     const container = document.getElementById("student_list");

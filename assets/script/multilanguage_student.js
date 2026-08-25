@@ -122,8 +122,8 @@ i18next.init({
                 "visited_domain": "Besuchte Domain",
                 "chatbot": "Chatbot",
                 "chatbots": "Chatbots",
-                "new_chatbot": "Neue prompt",
-                "visited_chatbot": "Überarbeiteter prompt",
+                "new_chatbot": "Neue Prompt",
+                "visited_chatbot": "Überarbeiteter Prompt",
                 
                 "statistics": "Statistiken",
                 "timeUse" : "Zeitnutzung",
