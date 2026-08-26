@@ -90,7 +90,7 @@ function load_statistics(data) {
 		(item.action === 'SAME_DOMAIN_RESULT' || item.action === 'SEEN_DOMAIN_RESULT' || item.action === 'UNKNOWN')
 	).length;
 
-	console.log(data.filter(item => item.page_type === 'RESULT'))
+	// console.log(data.filter(item => item.page_type === 'RESULT'))
 
 	// searches
 	// -----------------------
@@ -123,7 +123,7 @@ function load_statistics(data) {
 	const prompts = chatbotItems.map(item => {
 		return item.query
 	})
-	console.log(prompts)
+	// console.log(prompts)
 
 	// -----------------------
 
@@ -208,7 +208,6 @@ function load_statistics(data) {
 	output_tb += `<span style="margin-bottom: 1rem; display: block;"><strong>${i18next.t('duration')}</strong> (mm:ss)</span>`;
 	output_tb += '<hr/ style="border: 0.1px solid #ccc">'
 	
-	// output_tb += makeDurationChart(duration_data);
 	output_tb += '<div id="duration-chart-container" style="width: 100%; height: 80px;"></div>'
 
 	output_tb += '<table style="margin-top: 23px" id="duration_matrix">';
@@ -219,12 +218,26 @@ function load_statistics(data) {
 	output_tb += `<td>${i18next.t('longest')}</td>`;
 	output_tb += `</tr>`;
 
+	// --------------
+
+	search_shortest = '-'
+	search_average  = '-'
+	search_longest  = '-'
+
+	if (searchDuration != 0){
+		search_shortest = convertSecondsToMinutes(minSearchDuration)
+		search_average  = convertSecondsToMinutes(avgSearchDuration)
+		search_longest  = convertSecondsToMinutes(maxSearchDuration)
+	}
+
 	output_tb += `<tr>`;
 	output_tb += `<td><span class="legend_item" style="background-color: ${color_newQuery};"></span></td>`;
-	output_tb += `<td>${convertSecondsToMinutes(minSearchDuration)}</td>`;
-	output_tb += `<td>${convertSecondsToMinutes(avgSearchDuration)}</td>`;
-	output_tb += `<td>${convertSecondsToMinutes(maxSearchDuration)}</td>`;
+	output_tb += `<td>${search_shortest}</td>`;
+	output_tb += `<td>${search_average}</td>`;
+	output_tb += `<td>${search_longest}</td>`;
 	output_tb += `</tr>`;
+
+	// --------------
 
 	chat_shortest = '-'
 	chat_average  = '-'
@@ -235,7 +248,6 @@ function load_statistics(data) {
 		chat_average  = convertSecondsToMinutes(avgchatbotDuration)
 		chat_longest  = convertSecondsToMinutes(maxchatbotDuration)
 	}
-	// console.log(chatbotDuration)
 
 	output_tb += `<tr>`;
 	output_tb += `<td><span class="legend_item" style="background-color: ${chatbot_color};"></span></td>`;
@@ -243,6 +255,8 @@ function load_statistics(data) {
 	output_tb += `<td>${chat_average}</td>`;
 	output_tb += `<td>${chat_longest}</td>`;
 	output_tb += `</tr>`;
+
+	// --------------
 
 	output_tb += `<tr>`;
 	output_tb += `<td><span class="legend_item" style="background-color: ${new_page_color};"></span></td>`;

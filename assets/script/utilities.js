@@ -158,9 +158,7 @@ function makeDurationChart(containerId, data){
 	if (windowWidth < 768) {
 		width = window.innerWidth - (18*2);
 	}
-	// console.log(windowWidth, width)
 
-	// container.style.width = '100%';
     container.style.height = 80 + 'px';
 
 	function parseTime(str) {
