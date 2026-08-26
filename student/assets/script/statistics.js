@@ -120,10 +120,10 @@ function load_statistics(data) {
         return a.chatbot.localeCompare(b.chatbot);
     });
 
-	const prompts = chatbotItems.map(item => {
-		return item.query
-	})
-	// console.log(prompts)
+	const prompts = chatbotItems
+  		.map(item => item.query)
+  		.filter(query => query !== '');
+	console.log(prompts)
 
 	// -----------------------
 
@@ -223,6 +223,7 @@ function load_statistics(data) {
 	search_shortest = '-'
 	search_average  = '-'
 	search_longest  = '-'
+	// console.log(searchDuration)
 
 	if (searchDuration != 0){
 		search_shortest = convertSecondsToMinutes(minSearchDuration)
@@ -348,11 +349,10 @@ function load_statistics(data) {
 		output_sc += '</ul></td></tr>'
 		output_sc += '</table>';
 		
-		if (prompts.length > 0 && prompts[0] != '' ){
+		if (prompts.length > 0) { //  && prompts[0] != '' 
 
 			output_sc += '<table style="margin-top: 1.5rem; margin-bottom: 1rem;">';
 			output_sc += `<tr><td>${i18next.t('Prompts')}</td></tr>`;
-			output_sc += '</table>';
 			
 			output_sc += '<tr><td><ul class="list">'
 			prompts.forEach(item => {

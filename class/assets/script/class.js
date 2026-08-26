@@ -39,7 +39,7 @@ function load_data() {
         d3.json(predefined_hints)
     ])
     .then(([classData, classInfo, taskInfo, recapInfo, class_hints, predefinedHints]) => {
-        // console.log(recapInfo)
+        console.log(recapInfo)
         // console.log(predefinedHints)
         
         classData.forEach(item => {
@@ -58,11 +58,15 @@ function load_data() {
 
             item.Que_Pag = item.duration_queries + item.duration_chatbots + item.duration_pages;
         });
-        console.log(classData)
+        // console.log(classData)
 
-        // for (item of classData) {
-        //     console.log(item.username, item.duration_chatbots, +(item.S_Duration_CbtAvg), +(item.S_Actions_Cbt));
-        // }
+        for (item of recapInfo) {
+            console.log(item.page_type, item.query);
+        }
+
+        for (item of classData) {
+            console.log(item.user_id, item.duration_chatbots);
+        }
 
         // Store both datasets
         the_data = classData;
