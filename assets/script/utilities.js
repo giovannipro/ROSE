@@ -47,15 +47,24 @@ function timeChart(searchDuration, chatbotDuration, pageDuration, width, view) {
 	const duration_treshold = 120;
 
     const total = searchDuration + chatbotDuration + pageDuration;
-    const search_width = searchDuration * 100 / total;
-	const chatbot_width = chatbotDuration * 100 / total;
-    const page_width = pageDuration * 100 / total;
+    let search_width = searchDuration * 100 / total;
+	let chatbot_width = chatbotDuration * 100 / total;
+    let page_width = pageDuration * 100 / total;
+	
+	if (search_width == 0 || isNaN(search_width) == true){
+		search_width = 0;
+	}
+	if (chatbot_width == 0 || isNaN(chatbot_width) == true){
+		chatbot_width = 0;
+	}
+	if (page_width == 0 || isNaN(page_width) == true){
+		page_width = 0;
+	}
 	// console.log(search_width, chatbot_width, page_width)
 
     let min_search = convertSecondsToMinutes(searchDuration);
 	let min_chatbot = convertSecondsToMinutes(chatbotDuration);
     let min_pages = convertSecondsToMinutes(pageDuration);
-	// console.log(min_search, min_chatbot, min_pages)
 
     let min_ration = 0.1;
     if ((searchDuration / (pageDuration + chatbotDuration)) < min_ration) {
@@ -67,33 +76,6 @@ function timeChart(searchDuration, chatbotDuration, pageDuration, width, view) {
     if ((pageDuration / (searchDuration + chatbotDuration)) < min_ration) {
         min_pages = '';
     }
-	// console.log(searchDuration / (pageDuration + chatbotDuration))
-
-    let val_queries = '';
-	let val_chatbots = '';
-    let val_pages = '';
-
-	if (view == 'class'){
-		if (width >= visualization_treshold) {
-			
-			if (search_width >= (visualization_treshold) && searchDuration > duration_treshold){
-				val_queries = min_search;
-			}
-
-			if (chatbot_width >= (visualization_treshold) && chatbotDuration > duration_treshold){
-				val_chatbots = min_chatbot;
-			}
-	
-			if (page_width >= (visualization_treshold) && pageDuration > duration_treshold){
-				val_pages = min_pages;
-			}
-		}
-	}
-	else {
-		val_queries = min_search;
-		val_chatbot = min_chatbot;
-		val_pages = min_pages;
-	}
 
     // Create container div
     const container = document.createElement('div');
@@ -108,8 +90,6 @@ function timeChart(searchDuration, chatbotDuration, pageDuration, width, view) {
     container.style.height = bar_height + 'px';
 	container.style.marginBottom = 10 + 'px';
 	container.style.paddingTop = 5 + 'px';
-	// container.style.paddingBottom = 13 + 'px';
-	// container.style.borderBottom = '1px solid #ccc';
 
     // Create SVG using D3
     const svg = d3.select(container)

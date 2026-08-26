@@ -39,25 +39,30 @@ function load_data() {
         d3.json(predefined_hints)
     ])
     .then(([classData, classInfo, taskInfo, recapInfo, class_hints, predefinedHints]) => {
-        console.log(recapInfo)
-
         // console.log(recapInfo)
         // console.log(predefinedHints)
         
         classData.forEach(item => {
-            // console.log(item)
-
             item.user_id = +item.user_id;
             item.S_Queries_New = +item.S_Queries_New;
             item.S_ResultDomain_New = +item.S_ResultDomain_New;
             item.S_Duration_Net = +item.S_Duration_Net;
             item.S_Duration_ResAvg = +item.S_Duration_ResAvg;
             item.S_Duration_SeaAvg = +item.S_Duration_SeaAvg;
-            item.queries_duration = item.S_Duration_SeaAvg * item.S_Actions_Sea;
-            item.pages_duration = item.S_Duration_ResAvg * item.S_Actions_Res;
-            item.Que_Pag = item.queries_duration + item.pages_duration;
+            item.S_Duration_CbtAvg = +item.S_Duration_CbtAvg;
+            item.S_Actions_Cbt = +item.S_Actions_Cbt;
+
+            item.duration_queries = item.S_Duration_SeaAvg * item.S_Actions_Sea;
+            item.duration_chatbots = item.S_Duration_CbtAvg * item.S_Actions_Cbt;
+            item.duration_pages = item.S_Duration_ResAvg * item.S_Actions_Res;
+
+            item.Que_Pag = item.duration_queries + item.duration_chatbots + item.duration_pages;
         });
-        // console.log(classData)
+        console.log(classData)
+
+        // for (item of classData) {
+        //     console.log(item.username, item.duration_chatbots, +(item.S_Duration_CbtAvg), +(item.S_Actions_Cbt));
+        // }
 
         // Store both datasets
         the_data = classData;
@@ -389,23 +394,17 @@ function load_data() {
 load_data()
 
 function load_list(data, sort){
-    console.log(data)
-
-    // for (item of data) {
-    //     console.log(item)
-    // }
+    // console.log(data)
 
     const container = document.getElementById("student_list");
-    // container.style.height = data.length * 3 + "rem";
-
     let items = ''
 
     const max_duration = d3.max(data, d => d.Que_Pag)
 
     // sorting options
     const duration_sort = data.slice().sort((a,b) => b.Que_Pag - a.Que_Pag)
-    const queries_sort = data.slice().sort((a,b) => b.queries_duration - a.queries_duration)
-    const page_sort = data.slice().sort((a,b) => b.pages_duration - a.pages_duration)
+    const queries_sort = data.slice().sort((a,b) => b.duration_queries - a.duration_queries)
+    const page_sort = data.slice().sort((a,b) => b.duration_pages - a.duration_pages)
 
     const alphabetical_sort = data.slice().sort((a,b) => {
         const studentA = the_classInfo.students.find(s => s.id === a.user_id);
@@ -431,12 +430,13 @@ function load_list(data, sort){
 
     sorted_dataset.forEach((item, index) => {
         setTimeout(() => {
-            const total_duration = convertSecondsToMinutes(item.queries_duration + item.pages_duration)
-            const queries_duration = convertSecondsToMinutes(item.queries_duration)
-            const pages_duration = convertSecondsToMinutes(item.pages_duration)
-            const bar_width = (( (item.queries_duration + item.pages_duration) / max_duration) * 100);
+            const total_duration = convertSecondsToMinutes(item.duration_queries + item.duration_pages)
+            const duration_queries = convertSecondsToMinutes(item.duration_queries)
+            const duration_pages = convertSecondsToMinutes(item.duration_pages)
+            const bar_width = (( (item.duration_queries + item.duration_pages + item.duration_chatbots) / max_duration) * 100);
+            // console.log(item.duration_queries + item.duration_pages + item.duration_chatbots)
 
-            const the_duration_chart = timeChart(item.queries_duration, 0, item.pages_duration, bar_width, 'class')
+            const the_duration_chart = timeChart(item.duration_queries, item.duration_chatbots, item.duration_pages, bar_width, 'class')
             const user_id = item.user_id
             const task_id = item.task_id
             // const clazz_id = item.clazz_id
@@ -474,11 +474,11 @@ function load_list(data, sort){
                             <div class="student_more_box">
                                 <div>
                                     <div>${i18next.t('queries')}: </div>
-                                    <div style="justify-content: flex-end;" data-log="S_Queries_New">${item.S_Queries_New} / ${queries_duration}</div>
+                                    <div style="justify-content: flex-end;" data-log="S_Queries_New">${item.S_Queries_New} / ${duration_queries}</div>
                                 </div>
                                 <div>
                                     <div>${i18next.t('pages')}: </div>
-                                    <div style="justify-content: flex-end;" data-log="S_ResultDomain_New">${item.S_ResultDomain_New} / ${pages_duration}</div>
+                                    <div style="justify-content: flex-end;" data-log="S_ResultDomain_New">${item.S_ResultDomain_New} / ${duration_pages}</div>
                                 </div>
                             </div>
                         </div>
