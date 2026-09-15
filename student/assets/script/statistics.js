@@ -356,7 +356,7 @@ function load_statistics(data) {
 			
 			output_sc += '<tr><td><ul class="list">'
 			prompts.forEach(item => {
-				console.log(item)
+				// console.log(item)
 				output_sc += '<li>' + item + '</li>';
 			});
 			output_sc += '</ul></td></tr>'

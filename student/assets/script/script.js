@@ -409,6 +409,7 @@ function load_data() {
 					const category = checkAction(d.action)
 
 					if (d.page_type == 'CHATBOT'){
+						// console.log(d.action)
 						if (d.action == "NEW_PROMPT" || 
 							d.action == "NEW_PROMPT_SAME_ENGINE" || 
 							d.action == "NEW_PROMPT_SEEN_ENGINE")  
@@ -419,7 +420,7 @@ function load_data() {
 							color = chatbotModified_color
 						}
 						else {
-							color = chatbotModified_color;
+							color = chatbotRevised_color;
 						}
 					}
 					else {
