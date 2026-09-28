@@ -39,7 +39,7 @@ function load_data() {
         d3.json(predefined_hints)
     ])
     .then(([classData, classInfo, taskInfo, recapInfo, class_hints, predefinedHints]) => {
-        console.log(recapInfo)
+        // console.log(recapInfo)
         // console.log(predefinedHints)
         
         classData.forEach(item => {
@@ -51,22 +51,25 @@ function load_data() {
             item.S_Duration_SeaAvg = +item.S_Duration_SeaAvg;
             item.S_Duration_CbtAvg = +item.S_Duration_CbtAvg;
             item.S_Actions_Cbt = +item.S_Actions_Cbt;
+            item.S_Actions_Res = +item.S_Actions_Res;
 
             item.duration_queries = item.S_Duration_SeaAvg * item.S_Actions_Sea;
             item.duration_chatbots = item.S_Duration_CbtAvg * item.S_Actions_Cbt;
             item.duration_pages = item.S_Duration_ResAvg * item.S_Actions_Res;
-
+            
             item.Que_Pag = item.duration_queries + item.duration_chatbots + item.duration_pages;
+
+            console.log(item.username, item.S_Duration_ResAvg, item.S_Actions_Res)
         });
         // console.log(classData)
 
-        for (item of recapInfo) {
-            console.log(item.page_type, item.query);
-        }
+        // for (item of recapInfo) {
+        //     console.log(item.page_type, item.query);
+        // }
 
-        for (item of classData) {
-            console.log(item.user_id, item.duration_chatbots);
-        }
+        // for (item of classData) {
+        //     console.log(item.user_id, item.duration_chatbots);
+        // }
 
         // Store both datasets
         the_data = classData;
@@ -432,23 +435,24 @@ function load_list(data, sort){
         sorted_dataset = duration_sort
     }
 
+    console.log(sorted_dataset)
+
     sorted_dataset.forEach((item, index) => {
         setTimeout(() => {
-            const total_duration = convertSecondsToMinutes(item.duration_queries + item.duration_pages)
+            const total_duration = convertSecondsToMinutes(item.duration_queries + item.duration_chatbots+ item.duration_pages)
             const duration_queries = convertSecondsToMinutes(item.duration_queries)
             const duration_pages = convertSecondsToMinutes(item.duration_pages)
             const bar_width = (( (item.duration_queries + item.duration_pages + item.duration_chatbots) / max_duration) * 100);
-            // console.log(item.duration_queries + item.duration_pages + item.duration_chatbots)
-
+            
             const the_duration_chart = timeChart(item.duration_queries, item.duration_chatbots, item.duration_pages, bar_width, 'class')
+            console.log(item.username, item.duration_queries, item.duration_chatbots, item.duration_pages)
+            
             const user_id = item.user_id
             const task_id = item.task_id
-            // const clazz_id = item.clazz_id
 
             const student = the_classInfo.students.find(s => s.id === item.user_id);
             const student_name_0 = student?.username || `#${item.user_id}`;
             const student_name = student_name_0.split('#')[0];
-            // console.log(student, student_name)
 
             // link to the student page ---------------- 
             const student_page = `https://search.rose.education/dashboard?userId=${user_id}&taskId=${task_id}&username=${student_name}` // clazzId=${clazz_id}
@@ -495,9 +499,7 @@ function load_list(data, sort){
             if (index === sorted_dataset.length - 1) {
                 highlight();
             }
-            
-        }, index * 100);
-                        
+        }, index * 100);           
     }) 
 }
 
