@@ -24,9 +24,8 @@ function load_data() {
 	const apiEndpoint_taskInfo = `https://search.rose.education/api/dashboard/tasks/${task_id}`
 	// const apiEndpoint_student =  `../stats_525_40.csv`;
 
-	// http://127.0.0.1:5501/student/index.html?user_id=7&task_id=2&lang=EN
+	// http://127.0.0.1:5500/student/index.html?user_id=7&task_id=2&lang=EN
 	// console.log(user_id,task_id)
-
 
 	Promise.all([
         d3.csv(apiEndpoint_student),
@@ -36,9 +35,9 @@ function load_data() {
 	.then(([studentData, studentInfo, taskInfo]) => {
 		// console.log(studentData)
 
-		for (item of studentData){
-			console.log(item.page_type + ': ' + item.query)
-		}
+		// for (item of studentData){
+		// 	console.log(item.page_type + ': ' + item.query)
+		// }
 
 		loaded(studentData)
 

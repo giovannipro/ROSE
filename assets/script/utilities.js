@@ -514,31 +514,36 @@ function checkAction(action){
 	return [category, subcategory]
 }
 
-function detectSearchEngine(url) {
+function detectSearchEngine(the_domain,the_link) {
 
-	const SEARCH_ENGINES = [
-		{ name: "Google", domains: ["google."], queryParam: "q" },
-		{ name: "Yahoo", domains: ["yahoo."], queryParam: "p" },
-		{ name: "Bing", domains: ["bing.com"], queryParam: "q" },
-		{ name: "DuckDuckGo", domains: ["duckduckgo.com"], queryParam: "q" },
-		{ name: "Ecosia", domains: ["ecosia.org"], queryParam: "q" },
-		{ name: "Brave", domains: ["search.brave.com"], queryParam: "q" },
-		{ name: "Yandex", domains: ["yandex."], queryParam: "text" },
-		{ name: "Baidu", domains: ["baidu.com"], queryParam: "wd" },
-		{ name: "Startpage", domains: ["startpage.com"], queryParam: "query" }
-	];
+	// const SEARCH_ENGINES = [
+	// 	{ name: "Google", domains: ["google."], queryParam: "q" },
+	// 	{ name: "Yahoo", domains: ["yahoo."], queryParam: "p" },
+	// 	{ name: "Bing", domains: ["bing.com"], queryParam: "q" },
+	// 	{ name: "DuckDuckGo", domains: ["duckduckgo.com"], queryParam: "q" },
+	// 	{ name: "Ecosia", domains: ["ecosia.org"], queryParam: "q" },
+	// 	{ name: "Brave", domains: ["search.brave.com"], queryParam: "q" },
+	// 	{ name: "Yandex", domains: ["yandex."], queryParam: "text" },
+	// 	{ name: "Baidu", domains: ["baidu.com"], queryParam: "wd" },
+	// 	{ name: "Startpage", domains: ["startpage.com"], queryParam: "query" }
+	// ];
 
-	const u = new URL(url);
-	const hostname = u.hostname.toLowerCase();
+	// const engine = SEARCH_ENGINES.find(engine =>
+    // 	engine.domains.some(domain => the_domain.includes(domain))
+	// );
+	
+	const url = tldts.parse(the_domain);
 
-	for (const engine of SEARCH_ENGINES) {
-    	if (engine.domains.some(d => hostname.includes(d))) {
-      		return {
-        		engine: engine.name,
-        		query: u.searchParams.get(engine.queryParam)
-      		};
-    	}
-  	}
+	const result = tldts.parse(the_domain).hostname; //  tldts.getDomainWithoutSuffix(the_domain) // 
+	const result_ = result.replace(/^www\./i, "");
+	const result_m = result_.charAt(0).toUpperCase() + result_.slice(1);
 
-	return null;
+	const data = {
+		engine: result_m,
+		link: url
+	};
+	console.log(data)
+
+	return data;
+	
 }

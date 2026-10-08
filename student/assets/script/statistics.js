@@ -90,13 +90,15 @@ function load_statistics(data) {
 		(item.action === 'SAME_DOMAIN_RESULT' || item.action === 'SEEN_DOMAIN_RESULT' || item.action === 'UNKNOWN')
 	).length;
 
-	// console.log(data.filter(item => item.page_type === 'RESULT'))
-
 	// searches
 	// -----------------------
 	let searchEngines = [];
 	searchItems.map(item => {
-		searchEngines.push(detectSearchEngine(item.url))
+		const search_engine = item.domain;
+		const link = item.url;
+
+			const s_engine = detectSearchEngine(search_engine, link);
+			searchEngines.push(s_engine);
 	})
 	
 	const unique_searchEngines = searchEngines.filter(item => {
@@ -123,7 +125,7 @@ function load_statistics(data) {
 	const prompts = chatbotItems
   		.map(item => item.query)
   		.filter(query => query !== '');
-	console.log(prompts)
+	// console.log(prompts)
 
 	// -----------------------
 
