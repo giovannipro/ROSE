@@ -532,15 +532,13 @@ function detectSearchEngine(the_domain,the_link) {
     // 	engine.domains.some(domain => the_domain.includes(domain))
 	// );
 	
-	const url = tldts.parse(the_domain);
-
-	const result = tldts.parse(the_domain).hostname; //  tldts.getDomainWithoutSuffix(the_domain) // 
+	const result = tldts.parse(`https://${the_domain}`).hostname; //  tldts.getDomainWithoutSuffix(the_domain) // 
 	const result_ = result.replace(/^www\./i, "");
 	const result_m = result_.charAt(0).toUpperCase() + result_.slice(1);
 
 	const data = {
 		engine: result_m,
-		link: url
+		link: the_link
 	};
 	console.log(data)
 
