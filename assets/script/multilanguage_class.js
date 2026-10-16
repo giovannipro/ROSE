@@ -32,6 +32,7 @@ i18next.init({
 
                 "uniqueQueries": "unique queries",
                 "uniquePages": "unique pages",
+                "uniqueDomains": "unique domains",
 
                 "searches": "Searches",
                 "pages_m": "Pages",
@@ -69,6 +70,7 @@ i18next.init({
 
                 "uniqueQueries": "einzigartige Query",
                 "uniquePages": "einzigartige Seiten",
+                "uniqueDomains": "einzigartige Domänen",
 
                 "searches": "Suchen",
                 "queries_m": "Queries",
@@ -104,6 +106,7 @@ i18next.init({
 
                 "uniqueQueries": "query uniche",
                 "uniquePages": "pagine uniche",
+                "uniqueDomains": "domini unici",
 
                 "searches": "Ricerche",
                 "queries_m": "Query",

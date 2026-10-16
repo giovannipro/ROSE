@@ -202,7 +202,8 @@ function load_data() {
                 .attr("height",10)
                 .attr("fill","#ff9100")
     
-            let uniquePages = i18next.t('uniquePages')
+            // let uniquePages = i18next.t('uniquePages')
+            let uniqueDomains = i18next.t('uniqueDomains')
             y_Axis_group.append("text")
                 .attr("class", "axis-label")
                 .attr("x", 15)
@@ -210,7 +211,7 @@ function load_data() {
                 .attr("dy", -2)
                 .attr("fill", "black")
                 .attr("text-anchor", "start")
-                .text(uniquePages);
+                .text(uniqueDomains);
         }
 
         window.addEventListener('resize', debounce(() => {
