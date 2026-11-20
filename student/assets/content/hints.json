@@ -93,7 +93,7 @@
         "hint": {
             "en": "When you think a document is important and trustworthy, you could take the time to read and understand it thoroughly.",
             "de": "Wenn du dir sicher bist, dass ein Dokument wichtig und vertrauenswürdig ist, nimm dir die Zeit, es gründlich zu lesen und zu verstehen.",
-            "it": "Quando pensi che un documento sia importante e affidabile,potresti  prenderti il tempo di leggerlo e comprenderlo a fondo."
+            "it": "Quando pensi che un documento sia importante e affidabile, potresti prenderti il tempo di leggerlo e comprenderlo a fondo."
         },
         "observation": {
             "en": "You just skimmed (or read very fast) the web pages you open. This is a good strategy to get an overview, but sometimes the most important information is not immediately visible.",
@@ -165,7 +165,7 @@
         },
         "observation": {
             "en": "You visited many pages, but closed all of them. In some situations, it is useful to keep track of the pages you visit and compare them.",
-            "de": "Du kannst die Seiten in neuen Tabs öffnen, sodass du die wichtigen Seiten immer zur Hand hast und die Ergebnisseite nicht \"verlierst\". Das spart Zeit, wenn du die gefundenen Informationen verwenden, vergleichen oder wiederholen musst.",
+            "de": "Du hast viele Seiten besucht und dann wieder geschlossen. Manchmal ist es nützlich, die Webseiten nebeneinander zu öffnen, um diese miteinander zu vergleichen.",
             "it": "Hai visitato molte pagine, ma le hai chiuse tutte. In alcune situazioni, è utile tenere traccia delle pagine visitate e confrontarle."
         }
     },
@@ -228,12 +228,12 @@
         "condition": "Wikipedia appears at least once",
         "hint": {
             "en": "Wikipedia is a great secondary source: it's a good starting point to get an overview of a topic. But you should always double-check the information on other sources. You could follow the links to the sources provided in each Wikipedia article (or page) to make sure the information is correct. You could identify online encyclopedias other than Wikipedia. Here is a list: <ul><li><a href='https://www.treccani.it/' target='_blank'>Treccani</a></li></ul>",
-            "de": "Wikipedia ist eine hervorragende Sekundärquelle: Sie ist ein guter Ausgangspunkt, um sich einen Überblick über ein Thema zu verschaffen. Aber du solltest die Informationen aus anderen Quellen immer überprüfen. Du kannst den Links zu den Quellen folgen, die in jedem Wikipedia-Artikel (oder jeder Seite) angegeben sind, um sicherzustellen, dass die Informationen korrekt sind. Du kannst andere Online-Enzyklopädien als Wikipedia ermitteln. Hier ist eine Liste: <ul><li><a href='https://www.treccani.it/' target='_blank'>Treccani</a></li></ul>",
+            "de": "Wikipedia ist eine hervorragende Sekundärquelle: Sie ist ein guter Ausgangspunkt, um sich einen Überblick über ein Thema zu verschaffen. Aber du solltest die Informationen aus anderen Quellen immer überprüfen. Du kannst den Links zu den Quellen folgen, die in jedem Wikipedia-Artikel (oder jeder Seite) angegeben sind, um sicherzustellen, dass die Informationen korrekt sind. Du kannst andere Online-Enzyklopädien als Wikipedia ermitteln.",
             "it": "Wikipedia è un'ottima fonte secondaria: un buon punto di partenza per avere una panoramica di un argomento. Ma è sempre bene ricontrollare le informazioni su altre fonti. Potresti seguire i link alle fonti forniti in ogni articolo (o pagina) di Wikipedia per assicurarti che le informazioni siano corrette. Potresti identificare altre enciclopedie online oltre a Wikipedia. Ecco un elenco: <ul><li><a href='https://www.treccani.it/' target='_blank'>Treccani</a></li></ul>"
         },
         "observation": {
             "en": "You have used Wikipedia. Wikipedia is an open encyclopedia created by many people working together. This makes it very powerful, but you should be careful. Anyone can publish information there, even if it is checked by “Wikipedians”.",
-            "de": "You have used Wikipedia. Wikipedia is an open encyclopedia created by many people working together. This makes it very powerful, but you should be careful. Anyone can publish information there, even if it is checked by “Wikipedians”.",
+            "de": "Du hast Wikipedia benutzt. Wikipedia ist eine offene Enzyklopädie, die von vielen Menschen in Zusammenarbeit erstellt wurde. Das macht sie sehr leistungsfähig, aber du solltest vorsichtig sein. Jede*r kann dort Informationen veröffentlichen, auch wenn sie von „Wikipedianern“ geprüft wurden.",
             "it": "Hai utilizzato Wikipedia. Wikipedia è un'enciclopedia aperta creata da molte persone che lavorano insieme. Questo la rende molto potente, ma bisogna fare attenzione. Chiunque può pubblicare informazioni, anche se vengono controllate dai “wikipediani”."
         }
     },
