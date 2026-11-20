@@ -106,7 +106,7 @@ i18next.init({
                 "fit_scale": "Fit",
                 "search": "Suche",
                 "searches": "Suchen",
-                "domains": "Domänen",
+                "domains": "Domains",
                 "pages": "Seiten",
                 "page_m" : "Seiten",
                 "system": "System",
@@ -118,7 +118,7 @@ i18next.init({
                 "show_legend": "Legende anzeigen",
                 "hide_legend": "Legende ausblenden",
 
-                "domains_pages": "Domänen", //  und Seiten
+                "domains_pages": "Domains", //  und Seiten
 
                 "chatbot_info": "Navigationsaktionen, die auf einer Suchmaschinen-Website stattfinden.",
                 "domains_pages_info": "Navigationsaktionen, die auf einer einzelnen Domain (nicht einer Suchmaschine) stattfinden.",
@@ -126,7 +126,7 @@ i18next.init({
                 "system_info": "Systemaktionen wie Starten, Anhalten, Stoppen, etc.",
 
                 "total_searches" : "Gesamtzahl der Suchanfragen",
-                "new_searches" : "neue Suchanfragen",
+                "new_searches" : "einzigartige Suchanfragen",
                 "reused_searches" : "wiederverwendete Suchanfragen",
                 "modified_searches": "modifizierte Suchanfragen",
                 "total_chatbots" : "total chatbots",
@@ -143,7 +143,7 @@ i18next.init({
                 "visited_domain": "Besuchte Domain",
                 "chatbot": "Chatbot",
                 "chatbots": "Chatbots",
-                "new_prompt": "Neue Prompt",
+                "new_prompt": "Neuer Prompt",
                 "revised_prompt": "Wiederverwendeter oder kein Prompt",
                 "modified_prompt" : "Geänderter Prompt", 
                 
@@ -155,7 +155,7 @@ i18next.init({
                 "duration": "Dauer",
                 "shortest": "Kürzest",
                 "average": "Durchschnitt",
-                "longest": "Längest",
+                "longest": "Längste",
                 "new": "Neu",
                 "reused": "Wiederverwendet",
                 "modified": "Geändert",
@@ -177,7 +177,7 @@ i18next.init({
                 "date" : "Daten",
                 "page" : "Seite",
                 "query" : "Suche",
-                "domain" : "Domäne",
+                "domain" : "Domains",
                 "system" : "System",
 
                 "already_seen": "schon gesehen",
