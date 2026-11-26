@@ -1,0 +1,182 @@
+#controllers {
+	border-bottom: 1px solid #bfbfbf;	
+}
+
+#class_box {
+    display: flex;
+    justify-content: space-between;
+}
+
+aside {
+    width: 35%;
+    border-right: 1px solid #bfbfbf;
+    min-height: 50rem;
+    /* position: relative;
+    left: -30%; */
+    /* height: 100vh; */
+    /* border-right: 1px solid #bfbfbf; */
+}
+
+#container {
+    width: 65%;
+    height: 45rem;
+    position: fixed;
+    top: 5rem;
+    right: 0;
+    overflow: hidden;
+    /* min-height: 50vh; */
+    /* z-index: -1; */
+}
+
+.tab_content {
+    background-color: white;
+    margin: 0;
+    padding: 1rem;
+}
+
+@media print {
+    #container {
+        position: relative
+    }
+}
+
+#plot_class {
+    width: 100%;
+    height: 75vh;
+}
+
+#student_list {
+    list-style: none;
+    /* height: 70vh; */
+    overflow-y: scroll;
+    margin: 0;
+    padding: 0;
+}
+
+.student_item {
+    padding: 0.75rem;
+    border-bottom: 1px solid #ccc;
+    border-left: 5px solid transparent;
+    /* border-right: 1px solid #bfbfbf; */
+    cursor: pointer;
+}
+
+.student_item:last-child {
+    border-bottom: none;
+}
+
+.student_item:nth-child(even){
+    background-color: #f8f8f8;
+}
+
+.student_item:hover {
+    background-color: #eaeaea;
+}
+
+#sort_box {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border-bottom: 1px solid #ccc;
+    border-left: 3px solid transparent;
+    /* border-right: 1px solid #bfbfbf;  */
+    height: 2.5rem;
+    align-items: center;
+}
+
+.item_data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.student_more {
+    border-top: 1px solid #ccc;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    display: none;
+}
+
+.student_more div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.student_more_box div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.student_more_box > div {
+    display: flex;
+    justify-content: flex-start;
+    width: 50%;
+}
+
+.student_more_box > div > div {
+    margin-right: 0.5rem;
+}
+
+#get_sort, #get_querySort, #get_domainSort {
+    height: 2rem;
+    border-radius: 4px;
+}
+
+.arrow_link {
+    text-decoration: none; 
+    color: black;
+    padding: 10px;
+    left: 0;
+    transition: left 0.1s ease;
+}
+
+.arrow_link:hover {
+    position: relative;
+    left: 5px
+}
+
+.blabel {
+    cursor: pointer;
+}
+
+#statistics, #suggestions {
+    z-index: 2;
+    position: relative;
+}
+
+#statistics {
+    margin-bottom: 2rem;
+}
+
+.table_counters {
+    border-collapse: collapse;
+    margin: 0.75rem 0 0;
+    border-top: 0.1px solid #ccc;
+    margin-bottom: 2rem;
+}
+
+#domainTable td:nth-child(1), #queryTable td:nth-child(1) {
+    width: 80%;
+}
+
+.table_counters td {
+    vertical-align: top;
+    padding: 0.3rem 0;
+}
+
+.table_counters tr {
+    border-bottom: 0.1px solid #ccc;
+}
+
+.sort_tables {
+    padding: 0.3rem 0 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table_sort {
+    width: 70%;
+    font-size: 0.8rem; 
+    margin-right: 0.5rem;
+}
