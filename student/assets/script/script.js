@@ -936,24 +936,28 @@ function load_data() {
 				infobox.innerHTML = '';
 			}
 
-			const set_normalize = document.getElementById('normalize_size');
-			const set_fit = document.getElementById('fit_size');
+			const set_size = document.getElementById('set_size');
+			const normalize_label = document.getElementById('t_normalize_scale');
+			const fit_label = document.getElementById('t_fit_scale');
 
-			set_normalize.addEventListener("click", function () {
-				rescale("normalize");
-				scale_mode = "normalize"
+			set_size.addEventListener("click", function () {
 
-				set_normalize.classList.add("not_active");
-				set_fit.classList.remove("not_active");
+				if (scale_mode == "normalize"){
+					rescale("fit");
+					scale_mode = "fit"
+
+					fit_label.style.display = "none";
+					normalize_label.style.display = "block";
+				}
+				else {
+					rescale("normalize");
+					scale_mode = "normalize"
+
+					normalize_label.style.display = "none";
+					fit_label.style.display = "block";
+				}
 			});
 
-			set_fit.addEventListener("click", function () {
-				rescale("fit");
-				scale_mode = "fit"
-
-				set_fit.classList.add("not_active");
-				set_normalize.classList.remove("not_active");
-			});
 
 			function resize_chart(mode) {
 

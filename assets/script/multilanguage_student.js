@@ -16,8 +16,8 @@ i18next.init({
 
                 "user": "User",
                 "task": "Task",
-                "normalize_scale": "Normalize",
-                "fit_scale": "Fit",
+                "normalize_scale": "Normalize scale",
+                "fit_scale": "Fit scale",
                 "search": "Search",
                 "searches": "Searches",
                 "domains": "Domains",

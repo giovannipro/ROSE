@@ -540,7 +540,7 @@ function detectSearchEngine(the_domain,the_link) {
 		engine: result_m,
 		link: the_link
 	};
-	console.log(data)
+	// console.log(data)
 
 	return data;
 	

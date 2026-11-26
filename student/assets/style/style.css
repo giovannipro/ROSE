@@ -88,6 +88,10 @@ h2 {
 	width: 30%;
 }
 
+#set_size {
+	width: 7rem;
+}
+
 #set_task, #set_user, #set_story {
 	width: 90%;
 }
@@ -98,10 +102,6 @@ h2 {
 
 #set_story {
 	height: 2.3rem;
-}
-
-#set_size {
-	width: 30%;
 }
 
 .open_tab {
