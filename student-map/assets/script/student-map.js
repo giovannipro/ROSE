@@ -22,28 +22,75 @@ function load_data() {
 
 	const apiEndpoint_studentInfo = `https://search.rose.education/api/dashboard/students/${user_id}`
 
-    Promise.all([
-        d3.json(apiEndpoint_studentInfo)
-    ])
-    .then(([studentInfo]) => {
+    const tasks = [ // user - task
+        [1556, 57],
+        [535, 27],
+        [538, 27], 
+        [446, 27], 
+        [861, 27] 
+    ] 
+    console.log(tasks)
 
-        loaded(studentInfo)
+    const requests = tasks.map(([user_id, task_id]) => {
+
+        const url = `https://search.rose.education/api/analytics/stories-extraction?user_id=${user_id}&task_id=${task_id}`;
+        return d3.csv(url).then(data => ( data ));
+
+    });
+
+    Promise.all([
+        d3.json(apiEndpoint_studentInfo),
+        Promise.all(requests)
+    ])
+    .then(([studentInfo, results]) => {
+        console.log(studentInfo);
+        // console.log(results);
+
+        loaded(results)
 
         document.getElementById("the_student").innerHTML = studentInfo.username.split("#")[0];
-
     })
-    .catch(function (error) {
+    .catch(error => {
         if (error.message.includes("404")) {
             console.log("Something went wrong with the data loading");
         } 
         else {
             console.error("Data loading error:", error);
         }
-        no_data()
+        // no_data();
     });
 
     function loaded(data){
-        console.log(data)
+        // console.log(data);
+
+        // compute totals
+        for (let item of data){ 
+            // console.log(item)
+
+            const unique_queries = [...new Set(
+                item
+                    .filter(d => checkAction(d.action)[0] == "search")
+                    .map(d => d.query.trim())
+                    .filter(q => q !== "")
+            )];
+            // console.log(unique_queries)
+
+            const unique_prompts = [...new Set(
+                item
+                    .filter(d => checkAction(d.action)[0] == "page" && d.page_type == "CHATBOT") //  )
+                    .map(d => d.query.trim().toLowerCase())
+                    // .filter(q => q !== "")
+            )];
+            console.log(unique_prompts)
+
+            const unique_domains = [...new Set(
+                item
+                    .filter(d => checkAction(d.action)[0] == "page") //  && d.page_type == "CHATBOT")
+                    .map(d => d.query.trim().toLowerCase())
+                    .filter(q => q !== "")
+            )];
+            // console.log(unique_domains)
+        } 
     }
 }
 load_data()
