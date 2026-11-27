@@ -532,7 +532,7 @@ function highlight() {
     items.forEach(item => {
 
         item.addEventListener("click", (e) => {
-            e.preventDefault();
+            // e.preventDefault();
             
             const id = item.id;
             border_size = "4px"
