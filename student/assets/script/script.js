@@ -609,7 +609,8 @@ function load_data() {
 
 			let legend_open = false;
 			let legend_loaded = false
-			legend_switch.addEventListener("click", function () {
+			legend_switch.addEventListener("click", function (e) {
+				e.preventDefault();
 
 				if (legend_open == false) {
 					legend_box.style.display = "flex";

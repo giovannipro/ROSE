@@ -373,8 +373,9 @@ function open_tabs(tabA, tabB, tabC) {
 		const TIME_TAB = document.getElementById("time_container");
 		const TIME_ARROW = document.getElementById("open_time");
 
-		TIME_BUTTON.addEventListener("click", () => {
-	
+		TIME_BUTTON.addEventListener("click", (e) => {
+			e.preventDefault();
+
 			if (open_time == false) {
 				TIME_TAB.style.display = 'block';
 				open_time = true;
@@ -393,7 +394,8 @@ function open_tabs(tabA, tabB, tabC) {
 		const STAT_TAB = document.querySelector("#statistics_container");
 		const STAT_ARROW = document.getElementById("open_stat");
 
-		STAT_BUTTON.addEventListener("click", () => {
+		STAT_BUTTON.addEventListener("click", (e) => {
+			e.preventDefault();
 	
 			if (open_stat == false) {
 				STAT_TAB.style.display = 'block';
@@ -413,7 +415,8 @@ function open_tabs(tabA, tabB, tabC) {
 		const SUGG_TAB = document.querySelector("#suggestions_container");
 		const SUGG_ARROW = document.getElementById("open_sugg");
 	
-		SUGG_BUTTON.addEventListener("click", () => {
+		SUGG_BUTTON.addEventListener("click", (e) => {
+			e.preventDefault();
 	
 			if (open_sugg == false) {
 				SUGG_TAB.style.display = 'block';
